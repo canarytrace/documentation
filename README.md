@@ -1,8 +1,10 @@
 # Canarytrace documentation
 
+Documentation
+
 - [Architecture](https://github.com/canarytrace/canarytrace-documentation/wiki/Architecture)
 
----
+
 
 ## Overview
 
