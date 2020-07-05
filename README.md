@@ -2,7 +2,7 @@
 
 Documentation
 
-- [Architecture](https://github.com/canarytrace/canarytrace-documentation/wiki/Architecture)
+- [Architecture](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
 
 
 
