@@ -1,20 +1,18 @@
 # Canarytrace
 > Stack for functional testing web application and for analyze behavior of web browser.
 
-# Features
+## Features
 
-## Test stack
+**Test stack**
 - support pattern 1:1:1
 - ready for run on AWS, DO, Azure, GCE via Kubernetes
 - available as cloud and on-premise
-- licensed and developer version
+- profesional and developer version
 - live reporting
-- javascript based
 - based on WDIO v6
 
 ## Functional testing
-- full control over the browser
-- 
+- full control over the browser 
 
 ## Web Performance Testing
 
