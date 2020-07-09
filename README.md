@@ -25,7 +25,7 @@ Stack for functional testing web application and for analyze behavior of web bro
 ### Professional and Developer editions
 
 Canarytrace is distributed in version Professional and Developer. Professional contains all features plus [Canarytrace Listener](https://github.com/canarytrace/documentation/blob/master/listener/README.md).
-- Canarytrace Professional is for testing and monitoring of production environment.
+- Canarytrace Professional is a paid version and is for testing and monitoring of production environment.
 - Canarytrace Developer is for lecture, development of monitor script and testing lower environments such as preprod, test etc.
 
 
@@ -35,7 +35,21 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 | Live reporting to elasticsearch        | ✓                 | ✓          |
 | Dockerized        | ✓                 | ✓          |
 | Cloning repository to docker         | ✓                 | ✓          |
-| Save performance.entries data         | ✓                 | ✓          |
+| Store performance.entries data         | ✓                 | ✓          |
+| Store attachments to disk or to AWS S3         | ✓                 | ✓          |
+| Wait for clickable service         | ✓                 | ✓          |
+| Wait for perf. entries increase         | ✓                 | ✓          |
+| Elasticsearch mapping         | ✓                 | ✓          |
+| Kibana vizualizations and dashboards         | ✓                 | ✓          |
+| Console Intercept         | ✓                 | X          |
+| Coverage Audit         | ✓                 | X          |
+| Memory Intercept         | ✓                 | X          |
+| Performance Audit         | ✓                 | X          |
+| Request Intercept         | ✓                 | X          |
+| Response Intercept         | ✓                 | X          |
+| Console Intercept         | ✓                 | X          |
+| Canarytrace intercept         | ✓                 | X          |
+| Full kubernetes architecture         | ✓                 | X          |
 
 ## Documentation
 
