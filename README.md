@@ -50,10 +50,10 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 | [Response Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Console Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Canarytrace Listener](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
-| [Canarytrace Listener Thresholds](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
-| [Canarytrace Listener Alerting](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
-| [Canarytrace Listener Reporting](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
-| [Canarytrace Listener Slack integration](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Canarytrace Listener Thresholds](https://github.com/canarytrace/documentation/blob/master/listener/README.md)         | ✓                 | X          |
+| [Canarytrace Listener Alerting](https://github.com/canarytrace/documentation/blob/master/listener/README.md)         | ✓                 | X          |
+| [Canarytrace Listener Reporting](https://github.com/canarytrace/documentation/blob/master/listener/README.md)         | ✓                 | X          |
+| [Canarytrace Listener Slack integration](https://github.com/canarytrace/documentation/blob/master/listener/README.md)         | ✓                 | X          |
 | [Full kubernetes architecture](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 
 ## Documentation
