@@ -24,7 +24,7 @@ Stack for functional testing web application and for analyze behavior of web bro
 
 ### Professional and Developer editions
 
-Canarytrace is distributed in version Professional and Developer. Professional contain all features plus Canarytrace Listener
+Canarytrace is distributed in version Professional and Developer. Professional contains all features plus (Canarytrace Listener)[]
 
 **Features**
 | Canarytrace Professional | Canarytrace Developer |
