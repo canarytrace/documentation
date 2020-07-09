@@ -58,9 +58,24 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 | [Canarytrace Listener Slack integration](https://github.com/canarytrace/documentation/blob/master/listener/README.md)         | ✓                 | X          |
 | [Full kubernetes architecture](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 
+## Quick start
+
+Run Canarytrace Developer on your local machine
+```bash
+docker run ...
+```
+
 ## Documentation
 
 - [Architecture](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
+- [Compatibility](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
 
 
 ## Examples
+- [How to run Canarytrace Developer on MacOS](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
+- [How to run Canarytrace Developer on Linux](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
+- [How to run Canarytrace Developer on Windows 10 Pro](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
+
+## License
+
+Only Canarytrace Developer is licensed under the [Apache 2 license](./LICENSE).
