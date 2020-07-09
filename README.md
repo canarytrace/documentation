@@ -31,28 +31,28 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 
 | Feature |                   Canarytrace Professional | Canarytrace Developer |
 |---------                   | ------------------------ |----------------|
-| Canarytrace runner         | ✓              | ✓       |
-| Live reporting to elasticsearch        | ✓                 | ✓          |
-| Dockerized        | ✓                 | ✓          |
-| Cloning repository to docker         | ✓                 | ✓          |
-| Store performance.entries data         | ✓                 | ✓          |
-| Store attachments to disk or to AWS S3         | ✓                 | ✓          |
-| Wait for clickable service         | ✓                 | ✓          |
-| Wait for perf. entries increase         | ✓                 | ✓          |
-| Elasticsearch mapping         | ✓                 | ✓          |
-| Kibana vizualizations and dashboards         | ✓                 | ✓          |
-| Console Intercept         | ✓                 | X          |
-| Coverage Audit         | ✓                 | X          |
-| Memory Intercept         | ✓                 | X          |
-| Performance Audit         | ✓                 | X          |
-| Request Intercept         | ✓                 | X          |
-| Response Intercept         | ✓                 | X          |
-| Console Intercept         | ✓                 | X          |
-| Canarytrace Listener         | ✓                 | X          |
-| Canarytrace Listener Thresholds         | ✓                 | X          |
-| Canarytrace Listener Alerting         | ✓                 | X          |
-| Canarytrace Listener Reporting         | ✓                 | X          |
-| Full kubernetes architecture         | ✓                 | X          |
+| [Canarytrace runner](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓              | ✓       |
+| [Live reporting to elasticsearch](https://github.com/canarytrace/documentation/blob/master/features.md)        | ✓                 | ✓          |
+| [Dockerized](https://github.com/canarytrace/documentation/blob/master/features.md)        | ✓                 | ✓          |
+| [Cloning repository to docker](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Store performance.entries data](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Store attachments to disk or to AWS S3](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Wait for clickable service](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Wait for perf. entries increase](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Elasticsearch mapping](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Kibana vizualizations and dashboards](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Console Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Coverage Audit](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Memory Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Performance Audit](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Request Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Response Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Console Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Canarytrace Listener](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Canarytrace Listener Thresholds](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Canarytrace Listener Alerting](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Canarytrace Listener Reporting](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Full kubernetes architecture](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 
 ## Documentation
 
