@@ -1,4 +1,4 @@
-# Canarytrace
+# Canarytrace documentation
 Stack for functional testing web application and for analyze behavior of web browser.
 
 ---
@@ -24,15 +24,18 @@ Stack for functional testing web application and for analyze behavior of web bro
 
 ### Professional and Developer editions
 
-Canarytrace is distributed in version Professional and Developer. Professional contains all features plus (Canarytrace Listener)[]
+Canarytrace is distributed in version Professional and Developer. Professional contains all features plus [Canarytrace Listener](https://github.com/canarytrace/documentation/blob/master/listener/README.md).
+- Canarytrace Professional is for testing and monitoring of production environment.
+- Canarytrace Developer is for lecture, development of monitor script and testing lower environments such as preprod, test etc.
 
-**Features**
-| Canarytrace Professional | Canarytrace Developer |
-| --------------------- |----------------|
-| `master`              | `master`       |
-| `7.x`                 | `7.x`          |
-| `6.x`                 | `6.x`          |
-| `5.x`                 | `5.x`          |
+
+| Feature |                   Canarytrace Professional | Canarytrace Developer |
+|---------                   | ------------------------ |----------------|
+| Canarytrace runner         | ✓              | ✓       |
+| Live reporting to elasticsearch        | ✓                 | ✓          |
+| Dockerized        | ✓                 | ✓          |
+| Cloning repository to docker         | ✓                 | ✓          |
+| Save performance.entries data         | ✓                 | ✓          |
 
 ## Documentation
 
