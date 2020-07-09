@@ -1,5 +1,5 @@
 # Canarytrace
-> Stack for functional testing web application and for analyze behavior of web browser.
+Stack for functional testing web application and for analyze behavior of web browser.
 
 ---
 
