@@ -41,6 +41,7 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 | [Wait for perf. entries increase](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
 | [Elasticsearch mapping](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
 | [Kibana vizualizations and dashboards](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | ✓          |
+| [Filebeat and metricbeat logging](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Console Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Coverage Audit](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Memory Intercept](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
@@ -52,6 +53,7 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 | [Canarytrace Listener Thresholds](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Canarytrace Listener Alerting](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Canarytrace Listener Reporting](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
+| [Canarytrace Listener Slack integration](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 | [Full kubernetes architecture](https://github.com/canarytrace/documentation/blob/master/features.md)         | ✓                 | X          |
 
 ## Documentation
