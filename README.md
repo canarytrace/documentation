@@ -65,7 +65,7 @@ Run Canarytrace Developer on your local machine
 docker run ...
 ```
 
-## Documentation
+## Topics
 
 - [Architecture](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
 - [Compatibility](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
