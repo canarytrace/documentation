@@ -22,7 +22,21 @@ Stack for functional testing web application and for analyze behavior of web bro
 - Meets the requirement for 1:1:1 pattern.
 - Available as Canarytrace Cloud (Software as a Service) and as On-Premise.
 
+### Professional and Developer editions
+
+Canarytrace is distributed in version Professional and Developer. Professional contain all features plus Canarytrace Listener
+
+**Features**
+| Canarytrace Professional | Canarytrace Developer |
+| --------------------- |----------------|
+| `master`              | `master`       |
+| `7.x`                 | `7.x`          |
+| `6.x`                 | `6.x`          |
+| `5.x`                 | `5.x`          |
+
 ## Documentation
 
 - [Architecture](https://github.com/canarytrace/canarytrace-documentation/blob/master/architecture.md)
 
+
+## Examples
