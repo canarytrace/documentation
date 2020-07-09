@@ -3,7 +3,9 @@ Stack for functional testing web application and for analyze behavior of web bro
 
 ---
 
-**Note:** This is a living documentation. Click on Watch button for notify when the documentation is updated.
+**Note:** 
+- This is a living documentation. Click on Watch button for notify when the documentation is updated.
+- If you found some mistake, please create a [issue](https://github.com/canarytrace/documentation/issues) or [pull request](https://github.com/canarytrace/documentation/pulls) Thanks 👍
 
 ---
 
