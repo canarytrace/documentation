@@ -7,6 +7,20 @@ Stack for functional testing web application and for analyze behavior of web bro
 
 ---
 
+## Features
+- Based od [webdriver.io v6](https://webdriver.io/)
+- E2E Functional testing web application.
+- Analyze behavior of a web browser under test.
+- Monitoring user journey from end user perspective.
+- Analyze performance metrics.
+- Collect additional data from browser for analyze and reporting.
+- Sniffing browser networking stack.
+- Live logging / reporting to Elasticsearch.
+- Ready for alerting based on thresholds.
+- Ready for processing of collected data by other tools.
+- Ready to run on AWS, DigitalOcean, Azure Cloud and GCE via kubernetes.
+- Meets the requirement for 1:1:1 pattern.
+- Available as Canarytrace Cloud (Software as a Service) and as On-Premise.
 
 ## Documentation
 
