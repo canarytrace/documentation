@@ -48,7 +48,10 @@ Canarytrace is distributed in version Professional and Developer. Professional c
 | Request Intercept         | ✓                 | X          |
 | Response Intercept         | ✓                 | X          |
 | Console Intercept         | ✓                 | X          |
-| Canarytrace intercept         | ✓                 | X          |
+| Canarytrace Listener         | ✓                 | X          |
+| Canarytrace Listener Thresholds         | ✓                 | X          |
+| Canarytrace Listener Alerting         | ✓                 | X          |
+| Canarytrace Listener Reporting         | ✓                 | X          |
 | Full kubernetes architecture         | ✓                 | X          |
 
 ## Documentation
