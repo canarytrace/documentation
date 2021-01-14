@@ -31,7 +31,7 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'features/features',
+          docId: 'features/overview',
           label: 'Features',
           position: 'left',
         },

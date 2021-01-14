@@ -1,8 +1,6 @@
 ---
 id: live-reporting
 title: Live reporting
-sidebar_label: Architecture
-slug: /
+sidebar_label: Live reporting
 ---
 
-## Why Canarytrace

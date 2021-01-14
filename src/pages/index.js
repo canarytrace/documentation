@@ -83,7 +83,7 @@ function Home() {
                 'button button--outline button--lg',
                 styles.getStarted,
               )}
-              to={useBaseUrl('docs/')}>
+              to={useBaseUrl('/docs/canary/start/')}>
               Get Started
             </Link>
           </div>

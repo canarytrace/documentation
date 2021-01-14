@@ -8,23 +8,13 @@
  */
 
 module.exports = {
-  docs: [
-    {
-      type: 'category',
-      label: 'Getting Started',
-      items: ['quickstart/whyCanarytrace'],
-    },
-    {
-      type: 'category',
-      label: 'Features',
-      items: ['features/features', 'features/live-reporting'],
-    },
-    {
-      type: 'category',
-      label: 'Docusaurus',
-      items: ['doc1'],
-    },
-  ],
+  docs: {
+    ['Why Canarytrace']: ['why/canarytrace'],
+    ['Get Started']: ['canary/start', 'canary/installation'],
+    Features: ['features/overview', 'features/live-reporting'],
+    Docusaurus: ['doc1', 'doc2', 'doc3'],
+    DocusaurusMdx: ['mdx'],
+  },
 };
 
 /*
