@@ -8,8 +8,8 @@
  */
 
 module.exports = {
-  title: 'Canarytrace',
-  tagline: "Plug’n'Play stack for testing and monitoring your web application from user perspective.",
+  title: "Plug’n'Play stack for testing and monitoring your web application from user perspective.",
+  tagline: "Your Browser is a small infrastructure and we know a lot of informations that browser hides.",
   url: 'https://canarytrace.com/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -25,12 +25,6 @@ module.exports = {
         src: 'img/logo.svg',
       },
       items: [
-        {
-          to: 'quick/',
-          activeBasePath: 'quickstart',
-          label: 'Quickstart',
-          position: 'left',
-        },
         {
           to: 'docs/',
           activeBasePath: 'docs',

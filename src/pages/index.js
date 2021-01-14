@@ -18,7 +18,7 @@ import styles from './styles.module.css';
 const features = [
   {
     title: 'Easy to Use',
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
+    imageUrl: 'img/undraw_observations_mejb.svg',
     description: (
       <>
         Docusaurus was designed from the ground up to be easily installed and
@@ -68,16 +68,19 @@ function Home() {
   const {siteConfig = {}} = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title={`Canarytrace ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <p>
+          Just enough <code>docker-compose up</code> or <code>kubectl create -f smoke.yml</code>
+          </p>
           <div className={styles.buttons}>
             <Link
               className={clsx(
-                'button button--outline button--secondary button--lg',
+                'button button--outline button--lg',
                 styles.getStarted,
               )}
               to={useBaseUrl('docs/')}>
@@ -87,8 +90,25 @@ function Home() {
         </div>
       </header>
       <main>
-        {features && features.length > 0 && (
-          <section className={styles.features}>
+        <div id="features">
+          <h2 className={styles.featuresTopic}>What sets Canarytrace apart?</h2>
+          {features && features.length > 0 && (
+            <section className={styles.features}>
+              <div className="container">
+                <div className="row">
+                  {features.map(({title, imageUrl, description}) => (
+                    <Feature
+                      key={title}
+                      title={title}
+                      imageUrl={imageUrl}
+                      description={description}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+          <section className={styles.featuresSecond}>
             <div className="container">
               <div className="row">
                 {features.map(({title, imageUrl, description}) => (
@@ -102,7 +122,55 @@ function Home() {
               </div>
             </div>
           </section>
-        )}
+        </div>
+        <div id="features">
+        <h2 className={styles.featuresTopic}>Part two</h2>
+          <div class="container" id="feature1">
+            <div class="row">
+              <div class="col col--3">
+                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
+              </div>
+              <div class="col col--3">
+                <h3>Part two</h3>
+                <p>
+                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                </p>
+              </div>
+              <div class="col col--3">
+                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
+              </div>
+              <div class="col col--3">
+                <h3>Part two</h3>
+                <p>
+                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col--3">
+                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
+              </div>
+              <div class="col col--3">
+                <h3>Part two</h3>
+                <p>
+                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                </p>
+              </div>
+              <div class="col col--3">
+                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
+              </div>
+              <div class="col col--3">
+                <h3>Part two</h3>
+                <p>
+                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
       </main>
     </Layout>
   );

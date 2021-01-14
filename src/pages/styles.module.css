@@ -17,6 +17,11 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  background-image: url("../../static/img/backgroundPattern.png");
+}
+
+.hero__title {
+  color: aliceblue;
 }
 
 @media screen and (max-width: 966px) {
@@ -38,7 +43,25 @@
   width: 100%;
 }
 
+.featuresSecond {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+  background-color: #f5f6f7;
+}
+
+.featuresTopic {
+  text-align: center;
+  padding-top: 2rem;
+}
+
 .featureImage {
   height: 200px;
   width: 200px;
+}
+
+.featureImageBig {
+  height: 400px;
+  width: 400px;
 }

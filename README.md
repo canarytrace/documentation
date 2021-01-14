@@ -1,8 +1,23 @@
-# Website
+# Canarytrace documentation, issues and questions 
+Stack for functional testing web application and for analyze behavior of web browser.
+
+![GitHub issues](https://img.shields.io/github/issues/canarytrace/documentation?color=red&style=flat-square) ![GitHub closed issues](https://img.shields.io/github/issues-closed/canarytrace/documentation?color=green&style=flat-square) 
+---
+
+- Documentation is on our [Canarytrace Confluence](https://bit.ly/canary-doc)
+- Do you found an error or have you a question, please create [issue](https://github.com/canarytrace/documentation/issues), Thanks 👍
+
+
+---
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
+**Sources**
+- [uiDraw](https://undraw.co/search)
+
 ### Installation
+
+You can use yarn or node
 
 ```
 $ yarn
