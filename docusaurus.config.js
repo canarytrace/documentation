@@ -8,7 +8,7 @@
  */
 
 module.exports = {
-  title: "Canarytrace",
+  title: "Plug’n'Play stack for testing and monitoring your web application from user perspective.",
   tagline: "Your Browser is a small infrastructure and we know a lot of informations that browser hides.",
   url: 'https://canarytrace.com/',
   baseUrl: '/',
