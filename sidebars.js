@@ -8,8 +8,31 @@
  */
 
 module.exports = {
-  someSidebar: {
+  docs: [
+    {
+      type: 'category',
+      label: 'Getting Started',
+      items: ['quickstart/whyCanarytrace'],
+    },
+    {
+      type: 'category',
+      label: 'Features',
+      items: ['features/features', 'features/live-reporting'],
+    },
+    {
+      type: 'category',
+      label: 'Docusaurus',
+      items: ['doc1'],
+    },
+  ],
+};
+
+/*
+module.exports = {
+  docs: {
+    ['Quick start']: ['doc1', 'doc2', 'doc3'],
     Docusaurus: ['doc1', 'doc2', 'doc3'],
-    Features: ['mdx'],
+    DocusaurusMdx: ['mdx'],
   },
 };
+*/

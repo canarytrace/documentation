@@ -30,8 +30,8 @@ module.exports = {
       },
       items: [
         {
-          to: 'docs/',
-          activeBasePath: 'docs',
+          type: 'doc',
+          docId: 'features/features',
           label: 'Features',
           position: 'left',
         },
@@ -53,7 +53,7 @@ module.exports = {
           position: 'right'
         },
         {
-          href: 'https://twitter.com/FoalTs',
+          href: 'https://twitter.com/canarytrace',
           position: 'right',
           className: 'header-twitter-link',
           'aria-label': 'Twitter profile',
@@ -157,5 +157,5 @@ module.exports = {
         },
       },
     ],
-  ],
+  ]
 };
