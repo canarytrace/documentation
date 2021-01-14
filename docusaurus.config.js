@@ -52,6 +52,18 @@ module.exports = {
           label: 'Support',
           position: 'right'
         },
+        {
+          href: 'https://twitter.com/FoalTs',
+          position: 'right',
+          className: 'header-twitter-link',
+          'aria-label': 'Twitter profile',
+        },
+        {
+          href: 'https://bit.ly/tt-discord',
+          position: 'right',
+          className: 'header-chat-link',
+          'aria-label': 'Discord chat server',
+        },
       ],
     },
     footer: {
@@ -116,9 +128,9 @@ module.exports = {
         },
       ],
       logo: {
-        alt: 'Facebook Open Source Logo',
-        src: 'img/oss_logo.png',
-        href: 'https://opensource.facebook.com',
+        alt: 'Canarytrace',
+        src: 'img/logo-canary-footer.png',
+        href: 'https://canarytrace.com/',
       },
       // Please do not remove the credits, help to publicize Docusaurus :)
       copyright: `Copyright © ${new Date().getFullYear()} Canarytrace.`,
