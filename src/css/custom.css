@@ -30,6 +30,9 @@
   --ifm-navbar-background-color: #e3e3e3; 
   --ifm-navbar-link-hover-color: #0a0a0a;
   --ifm-navbar-link-color: #3b3b3b;
+  --ifm-link-color: #0c65a5;
+  --ifm-link-decoration: underline dotted;
+  --ifm-link-hover-decoration: underline dotted;
 }
 
 .docusaurus-highlight-code-line {

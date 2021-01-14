@@ -36,15 +36,27 @@ module.exports = {
           position: 'left',
         },
         {
+          type: 'doc',
+          docId: 'features/dashboards',
+          label: 'Dashboards',
+          position: 'left',
+        },
+        {
           to: 'docs/',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
         },
         {
+          to: 'docs/',
+          activeBasePath: 'docs',
+          label: 'Release notes',
+          position: 'right',
+        },
+        {
           href: 'https://canarytrace.medium.com/',
           label: 'Blog',
-          position: 'left'
+          position: 'right'
         },
         {
           to: 'docs/',
