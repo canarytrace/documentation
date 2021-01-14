@@ -8,7 +8,7 @@
  */
 
 module.exports = {
-  title: "Plug’n'Play stack for testing and monitoring your web application from user perspective.",
+  title: "Canarytrace",
   tagline: "Your Browser is a small infrastructure and we know a lot of informations that browser hides.",
   url: 'https://canarytrace.com/',
   baseUrl: '/',
@@ -18,24 +18,38 @@ module.exports = {
   organizationName: 'Canarytrace', // Usually your GitHub org/user name.
   projectName: 'Smoke', // Usually your repo name.
   themeConfig: {
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+    },
     navbar: {
       title: 'Canarytrace',
       logo: {
         alt: 'Canarytrace',
-        src: 'img/logo.svg',
+        src: 'img/log-canary.svg',
       },
       items: [
+        {
+          to: 'docs/',
+          activeBasePath: 'docs',
+          label: 'Features',
+          position: 'left',
+        },
         {
           to: 'docs/',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
         },
-        {to: 'blog', label: 'Blog', position: 'left'},
-        // Please keep GitHub link to the right for consistency.
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'Issues',
+          href: 'https://canarytrace.medium.com/',
+          label: 'Blog',
+          position: 'left'
+        },
+        {
+          to: 'docs/',
+          activeBasePath: 'docs',
+          label: 'Support',
           position: 'right'
         },
       ],
@@ -107,7 +121,7 @@ module.exports = {
         href: 'https://opensource.facebook.com',
       },
       // Please do not remove the credits, help to publicize Docusaurus :)
-      copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Canarytrace.`,
     },
   },
   presets: [

@@ -125,41 +125,41 @@ function Home() {
         </div>
         <div id="features">
         <h2 className={styles.featuresTopic}>Part two</h2>
-          <div class="container" id="feature1">
-            <div class="row">
-              <div class="col col--3">
+          <div className="container" id="feature1">
+            <div className="row">
+              <div className="col col--3">
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
-              <div class="col col--3">
+              <div className="col col--3">
                 <h3>Part two</h3>
                 <p>
                   Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
                 </p>
               </div>
-              <div class="col col--3">
+              <div className="col col--3">
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
-              <div class="col col--3">
+              <div className="col col--3">
                 <h3>Part two</h3>
                 <p>
                   Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
                 </p>
               </div>
             </div>
-            <div class="row">
-              <div class="col col--3">
+            <div className="row">
+              <div className="col col--3">
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
-              <div class="col col--3">
+              <div className="col col--3">
                 <h3>Part two</h3>
                 <p>
                   Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
                 </p>
               </div>
-              <div class="col col--3">
+              <div className="col col--3">
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
-              <div class="col col--3">
+              <div className="col col--3">
                 <h3>Part two</h3>
                 <p>
                   Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
@@ -167,9 +167,6 @@ function Home() {
               </div>
             </div>
           </div>
-
-
-
         </div>
       </main>
     </Layout>
