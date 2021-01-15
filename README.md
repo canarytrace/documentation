@@ -5,12 +5,12 @@ Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your w
 ---
 
 - [Canarytrace Documentation](https://canarytrace.com/)
-- Do you found an error or have you a question, please create [issue](https://github.com/canarytrace/documentation/issues), Thanks 👍
+- Do you found an error or have you a question, please create [issue](https://github.com/canarytrace/documentation/issues/new/choose), Thanks 👍
 
 
 ---
 
-## For development
+## Download and build offline documentation
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
