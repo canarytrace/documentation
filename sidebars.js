@@ -12,6 +12,7 @@ module.exports = {
     ['Why Canarytrace']: ['why/canarytrace'],
     ['Get Started']: ['canary/start', 'canary/installation'],
     Features: ['features/overview', 'features/live-reporting', 'features/dashboards', 'features/lighthouse'],
+    Guides: ['guides/overview', 'guides/architecture', 'guides/cli'],
     Support: ['resources/releases', 'support/community', 'support/contactus'],
   },
 };
