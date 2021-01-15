@@ -48,7 +48,7 @@ module.exports = {
           position: 'left',
         },
         {
-          to: 'docs/',
+          to: 'docs/resources/releases',
           activeBasePath: 'docs',
           label: 'Release notes',
           position: 'right',
@@ -59,7 +59,7 @@ module.exports = {
           position: 'right'
         },
         {
-          to: 'docs/',
+          to: 'docs/support/contactus',
           activeBasePath: 'docs',
           label: 'Support',
           position: 'right'

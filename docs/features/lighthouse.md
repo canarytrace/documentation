@@ -660,7 +660,7 @@ HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexin
 Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. 
 
 
-### Dashboard and visualizations
+### Visualizations of Lighthouse results
 
 
 > **Dashboard documentation** <br/><br/>
