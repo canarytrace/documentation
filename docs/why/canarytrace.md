@@ -17,7 +17,7 @@ slug: /
 
 ## In a nutshell
 
-Canarytrace is a Plug’n'Play stack for testing, monitoring availability of web application from user perspective and measurement performance metrics [#web performance testing](http) .
+Canarytrace is a Plug’n'Play stack for testing, monitoring availability of web application from user perspective and measurement performance metrics [web performance testing](/docs/references/glosary#web-performance-testing) .
 Web applications are tested with functional frameworks ( [functional testing](https://en.wikipedia.org/wiki/Functional_testing) ) and by lot of performance tools ( [performance testing](https://en.wikipedia.org/wiki/Software_performance_testing) )
 
 ### We make it possible to:
@@ -32,4 +32,4 @@ This enables you to write faster, easier and more reliable tests.
 
 ---
 
-Do you found some mistake or have any questions, [please create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍

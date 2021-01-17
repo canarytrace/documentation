@@ -216,4 +216,4 @@ Volumes
 
 ---
 
-Do you found an error or have you a question, [please create issue](https://github.com/canarytrace/documentation/issues/new/choose), Thanks 👍
+Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍

@@ -127,4 +127,4 @@ There may be several reasons for this
 
 ---
 
-Do you found some mistake or have any questions, [please create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍

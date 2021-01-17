@@ -85,3 +85,6 @@ V Gitu jsou uložené monitor scripty a konfigurace test stacku Canarytrace. Př
 ### Persistent storage
 Canarytrace ukládá attachmenty do persistentního úložiště, například. snímky obrazovky, HAR soubory, kopie vyrenderovaného DOMu pro pozdější analýzu.
 
+---
+
+Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
