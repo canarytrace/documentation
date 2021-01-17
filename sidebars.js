@@ -9,10 +9,11 @@
 
 module.exports = {
   docs: {
-    ['Why Canarytrace']: ['why/canarytrace'],
+    ['Overview']: ['why/canarytrace'],
     ['Get Started']: ['canary/start', 'canary/installation'],
     Features: ['features/overview', 'features/live-reporting', 'features/dashboards', 'features/lighthouse'],
-    Guides: ['guides/overview', 'guides/architecture', 'guides/cli'],
+    Guides: ['guides/overview', 'guides/architecture', 'guides/cli', 'guides/macos', 'guides/linux', 'guides/windows'],
+    References: ['references/glosary', 'references/awesome', 'references/troubleshooting'],
     Support: ['resources/releases', 'support/community', 'support/contactus'],
   },
 };

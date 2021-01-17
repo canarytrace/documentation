@@ -7,7 +7,7 @@ custom_edit_url: false
 
 Architektura Canarytrace je založená na dockerizovaných komponentách, které jsou orchestrovány v Kubernetes. Díky tomu lze Canarytrace provozovat v cloudech jako jsou AWS, DigitalOcean, Google Cloud Engine, Azure Cloud, nebo kdekoli jinde, kde lze provozovat Kubernetes nebo alespoň Minikube. Stejně tak lze Canarytrace provozovat v OpenShiftu.
 
-![Example banner](../../static/docs-img/canarytrace-v3.0.png)
+![Architecture](../../static/docs-img/canarytrace-v3.0.png)
 
 ### Canarytrace
 

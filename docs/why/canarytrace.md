@@ -1,7 +1,7 @@
 ---
 id: canarytrace
-title: Introduction
-sidebar_label: Introduction
+title: Why Canarytrace?
+sidebar_label: Why Canarytrace?
 custom_edit_url: false
 description: Perex
 keywords:
@@ -11,91 +11,25 @@ keywords:
 slug: /
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-export const Highlight = ({children, color}) => (
-  <span
-    style={{
-      backgroundColor: color,
-      borderRadius: '2px',
-      color: '#fff',
-      padding: '0.2rem',
-    }}>
-    {children}
-  </span>
-);
+> ### What you’ll learn
+- What is Canarytrace
+- Key features
 
+## In a nutshell
 
-## Examples styling
+Canarytrace is a Plug’n'Play stack for testing, monitoring availability of web application from user perspective and measurement performance metrics [#web performance testing](http) .
+Web applications are tested with functional frameworks ( [functional testing](https://en.wikipedia.org/wiki/Functional_testing) ) and by lot of performance tools ( [performance testing](https://en.wikipedia.org/wiki/Software_performance_testing) )
 
-Nejaky text
+### We make it possible to:
 
-### Code
+Set up tests
+Write tests
+Run tests
+Debug Tests
+Cypress is most often compared to Selenium; however Cypress is both fundamentally and architecturally different. Cypress is not constrained by the same restrictions as Selenium.
 
-```yaml {4}
-version: "3.8"
-services:
-  selen:
-    image: selenium/standalone-chrome:3.141.59-20200730
-    ports:
-      - "4444:4444"
-      - "9222:9222"
-    network_mode: "host"
-    volumes:
-    ...
-```
+This enables you to write faster, easier and more reliable tests.
 
-<div style={{ padding: '20px', backgroundColor: 'tomato' }}>
-  <h3>This is JSX</h3>
-</div>
+---
 
-<Highlight color="#25c2a0">Docusaurus green</Highlight> and <Highlight color="#1877F2">Facebook blue</Highlight> are my favorite colors.
-
-I can write **Markdown** alongside my _JSX_!
-
-<Tabs
-  defaultValue="linux"
-  values={[
-    { label: 'Linux', value: 'linux', },
-    { label: 'Mac', value: 'mac', },
-    { label: 'Windows', value: 'windows', },
-  ]
-}>
-<TabItem value="linux">
-Run Canarytrace installer
-
-```js
-docker run --name installer --net canary --rm quay.io/canarytrace/installer:7.3
-```
-
-</TabItem>
-<TabItem value="mac">
-
-```py
-def hello_world():
-  print 'Hello, world!'
-```
-
-</TabItem>
-<TabItem value="windows">
-
-```java
-class HelloWorld {
-  public static void main(String args[]) {
-    System.out.println("Hello, World");
-  }
-}
-```
-
-</TabItem>
-</Tabs>
-
-```bash
-  docker run
-```
-
-:::note
-Check out repository for latest docker image https://quay.io/organization/canarytrace
-:::
-
-![Example banner](../../static/img/logo-canary-footer.png)
+Do you found some mistake or have any questions, [please create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
