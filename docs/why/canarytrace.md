@@ -41,11 +41,13 @@ Canarytrace is first stack for in-depth analysis behavior of browser and measure
 - **Plug’n'Play stack**: [Architecture of Canarytrace](http://localhost:3000/docs/guides/architecture) is designed by Iac ( [Infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) ) principles. Canarytrace and additional components is [Dockerized](/docs/features/docker). Very fast onboarding. Very fast deployment of Canarytrace - no lengthy deployment procedures.
 Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure](https://azure.microsoft.com/), or your [Kubernetes](https://kubernetes.io/) etc. is matter of the moment.
 
-- **Maintenance free**: 
+- **Maintenance free**: Only set list of landing pages e.g. `https://canarytrace.com/;https://canarytrace.com/docs` that's all. Canarytrace automatically analysing lot of metrics from every landing page. 
 
-- **Testing and monitoring web application during development**: 
+- **Testing and monitoring web application during development**: Thanks maintenance free you can testing and measure lot of metrics durring development or during switchnig on new version of web application - early testing.
 
-- 1 min and trends
+- **Check landing page every 1min**: Canarytrace test and measure your landing page very ofen, e.g. every 1min or every 3min etc. Thanks to this, it catches a lots of errors. Very frequent measurements are useful for immediate and more accurate overview on realy state of your web application.
+
+- **From user perspective**: Canarytrace use a real browser (not headless). Thanks to is results such as of real world. 
 
 - You will be first to know (alerting)
 
