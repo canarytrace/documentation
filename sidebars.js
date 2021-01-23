@@ -9,7 +9,7 @@
 
 module.exports = {
   docs: {
-    ['Overview']: ['why/canarytrace'],
+    ['Overview']: ['why/canarytrace','why/edition'],
     ['Get Started']: ['canary/start', 'canary/installation'],
     Features: ['features/overview', 'features/live-reporting', 'features/docker', 'features/dashboards', 'features/lighthouse'],
     Guides: ['guides/overview', 'guides/architecture', 'guides/cli', 'guides/macos', 'guides/linux', 'guides/windows'],
@@ -17,13 +17,3 @@ module.exports = {
     Support: ['resources/releases', 'support/community', 'support/contactus'],
   },
 };
-
-/*
-module.exports = {
-  docs: {
-    ['Quick start']: ['doc1', 'doc2', 'doc3'],
-    Docusaurus: ['doc1', 'doc2', 'doc3'],
-    DocusaurusMdx: ['mdx'],
-  },
-};
-*/

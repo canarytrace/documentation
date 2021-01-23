@@ -48,8 +48,8 @@ module.exports = {
           position: 'left',
         },
         {
-          to: 'docs/resources/releases',
-          activeBasePath: 'docs',
+          type: 'doc',
+          docId: 'resources/releases',
           label: 'Release notes',
           position: 'right',
         },
@@ -59,8 +59,8 @@ module.exports = {
           position: 'right'
         },
         {
-          to: 'docs/support/contactus',
-          activeBasePath: 'docs',
+          type: 'doc',
+          docId: 'support/contactus',
           label: 'Support',
           position: 'right'
         },
@@ -85,29 +85,25 @@ module.exports = {
           title: 'Learn',
           items: [
             {
-              label: 'Style Guide',
+              label: 'Why Canarytrace?',
               to: 'docs/',
-            },
-            {
-              label: 'Second Doc',
-              to: 'docs/doc2',
-            },
+            }
           ],
         },
         {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Issues',
+              href: 'https://github.com/canarytrace/documentation/issues/new/choose',
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              href: 'https://twitter.com/canarytrace',
             },
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://bit.ly/tt-discord',
             },
           ],
         },
@@ -116,25 +112,21 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              to: 'blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
+              href: 'https://canarytrace.medium.com/',
+            }
           ],
         },
         {
-          title: 'Legal',
+          title: 'About Us',
           // Please do not remove the privacy and terms, it's a legal requirement.
           items: [
             {
-              label: 'Privacy',
-              href: 'https://opensource.facebook.com/legal/privacy/',
+              label: 'Our team',
+              href: '#',
             },
             {
-              label: 'Terms',
-              href: 'https://opensource.facebook.com/legal/terms/',
+              label: 'Events',
+              href: '#',
             },
           ],
         },

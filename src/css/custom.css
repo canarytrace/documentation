@@ -69,3 +69,31 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+
+.canaryBadge {
+  background-color:white;
+  border: var(--ifm-badge-border-width) solid #0c65a5;
+  border-radius: var(--ifm-badge-border-radius);
+  color: #0c65a5;
+  display: inline-block;
+  font-size: 75%;
+  font-weight: var(--ifm-font-weight-bold);
+  line-height: 1;
+  padding: var(--ifm-badge-padding-vertical) var(--ifm-badge-padding-horizontal);
+  vertical-align: baseline;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.screencast {
+  width: 100%;
+}
+
+hr {
+  border-color: #e6e6e6;
+  border-style: dotted;
+  border-width: 0,1 px;
+  box-sizing: content-box;
+  margin: var(--ifm-hr-margin-vertical) 0;
+  overflow: hidden;
+}
