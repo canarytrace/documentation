@@ -49,43 +49,61 @@ Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOce
 
 - **From user perspective**: Canarytrace use a real browser (not headless). Thanks to is results such as of real world. 
 
-- You will be first to know (alerting)
+- **You will be first to know**: You can define lot of thresholds or multi-thresholds  from more metrics and event. You will be instantly notified when an issue arises or is anomaly detection was triggered and at the same time you will not be overwhelmed by notifications.
 
-- With 5 µs accuracy
+- **With 5 µs accuracy**: Canarytrace thanks to custom infrastructure measure very accurately. All results are reliable.
 
-- Hero Element
+- **Hero Element**: Canarytrace measure when exactly is the selected button, banner or text displayed to the user.
 
-- Performance audit
+- **Performance audit and Web Performance Testing**: Canarytrace use custom implementation of Lighthouse and WebApi for measure web loading speed. We use an isolated web browser for every instace with precissely set resources. Canarytrace measure more than 60 non-functional metrics.
 
-- integration with your tools
+- **Integration with your tools**: You can work with data collected by Canarytrace via REST-API.
 
-### Ready na nasazeni, plug-an-play, docker and kube
+## Our mission
 
-Our mission
+Our mission is to build maintenance free stack for analyse web application and web browser in a real-time. Browser and his processes is very complicated for everyone, there are many of them and our mission is provide evidence how the application behaves and how the browser works when simulating a real user.
 
-### Pro koho Canary je urcen a co mu to dava
+We want to help developers, performance testers and DevOps build and test a new generation of modern applications better with maximum information about quality. We  want provide useful information about application availability, about performance from user perspective and about processes inside the browser during a problem with web application.
 
+Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack, a service, and a community that everyone can learn and benefit from. 
 
-### Dve edice
-
-
-### Video - setup smoke pro
-
-
-### Running tests
-
-
-### Dashboards
-
-
-### Debuging problem
-
-
-### Jednoduche spusteni prave nyni
+We’re solving the hardest pain points of web performance testing and monitoring availability from user perspective.We believe in this mission and hope that you will join us and Canarytrace will become a way for assurance of quality availability your web applications.
 
 
 
 
+## Who uses Canarytrace
+
+Our users are typically developers building web applications using modern JavaScript frameworks, performance testers ensuring quality under load and DevOps ensuring deploy and operation of web application and their high availability.
+
+**Canarytrace is intended for scenarios**
+
+- For measure web performance metrics and investigate incidents during performance tests.
+- For measure web performance metrics and availability during problems and peaks on production environment.
+- To get real information about how the web application will work for the user when the infrastructure is under load.
+- To capture initial incidents already during development or in a lower environment.
+- For front-end developers to fine-tune speed metrics and reveal opportunities for improvement performance and quality of web application.
+
+## Two editions
+
+Canarytrace has build to two editions according to usage
+
+- **Canarytrace Smoke Pro**: is maintenance free and is intended for testing and monitoring landing pages. Canarytrace itself evaluates a lot of metrics and evaluates quality and availability.
+
+- **Canarytrace Professional**: doing the same thing as Canarytrace Smoke Pro and moreover can monitor and measure performance of user journeys.
+
+
+## Setting up Canarytrace
+
+
+## Running monitoring
+
+
+## Dashboards with results
+
+
+
+Starting Canarytrace is very easy and monitoring and measurement starts in a few minutes 👏🏻
 
 ---
 
