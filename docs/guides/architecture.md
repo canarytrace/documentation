@@ -3,88 +3,120 @@ id: architecture
 title: Architecture
 sidebar_label: Architecture
 custom_edit_url: false
+description: Basic overview of Canarytrace architecture
+keywords:
+  - canarytrace
+  - elaticsearch
+  - kibana
+  - cloud
+  - git
 ---
 
-Architektura Canarytrace je založená na dockerizovaných komponentách, které jsou orchestrovány v Kubernetes. Díky tomu lze Canarytrace provozovat v cloudech jako jsou AWS, DigitalOcean, Google Cloud Engine, Azure Cloud, nebo kdekoli jinde, kde lze provozovat Kubernetes nebo alespoň Minikube. Stejně tak lze Canarytrace provozovat v OpenShiftu.
+> ### What you’ll learn
+- You will get a basic overview of architecture
+
+The architecture of Canarytrace is based on dockerized components, which are orchestrated in [Kubernetes](https://kubernetes.io/) or [OpenShift](https://www.openshift.com/). Thanks to this approach is easy deploy Canarytrace to in the cloud e.g. [AWS](https://aws.amazon.com/), [Google Cloud Engine](https://cloud.google.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure Cloud](https://azure.microsoft.com/) etc. or in your own datacenter where is possible install of Kubernetes.
+
 
 ![Architecture](../../static/docs-img/canarytrace-v3.0.png)
 
-### Canarytrace
+### What is Canarytrace?
+<a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
+<a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
-Canarytrace je test stack založený na https://webdriver.io/ a využívá hybridního přístupu k testování webových aplikací. Využívá se kombinace selenium a debugovacího portu browseru pro plnou kontrolu nad testovanou aplikací. Není náhradou za Zabbix nebo Nagios, Canarytrace monitoruje browser na nejvyšší / E2E úrovni. Canarytrace rotuje na úrovni infrastruktury pomocí Kubernetes CronJobu a díky tomu může běžet v nespočet instancích paralelně a izolovaně od ostatních instancí. Při spuštění dojde k naklonování git repozitáře s monitorovacími skripty a spuštění konkrétního skriptu.
+Canarytrace is a stack based on [Webdriver.io](https://webdriver.io/) and uses a hybrid approach to testing of the web application. We use combination of a webdriver and [devTools](https://developers.google.com/web/tools/chrome-devtools) for full control on a web browser during monitoring and measure.
+Canarytrace isn't a substitute for monitoring tools of lower level e.g. Zabbix or Nagios but complement each other. 
+So, Canarytrace control browser and perform measure and monitoring on top level (E2E) and provides real information about the vitality of the web application and what is about impact on the client.
 
-**Hlavní zodpovědnosti**
+Canarytrace rotates on very short intervals via Kubernetes and thanks to can run on multiple instances, which is isolated from each other and every instance has fixed resources for reliable results.
 
-- Naklonování repozitáře s měřícími skripty
+Every run Canarytrace starts of cloning monitor script from git repository directly to Canarytrace container. 
 
-- Spuštění vybraného skriptu
+### Main responsibilities
 
-- Přístup do prohlížeče během testování frontendu a sbírání nefunkcionálních metrik
+Every part of architecture has own responsibility.
 
-- Assertace funkcionálních požadavků
+- Cloning git repository with monitor scripts directly to container with Canarytrace.
 
-- Průběžné odesílání nasbíraných dat do Elasticsearch
+- Run selected monitor script.
 
-Canarytrace nic neměří, tuto zodpovědnost nechává čistě na straně browseru, který se v ten moment stává garantem za správnost dat. Canarytrace řeší pouze logiku sbírání a filtrování nasbíraných dat a následné odesílání k analýze. Jedna instance Canarytrace se nikdy nespouští paralelně a to kvůli stálosti prostředí ve kterém měří. Paralelizace se řeší na vyšší úrovni a to pomocí Kubernetes CronJobu. Canarytrace neodesílá žádné alerty a ani nereaguje na žádné threshlody. Toto deleguje na další komponentu Canarytrace Listener.
+- Access to browser via webdriver and devTools during monitoring and measure non-functional metrics and collect additional telemetrics data from browser API.
 
-### Canarytrace Smoke Pro
+- Assertation function requirements.
+
+- Continuously sending all data from Canarytrace to Elasticsearch.
+
+> - Canarytrace doesn't measure anything, this is responsibility on a web browser and its embedded tools. In this moment is a web browser quarantor of reliability data.
+> - Canarytrace has internal algorithms for collect data from browser, filtering and sending data to analysis to Elasticsearch.
+> - Canarytrace never run two instances in a single browser, but uses a 1: 1: 1 
+> - Parallelization is performed on lower level of this architecture. We use Kubernetes for parallelization, izolation of monitorin and for set exactly resources for every runned a web browser.
+> - Canarytrace didn't sending any notifications. This is a responsibility of Canarytrace Listener.
 
 ### Browser instance
 
-Docker container s nainstalovanou konkrétní verzí prohlížeče představuje izolovaný prostor s přesně nastavenými resources pro prohlížeč. Je důležité aby měl browser dostatek prostředků a nebyl ovlivňován jinými procesy.
+Browser is separated from Canarytrace and has fixed setup of resources. Is very important so that the browser has enough resources. Práce s webovou aplikací nesmí být ovlivněna externími procesy.
 
-Canarytrace a browser jsou v rámci PODu na localhostu a to umožňuje přistupovat k debug protokolu browseru a využívat jeho API. Výhoda je v tom, že Canarytrace ovládá celý browser a neběží u vnitř a tím neblokuje některé možnosti při automatizovaných testech.
+Canarytrace and a browser are in the POD on localhost and thanks to we controll browser via devTools and use his API. The advantage is that the canarytration has access to all browser activities.
 
-Docker container s instancí browseru obsahuje i VNC server, který umožňuje vizuální kontrolu.
+**Main responsibility**
 
-### Filebeat & Metricbeat
-Filebeat a Metricbeat jsou Lightweight data shippers. Jejich úkolem je sbírat logy (stdout/stderr) a metriky z docker contejnerů. Místo Metricbeat lze použít například AWS CloudWatch.
+- Open and render web applications, call requests, and provide data telemetry.
 
-Každý POD s Canarytrace má svůj vlastní POD s Filebeat a Metricbeat.
+### Elasticsearch
 
-**Hlavní zodpovědnosti**
+Elasticsearch is distributed search and analytics engine and is the centerpiece of Canarytrace stack. Canarytrace stores a large amount of data in elasticsearch collected from browser, from Web API, from performance audit and other log records.
 
-- Odesílání logů do Elasticsearch
+This is a big advantage because elasticsearch is powerful and a lot of people know it. It allows access to data via rest api and other tools can work with data collected from Canarytrace
 
-- Odesílání metric do Elasticsearch
+Data from Elasticsearch are used by Kibana for visualize them and by Canarytrace Listener for automatically analyses of incidentes, bugs, trigering alert by thresholds and for generate reports.
 
-### Elasticsearch cluster
+**Main responsibility**
 
-Elasticsearch je distribuovaný search and analytics engine a je středobodem test automatizace. Do Elasticsearch se ukládají testreporty, data z browser api, logy a metriky z beats. Data z Elasticsearch využívá Kibana pro vizualizaci nasbíraných dat a Canarytrace Listener pro alertování a tvorbu reportů.
-
-**Hlavní zodpovědnosti**
-
-- Ukládání dat z Canarytrace.
-
-- Ukládání dat z Beats.
+- Saving data from Canarytrace
+- Saving data from other components such as filebeat or metric beat
+- Provide collected data to other components
+- Secure storage for collected data
+- Backing up collected telemetry data
 
 ### Kibana
-Kibana slouží k prohlížení a vizualizaci dat uložených v Elasticsearch. V Kibaně lze data vyhledávat, filtrovat, ukládat vyhledávání, vytvářet reporty, grafy, tabulkové výpisy a vizualizace s vlastní firemní grafikou.
 
-**Hlavní zodpovědnosti**
 
-- Vyhledávání a analýza dat z testování, měření a z dat z Browser API
+Kibana is used to view and visualize data stored in Elasticsearch. You can data search and filter, save searches, create reports, graphs, spreadsheets and visualizations with your own company graphics.
 
-- Vizualizace dat a tvorba reportů.
+**Main responsibility**
+
+- GUI accesible via web browser.
+- Access to raw data stored to Elasticsearch
+- Provide visualizations and dashboards
+
+### Filebeat & Metricbeat
+
+Filebeat a Metricbeat are lightweight data shippers. Their tasks is collect logs from (stdout/stderr) and metrics from docker containers.
+
+**Main responsibility**
+
+- Send logs and metrics from docker containers to elaticsearch.
 
 ### Canarytrace Listener
-Canarytrace je komponenta, která automatizovaně analyzuje data z Elasticsearch a podle nastavených thresholdů alertuje na výstupní kanály typu slack či email. Canarytrace Listener slouží jako observer a monitoruje zda Canarytrace že běží a odesílá data do Elasticsearch. Canarytrace porovnává typ chyb a jejich četnost. Také například monitoruje požadovaný obsah hlaviček v requestech a responsech.
 
-**Hlavní zodpovědnosti**
+Canarytrace Listener is a component, which automatically analyse data from Elasticsearch and fired notification by threshold on output reporters e.g. slack.
+Compares type of errors, their frequency, examines incoming resources to the browser, their headers etc.
+Canarytrace Listener work also an observer and monitoring work of Canarytrace collectors.
 
-- Kontinuálně analyzuje nasbíraná data v Elasticsearch.
+**Main responsibility**
 
-- Alertuje v případě překročení nastavených thresholdů.
-
-### Reporting, Slack, Email
-Canarytrace Listener vystavuje kompletní reporty za zvolené období a za vybraný monitor script, stejně tak odesílá průběh aktuálně nalezených incidentů do slack channelu c.service-reporting. Defaultně od slacku posílá mini reporty a na email kompletní reporty.
+- Continualy analyse collected data from Canarytrace collectors (Canarytrace Professional, Canarytrace Smoke Pro)
+- Trigger alert when is some thresholds exceeded.
 
 ### GIT
-V Gitu jsou uložené monitor scripty a konfigurace test stacku Canarytrace. Při spuštění Canarytrace dojde k naklonování repozitáře s monitor scripty do běžícího docker containeru.
+
+In the git are stored monitor scripts and configuration of Canarytrace stack (IaC). When started, the Git repository is cloned directly to Docker container and monitoring and measure can start.
 
 ### Persistent storage
-Canarytrace ukládá attachmenty do persistentního úložiště, například. snímky obrazovky, HAR soubory, kopie vyrenderovaného DOMu pro pozdější analýzu.
+
+Canarytrace store attachments in a persistent storage,e.g. screenshots, HAR files, copy of DOM for later analyse.
 
 ---
 
-Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+- Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+- Have more questions? [Contact us](/docs/support/contactus).

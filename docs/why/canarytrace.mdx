@@ -3,11 +3,12 @@ id: canarytrace
 title: Why Canarytrace?
 sidebar_label: Why Canarytrace?
 custom_edit_url: false
-description: Perex
+description: What is a key features of Canarytrace, who use them and what easy is start use Canarytrace.
 keywords:
-  - test
-  - test1
-  - test2
+  - canarytrace
+  - elaticsearch
+  - kibana
+  - features
 slug: /
 ---
 
@@ -24,6 +25,37 @@ Web applications are tested with functional frameworks ( [functional testing](ht
 Browser on desktop or mobile device is a small infrastructure and has different performance and behavior according on resources (eg. CPU, RAM) depending on the device, condition of network and by quality of web application.
 
 Canarytrace is first stack for in-depth analysis behavior of browser and measure performance web application from end of user perspective.
+
+**Canarytrace is intended for scenarios**
+
+- For measure web performance metrics and investigate incidents during performance tests.
+- For measure web performance metrics and availability during problems and peaks on production environment.
+- To get real information about how the web application will work for the user when the infrastructure is under load.
+- To capture initial incidents already during development or in a lower environment.
+- For front-end developers to fine-tune speed metrics and reveal opportunities for improvement performance and quality of web application.
+
+## Our mission
+
+Our mission is to build maintenance free stack for analyse web application and web browser in a real-time. Browser and his processes is very complicated for everyone, there are many of them and our mission is provide evidence how the application behaves and how the browser works when simulating a real user.
+
+We want to help developers, performance testers and DevOps build and test a new generation of modern applications better with maximum information about quality. We  want provide useful information about application availability, about performance from user perspective and about processes inside the browser during a problem with web application.
+
+Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack, a service, and a community that everyone can learn and benefit from. 
+
+We’re solving the hardest pain points of web performance testing and monitoring availability from user perspective.We believe in this mission and hope that you will join us and Canarytrace will become a way for assurance of quality availability your web applications.
+
+
+## Who uses Canarytrace
+
+Our users are typically developers building web applications using modern JavaScript frameworks, performance testers ensuring quality under load and DevOps ensuring deploy and operation of web application and their high availability.
+
+## Two editions
+
+Canarytrace has build to two editions according to usage
+
+- **Canarytrace Smoke Pro**: is maintenance free and is intended for testing and monitoring landing pages. Canarytrace itself evaluates a lot of metrics and evaluates quality and availability. 
+
+- **Canarytrace Professional**: doing the same thing as Canarytrace Smoke Pro and moreover can monitor and measure performance of user journeys.
 
 
 ## Key features
@@ -59,64 +91,42 @@ Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOce
 
 - **Integration with your tools**: You can work with data collected by Canarytrace via REST-API.
 
-## Our mission
 
-Our mission is to build maintenance free stack for analyse web application and web browser in a real-time. Browser and his processes is very complicated for everyone, there are many of them and our mission is provide evidence how the application behaves and how the browser works when simulating a real user.
-
-We want to help developers, performance testers and DevOps build and test a new generation of modern applications better with maximum information about quality. We  want provide useful information about application availability, about performance from user perspective and about processes inside the browser during a problem with web application.
-
-Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack, a service, and a community that everyone can learn and benefit from. 
-
-We’re solving the hardest pain points of web performance testing and monitoring availability from user perspective.We believe in this mission and hope that you will join us and Canarytrace will become a way for assurance of quality availability your web applications.
-
-
-
-
-## Who uses Canarytrace
-
-Our users are typically developers building web applications using modern JavaScript frameworks, performance testers ensuring quality under load and DevOps ensuring deploy and operation of web application and their high availability.
-
-**Canarytrace is intended for scenarios**
-
-- For measure web performance metrics and investigate incidents during performance tests.
-- For measure web performance metrics and availability during problems and peaks on production environment.
-- To get real information about how the web application will work for the user when the infrastructure is under load.
-- To capture initial incidents already during development or in a lower environment.
-- For front-end developers to fine-tune speed metrics and reveal opportunities for improvement performance and quality of web application.
-
-## Two editions
-
-Canarytrace has build to two editions according to usage
-
-- **Canarytrace Smoke Pro**: is maintenance free and is intended for testing and monitoring landing pages. Canarytrace itself evaluates a lot of metrics and evaluates quality and availability. 
-
-- **Canarytrace Professional**: doing the same thing as Canarytrace Smoke Pro and moreover can monitor and measure performance of user journeys.
-
-
-## Setting up Canarytrace
+### Setting up Canarytrace
 ---
 
-<video poster="/src/screencast/installer.png" preload autoplay controls className="screencast">
-  <source type="video/mp4" src="/src/screencast/installer.mp4"></source>
+Run your elasticsearch and kibana and setup them via [Canarytrace Installer](/docs/features/installer). Ready to monitoring to 1 minute.
+
+<video poster="https://canarytrace.com/src/screencast/installer.png" preload autoplay controls className="screencast">
+  <source type="video/mp4" src="https://canarytrace.com/src/screencast/installer.mp4"></source>
 </video>
 
 
-## Running on localhost
+### Running on localhost
+---
 
-<video poster="/src/screencast/installer.png" preload autoplay controls className="screencast">
-  <source type="video/mp4" src="/src/screencast/smoke-pro-docker-compose.mp4"></source>
+For better expierience, non-stop monitoring and for production use. 👍
+
+<video poster="https://canarytrace.com/src/screencast/installer.png" preload autoplay controls className="screencast">
+  <source type="video/mp4" src="https://canarytrace.com/src/screencast/smoke-pro-docker-compose.mp4"></source>
 </video>
 
-## Running in Kubernetes
+### Running in Kubernetes
+---
 
-<video poster="/src/screencast/installer.png" preload autoplay controls className="screencast">
-  <source type="video/mp4" src="/src/screencast/smoke-cronjob.mp4"></source>
+Use Kubernetes CronJob for better experience, non-stop monitoring and for production use.
+
+<video poster="https://canarytrace.com/src/screencast/installer.png" preload autoplay controls className="screencast">
+  <source type="video/mp4" src="https://canarytrace.com/src/screencast/smoke-cronjob.mp4"></source>
 </video>
 
-## Dashboards with results
+### Dashboards with results
+---
 
-<video poster="/src/screencast/kibana-smoke-pro.png" preload autoplay controls className="screencast">
-  <source type="video/mp4" src="/src/screencast/kibana-smoke-pro.mp4"></source>
+And we are at final. Canarytrace continuously send data to elasticsearch and you can show results of all measure in a kibana.
+
+<video poster="https://canarytrace.com/src/screencast/kibana-smoke-pro.png" preload autoplay controls className="screencast">
+  <source type="video/mp4" src="https://canarytrace.com/src/screencast/kibana-smoke-pro.mp4"></source>
 </video>
 
 
