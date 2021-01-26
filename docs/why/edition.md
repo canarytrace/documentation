@@ -17,6 +17,8 @@ keywords:
 ## Canarytrace Smoke Pro
 Features and parts of documentation has badge <a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
+Canarytrace Smoke Pro is maintenance free stack for testing, measures and monitoring web application.
+
 
 ## Canarytrace Professional 
 Features and parts of documentation has badge <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
