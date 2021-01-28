@@ -97,3 +97,7 @@ hr {
   margin: var(--ifm-hr-margin-vertical) 0;
   overflow: hidden;
 }
+
+.diagramIframe {
+  border:none;
+}

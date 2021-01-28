@@ -18,13 +18,20 @@ Set up Elasticsearch and Kibana it's also fast, thanks to prepared Canarytrace I
 
 - For Elasticsearch and Kibana 7.x but recommended version is 7.10
 - Dockerized - the [docker image](https://quay.io/repository/canarytrace/installer) tag corresponds to the version of the Elasticsearch for which it is intended 
-- Install index patterns
-- Install mapping
-- Install visualizations
-- Install dashboards
 - Ready for [Canarytrace Professional](/docs/why/edition#canarytrace-professional) and for [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro)
 - Ready for local use
 - Ready for use on elastic.co
+
+### What does installation contain?
+
+- **Install index patterns**
+  - Index patterns tell Kibana which Elasticsearch indices you want to explore. An index pattern can match the name of a single index, or include a wildcard (*) to match multiple indices.
+- **Install templates**
+  - An index template is a way to tell Elasticsearch how to configure an index when it is created.
+- **Install visualizations**
+  - Visualize enables you to create visualizations of the data from your Elasticsearch indices, which you can then add to dashboards for analysis.
+- **Install dashboards**
+  - A dashboard is a collection of visualizations, searches, and maps, typically in real-time. Dashboards provide at-a-glance insights into your data and enable you to drill down into details.
 
 ## Docker image
 
