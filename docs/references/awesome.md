@@ -10,10 +10,6 @@ keywords:
   - test2
 ---
 
-> ### What you’ll learn
-
-- This glossary contains explain used technologies and terms in the Canarytrace ecosystem.
-
 ### Lighthouse
 
 - [The Algorithm Behind the Performance Score (and How to Improve Yours)](https://calibreapp.com/blog/how-performance-score-works)
