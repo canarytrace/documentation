@@ -21,7 +21,7 @@ keywords:
 - `-e ELASTIC_REQUEST_COMPRESSION=allow`
 - [CLI Options](/docs/guides/cli) 
 
-Some version of elasticsearch return ResponseError: `parse_exception` and in this case don't use compression.
+Some version of elasticsearch return ResponseError: `parse_exception` in this case don't use compression.
 ```
 [0-0] {
   root_cause: [ { type: 'parse_exception', reason: 'request body is required' } ],
@@ -49,7 +49,7 @@ on:response:err: requestId: 1
 - `-e ELASTIC_OBSERVABILITY=allow`
 - [CLI Options](/docs/guides/cli) 
 
-This print settings of elatsicsearch connection, request and response events and payload to stdout.
+This print settings of elasticsearch connection, request and response events and payload to stdout.
 
 ```
 # settings
@@ -121,7 +121,7 @@ Every request and response has the same requestId e.g. `[0-0] on:response: reque
 
 There may be several reasons for this
 - Your monitor script contains some errors. Please use `kubectl -n canary logs -f <name-of-pod> -c` canary for check logs, or you can check `.filebeat` index in a Kibana
-- You don’t have sufficient resources of your k8s cluster for run Canarytrace instance.
+- You don’t have sufficient resources on your k8s cluster for run Canarytrace instance.
 
 ![Visualizations aren’t smoothly](../../static/docs-img/kibana-visu-arent-smoothly.png)
 
