@@ -11,11 +11,11 @@ keywords:
 ---
 
 > ### What you’ll learn
-- This glossary contains explain used technologies and terms in the Canarytrace ecosystem.
+- This glossary contains an explanation of the technologies and terms used in the Canarytrace ecosystem.
 
 ### Web Performance Testing
 
-Web Performance Testing is type of automation test for measure key performance indicators of web application. Metrics such as WebVitals, JS Heap, troughput, count tasks over 100ms, Time to First Byte, Response Time etc. is  measured and analysed directly in a browser. 
+Web Performance Testing is type of automation test for measuring of key performance indicators of web application. Metrics such as WebVitals, JS Heap, throughput, count tasks over 100ms, Time to First Byte, Response Time etc. it is  measured and analysed directly in a browser. 
 In this case is a browser and his APIs and diagnostic tools guarantee for data accuracy.
 
 ### TTFB
