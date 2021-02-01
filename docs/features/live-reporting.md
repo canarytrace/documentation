@@ -119,7 +119,7 @@ Every action of Canarytrace runner fired event, which stored data about Canarytr
 
 - `timestamp` is created in time, when Canarytrace fired event.
 
-Labels `seleniumCluster`, `maxInstances` and `goog:chromeOptions` is variable events and depends on your setup.
+Labels `seleniumCluster`, `maxInstances` and `goog:chromeOptions` are variables events and depends on your setup.
 
 
 **event: suiteStart**
@@ -277,7 +277,7 @@ Canarytrace downloads these collection after action open page, click or reload p
 
 > - Performance entries is automatically stores when is used PERFORMANCE_ENTRIES_INTERCEPT option and when is your Elasticsearch available. For more information go to [CLI Options](/docs/guides/cli)
 
-Performance entries is intercepted by browser and Canarytrace downloads collection with performance entries when is fired event `testStepEnd`. All performance entries intercepted between `testStepStart` and `testStepEnd` has the same `uuidAction` such as `testStepStart` and `testStepEnd`. This is useful for searching what and how long it took during testStep open home page. E.g. what was downloaded to the browser and how long it took during opening home page tesla.com.
+Performance entries are intercepted by browser and Canarytrace downloads collection with performance entries when is fired event `testStepEnd`. All performance entries intercepted between `testStepStart` and `testStepEnd` have the same `uuidAction` such as `testStepStart` and `testStepEnd`. This is useful for searching what and how long it took during testStep open home page. E.g. what was downloaded to the browser and how long it took during opening home page tesla.com.
 
 ```javascript title="one test step"
 it('open home page', () => { # Canarytrace create unique uuidAction
