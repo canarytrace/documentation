@@ -5,12 +5,12 @@ sidebar_label: Command Line
 custom_edit_url: false
 ---
 
-Canarytrace is distributed as a docker image and is run from command line. Behavior and functions are set using options. Some are required and some are optional. Canarytrace is based on WDIO v6 and therefore some options are described on [WDIO CLI Options page](https://webdriver.io/docs/clioptions.html).
+Canarytrace is distributed as a docker image and is run from command line. Behavior and functions are set using options. Some options are mandatory and some are optional. Canarytrace is based on WDIO v6 and therefore some options are described on [WDIO CLI Options page](https://webdriver.io/docs/clioptions.html).
 
 > ### What you’ll learn
 - How to run Canarytrace from the command line
 - Options for Canarytrace settings
-- All options is environment variables and they are used when running in both the docker and kubernetes
+- All options are environment variables and they are used when running in both the docker and the kubernetes
 
 ## How to run Canarytrace
 
@@ -49,7 +49,7 @@ You can run a command using `docker-compose up`
 
 ### Kubernetes 
 
-Use Kubernetes CronJob for better experience, non-stop monitoring and for production use. 
+Use Kubernetes CronJob for production use and for non-stop monitoring. 
 
 ```yaml title="smoke.yaml"
 
@@ -91,9 +91,9 @@ spec:
 ```
 
 This example isn't complete. But you can see option as environment variable `ELASTIC_CLUSTER` which is filled from [secret object](https://kubernetes.io/docs/concepts/configuration/secret/).
-Next used environment variables are `WAIT_FOR_TIMEOUT`, `PT_AUDIT`, `PT_AUDIT_THROTTLING`. Some of them are required and some are optional.
+Next used environment variables are `WAIT_FOR_TIMEOUT`, `PT_AUDIT`, `PT_AUDIT_THROTTLING`. Some of them are mandatory and some are optional.
 
-## Required 
+## Mandatory options 
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
 
