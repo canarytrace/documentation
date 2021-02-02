@@ -158,7 +158,7 @@ Your directory now looks like
 - `quay.io/canarytrace/developer:c.2.12.2` container image in format `maintainer/name_docker_image:version`. Check out repository for latest docker image [https://quay.io/organization/canarytrace](https://quay.io/organization/canarytrace)
 
 
-### Run your first test case
+## Run your first test case
 
 Run Canarytrace with test case
 
