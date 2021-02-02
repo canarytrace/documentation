@@ -8,9 +8,9 @@ custom_edit_url: false
 
 ## What is Canarytrace?
 
-Canarytrace isn't a testing framework, but it's a plug-an-play stack for functional testing, web performance testing and availability monitoring web application by user perspective. It’s based on a testing framework [WDIO](https://webdriver.io/), contain services for live logging, sniffing network of browser, web performance testing and other components for test design, execution, evaluation and investigation of the results.
+Canarytrace isn't a testing framework, but it's a plug-an-play stack for functional testing, web performance testing and availability monitoring web application by user perspective. It’s based on [WDIO](https://webdriver.io/) testing framework, featuring live logging services, browser network sniffing, web performance testing and other components for designing, execution, evaluation and investigation of the results.
 
-Additional components are responsible for alerting (based on pre-defined thresholds), automatically search for incidents in collected data, reporting, searching and visualisation of data from every run.
+Other components are responsible for alerting (based on predefined thresholds), automatically searching for incidents in the data collected, reporting, searching, and visualising data from each run.
 
 - [Architecture](/docs/)
 
@@ -25,18 +25,18 @@ Additional components are responsible for alerting (based on pre-defined thresho
 ## Web Performance Testing (WPT)
 <a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a><a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Canarytrace Smoke Pro</span></a>
 
-Canarytrace collects a lot of non-functional metrics such as `FP`, `FCP`, `FMP`, `ResponseTime`, `TTFB`, `SpeedScore`, [WebVitals](https://web.dev/vitals/) and more.
+Canarytrace collects many non-functional metrics such as `FP`, `FCP`, `FMP`, `ResponseTime`, `TTFB`, `SpeedScore`, [WebVitals](https://web.dev/vitals/) and more.
 
 WPT is an important activity during functional web testing. If the browser doesn't have sufficient resources, the web application may not work well.
 Thanks to the [Canarytrace architecture](/docs/guides/architecture), measurements are stable, repeatable and the results reliable.
-All non-functional metrics are continuously stored to Elasticsearch.
+All non-functional metrics data are continuously stored to Elasticsearch.
 
 > Look at our base [Awesome Web Performance](docs/references/awesome)
 
 
 ## Frontend analyser
 
-Standard testing frameworks evaluate functional state of the web application without any information about the non-functional context and behaviour of the web browser. Canarytrace stores a lot of non-functional data from the browser for analyzing the state of the web application. E.g. coverage audit, all requests, all responses, memory usage in the tab with tested web application etc.
+Other testing frameworks evaluate functional state of the web application without any information about the non-functional context and behaviour of the web browser. Canarytrace stores many non-functional data metrics from the browser for analysing the state of the web application. E.g. coverage audit, all requests, all responses, memory usage in the tab with tested web application etc.
 
 Canarytrace doesn't test web application as a blackbox and that is a huge difference and a great benefit compared to other E2E GUI functional testing frameworks.
 
@@ -48,7 +48,7 @@ Do you need measure performance all steps from login to add to basket on your e-
 
 ## Hero Elements
 
-Easily measure render time of individual parts of your web application with Hero Elements, e.g. when exactly is displayed to suer login button or some banner?
+Easily measure render time of individual parts of your web application with Hero Elements, e.g. when exactly is displayed to user login button or some banner?
 
 - [How to use Hero Elements](/docs/features/hero)
 
@@ -66,24 +66,24 @@ Canarytrace uses Elasticsearch stack for multiple activities. e.g. search, aggre
 
 [Canarytrace Professional](/docs/why/edition#canarytrace-professional) runner is responsible only for cloning test cases from the repository, loading and executing test cases / monitor script and continuously storing data to elasticsearch (e.g testreport, metrics). That’s all. No alerting, no parallel execution etc.
 
-Elasticsearch stack and Canarytrace Listener take over other activities like alerting by thresholds, reporting to stakeholders and first stage analysis of data from Canarytrace runner.
+Elasticsearch stack and Canarytrace Listener take over other activities like alerting based on thresholds, reporting to stakeholders and first stage analysis of data from Canarytrace runner.
 
 
 ## Maintenance free
-[Canarytrace Smoke](/docs/why/edition#canarytrace-smoke-pro) and [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) is edition without any maintenace.
+[Canarytrace Smoke](/docs/why/edition#canarytrace-smoke-pro) and [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) are editions without any maintenace.
 Enter only destination addresses of landing pages, that's all.
 
 It’s a great approach for quickly monitoring and measure of landing pages and other pages available via URI
 
 ## Live reporting test report
-All data from Canarytrace runner are continuously stored to Elasticsearch. You can see the results of testing and measurement immediately.
+All data from Canarytrace runner are continuously stored into Elasticsearch. You can see the results of testing and measurement immediately.
 
 ## Canarytrace installer
 [Installer](/docs/features/installer) is our component for quickly setup Elasticsearch and Kibana before first run. Installer set up [index patterns](https://www.elastic.co/guide/en/kibana/current/index-patterns.html), [mappings and template](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html), [visualizations and dashboards](https://www.elastic.co/guide/en/kibana/current/dashboard.html).
 
 ## Kibana visualizations and dashboards
 
-[Kibana](https://www.elastic.co/kibana) is a web application with GUI for viewing data stored in Elasticsearch. Data then can be used in graphs and other visualisations from which you can create custom dashboards for your testers, managers, developers or other team members.
+[Kibana](https://www.elastic.co/kibana) is a web application with GUI for viewing data stored in Elasticsearch. Data can be used in graphs and other visualisations from which you can create custom dashboards for your testers, managers, developers or other team members.
 
 Kibana contains input search for searching keywork in all data. You can search and pairing data in all indices for every run by label `uuid`
 
@@ -118,12 +118,12 @@ Canarytrace can wait on more browser events e.g. `waitOnIncreaseEntries` for wai
 
 ## Performance entries
 
-`performance.entries` is collection of a part of Web Api Performance and contains events of web page and browser with non-functional metrics and timestamps. Guarantor of this collections is a web browser and whole collection is stored to Elasticsearch.
+`performance.entries` is collection of a part of Web Api Performance and contains events of web page and browser with non-functional metrics and timestamps. Garant of this collections is a web browser and whole collection is stored into Elasticsearch.
 
 
 ## Console Intercept
 
-Console Intercept is Canarytrace service, which intercept all entries from browser console. Contains message from recommendation level to error level. Again, all data from browser console is stored to elasticsearch.
+Console Intercept is Canarytrace service, which intercept all entries from browser console. Contains message from recommendation level to error level. Again, all data from browser console is stored into elasticsearch.
 
 ## Coverage Audit
 
