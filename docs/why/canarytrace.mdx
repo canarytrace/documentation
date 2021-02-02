@@ -20,34 +20,34 @@ slug: /
 
 Canarytrace is a Plug’n'Play stack for testing, monitoring availability of web application from user perspective and measurement performance metrics ( [web performance testing](/docs/references/glosary#web-performance-testing) ).
 
-Web applications are tested with functional frameworks ( [functional testing](https://en.wikipedia.org/wiki/Functional_testing) ) and by performance tools ( [performance testing](https://en.wikipedia.org/wiki/Software_performance_testing) ). None of these approaches test performance and behavior of browser.
+Web applications are tested with functional frameworks ( [functional testing](https://en.wikipedia.org/wiki/Functional_testing) ) and by performance tools ( [performance testing](https://en.wikipedia.org/wiki/Software_performance_testing) ). None of these approaches test performance and behaviour of browser.
 
-Browser on desktop or mobile device is a small infrastructure and has different performance and behavior according on resources (eg. CPU, RAM) depending on the device, condition of network and by quality of web application.
+A desktop or mobile device browser is a small infrastructure and has different performance and behaviour according on resources (eg. CPU, RAM) depending on the device, condition of network and by quality of web application.
 
-Canarytrace is first stack for in-depth analysis behavior of browser and measure performance web application from end of user perspective.
+The Canarytrace is first stack for in-depth analysis behaviour of browser and measure performance web application from end of user perspective.
 
 **Canarytrace is intended for scenarios**
 
 - For measure web performance metrics and investigate incidents during performance tests.
 - For measure web performance metrics and availability during problems and peaks on production environment.
-- To get real information about how the web application will work for the user when the infrastructure is under load.
+- To get real information about how the web application is working for the real user when the infrastructure is under load.
 - To capture initial incidents already during development or in a lower environment.
-- For front-end developers to fine-tune speed metrics and reveal opportunities for improvement performance and quality of web application.
+- For front-end developers to fine-tune speed metrics and reveal opportunities for improvement performance and web application quality.
 
 ## Our mission
 
-Our mission is to build maintenance free stack for analyse web application and web browser in a real-time. Browser and his processes is very complicated for everyone, there are many of them and our mission is provide evidence how the application behaves and how the browser works when simulating a real user.
+Our mission is to build maintenance free stack for analyse web application and web browser in a real-time. Browser and its processes are very complicated for everyone, there are many of them and our mission is provide evidence how the application behaves and how the browser works when simulating a real user.
 
-We want to help developers, performance testers and DevOps build and test a new generation of modern applications better with maximum information about quality. We  want provide useful information about application availability, about performance from user perspective and about processes inside the browser during a problem with web application.
+We want to help developers, performance testers and DevOps build and test a new generation of modern applications better with maximum information about quality. We want to provide useful information about the availability of the application, about performance from user perspective and about processes inside the browser during a problem with web application.
 
-Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack, a service, and a community that everyone can learn and benefit from. 
+Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack. A service. And a community that everyone can learn and benefit from. 
 
-We’re solving the hardest pain points of web performance testing and monitoring availability from user perspective.We believe in this mission and hope that you will join us and Canarytrace will become a way for assurance of quality availability your web applications.
+We’re solving the hardest pain points of web performance testing and monitoring availability from user perspective. We believe in this mission and hope that you will join us and Canarytrace will become a way for assurance of quality availability your web applications.
 
 
 ## Who uses Canarytrace
 
-Our users are typically developers building web applications using modern JavaScript frameworks, performance testers ensuring quality under load and DevOps ensuring deploy and operation of web application and their high availability.
+Our users are typically developers building web applications using modern JavaScript frameworks, performance testers ensuring quality under load and DevOps engineers deploy and operation of web application and their high availability.
 
 ## Two editions
 
@@ -55,7 +55,7 @@ Canarytrace has build to two editions according to usage
 
 - **Canarytrace Smoke Pro**: is maintenance free and is intended for testing and monitoring landing pages. Canarytrace itself evaluates a lot of metrics and evaluates quality and availability. 
 
-- **Canarytrace Professional**: doing the same thing as Canarytrace Smoke Pro and moreover can monitor and measure performance of user journeys.
+- **Canarytrace Professional**: working in simmilar way as Canarytrace Smoke Pro and it can monitor and measure performance of user journeys on top of.
 
 
 ## Key features
@@ -64,30 +64,30 @@ Canarytrace has build to two editions according to usage
 
 - **Credible results**: Testing and measurement is performed with fixed sources for the browser - there is no distortion of metrics. The results will tell you the real state your web application and the impact on your client.
 
-- **Workload model**: You can run more Canarytrace instances with different profile of devices, with different scenarios (user journey) and with different behavior of simulated user.
+- **Workload model**: You can run more Canarytrace instances with different profile of devices, with different scenarios (user journey) and with different behaviour of simulated user.
 
 - **Browser based performance testing**: If is hard perform load testing your web application by traditional performance tools, for Canarytrace it's easy, because we uses a real browser. You can run a huge number of virtual users.
 
 - **Live reporting**: Canarytrace store immediately telemetry data from a browser. Be the first to know if your application is unavailable or the loading speed slows down
 
-- **Plug’n'Play stack**: [Architecture of Canarytrace](http://localhost:3000/docs/guides/architecture) is designed by Iac ( [Infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) ) principles. Canarytrace and additional components is [Dockerized](/docs/features/docker). Very fast onboarding. Very fast deployment of Canarytrace - no lengthy deployment procedures.
-Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure](https://azure.microsoft.com/), or your [Kubernetes](https://kubernetes.io/) etc. is matter of the moment.
+- **Plug’n'Play stack**: [Architecture of Canarytrace](http://localhost:3000/docs/guides/architecture) is designed by IaC ( [Infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) ) principles. Canarytrace and additional components is [Dockerized](/docs/features/docker). Very fast onboarding. Very fast deployment of Canarytrace - no lengthy deployment procedures.
+Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure](https://azure.microsoft.com/), or your [Kubernetes](https://kubernetes.io/) etc. within moments.
 
 - **Maintenance free**: Only set list of landing pages e.g. `https://canarytrace.com/;https://canarytrace.com/docs` that's all. Canarytrace automatically analysing lot of metrics from every landing page. 
 
-- **Testing and monitoring web application during development**: Thanks maintenance free you can testing and measure lot of metrics durring development or during switchnig on new version of web application - early testing.
+- **Testing and monitoring web application during development**: Due to the fact that Canarytrace is maintenance free you can testing and measure lot of metrics during development or during switching on new version of web application - early testing.
 
-- **Check landing page every 1min**: Canarytrace test and measure your landing page very ofen, e.g. every 1min or every 3min etc. Thanks to this, it catches a lots of errors. Very frequent measurements are useful for immediate and more accurate overview on realy state of your web application.
+- **Check landing page every 1min**: Canarytrace test and measure your landing page very often, e.g. every 1min or every 3min etc. Due to this, it catches a lots of errors. Very frequent measurements are useful for immediate and more accurate overview on initial state of your web application.
 
 - **From user perspective**: Canarytrace use a real browser (not headless). Thanks to is results such as of real world. 
 
-- **You will be first to know**: You can define lot of thresholds or multi-thresholds  from more metrics and event. You will be instantly notified when an issue arises or is anomaly detection was triggered and at the same time you will not be overwhelmed by notifications.
+- **You will be first to know**: You can define lot of thresholds or multi-thresholds  from more metrics and event. You will be instantly notified when an issue arises or when anomaly is identified and at the same time you will not be overwhelmed by notifications.
 
 - **With 5 µs accuracy**: Canarytrace thanks to custom infrastructure measure very accurately. All results are reliable.
 
 - **Hero Element**: Canarytrace measure when exactly is the selected button, banner or text displayed to the user.
 
-- **Performance audit and Web Performance Testing**: Canarytrace use custom implementation of Lighthouse and WebApi for measure web loading speed. We use an isolated web browser for every instace with precissely set resources. Canarytrace measure more than 60 non-functional metrics.
+- **Performance audit and Web Performance Testing**: Canarytrace use custom implementation of Lighthouse and WebApi for measure web loading speed. We use an isolated web browser for every instace with precisely set resources. Canarytrace measure more than 60 non-functional metrics.
 
 - **Integration with your tools**: You can work with data collected by Canarytrace via REST-API.
 
@@ -95,7 +95,7 @@ Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOce
 ### Setting up Canarytrace
 ---
 
-Run your elasticsearch and kibana and setup them via [Canarytrace Installer](/docs/features/installer). Ready to monitoring to 1 minute.
+Run your elasticsearch and kibana and setup them via [Canarytrace Installer](/docs/features/installer). Ready to monitoring in 1 minute.
 
 <video poster="https://canarytrace.com/src/screencast/installer.png" preload autoplay controls className="screencast">
   <source type="video/mp4" src="https://canarytrace.com/src/screencast/installer.mp4"></source>
@@ -123,7 +123,7 @@ Use Kubernetes CronJob for better experience, non-stop monitoring and for produc
 ### Dashboards with results
 ---
 
-And we are at final. Canarytrace continuously send data to elasticsearch and you can show results of all measure in a kibana.
+And we are at final. Canarytrace continuously send data to elasticsearch and you can show results of all measurements in a kibana.
 
 <video poster="https://canarytrace.com/src/screencast/kibana-smoke-pro.png" preload autoplay controls className="screencast">
   <source type="video/mp4" src="https://canarytrace.com/src/screencast/kibana-smoke-pro.mp4"></source>
