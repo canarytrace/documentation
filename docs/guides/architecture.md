@@ -15,7 +15,7 @@ keywords:
 > ### What you’ll learn
 - You will get a basic overview of architecture
 
-The architecture of Canarytrace is based on dockerized components, which are orchestrated in [Kubernetes](https://kubernetes.io/) or [OpenShift](https://www.openshift.com/). Thanks to this approach is easy deploy Canarytrace to in the cloud e.g. [AWS](https://aws.amazon.com/), [Google Cloud Engine](https://cloud.google.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure Cloud](https://azure.microsoft.com/) etc. or in your own datacenter where is possible install of Kubernetes.
+The architecture of Canarytrace is based on dockerized components, which are orchestrated in [Kubernetes](https://kubernetes.io/) or [OpenShift](https://www.openshift.com/). Thanks to this approach is easy deploy Canarytrace to in cloud e.g. [AWS](https://aws.amazon.com/), [Google Cloud Engine](https://cloud.google.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure Cloud](https://azure.microsoft.com/) etc. or in your own datacenter where is possible install of Kubernetes.
 
 
 ![Architecture](../../static/docs-img/canarytrace-v3.0.png)
@@ -24,13 +24,13 @@ The architecture of Canarytrace is based on dockerized components, which are orc
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 <a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
-Canarytrace is a stack based on [Webdriver.io](https://webdriver.io/) and uses a hybrid approach to testing of the web application. We use combination of a webdriver and [devTools](https://developers.google.com/web/tools/chrome-devtools) for full control on a web browser during monitoring and measure.
-Canarytrace isn't a substitute for monitoring tools of lower level e.g. Zabbix or Nagios but complement each other. 
-So, Canarytrace control browser and perform measure and monitoring on top level (E2E) and provides real information about the vitality of the web application and what is about impact on the client.
+Canarytrace is a stack based on [Webdriver.io](https://webdriver.io/) and uses a hybrid approach to testing of the web application. We are using combination of a webdriver and [devTools](https://developers.google.com/web/tools/chrome-devtools) for full control on a web browser during monitoring and measure.
+Canarytrace isn't a substitute for monitoring tools of lower level e.g. Zabbix or Nagios but they complement each other. 
+So, Canarytrace control browser and perform measure and monitoring on top level (E2E) and provides real information about the vitality of the web application and what's the impact on the client.
 
-Canarytrace rotates on very short intervals via Kubernetes and thanks to can run on multiple instances, which is isolated from each other and every instance has fixed resources for reliable results.
+Canarytrace rotates on very short intervals via Kubernetes and it runs in multiple instances because of that, which are isolated from each other and every instance has fixed resources for reliable results.
 
-Every run Canarytrace starts of cloning monitor script from git repository directly to Canarytrace container. 
+Every run of Canarytrace starts with a monitor script cloning from git repository directly to Canarytrace container. 
 
 ### Main responsibilities
 
@@ -54,9 +54,9 @@ Every part of architecture has own responsibility.
 
 ### Browser instance
 
-Browser is separated from Canarytrace and has fixed setup of resources. Is very important so that the browser has enough resources. Práce s webovou aplikací nesmí být ovlivněna externími procesy.
+Browser is separated from Canarytrace and has fixed setup of resources. Is very important so that the browser has enough resources. Work with web application must not be affected be external processes.
 
-Canarytrace and a browser are in the POD on localhost and thanks to we controll browser via devTools and use his API. The advantage is that the canarytration has access to all browser activities.
+Canarytrace and a browser are in the POD on localhost and thanks to we controll browser via devTools and use his API. The advantage of this is that the Canarytrace has access to all browser activities.
 
 **Main responsibility**
 
