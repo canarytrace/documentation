@@ -35,7 +35,7 @@ Only [Docker](https://www.docker.com/). If you don't know the docker, take a loo
 ## Step-by-step
 We will go step by step to start testing successfully.
 
-### Run Elasticsearch into Docker
+### Run Elasticsearch in a Docker
 Data from Canarytrace are continuously stored to Elasticsearch.
 
 **Create a user-defined bridges**
@@ -49,7 +49,7 @@ docker network create canary
 docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.0 bin/elasticsearch -Enetwork.host=0.0.0.0
 ```
 
-### Run Kibana into Docker
+### Run Kibana in a Docker
 [Kibana](/docs/guides/elasticsearch#what-is-kibana) is a web application with GUI for viewing data stored in Elasticsearch.
 
 ```bash
@@ -110,3 +110,8 @@ That's all 🎉 Now you can explore dashboard and visualizations in Kibana. Open
 ![Architecture](../../static/docs-img/kibana-canarytrace-smoke-overview.png)
 
 For real use or for production use start your Canarytrace Smoke on cloud in Kubernetes.
+
+---
+
+- Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+- Have more questions? [Contact us](/docs/support/contactus).

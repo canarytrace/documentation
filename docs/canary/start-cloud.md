@@ -209,3 +209,8 @@ Lens is open-source and multi-platform IDE for controll Kubernetes cluster.
 That's all 🎉 Now wait a **few minutes** and you can explore dashboard and visualizations in Kibana. Open your Kibana endpoint `https://2036be9b05634936879e34555dbaa17b.us-central1.gcp.cloud.es.io:9243` in your browser and navigate to `Dashboard / Canarytrace Smoke Overview`
 
 ![Kibana Cloud](../../static/docs-img/kibana-cloud-canarytrace-smoke-overview.png)
+
+---
+
+- Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+- Have more questions? [Contact us](/docs/support/contactus).
