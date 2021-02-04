@@ -1,13 +1,14 @@
 ---
 id: edition
 title: Canarytrace Edition
-sidebar_label: Two Edition
+sidebar_label: Canarytrace Edition
 custom_edit_url: false
-description: Perex
+description: About Canarytrace Edition
 keywords:
-  - test
-  - test1
-  - test2
+  - Canarytrace
+  - Smoke
+  - Pro
+  - Professional
 ---
 
 > ### What you’ll learn
@@ -17,7 +18,7 @@ keywords:
 ## Canarytrace Smoke Pro
 Features and parts of documentation has badge <a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
-Canarytrace Smoke Pro is maintenance free stack for testing, measures and monitoring web application.
+Canarytrace Smoke Pro is maintenance free stack for test, measure and monitor web application.
 
 
 ## Canarytrace Professional 
@@ -30,3 +31,4 @@ Starting Canarytrace is very easy, monitoring and measurement starts in a few mi
 ---
 
 - Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+- Have more questions? [Contact us](/docs/support/contactus).

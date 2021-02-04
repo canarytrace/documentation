@@ -12,13 +12,13 @@ Canarytrace isn't a testing framework, but it's a plug-an-play stack for functio
 
 Other components are responsible for alerting (based on predefined thresholds), automatically searching for incidents in the data collected, reporting, searching, and visualising data from each run.
 
-- [Architecture](/docs/)
+> - Look at [Canarytrace Architecture](/docs/)
 
 ## E2E Functional testing
 <a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
-- Full control over the web browser via WebdriverIO in a stable pattern 1:1:1. WebdriverIO is used as a proxy.
-- Design test case is [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) style. E.g. it and describe.
+- Full control over the web browser via WebdriverIO in a stable pattern 1:1:1. WebdriverIO is used as a main controller of a browser.
+- Design test case is [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) style. E.g. it and describe method.
 - We use [WDIO](https://webdriver.io/) API v6
 - All test report data are continuously stored to Elasticsearch.
 
@@ -36,7 +36,7 @@ All non-functional metrics data are continuously stored to Elasticsearch.
 
 ## Frontend analyser
 
-Other testing frameworks evaluate functional state of the web application without any information about the non-functional context and behaviour of the web browser. Canarytrace stores many non-functional data metrics from the browser for analysing the state of the web application. E.g. coverage audit, all requests, all responses, memory usage in the tab with tested web application etc.
+Other testing frameworks evaluate functional state of the web application without any information about the non-functional context and behaviour of the web browser. Canarytrace stores many non-functional data metrics from the browser for analysing the state of the web application. E.g. [coverage audit](http://localhost:3000/docs/features/overview#coverage-audit), all requests, all responses, memory usage in the tab with tested web application etc.
 
 Canarytrace doesn't test web application as a blackbox and that is a huge difference and a great benefit compared to other E2E GUI functional testing frameworks.
 
@@ -161,3 +161,4 @@ Canarytrace Listener is a separate component and main features are:
 ---
 
 - Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
+- Have more questions? [Contact us](/docs/support/contactus).
