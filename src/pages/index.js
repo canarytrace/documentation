@@ -15,39 +15,90 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
-const features = [
+const featuresFirstLine = [
   {
-    title: 'Easy to Use',
+    title: 'Performance Audit',
     imageUrl: 'img/undraw_observations_mejb.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Start a performance audit and evaluate requirements. A lot of speed metrics as Web Vitals, TTFB, Response Time, Speed Index and many more will help you to meet all of your requirement. You will receive regular recommendations for improvements
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'More metrics, more informations, more opportunities',
     imageUrl: 'img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        The more you know, the more accurately you identify the problem. Smoke Pro detects and logs more than 60 metrics already available.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'From user perspective',
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        We see it the same way<br/>
+        Monitor conditions as your users. This is great added value and irreplaceable access.
       </>
     ),
   },
+  {
+    title: 'Trends',
+    imageUrl: 'img/undraw_docusaurus_react.svg',
+    description: (
+      <>
+        View last week’s or months metrics and error rates.<br/>
+        You can create trends over any available metrics such as ResponseTime or Performance Score. Couple of dashboard are ready for you.
+      </>
+    ),
+  },
+  {
+    title: 'Do you like data?',
+    imageUrl: 'img/undraw_docusaurus_react.svg',
+    description: (
+      <>
+        is it up to you how long history you want to store, couple of weeks or months? Old data are automatically deleted. 
+        <br />
+        You can backup your stored data or search, filter, aggregate and visualise them.
+      </>
+    ),
+  }
 ];
 
+
+const featuresSecondLine = [
+  {
+    title: 'Device mix',
+    imageUrl: 'img/undraw_observations_mejb.svg',
+    description: (
+      <>
+        Computer and mobile devices are main channels today. Surprise for you and your web how it’s running on weak mobile devices of on slow networks. Or you can simply combine desktop and mobile device
+      </>
+    ),
+  },
+  {
+    title: 'Practically non-stop',
+    imageUrl: 'img/undraw_observations_mejb.svg',
+    description: (
+      <>
+        Smoke Pro is checking availability of your web every minute. You won’t miss any defect anymore.
+      </>
+    ),
+  },
+  {
+    title: 'You will be first to know',
+    imageUrl: 'img/undraw_observations_mejb.svg',
+    description: (
+      <>
+        You can get notification on Slack, email, or we’ll call you. If you like graphs, we have plenty of them for you. 
+        <br/>
+        Smoke Pro evaluates a lot of metrics, based on thresholds or their combinations, notifications are triggered.
+      </>
+    ),
+  }
+]
 function Feature({imageUrl, title, description}) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
@@ -92,11 +143,11 @@ function Home() {
       <main>
         <div id="features">
           <h2 className={styles.featuresTopic}>What sets Canarytrace apart?</h2>
-          {features && features.length > 0 && (
+          {featuresFirstLine && featuresFirstLine.length > 0 && (
             <section className={styles.features}>
               <div className="container">
                 <div className="row">
-                  {features.map(({title, imageUrl, description}) => (
+                  {featuresFirstLine.map(({title, imageUrl, description}) => (
                     <Feature
                       key={title}
                       title={title}
@@ -111,7 +162,7 @@ function Home() {
           <section className={styles.featuresSecond}>
             <div className="container">
               <div className="row">
-                {features.map(({title, imageUrl, description}) => (
+                {featuresSecondLine.map(({title, imageUrl, description}) => (
                   <Feature
                     key={title}
                     title={title}
@@ -131,18 +182,19 @@ function Home() {
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
               <div className="col col--3">
-                <h3>Part two</h3>
+                <h3>Live Reporting</h3>
                 <p>
-                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                Results and measured values are instantly send - the whole team know actual state.<br/>
+                Smoke Pro is fully ready to be part of CI pipelines.
                 </p>
               </div>
               <div className="col col--3">
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
               <div className="col col--3">
-                <h3>Part two</h3>
+                <h3>With 5 µs accuracy</h3>
                 <p>
-                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                The speed of the web is complex topic, we are interested in and we take it seriously. We have developed our own methodologies so we can measure and analyse reliably and precisely.
                 </p>
               </div>
             </div>
@@ -151,18 +203,20 @@ function Home() {
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
               <div className="col col--3">
-                <h3>Part two</h3>
+                <h3>Hero Elements</h3>
                 <p>
-                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                <b>Point to interested part of your web page.</b><br/>
+                We’ll tag the different parts of the site with Hero Elements and you’ll know exactly when the user will see a banner or product for example.
                 </p>
               </div>
               <div className="col col--3">
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
               <div className="col col--3">
-                <h3>Part two</h3>
+                <h3>Plug'n'Play</h3>
                 <p>
-                  Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Smoke Pro looking deep into browser actions analyse browser behaviour.
+                No long installation with dozens of steps. Insert target address of web application and press run.<br/>
+                So simple. We can help you with starting or monitoring, and it could be completely easy for you.
                 </p>
               </div>
             </div>
