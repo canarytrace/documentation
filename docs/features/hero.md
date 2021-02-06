@@ -65,7 +65,7 @@ For accurate measurements we use [DOMHighResTimeStamp](https://developer.mozilla
 
 **Elasticsearch index**
 
-- `c.performance-entries-*` performance mark timestamps are stored with the same index as [performance entries](docs/features/live-reporting#cperformance-entries-).
+- `c.performance-entries-*` performance mark timestamps are stored with the same index as [performance entries](/docs/features/live-reporting#cperformance-entries-).
 
 ### How to make it work
 
