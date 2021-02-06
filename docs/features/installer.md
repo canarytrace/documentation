@@ -16,7 +16,7 @@ Canarytrace is known as plug'n'play stack and it's means, that first run is very
 Set up Elasticsearch and Kibana it's also fast, thanks to prepared Canarytrace Installer.
 
 
-- For Elasticsearch and Kibana 7.x but recommended version is 7.10
+- **Supported version of Elasticsearch and Kibana is 7.10**
 - Dockerized - the [docker image](https://quay.io/repository/canarytrace/installer) tag corresponds to the version of the Elasticsearch for which it is intended 
 - Ready for [Canarytrace Professional](/docs/why/edition#canarytrace-professional) and for [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro)
 - Ready for local use
