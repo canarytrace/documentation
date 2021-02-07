@@ -1,4 +1,0 @@
----
-id: community
-title: Community
----
