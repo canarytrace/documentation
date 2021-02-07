@@ -5,8 +5,7 @@ sidebar_label: Live reporting
 ---
 
 > ### What you’ll learn
-- This installer prepare Elasticsearch and Kibana for Canarytrace use
-- What is options for Canarytrace Installer?
+- What data are stored in which index
 
 
 Canarytrace stores a lof of data to Elasticsearch indices. Elasticsearch index is in a simple analogous form something like a table in a SQL databases. For better work with data stores by Canarytrace runner it's necessary to [setup Elasticsearch](/docs/features/installer). 

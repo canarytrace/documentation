@@ -8,6 +8,7 @@ custom_edit_url: false
 
 > - Have a question about our Canarytrace stack? Fill out the form and a Canarytrace sales will contact you within one business day.
 > - You can contact us directly <a href="mailto:rdpanek@canarytrace.com?subject=I have question about Canarytrace">rdpanek@canarytrace.com</a>
+> - You can write to us directly on [@canarytrace](https://twitter.com/canarytrace) twitter
 
 
 

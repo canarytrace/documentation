@@ -4,14 +4,7 @@ title: Troubleshooting
 sidebar_label: Troubleshooting
 custom_edit_url: false
 description: Canarytrace troubleshooting
-keywords:
-  - test
-  - test1
-  - test2
 ---
-
-> ### What you’ll learn
-- This glossary contains explain used technologies and terms in the Canarytrace ecosystem.
 
 
 ## Elasticsearch

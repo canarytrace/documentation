@@ -13,6 +13,8 @@ keywords:
 ---
 
 > ### What you’ll learn
+- What is Kubernetes
+- Why we use Kubernetes
 - What are the recommendation on resources requirements
 
 Canarytrace is designed for use in Kubernetes and this has many advantages:

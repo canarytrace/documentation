@@ -6,8 +6,8 @@ custom_edit_url: false
 ---
 
 > ### What you’ll learn
-- This installer prepare Elasticsearch and Kibana for Canarytrace use
-- What is options for Canarytra
+- What docker images we created
+- How to download docker images
 
 ### Canarytrace Smoke
 
