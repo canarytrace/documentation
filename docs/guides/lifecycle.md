@@ -13,26 +13,19 @@ keywords:
 ---
 
 > ### What you’ll learn
-- XXX
+- Basic overview of the life cycle of Canarytrace
 
 ### Kubernetes
 Canarytrace is encapsulated in a Pod which contains docker containers with Canarytrace runner and a browser. Advantage of this approach is in:
 
-- Test execution is isolated from other test executions. So the tests don't affect each other.
-
-- The browser has fixed resources. So every verifying and measurement in a browser is repeatable and the results are creditable.
-
-- Every test execution is a immutable.
-
-- Kubernetes is possible install it on AWS, DigitalOcean, Azure, GCE or your VPS, so Canarytrace is possible run anywhere and without vendor-lock.
-
 - [Architecture](/docs/guides/architecture) 
-
-- Thanks to approach we don’t need tools as Jenkins and Selenium cluster, because this features is provided by Kubernetes. 
-
-- The parallel test execution also doesn't solve the testing framework, but Kubernetes via increase Canarytrace instances. Every test execution is isolated.
-
 - [Deploy Canarytrace to Kubernetes](/docs/guides/kubernetes)
+- Test execution is isolated from other test executions. So the tests don't affect each other.
+- The browser has fixed resources. So every verifying and measurement in a browser is repeatable and the results are creditable.
+- Every test execution is a immutable.
+- Kubernetes is possible install it on AWS, DigitalOcean, Azure, GCE or your VPS, so Canarytrace is possible run anywhere and without vendor-lock.
+- Thanks to approach we don’t need tools as Jenkins and Selenium cluster, because this features is provided by Kubernetes. 
+- The parallel test execution also doesn't solve the testing framework, but Kubernetes via increase Canarytrace instances. Every test execution is isolated.
 
 ### CronJob
 
@@ -66,6 +59,7 @@ Each run of Canarytrace runner goes through phases
 ### Availability phase
 
 - Next step is availability check destination URI, which is used in monitor script and measure timing connection. This is useful for prepare monitor script and verification of access to the target environment.
+  - You must activate this function by [`AVAILABILITY_CHECK=allow`](/docs/guides/cli) option
 
 > - These values is printed to stdout stream and sending to Elasticsearch via filebeat.
 
@@ -93,6 +87,15 @@ Each run of Canarytrace runner goes through phases
 
 ### Filebeat
 - Filebeat logs all instances independently.
+
+
+## Canarytrace Smoke Pro Lifecycle
+
+- [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) it's a way for test and analysis web application without writing a test. Enter only URLs separated by a semicolon.
+- [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) open every URL in a real browser,  check existing title element, loadEventEnd and response code of navigate request and the result save to elasticsearch.
+- [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) contains tools for web performance testing such as [Lighthouse](/docs/features/lighthouse)
+
+<iframe src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=Canarytrace%20Smoke%20PRO%20phase%20for%20every%20URL#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1xLb2_oV1wqF8j2J6mhAeAdEVfKImFk5p%26export%3Ddownload" width="100%" height="500" className="diagramIframe"></iframe>
 
 ---
 
