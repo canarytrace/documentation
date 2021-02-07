@@ -142,7 +142,7 @@ function Home() {
       </header>
       <main>
         <div id="features">
-          <h2 className={styles.featuresTopic}>What sets Canarytrace apart?</h2>
+          <h1 className={styles.featuresTopic}>What sets Canarytrace apart?</h1>
           {featuresFirstLine && featuresFirstLine.length > 0 && (
             <section className={styles.features}>
               <div className="container">
@@ -213,7 +213,7 @@ function Home() {
                 <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
               </div>
               <div className="col col--3">
-                <h3>Plug'n'Play</h3>
+                <h3>Do you like data?</h3>
                 <p>
                 No long installation with dozens of steps. Insert target address of web application and press run.<br/>
                 So simple. We can help you with starting or monitoring, and it could be completely easy for you.

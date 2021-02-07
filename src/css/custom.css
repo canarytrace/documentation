@@ -101,3 +101,28 @@ hr {
 .diagramIframe {
   border:none;
 }
+
+.featuresTopic_src-pages- {
+  color: rgb(72, 72, 75);
+}
+
+input.email {
+  background-color:white;
+  border: var(--ifm-badge-border-width) solid #0c65a5;
+  border-radius: var(--ifm-badge-border-radius);
+  color: rgb(72, 72, 75);
+  display: inline-block;
+  font-size: 95%;
+  font-weight: var(--ifm-font-weight-bold);
+  line-height: 1;
+  padding: var(--ifm-badge-padding-vertical) var(--ifm-badge-padding-horizontal);
+  vertical-align: baseline;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: 400px;
+}
+
+input {
+  float:left;
+  height: 40px;
+}

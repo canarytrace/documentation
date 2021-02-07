@@ -15,6 +15,6 @@ module.exports = {
     Guides: ['guides/architecture', 'guides/elasticsearch', 'guides/cli', 'guides/lifecycle', 'guides/kubernetes', 'guides/linux', 'guides/windows'],
     References: ['references/releases', 'references/roadmap', 'references/glosary', 'references/awesome', 'references/troubleshooting'],
     Media: ['media/webinars'],
-    Support: ['support/bugs', 'support/community', 'support/contactus'],
+    Support: ['support/bugs', 'support/community', 'support/contactus', 'support/subscribe'],
   },
 };

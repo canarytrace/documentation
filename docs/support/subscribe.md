@@ -1,14 +1,14 @@
 ---
-id: contactus
-title: Contact us
-sidebar_label: Contact us
+id: subscribe
+title: What’s New
+sidebar_label: Subscribe
 custom_edit_url: false
 ---
 
 
 > Get the latest Canarytrace news to your inbox from our teams.
 
-We work on an news technologies for testing and monitoring important events in a browser. We test new procedures in a laboratory environments and write articles with our results. We prepare new livestreams, webinars and trainings.
+We work on an news technologies for testing and monitoring important events in a browser. We test new procedures in a laboratory environments and write articles with our results. We prepare new livestreams, webinars and trainings. So stay tuned 👌
 
 
 <div class="container">

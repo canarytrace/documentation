@@ -128,6 +128,10 @@ module.exports = {
               label: 'Events',
               href: '#',
             },
+            {
+              label: 'Subscribe',
+              href: '/docs/support/subscribe'
+            }
           ],
         },
       ],
