@@ -33,6 +33,7 @@ Published on [Czech Tester Group](https://www.meetup.com/ProfessionalTesting/), 
 #### From slides
 
 - Canarytrace dashboards https://bit.ly/canary-dashboards
+- Demos [on localhost](/docs/canary/start), [in Kubernetes](/docs/canary/start-cloud)
 - [Download slides](https://www.icloud.com/iclouddrive/011LJxdpZIn7NEmFJM8HfO_dQ#Canarytrace_Smoke_Pro_in_nutshell)
 
 
