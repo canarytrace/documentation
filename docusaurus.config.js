@@ -87,6 +87,14 @@ module.exports = {
             {
               label: 'Why Canarytrace?',
               to: 'docs/',
+            },
+            {
+              label: 'Get started',
+              to: 'docs/canary/start',
+            },
+            {
+              label: 'Webinars',
+              to: 'docs/media/webinars',
             }
           ],
         },
@@ -122,15 +130,15 @@ module.exports = {
           items: [
             {
               label: 'Our team',
-              href: '#',
+              to: 'people',
             },
             {
               label: 'Events',
-              href: '#',
+              href: 'https://www.meetup.com/ProfessionalTesting/',
             },
             {
               label: 'Subscribe',
-              href: '/docs/support/subscribe'
+              to: 'docs/support/subscribe'
             }
           ],
         },
