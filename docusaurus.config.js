@@ -49,7 +49,7 @@ module.exports = {
         },
         {
           type: 'doc',
-          docId: 'resources/releases',
+          docId: 'references/releases',
           label: 'Release notes',
           position: 'right',
         },
