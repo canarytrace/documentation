@@ -286,6 +286,84 @@ Update environment variables of the deployment script with your monitor script
 
 All values for other environment variables are provided via `secret-github`, `secret-elastic`, `secret-aws`, `secret-user`, `canary-config` and `canary-services`
 
+
+## Filebeat
+
+[Filebeat](/docs/features/filebeat) logging all stdout and stderr streams from all Canarytrace docker containers in your cluster.
+
+> - All data from Filebeat are stored to `filebeat-*` index
+
+### Manually debuging Canarytrace
+
+For manually debuging Canarytrace runner and other components in a docker containers - you can use command line tool [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) for tail stdout and stderr streams from all containers in your Kubernetes cluster or [Lens](https://k8slens.dev/)
+
+```bash title="Get logs from Canarytrace pod from your localhost"
+kubectl -n canary logs -f tesla-1597447320-2gg4r -c canary
+```
+This is easy for learning and maintanance Canarytrace containers, but not but not effective. 
+
+#### Filebeat provides
+
+- Show all logs in a Kibana in real time - access to logos without knowledge with kubectl tool
+- Searching events, errors and other strings in a streams
+- Filtering by name of docker container 
+- Create visualizations from events
+- Create alerting from events in a log by conditions
+
+### How to run Filebeat
+
+- [Download deployment script for Filebeat](/docs/guides/kubernetes#how-to-get-a-deployment-scripts) `deployments/beats/filebeat-logging.yaml` from Canarytrace Professional and Canarytrace Smoke Pro docker container
+- Edit elasticsearch connection params
+
+```yaml title="deployments/beats/filebeat-logging.yaml"
+env:
+- name: ELASTICSEARCH_HOST
+  value: "https://elasticsearch-host"
+- name: ELASTICSEARCH_PORT
+  value: "9243"
+- name: ELASTICSEARCH_USERNAME
+  value: "elastic"
+- name: ELASTICSEARCH_PASSWORD
+  value: "pass"
+```
+
+- Deploy `kubectl apply -f deployments/beats/filebeat-logging.yaml`
+
+**You can check filebeat logs, that it doesn't contain any error messages**
+
+```bash
+kubectl -n kube-system get pods
+
+// outpu
+...
+filebeat-cznq9                    1/1     Running   0          9h
+kube-proxy-gjp6p                  1/1     Running   0          12d
+```
+
+**Get logs from container with filebeat**
+
+```bash
+kubectl -n kube-system logs -f filebeat-cznq9
+```
+
+### Filebeat data browsing
+
+- Open your Kibana > Discover and index `filebeat-*`
+
+![Filebeat logs in a Kibana](../../static/docs-img/kibana-filebeat.png)
+
+**Search input**
+
+- `kubernetes.container.name : canary` display stdout and stderr streams from Canarytrace runner docker container.
+- `message: "testStepStart: HomePage open"` for display all record which contains this string.
+
+### Filebeat log viewer
+
+> - Kibana contains a built-in log viewer
+> - Open your Kibana > Observability > Logs
+
+![Filebeat log viewer](../../static/docs-img/kibana-filebeat-logviewer.png)
+
 ---
 
 - Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
