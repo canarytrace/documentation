@@ -82,6 +82,86 @@ drwxr-xr-x@ 6 rdpanek  staff   192B  2 srp 11:06 tf-k8s
 
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 
+
+### Deploy Canarytrace Smoke Pro to Kubernetes
+
+```yaml title="CronJob"
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: smoke-web
+spec:
+  concurrencyPolicy: Replace
+  failedJobsHistoryLimit: 2
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: canary
+            image: quay.io/canarytrace/smoke-pro
+            env:
+            - name: BASE_URL
+              value: "https://www.tesla.com/;http://canarytrace.com/"
+            - name: SMOKE
+              value: allow
+            - name: ELASTIC_CLUSTER
+              value: "https://XXX.europe-west3.gcp.cloud.es.io:9243"
+            - name: ELASTIC_HTTP_AUTH
+              value: "elastic:XXX"
+            - name: AT_DRIVER_HOST_NAME
+              value: "localhost"
+            - name: PT_AUDIT
+              value: allow
+            - name: PT_AUDIT_THROTTLING
+              value: 'desktopDense4G'
+            resources:
+              requests:
+                memory: "300Mi"
+                cpu: "200m"
+              limits:
+                memory: "400Mi"
+                cpu: "300m"
+            imagePullPolicy: "IfNotPresent"
+          - name: selenium
+            image: selenium/standalone-chrome:3.141.59-20200730
+            ports:
+              - containerPort: 4444
+            resources:
+              requests:
+                memory: "4000Mi"
+                cpu: "2000m"
+              limits:
+                memory: "6000Mi"
+                cpu: "4000m"
+            imagePullPolicy: "IfNotPresent"
+            volumeMounts:
+              - mountPath: "/dev/shm"
+                name: "dshm"
+            livenessProbe:
+              httpGet:
+                path: /wd/hub
+                port: 4444
+              initialDelaySeconds: 10
+              timeoutSeconds: 5
+            readinessProbe:
+              httpGet:
+                path: /wd/hub
+                port: 4444
+              initialDelaySeconds: 10
+              timeoutSeconds: 5
+          restartPolicy: "Never"
+          volumes:
+            - name: "dshm"
+              emptyDir:
+                medium: "Memory"
+          imagePullSecrets:
+            - name: canarytrace-labs-pull-secret
+```
+
+### Deploy Canarytrace Professional to Kubernetes
+
 ### Prepare and deploy Canarytrace via Terraform
 
 1. Install [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
