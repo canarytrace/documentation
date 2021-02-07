@@ -13,7 +13,7 @@ keywords:
 ---
 
 > ### What you’ll learn
-- XXX
+- What are the recommendation on resources requirements
 
 Canarytrace is designed for use in Kubernetes and this has many advantages:
 
@@ -21,26 +21,32 @@ Canarytrace is designed for use in Kubernetes and this has many advantages:
 - Designed for pattern 1:1:1 (= 1 monitor script, 1 Canarytrace runner, 1 instance of a browser) - due to strict isolation and predictable resource allocation for each run, the results are credible and comparable.
 - Many tasks are delegated to a lower level, on Kubernetes. It's a better approach than to solve all tasks on the testing framework level. Each Canarytrace component has its own responsibility. E.g.
   - Canarytrace runner (WDIO + services) only loads, runs of test scripts and live reporting
-  - Elasticsearch stack for storing all data from Canarytrace runner and such as engine for agregate data for test report, backups, trends etc.
-  - Beats for backup live logging
-  - Kibana for data analysis and visualizations from Canarytrace runner, for the preparation of a test report in many forms e.g. report for testers, architect, devops or test manager.
+  - [Elasticsearch stack](https://www.elastic.co/elastic-stack) for storing all data from Canarytrace runner and such as engine for agregate data for test report, backups, trends etc.
+  - [Beats](https://www.elastic.co/beats/) are small datashippers and we use Beats for collect all logs from our docker containers.
+  - [Kibana](https://www.elastic.co/kibana) for data analysis and visualizations from Canarytrace runner, for the preparation of a test report in many forms e.g. report for testers, architect, devops or test manager.
   - Canarytrace Listener for automatically analyzing many types of data scanned from a browser, alerting by thresholds to many services such as slack or email, simplification of the test result for integration with other tools such as Zabbix.
   - Kubernetes parallelizes, guarantees, manages and isolates each instance of the Canarytrace runner. Every instance of Canarytrace starts on the same conditions. This is an advantage because the tests don't affect each other.
   - We no longer need tools like Jenkins or Selenium cluster.
   - Thanks to Kubernetes you are not vendor locked and at the same time Canarytrace can be run on AWS, DigitalOcean, Azure Cloud, GCE or on your VPS.
 
-### Required resources for one instance
+## Required resources for one instance
+
+Requirements on resource will be higher if you will be perform a performance audit. Without performance audit will be perform availability check and download information about network trafic in a browser.
+
+> ### Recommended requirements for performance audit
+> - Loading web pages into a modern browser is not an easy task. The measurement results may be skewed by insufficient resources and therefore the following settings are recommended for performance audit.
+> - Minimum 2 dedicated cores (4 recommended)
+> - Minimum 2GB RAM (4-8GB recommended)
+
 - One instance = one monitor script
 - [Resource units in Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
 
 | Resources | CPU requests | CPU limits | Memory requests | Memory limits |
 |-|-|-|-|-|
 | Canarytrace Runner | `200m` | `300m` | `300Mi` | `400Mi` |
-| Browser | `600m` | `700m` | `1000Mi` | `1200Mi` |
-| Total | `800m` | `1000m` | `1300Mi` | `1600Mi` |
+| Browser | `2000m` | `4000m` | `4000Mi` | `4000Mi` |
+| Total | `2200m` | `4300m` | `4300Mi` | `4400Mi` |
 
-
-> - Recommended configuration for two Canary instances 4 vCPU 8 GB RAM
 
 **Check resource quota on all nodes**
 
@@ -54,9 +60,9 @@ canary-3bcb1
   memory             3415Mi (51%)  3840Mi (57%)
 ```
 
-### How to download deployment scripts
+## How to get a deployment scripts
 
-All deployment scripts are distributed with Canarytrace Professional and Canarytrace Smoke Pro docker images
+All deployment scripts are distributed with [Canarytrace Professional](/docs/why/edition#canarytrace-professional) and [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) docker images
 
 ```bash
 # Download deployments scripts from docker image
@@ -83,7 +89,9 @@ drwxr-xr-x@ 6 rdpanek  staff   192B  2 srp 11:06 tf-k8s
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 
 
-### Deploy Canarytrace Smoke Pro to Kubernetes
+## Deploy Canarytrace Smoke
+
+[Canarytrace Smoke](/docs) is a free edition and you can use it for study of web performance testing
 
 ```yaml title="CronJob"
 apiVersion: batch/v1beta1
@@ -160,9 +168,7 @@ spec:
             - name: canarytrace-labs-pull-secret
 ```
 
-### Deploy Canarytrace Professional to Kubernetes
-
-### Prepare and deploy Canarytrace via Terraform
+## Prepare and deploy Canarytrace via Terraform
 
 1. Install [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 2. Deploy Kubernetes objects via Terraform
@@ -173,7 +179,7 @@ terraform init
 terraform apply
 ```
 
-### Prepare and manually deploy Canarytrace to Kubernetes
+## Prepare and manually deploy Canarytrace to Kubernetes
 
 ```bash
 ᐰ ls -lah k8s/
