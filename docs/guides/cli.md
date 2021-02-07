@@ -99,7 +99,7 @@ Next used environment variables are `WAIT_FOR_TIMEOUT`, `PT_AUDIT`, `PT_AUDIT_TH
 
 - `SPEC` is path and name of testcase / monitor script. E.g. `SPEC=tesla/smoke.js`
 
-#### GIT repository
+### GIT repository
 
 - `GIT_REPOSITORY` is URI of git repository with your tests. E.g. `GIT_REPOSITORY=https://github.com/canarytrace/canary-tests.git`
 
@@ -159,7 +159,7 @@ You can use one of the values `["trace", "debug", "info", "warn", "error", "sile
 - `TESTS_PATH` default is /tmp/canary-tests there is no reason to change this option.
 
 
-#### Elasticsearch
+### Elasticsearch
 
 - `ELASTIC_CLUSTER` URI of elasticsearch cluster. E.g. `ELASTIC_CLUSTER=http://localhost:9200` This option activate live reporting all data to  elasticsearch.
 
@@ -182,7 +182,7 @@ You can use one of the values `["trace", "debug", "info", "warn", "error", "sile
 - `ELASTIC_REQUEST_COMPRESSION` default no. E.g. `ELASTIC_REQUEST_COMPRESSION=allow`
 
 
-#### AWS
+### AWS
 
 - `AWS_S3_ACCESS_KEY` your AWS_KEY_ID. E.g. `AWS_S3_ACCESS_KEY=ABC`
 
@@ -209,43 +209,108 @@ You can use one of the values `["trace", "debug", "info", "warn", "error", "sile
 - `PASS` password for TC, which use login to app. E.g. `PASS=Cybertruck@250Mil`
 
 
-#### Services
-
-  - For activate this feature e.g. `PERFORMANCE_ENTRIES_INTERCEPT=allow`
-
-- `PT_AUDIT` default `no` store web performance metrics collect from browser to elasticsearch index `c.audit-*`
-
-  - For activate this feature e.g. `PT_AUDIT=allow`
+### Services
 
 - `RESPONSE_INTERCEPT` default `no` store collection of arrived responses to browser to elasticsearch index `c.response-*`
 
-  - For activate this feature e.g. `RESPONSE_INTERCEPT=allow`
+  - For activate this features use `RESPONSE_INTERCEPT=allow`
 
 - `REQUEST_INTERCEPT` default `no` store collection of sending request from browser to elasticsearch index `c.request-*`
 
-  - For activate this feature e.g. `REQUEST_INTERCEPT=allow`
+  - For activate this features use `REQUEST_INTERCEPT=allow`
 
 - `CONSOLE_INTERCEPT` default `no` store console of browser to elasticsearch index `c.console-*`
 
-  - For activate this feature e.g. `CONSOLE_INTERCEPT=allow`
+  - For activate this features use `CONSOLE_INTERCEPT=allow`
 
 - `COVERAGE_AUDIT` default `no` store percentage used and unused code of web application to elasticsearch index `c.coverage-audit-*`
 
-  - For activate this feature e.g. `COVERAGE_AUDIT=allow`
+  - For activate this features use `COVERAGE_AUDIT=allow`
 
 - `MEMORY_INTERCEPT` default `no` store used javascript memory during loading and using the web application to elasticsearch index `c.memory-*`
 
-  - For activate this feature e.g. `MEMORY_INTERCEPT=allow`
+  - For activate this features use `MEMORY_INTERCEPT=allow`
 
 - `HERO_ELEMENTS` default `no` store marked hero elements to elasticsearch index `c.performance-entries-*`
 
-  - For activate this feature e.g. `HERO_ELEMENTS=allow`
+  - For activate this features use `HERO_ELEMENTS=allow`
 
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a><a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
 - `PERFORMANCE_ENTRIES_INTERCEPT` default `no` store performance.entries collection to elasticsearch index `c.performance-entries-*` This service is in Canarytrace Smoke and Canarytrace Smoke Pro allowed as default.
 
-Data from all services is stored to elasticsearch indices in a format `INDEX_PREFIX+SERVICE-*` 
+- `PT_AUDIT` default `no` runs a performance audit, collect the performance metrics and store into elasticsearch into `c.audit-*` index.
+
+  - For activate this features use `PT_AUDIT=allow`
+
+**Throttling**
+
+Throttling is set by switch `PT_AUDIT_THROTTLING` and these configurations are available:
+
+**desktopDense4G** contains configuration
+```javascript
+{
+    onlyCategories: ['performance'],
+    maxWaitForFcp: 30 * 1000,
+    maxWaitForLoad: 45 * 1000,
+    throttlingMethod: 'simulate',
+    internalDisableDeviceScreenEmulation: false,
+    throttling: {
+        rttMs: 40,
+        throughputKbps: 10 * 1024,
+        cpuSlowdownMultiplier: 1,
+        requestLatencyMs: 0, // 0 means unset
+        downloadThroughputKbps: 0,
+        uploadThroughputKbps: 0,
+    }
+}
+```
+
+**mobileSlow4G** contains configuration
+```javascript
+{
+    onlyCategories: ['performance'],
+    maxWaitForFcp: 30 * 1000,
+    maxWaitForLoad: 45 * 1000,
+    throttlingMethod: 'simulate',
+    internalDisableDeviceScreenEmulation: false,
+    throttling: {
+        rttMs: 150,
+        throughputKbps: 1.6 * 1024,
+        requestLatencyMs: 150 * 3.75,
+        downloadThroughputKbps: 1.6 * 1024 * 0.9,
+        uploadThroughputKbps: 750 * 0.9,
+        cpuSlowdownMultiplier: 4,
+    }
+}
+```
+
+**mobileRegular3G** contains configuration
+```javascript
+{
+    onlyCategories: ['performance'],
+    maxWaitForFcp: 30 * 1000,
+    maxWaitForLoad: 45 * 1000,
+    throttlingMethod: 'simulate',
+    internalDisableDeviceScreenEmulation: false,
+    throttling: {
+        rttMs: 300,
+        throughputKbps: 700,
+        requestLatencyMs: 300 * 3.75,
+        downloadThroughputKbps: 700 * 0.9,
+        uploadThroughputKbps: 700 * 0.9,
+        cpuSlowdownMultiplier: 4,
+    }
+}
+```
+
+and you can use in a CronJob
+```yaml
+- name: PT_AUDIT_THROTTLING
+  value: 'desktopDense4G'
+```
+
+> - Data from all services is stored to elasticsearch indices in a format `INDEX_PREFIX+SERVICE-*` 
 
 #### Volumes
 
