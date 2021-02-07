@@ -9,6 +9,20 @@ custom_edit_url: false
 - This installer prepare Elasticsearch and Kibana for Canarytrace use
 - What is options for Canarytra
 
+### Canarytrace Smoke
+
+---
+
+Canarytrace Smoke is a free edition and you can use it for study of web performance testing.
+
+```bash
+docker pull quay.io/canarytrace/smoke
+```
+
+- Tags https://quay.io/repository/canarytrace/smoke?tab=tags
+- Results are displayed in a [dashboards](/docs/features/dashboards)
+- [Download a deployment script](/docs/guides/kubernetes#deploy-canarytrace-professional-to-kubernetes)
+
 
 ### Canarytrace Smoke Pro
 
@@ -23,7 +37,7 @@ docker pull quay.io/canarytrace/smoke-pro
 - For use this image you need to [buy a license](/docs/support/contactus)
 - Available as Canarytrace Cloud (Software as a Service) and as On-Premise.
 - Results are displayed in a [dashboards](/docs/features/dashboards)
-- [Download a deployment script](/docs/guides/kubernetes#deploy-canarytrace-smoke-pro-to-kubernetes)
+- [How to get a deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
 
 
 
@@ -31,7 +45,7 @@ docker pull quay.io/canarytrace/smoke-pro
 
 ---
 
-Canarytrace Professional is deployed during 5 min and allows you to test a web application from a user perspective / user journey. You can perform a performance audit on every test steps.
+Canarytrace Professional allows you to test a web application from a user perspective / user journey. You can perform a performance audit on every test steps.
 
 ```bash
 docker pull quay.io/canarytrace/professional
@@ -40,27 +54,19 @@ docker pull quay.io/canarytrace/professional
 - For use this image you need to [buy a license](/docs/support/contactus)
 - Available as Canarytrace Cloud (Software as a Service) and as On-Premise.
 - Results are displayed in a [dashboards](/docs/features/dashboards)
-- [Download a deployment script](/docs/guides/kubernetes#deploy-canarytrace-professional-to-kubernetes)
-
-**Deploy to Kubernetes**
-
-
-
-### Canarytrace Smoke
----
+- [How to get a deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
 
 
 ### Canarytrace Installer
 ---
 
+Loads settings into Elasticsearch and Kibana for use with Canarytrace.
 
-### Canarytrace Listener
----
-
-
-
-
-
+```bash
+docker pull quay.io/canarytrace/installer
+```
+- Tags https://quay.io/repository/canarytrace/installer?tab=tags
+- More info about [Canarytrace Installer](/docs/features/installer)
 
 
 ---
