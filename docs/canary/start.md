@@ -30,7 +30,6 @@ Only [Docker](https://www.docker.com/). If you don't know the docker, take a loo
 
 - [How to run Canarytrace on Windows 10 Pro](/docs/guides/windows)
 - [How to run Canarytrace on Linux](/docs/guides/linux)
-- [How to run Canarytrace on Mac OS](/docs/guides/macos)
 
 ## Step-by-step
 We will go step by step to start testing successfully.

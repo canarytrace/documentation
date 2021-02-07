@@ -5,10 +5,6 @@ sidebar_label: Linux example
 custom_edit_url: false
 ---
 
-> ### What you’ll learn
-- This installer prepare Elasticsearch and Kibana for Canarytrace use
-- What is options for Canarytrace Installer?
-
 ## Prepare Linux droplet on DigitalOcean
 
 **Create and sign in to droplet on DigitalOcean**

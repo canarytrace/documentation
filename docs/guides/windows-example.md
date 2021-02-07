@@ -5,10 +5,6 @@ sidebar_label: Windows example
 custom_edit_url: false
 ---
 
-> ### What you’ll learn
-- This installer prepare Elasticsearch and Kibana for Canarytrace use
-- What is options for Canarytrace Installer?
-
 If you have Windows with Docker Desktop installed, skip the first and second step
 
 ## Prepare Windows on Azure
