@@ -38,7 +38,7 @@ function Home() {
                 <div class="avatar avatar--vertical">
                   <img
                     class="avatar__photo avatar__photo--xl"
-                    src="img/radimDanielPanek.png"
+                    src="/img/radimDanielPanek.png"
                   />
                   <div class="avatar__intro">
                     <br/>
@@ -54,7 +54,7 @@ function Home() {
                 <div class="avatar avatar--vertical">
                   <img
                     class="avatar__photo avatar__photo--xl"
-                    src="img/miroslavKret.png"
+                    src="/img/miroslavKret.png"
                   />
                   <div class="avatar__intro">
                     <br/>
@@ -70,7 +70,7 @@ function Home() {
                 <div class="avatar avatar--vertical">
                   <img
                     class="avatar__photo avatar__photo--xl"
-                    src="img/veronikaPankova.png"
+                    src="/img/veronikaPankova.png"
                   />
                   <div class="avatar__intro">
                     <br/>
@@ -107,7 +107,7 @@ function Home() {
                 <div class="avatar avatar--vertical">
                   <img
                     class="avatar__photo avatar__photo--xl"
-                    src="img/undefined.png"
+                    src="/img/undefined.png"
                   />
                   <div class="avatar__intro">
                     <br/>

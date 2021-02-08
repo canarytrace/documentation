@@ -26,7 +26,7 @@ const featuresFirstLine = [
     ),
   },
   {
-    title: 'More metrics, more informations, more opportunities',
+    title: 'More metrics, more information, more opportunities',
     imageUrl: 'img/metrics.svg',
     description: (
       <>
