@@ -77,7 +77,7 @@ function Home() {
                     <h4 class="avatar__name">Veronika Pánková</h4>
                     <small class="avatar__subtitle">
                       Monitoring specialist <br/>
-                      <a href="https://twitter.com/kret_miroslav">@kret_miroslav</a>
+                      <a href="https://twitter.com/Kralovaver">@Kralovaver</a>
                     </small>
                   </div>
                 </div>
