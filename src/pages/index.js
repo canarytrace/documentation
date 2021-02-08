@@ -184,51 +184,28 @@ function Home() {
         </div>
         <div id="features">
         <h2 className={styles.featuresTopic}>Who's using Canarytrace</h2>
-          <div className="container" id="feature1">
+          <br />
+          <div className="container" id="clients">
             <div className="row">
               <div className="col col--3">
-                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
+                
               </div>
               <div className="col col--3">
-                <h3>Live Reporting</h3>
-                <p>
-                Results and measured values are instantly send - the whole team know actual state.<br/>
-                Smoke Pro is fully ready to be part of CI pipelines.
-                </p>
+                <a href="https://www.ifortuna.cz/" target="_blank">
+                  <img src="clients/feg.png" alt="FEG" />
+                </a>
               </div>
               <div className="col col--3">
-                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
+                <a href="https://nakit.cz/" target="_blank">
+                  <img src="clients/nakit.png" alt="Nakit" />
+                </a>
               </div>
               <div className="col col--3">
-                <h3>With 5 µs accuracy</h3>
-                <p>
-                The speed of the web is complex topic, we are interested in and we take it seriously. We have developed our own methodologies so we can measure and analyse reliably and precisely.
-                </p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col--3">
-                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
-              </div>
-              <div className="col col--3">
-                <h3>Hero Elements</h3>
-                <p>
-                <b>Point to interested part of your web page.</b><br/>
-                We’ll tag the different parts of the site with Hero Elements and you’ll know exactly when the user will see a banner or product for example.
-                </p>
-              </div>
-              <div className="col col--3">
-                <img className={styles.featureImage} src="img/undraw_observations_mejb.svg" alt="Ficura" />
-              </div>
-              <div className="col col--3">
-                <h3>Do you like data?</h3>
-                <p>
-                No long installation with dozens of steps. Insert target address of web application and press run.<br/>
-                So simple. We can help you with starting or monitoring, and it could be completely easy for you.
-                </p>
+               
               </div>
             </div>
           </div>
+          <br />
         </div>
       </main>
     </Layout>
