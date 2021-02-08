@@ -18,7 +18,7 @@ import styles from './styles.module.css';
 const featuresFirstLine = [
   {
     title: 'Performance Audit',
-    imageUrl: 'img/undraw_observations_mejb.svg',
+    imageUrl: 'img/performance.svg',
     description: (
       <>
         Start a performance audit and evaluate requirements. A lot of speed metrics as Web Vitals, TTFB, Response Time, Speed Index and many more will help you to meet all of your requirement. You will receive regular recommendations for improvements
@@ -27,7 +27,7 @@ const featuresFirstLine = [
   },
   {
     title: 'More metrics, more informations, more opportunities',
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
+    imageUrl: 'img/metrics.svg',
     description: (
       <>
         The more you know, the more accurately you identify the problem. Smoke Pro detects and logs more than 60 metrics already available.
@@ -36,7 +36,7 @@ const featuresFirstLine = [
   },
   {
     title: 'From user perspective',
-    imageUrl: 'img/undraw_docusaurus_react.svg',
+    imageUrl: 'img/users.svg',
     description: (
       <>
         We see it the same way<br/>
@@ -46,7 +46,7 @@ const featuresFirstLine = [
   },
   {
     title: 'Trends',
-    imageUrl: 'img/undraw_docusaurus_react.svg',
+    imageUrl: 'img/trends.svg',
     description: (
       <>
         View last week’s or months metrics and error rates.<br/>
@@ -55,13 +55,20 @@ const featuresFirstLine = [
     ),
   },
   {
-    title: 'Do you like data?',
-    imageUrl: 'img/undraw_docusaurus_react.svg',
+    title: 'Live Reporting',
+    imageUrl: 'img/reporting.svg',
     description: (
       <>
-        is it up to you how long history you want to store, couple of weeks or months? Old data are automatically deleted. 
-        <br />
-        You can backup your stored data or search, filter, aggregate and visualise them.
+        Results and measured values are instantly send - the whole team know actual state. Smoke Pro is fully ready to be part of CI pipelines.
+      </>
+    ),
+  },
+  {
+    title: 'Every minute',
+    imageUrl: 'img/bug.svg',
+    description: (
+      <>
+        Smoke Pro is checking availability of your web every minute - practically non-stop. You won’t miss any defect anymore.
       </>
     ),
   }
@@ -71,7 +78,7 @@ const featuresFirstLine = [
 const featuresSecondLine = [
   {
     title: 'Device mix',
-    imageUrl: 'img/undraw_observations_mejb.svg',
+    imageUrl: 'img/devices.svg',
     description: (
       <>
         Computer and mobile devices are main channels today. Surprise for you and your web how it’s running on weak mobile devices of on slow networks. Or you can simply combine desktop and mobile device
@@ -79,17 +86,18 @@ const featuresSecondLine = [
     ),
   },
   {
-    title: 'Practically non-stop',
-    imageUrl: 'img/undraw_observations_mejb.svg',
+    title: 'Hero Elements',
+    imageUrl: 'img/hero.svg',
     description: (
       <>
-        Smoke Pro is checking availability of your web every minute. You won’t miss any defect anymore.
+        Point to interested part of your web page.<br/>
+        We’ll tag the different parts of the site with Hero Elements and you’ll know exactly when the user will see a banner or product for example.
       </>
     ),
   },
   {
     title: 'You will be first to know',
-    imageUrl: 'img/undraw_observations_mejb.svg',
+    imageUrl: 'img/message.svg',
     description: (
       <>
         You can get notification on Slack, email, or we’ll call you. If you like graphs, we have plenty of them for you. 
@@ -175,7 +183,7 @@ function Home() {
           </section>
         </div>
         <div id="features">
-        <h2 className={styles.featuresTopic}>Part two</h2>
+        <h2 className={styles.featuresTopic}>Who's using Canarytrace</h2>
           <div className="container" id="feature1">
             <div className="row">
               <div className="col col--3">
