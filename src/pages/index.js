@@ -21,7 +21,7 @@ const featuresFirstLine = [
     imageUrl: 'img/performance.svg',
     description: (
       <>
-        Start a performance audit and evaluate requirements. A lot of speed metrics as Web Vitals, TTFB, Response Time, Speed Index and many more will help you to meet all of your requirement. You will receive regular recommendations for improvements
+        Start a performance audit and evaluate requirements every 3 min. We measure the speed of loading web applications in great detail. You will receive regular recommendations for improvements.
       </>
     ),
   },
@@ -30,7 +30,7 @@ const featuresFirstLine = [
     imageUrl: 'img/metrics.svg',
     description: (
       <>
-        The more you know, the more accurately you identify the problem. Smoke Pro detects and logs more than 60 metrics already available.
+        The more you know, the more accurately you identify the problem. Smoke Pro detects and logs more than 60 metrics already available. A lot of speed metrics as Web Vitals, TTFB, Response Time, Speed Index and many more will help you to meet all of your requirement.
       </>
     ),
   },

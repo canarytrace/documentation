@@ -8,7 +8,7 @@
  */
 
 module.exports = {
-  title: "Plug’n'Play stack for testing and monitoring your web application from user perspective.",
+  title: "Plug’n'Play stack for testing of speed and monitoring your web application from user perspective.",
   tagline: "Your browser is a small infrastructure and we know a lot of information that browser hides.",
   url: 'https://canarytrace.com/',
   baseUrl: '/',
