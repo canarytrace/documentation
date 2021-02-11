@@ -7,7 +7,7 @@ custom_edit_url: false
 
 > ### What you’ll learn
 - What are the types of dashboard
-- You can see all dashboards on [Figma workspace](https://bit.ly/canary-dashboards) with descriptions.
+- You can see all dashboards on [Figma workspace](https://www.figma.com/file/DKbkN5nfJIw2HB3iGEu8tS/Canarytrace-Dashboards?node-id=348%3A3) with descriptions. If you want see older version, you must be logged.
  
 All data collected by Canarytrace are stored into Elasticsearch and are displayed in [Kibana](https://www.elastic.co/kibana) in the form of visualizations which are grouped into dashboards.
 
