@@ -94,6 +94,8 @@ In this same location where is your `docker-compose.yaml` run docker compose
 docker-compose up
 ```
 
+> If you have problem with docker-compose look at the bugs [#44](https://github.com/canarytrace/documentation/issues/44), [#45](https://github.com/canarytrace/documentation/issues/45) from the community
+
 ### What data is stored into Elasticsearch
 
 Canarytrace Smoke is community edition collect these data
