@@ -30,6 +30,19 @@ quay.io/canarytrace/professional:<Major>.<Minor>.<Patch>
 
 ---
 
+### Canarytrace Installer 7.10.0
+**Released 11. 02. 2021**
+
+📦 **Changes**
+- Compatible with Elasticsearch 7.10.0 and Kibana 7.10.0
+
+**Links**
+- [Canarytrace Installer](/docs/features/installer)
+- [Kibana dashboards](/docs/features/dashboards)
+
+
+---
+
 ### Canarytrace Smoke Pro 3.0.5
 **Released 21. 01. 2021**
 

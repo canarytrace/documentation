@@ -15,8 +15,12 @@ custom_edit_url: false
 Canarytrace is known as plug'n'play stack and it's means, that first run is very quickly and doesn't require lengthy set up. 
 Set up Elasticsearch and Kibana it's also fast, thanks to prepared Canarytrace Installer.
 
+> ### Important
+- Select version of Installer by version of Elasticsearch and Kibana. E.g. if you use Elasticsearch 7.10.0 and Kibana 7.10.0 select Installer 7.10.0
+- Choose the right version according to the [docker image tag](https://quay.io/repository/canarytrace/installer?tab=tags)
 
-- **Supported version of Elasticsearch and Kibana is 7.10**
+
+- **Latest supported version of Elasticsearch and Kibana is 7.10.0**
 - Dockerized - the [docker image](https://quay.io/repository/canarytrace/installer) tag corresponds to the version of the Elasticsearch for which it is intended 
 - Ready for [Canarytrace Professional](/docs/why/edition#canarytrace-professional) and for [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro)
 - Ready for local use
@@ -45,7 +49,7 @@ Canarytrace Installer is available on our docker registry [https://quay.io/repos
 
 **Run Canarytrace Installer**
 ```
-docker run --name installer --net canary --rm quay.io/canarytrace/installer:7.3
+docker run --name installer --net canary --rm quay.io/canarytrace/installer:7.10.0
 ```
 
 > - Please, use always [latest version](https://quay.io/repository/canarytrace/installer?tab=tags)
@@ -71,7 +75,7 @@ This setting allows you to change the default setting. For example, Elasticsearc
 version: "3.8"
 services:
   installer:
-    image: quay.io/canarytrace/installer:7.3
+    image: quay.io/canarytrace/installer:7.10.0
     environment:
       ELASTIC_ENDPOINT: 'https://XXX.eu-central-1.aws.cloud.es.io'
       ELASTIC_PORT: 9243
