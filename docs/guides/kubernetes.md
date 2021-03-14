@@ -170,6 +170,78 @@ spec:
             - name: canarytrace-labs-pull-secret
 ```
 
+## RBAC and how to connect to Kubernetes
+> - ### You got from us
+> - `xxx.kubeconfig.yaml` e.g. `operator-kanarek-kubeconfig.yaml`
+> - `client-certificate` e.g. `kanarek.crt`
+> - `client-key` e.g. `kanarek.key`
+
+**Prepare**
+
+1. Create a directory on your localhost e.g. `~/canary` and move `client-certificate`, `client-key` and `xxx.kubeconfig.yaml` there.
+2. Edit your `xxx.kubeconfig.yaml` and setup absolute path to your `client-certificate` a `client-key`
+
+```yaml title="example xxx.kubeconfig.yaml" {18,19}
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDR...
+    server: https://1ba1e227-xxx-43c1-yyy-f6458f37a083.k8s.ondigitalocean.com
+  name: do-fra1-ko-canary
+contexts:
+- context:
+    cluster: do-fra1-ko-canary
+    user: kanarek
+  name: do-fra1-ko-canary
+current-context: do-fra1-ko-canary
+kind: Config
+preferences: {}
+users:
+- name: kanarek
+  user:
+    client-certificate: ~/canary/kanarek.crt
+    client-key: ~/canary/kanarek.key
+```
+2. Test, than SSL/TLS connection was successful and user has authorization to list pods resources.
+
+```bash
+kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml auth can-i get pods
+
+# output
+yes
+```
+
+**How to edit list of landing pages**
+<a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
+
+1. Get list of CronJobs
+
+```bash
+kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml get cronjobs
+
+# output
+NAME                          SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+canarytrace-xxx-1-desktop   */5 * * * *   False     1        66s             17d
+canarytrace-xxx-1-mobile    */5 * * * *   False     1        66s             17d
+```
+
+2. Edit CronJob and scroll down to BASE_URL
+
+```bash
+kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml edit cronjob canarytrace-xxx-1-desktop
+
+# output
+ 27           containers:
+ 28           - env:
+ 29             - name: BASE_URL
+ 30               value: https://canarytrace.com/;https://www.teststack.cz/
+```
+3. Edit collection of landing pages in BASE_URL and save changes
+
+**You can display your Canarytrace instances**
+
+- `kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml get pods`
+
 ## Prepare and deploy Canarytrace via Terraform
 
 1. Install [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
