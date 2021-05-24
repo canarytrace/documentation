@@ -30,6 +30,18 @@ quay.io/canarytrace/professional:<Major>.<Minor>.<Patch>
 
 ---
 
+### Canarytrace Smoke Pro 3.0.6
+**Released 16. 03. 2021**
+
+📦 **Changes**
+- Added new error message `Test did not finished on time!` when testing collection of landing pages it takes too long.
+
+
+🐛 **Bug fixes**
+- `smoke-cronjob.yml` [Increase resources](/docs/guides/kubernetes#required-resources-for-one-instance).
+
+---
+
 ### Canarytrace Installer 7.10.0
 **Released 11. 02. 2021**
 
