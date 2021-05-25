@@ -10,46 +10,49 @@ keywords:
 ---
 
 > - This is a living documentation and will be frequently updated into release Canarytrace 4.1.0
-> - Please create an [create issue](https://github.com/canarytrace/documentation/issues/new/choose) if you find a mistake, or have any questions, thanks 👍
+> - Please create an [issue](https://github.com/canarytrace/documentation/issues/new/choose) if you find a mistake, or have any questions, thanks 👍
 
 ## What news
 
 🚀 **New features**
 
-- Upgrade [Webdriver.IO](https://webdriver.io/) from v6 on [v7.5](https://webdriver.io/versions) 
+- Upgrade [Webdriver.IO](https://webdriver.io/) from [v6](https://v6.webdriver.io/) on [v7.5](https://webdriver.io/versions) 
 
 🐛 **Bug fixes**
 
-## Webdriver.IO
+## Get started
 - what is new a v7.5
 - how to install
 
-### Installation
+### Editions
+
+- Canarytrace vs. Canarytrace Smoke
+
+### Webdriver.IO and installation
 
 `npm install @wdio/cli --save`
 
 `npx wdio config`
 
-```
-=========================
-WDIO Configuration Helper
-=========================
+- `Where is your automation backend located? ` = select `On my local machine` and confirm
+- `Which framework do you want to use?` = select `mocha` and confirm
+- `Do you want to use a compiler?` = select `Babel` and confirm
+- `Where are your test specs located?` only confirm
+- `Do you want WebdriverIO to autogenerate some test files?` type `y` and confirm
+- `Do you want to use page objects` type `n` and confirm
+- `Which reporter do you want to use?` = select `spec` and confirm
+- `Do you want to add a service to your test setup?` = select `chromedriver` and confirm
+- `What is the base url?` only confirm
 
-? Where is your automation backend located? On my local machine
-? Which framework do you want to use? mocha
-? Do you want to use a compiler? Babel (https://babeljs.io/)
-? Where are your test specs located? ./test/specs/**/*.js
-? Do you want WebdriverIO to autogenerate some test files? Yes
-? Do you want to use page objects (https://martinfowler.com/bliki/PageObject.html)? Yes
-? Where are your page objects located? ./test/pageobjects/**/*.js
-? Which reporter do you want to use? spec
-? Do you want to add a service to your test setup? chromedriver
-? What is the base url? http://localhost
-```
+and run
 
-`npx wdio run ./wdio.conf.js`
+`npx wdio run ./wdio.conf.js --spec example.e2e.js`
 
-### First user journey test
+More info on [Webdriver.IO documentation](https://webdriver.io/docs/gettingstarted#set-up)
+
+### Write your first WDIO script
+
+### Run WDIO script
 
 
 ## Run Canarytrace 4 alpha
