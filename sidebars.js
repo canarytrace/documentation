@@ -13,7 +13,7 @@ module.exports = {
     ['Get Started']: ['canary/start', 'canary/start-cloud'],
     Features: ['features/overview', 'features/live-reporting', 'features/filebeat', 'features/installer', 'features/docker', 'features/dashboards', 'features/lighthouse', 'features/hero'],
     Guides: ['guides/architecture', 'guides/elasticsearch', 'guides/cli', 'guides/api', 'guides/lifecycle', 'guides/listener', 'guides/kubernetes', 'guides/linux', 'guides/windows'],
-    References: ['references/releases', 'references/roadmap', 'references/glosary', 'references/awesome', 'references/troubleshooting'],
+    References: ['references/releases', 'references/releases4', 'references/roadmap', 'references/glosary', 'references/awesome', 'references/troubleshooting'],
     Media: ['media/webinars'],
     Support: ['support/bugs', 'support/contactus', 'support/subscribe'],
   },

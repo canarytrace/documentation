@@ -92,7 +92,7 @@ function Home() {
                 <div class="avatar avatar--vertical">
                   <img
                     class="avatar__photo avatar__photo--xl"
-                    src="https://media-exp1.licdn.com/dms/image/C4D03AQGb3LaEULeD5w/profile-displayphoto-shrink_800_800/0/1516611360390?e=1618444800&v=beta&t=j-HjAVF2JTh_SeqZo673o2mxO4vqRMMKnA2OQfVzijY"
+                    src="https://media-exp1.licdn.com/dms/image/C4D03AQGb3LaEULeD5w/profile-displayphoto-shrink_800_800/0/1516611360390?e=1627516800&v=beta&t=LC80XEWsZzAqt0gzj0cA-bl4CV_V79cJwwSQhy6_iE0"
                   />
                   <div class="avatar__intro">
                     <br/>
