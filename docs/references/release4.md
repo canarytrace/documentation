@@ -98,6 +98,104 @@ canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] 1 passing (4.9s)
 
 ### Kubernetes
 
+**Canarytrace**
+
+No pass ssh
+```bash
+kubectl -n canarytrace create secret generic secret-github --from-file=ssh-privatekey=/Users/rdpanek/.ssh/id_rsa_no_pass
+```
+
+Deployment
+```yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: canarytrace
+spec:
+  concurrencyPolicy: Replace
+  failedJobsHistoryLimit: 2
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: canary
+            image: quay.io/canarytrace/canarytrace:latest
+            env:
+            - name: BASE_URL
+              value: "https://the-internet.herokuapp.com/login"
+            - name: GIT_REVISION
+              value: "fd29508"
+            - name: SPEC
+              value: "test/specs/example.e2e.js"
+            - name: LABELS
+              value: "wdio75, demo, smoke"
+            - name: EDITION
+              value: "canarytrace"
+            - name: GIT_REPOSITORY
+              value: "git@github.com:canarytrace/wdio75-demo.git"
+            - name: GIT_REPOSITORY_HOST
+              value: "github.com"
+            - name: GIT_REPOSITORY_PORT
+              value: "22"
+            - name: ELASTIC_CLUSTER
+              value: "https://abcdef.eu-central-1.aws.cloud.es.io:9243"
+            - name: ELASTIC_HTTP_AUTH
+              value: "elastic:SecretPassword"
+            resources:
+              requests:
+                memory: "300Mi"
+                cpu: "200m"
+              limits:
+                memory: "400Mi"
+                cpu: "300m"
+            imagePullPolicy: "IfNotPresent"
+            volumeMounts:
+              - mountPath: /secret
+                name: secret-github
+                readOnly: true
+          - name: selenium
+            image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20210207
+            ports:
+              - containerPort: 4444
+            resources:
+              requests:
+                memory: "2000Mi"
+                cpu: "2000m"
+              limits:
+                memory: "4000Mi"
+                cpu: "3000m"
+            imagePullPolicy: "IfNotPresent"
+            volumeMounts:
+              - mountPath: "/dev/shm"
+                name: "dshm"
+            livenessProbe:
+              httpGet:
+                path: /status
+                port: 4444
+              initialDelaySeconds: 10
+              timeoutSeconds: 5
+            readinessProbe:
+              httpGet:
+                path: /status
+                port: 4444
+              initialDelaySeconds: 10
+              timeoutSeconds: 5
+          restartPolicy: "Never"
+          terminationGracePeriodSeconds: 5
+          volumes:
+            - name: secret-github
+              secret:
+                secretName: secret-github
+            - name: "dshm"
+              emptyDir:
+                medium: "Memory"
+          imagePullSecrets:
+            - name: canarytrace-labs-pull-secret
+
+```
+
 **Canarytrace Smoke**
 
 ```yaml
