@@ -102,10 +102,12 @@ More info on [Webdriver.IO documentation](https://webdriver.io/docs/gettingstart
 
 
 ## Run Canarytrace 4 alpha
+---
 
 Canarytrace is a dockerized stack and is ready for run in a [Kubernetes](https://kubernetes.io/). You can run your test for example in a [Docker compose](https://docs.docker.com/compose/).
 
 ### Docker compose
+---
 
 1). Create `docker-compose.yaml` file with this definition
 
@@ -146,9 +148,10 @@ canarytrace_1  | [chrome 88.0.4324.150 linux #0-0]
 canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] 1 passing (4.9s)
 ```
 
-### Kubernetes
+### Canarytrace in Kubernetes
+---
 
-Canarytrace is designed for run in a Kubernetes. 
+Canarytrace is designed for run in a Kubernetes and we have ready deployment objects.
 
 1). Create namespace
 
@@ -156,15 +159,41 @@ Canarytrace is designed for run in a Kubernetes.
 
 2). Deploy your private ssh key to Kubernetes
 
-- Create ssh key withtout passphrase
+- Create ssh key withtout passphrase via `ssh-keygen`
 
-- Create secret, which will contains your private ssh key
 ```bash
-kubectl -n canarytrace create secret generic secret-github --from-file=ssh-privatekey=/Users/rdpanek/.ssh/id_rsa_no_pass
+ᐰ ssh-keygen -t ed25519 -C "your_email@example.com"
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/Users/rdp/.ssh/id_ed25519): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/rdp/.ssh/id_ed25519.
+Your public key has been saved in /Users/rdp/.ssh/id_ed25519.pub.
+The key fingerprint is:
+SHA256:AxSzKTAVDYfk/lhkP1gjToeyFuNImvDwS8EiRzrZz70 your_email@example.com
+The key's randomart image is:
++--[ED25519 256]--+
+|  +o===.         |
+| * +.o.=         |
+|O * * X +        |
+|o@ B % B .       |
+|o = B = S        |
+| . o + . o       |
+|  . . E          |
+|                 |
+|                 |
++----[SHA256]-----+
 ```
 
-Deployment
-```yaml
+- Upload public key `/Users/rdp/.ssh/id_ed25519.pub` to your Github
+- Create secret, which will contains your private ssh key
+```bash
+kubectl -n canarytrace create secret generic secret-github --from-file=ssh-privatekey=/Users/rdp/.ssh/id_ed25519
+```
+
+- Create deployment `kubectl -n canarytrace create -f canarytrace.yaml`
+
+```yaml title="canarytrace.yaml"
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -254,9 +283,14 @@ spec:
 
 ```
 
-**Canarytrace Smoke**
+### Canarytrace Smoke in Kubernetes
+---
 
-```yaml
+For Canarytrace Smoke you don't need any script or ssh keys. Enter only collections of landing pages.
+
+- Create deployment `kubectl -n canarytrace create -f canarytrace.yaml`
+
+```yaml title="canarytrace.yaml"
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -322,13 +356,54 @@ spec:
             - name: canarytrace-labs-pull-secret
 ```
 
-### CLI
+> `canarytrace-labs-pull-secret` is our secret for download docker image with Canarytrace.
 
-- `USER` - username
-- `PASS` - password
+### Environment variables
+
+This ENV is useful for setup Canarytrace behavior, switch edition, setup credentials to repository or elasticsearch etc.
+Some ENV have a default value, so do you have not to set them.
+
+- `USER` - username used in your test case via `browser.config.username`
+- `PASS` - password used in your test case via ``browser.config.password``
+
+Example
+
+```javascript
+  it('fill login and password inputs', async () => {
+    const userNameElm = await $(userNameInput)
+    await userNameElm.waitForClickable({timeoutMsg: 'Username input not exist.'})
+    await userNameElm.setValue(browser.config.username);
+
+    const passwordElm = await $(passwordInput)
+    await passwordElm.waitForClickable({timeoutMsg: 'Password button not exist.'})
+    await passwordElm.setValue(browser.config.password);
+  })
+```
+
 - `BASE_URL` - one target URL or collection of urls
-- `TC` - test case / monitor script
-- `ENGINE` - default `wdio` = Webdriver.IO v7.5 and no need change it
+
+In case Canarytrace edition, add start URL into `BASE_URL` and in test use only `browser.url('/');`
+
+Enter start URL in your deployment script (Kubernetes)
+```yaml
+- name: BASE_URL
+  value: "https://the-internet.herokuapp.com/login"
+```
+and in your test case use only `/` in [browser.url()](https://webdriver.io/docs/api/browser/url) method
+```javascript
+  it('open home page', async () => {
+    await browser.url('/');
+    await expect(browser).toHaveTitle(title, {message: 'Element title not found. The page couldn\'t be loaded in time.'})
+  });
+```
+
+In case Canarytrace Smoke edition, add collection of landing pages into `BASE_URL` separated by a semicolon
+```yaml
+- name: BASE_URL
+  value: "https://canarytrace.com/;https://canarytrace.com/docs/;https://canarytrace.com/docs/support/contactus"
+```
+
+- `ENGINE` - default `wdio` for Webdriver.IO v7.5 and no need change it
 - `LABELS` - optional metainformation, which is stored in the elastic to each record in each index, e.g. `'relesease=7, environment=dev'`
 
 - `ELASTIC_CLUSTER` - e.g. `localhost:9200` if left blank, documents will be printed to stdout.
@@ -340,10 +415,24 @@ spec:
 
 - `EDITION` - Available options `canarytrace` or `smoke`, default is `smoke`
 - `ENV_PRINT` - Print all environment variables
-- `WAIT_FOR_TIMEOUT` - Timeout limit for all webdriver.io waitFor* commands. Default is 30.000ms
+- `WAIT_FOR_TIMEOUT` - Timeout limit for all [webdriver.io waitFor* commands](https://webdriver.io/docs/options#waitfortimeout). Default is 30.000ms
 - `AVAILABILITY_CHECK` - use `allow` if you want run check availability of web app before run Canarytrace.
-- `LOG_LEVEL` - default `warn`
-- `GIT_REPOSITORY`
-- `GIT_REPOSITORY_PORT`
-- `GIT_REPOSITORY_HOST`
-- `GIT_REVISION`
+- `LOG_LEVEL` - default `warn`. [Level of logging verbosity](https://webdriver.io/docs/options#loglevel)
+- `SPEC` - test case / monitor script
+- `GIT_REPOSITORY` - e.g. `git@github.com:canarytrace/wdio75-demo.git`
+- `GIT_REPOSITORY_PORT` - e.g. `github.com`
+- `GIT_REPOSITORY_HOST` - e.g. `22`
+- `GIT_REVISION` - `fd29508` revision of test case. Canarytrace perform git checkout before run test.
+
+
+> ### What next?
+- [Canarytrace in a nutshell](/docs/#in-a-nutshell)
+- [Start local demo](/docs/canary/start)
+- [Start in kubernetes](/docs/canary/start-cloud)
+- [Live reporting](/docs/features/live-reporting)
+- [Canarytrace Installer](/docs/features/installer)
+- [Dashboards](/docs/features/dashboards)
+
+---
+
+Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
