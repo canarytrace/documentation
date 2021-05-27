@@ -9,7 +9,7 @@ keywords:
   - releases
 ---
 
-> - This page is only for Canarytrace 4 alpha
+> - This page cover Canarytrace 4 alpha
 > - This is a living documentation and will be frequently updated into release Canarytrace 4.1.0
 > - Please create an [issue](https://github.com/canarytrace/documentation/issues/new/choose) if you find a mistake, or have any questions, thanks 👍
 
@@ -30,7 +30,7 @@ keywords:
 
 ## Get started
 ---
-Canarytrace is a dockerized stack for testing and monitoring vitality of web applications. Use a test framework [mocha](https://mochajs.org/) and [Webdriver.IO](https://webdriver.io/) and if you have some test cases for Webdriver.IO, you can run them in Canarytrace. Canarytrace does not change the Webdriver.IO code in any way.
+Canarytrace is a dockerized stack for testing and monitoring vitality of web applications. Use a test frameworks [mocha](https://mochajs.org/) and [Webdriver.IO](https://webdriver.io/) and if you have some test cases for Webdriver.IO, you can run them in Canarytrace. Canarytrace does not change the Webdriver.IO code in any way.
 
 Canarytrace adds features for non-invasive / agent-less monitoring of performance and high availability of web applications, equipment for undistorted and accurate measurements from cloud and without vendor-lock e.g. Kubernetes deployments, live reporting a lot of data from a browser for investigation of performance issues, implements tools such as Lighthouse for performance audit, settings for Elasticsearch and Kibana for the operators, testers or managers.
 
@@ -78,7 +78,7 @@ Webdriver.IO is a testing framework written in javascript and its installation i
 
 🎉 Great, Webdriver.IO is ready with including a demo test.
 
-**What was installed?**
+**What is installed?**
 
 ```bash
 -rw-r--r--    1 rdpanek  staff   204B 27 May 08:54 babel.config.js
