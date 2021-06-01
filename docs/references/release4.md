@@ -129,6 +129,7 @@ services:
     environment:
       BASE_URL: 'https://the-internet.herokuapp.com/'
       SPEC: 'specs/example.e2e.js'
+      LICENSE: 'XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX'
 ```
 
 > `./test` is a relative path to your directory with tests.
@@ -230,6 +231,8 @@ spec:
               value: "https://abcdef.eu-central-1.aws.cloud.es.io:9243"
             - name: ELASTIC_HTTP_AUTH
               value: "elastic:SecretPassword"
+            - name: LICENSE
+              value: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
             resources:
               requests:
                 memory: "300Mi"
@@ -311,6 +314,8 @@ spec:
               value: "https://the-internet.herokuapp.com/login"
             - name: LABELS
               value: "wdio75, demo, smoke"
+            - name: LICENSE
+              value: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
             resources:
               requests:
                 memory: "300Mi"
@@ -356,7 +361,7 @@ spec:
             - name: canarytrace-labs-pull-secret
 ```
 
-> `canarytrace-labs-pull-secret` is our secret for download docker image with Canarytrace.
+> `canarytrace-labs-pull-secret` is our secret for download docker image with Canarytrace. You can download docker image with Canarytrace and push to your docker repository.
 
 ### Environment variables
 
@@ -423,6 +428,7 @@ In case Canarytrace Smoke edition, add collection of landing pages into `BASE_UR
 - `GIT_REPOSITORY_PORT` - e.g. `github.com`
 - `GIT_REPOSITORY_HOST` - e.g. `22`
 - `GIT_REVISION` - `fd29508` revision of test case. Canarytrace perform git checkout before run test.
+- `LICENSE` - is unique key only for you.
 
 
 > ### What next?
