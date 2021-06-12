@@ -18,6 +18,7 @@ keywords:
 
 🚀 **New features**
 
+- Upgrade [Lighthouse 8](https://developers.google.com/web/tools/lighthouse)
 - Upgrade [Webdriver.IO](https://webdriver.io/) from [v6](https://v6.webdriver.io/) on [v7.5](https://webdriver.io/versions)
 - Upgrade Selenium 3 on [Selenium 4](https://github.com/SeleniumHQ/docker-selenium)
 - Editions of Canarytrace and Canarytrace Smoke is one docker container. You can switch between them.
