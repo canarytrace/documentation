@@ -1,0 +1,47 @@
+name: Build & Push documentation
+
+# build only on push to master branch
+on:
+  push:
+    branches: 
+    - master
+jobs:
+
+  job1:
+    name: Build & Push documentation
+    runs-on: ubuntu-20.04
+    outputs:
+      git-tag: ${{ steps.previoustag.outputs.tag }}
+
+    steps:
+      -
+        name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
+        name: 'Get Previous Tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@master"
+      - 
+        name: 'Git Tag'
+        run: echo ${{steps.previoustag.outputs.tag}}
+
+      # Prepare nodejs env
+      - 
+        name: 'Setup node environment'
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+        
+      # Install
+      - 
+        name: 'yarn install'
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
+          
+      # Build prod
+      -
+       name: 'build prod'
+       run: 'npm run build'
