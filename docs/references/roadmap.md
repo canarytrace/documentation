@@ -13,7 +13,7 @@ description: Perex
 
 We work on new features and of course on repairs a bugs. See what awaits us or suggest a new feature 👍 
 
-- <a className="button button--outline button--primary" href="https://github.com/canarytrace/documentation/projects/4">Canarytrace Professional and Smoke Pro</a>
+- <a className="button button--outline button--primary" href="https://github.com/canarytrace/documentation/projects/4">Canarytrace</a>
 - <a className="button button--outline button--primary" href="https://github.com/canarytrace/documentation/projects/3">Canarytrace Listener</a>
 
 ---
