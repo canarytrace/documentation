@@ -15,18 +15,28 @@ keywords:
 > - [Our docker registry](https://quay.io/organization/canarytrace)
 
 ```bash
-# Canarytrace Smoke
-quay.io/canarytrace/smoke:<Major>.<Minor>.<Patch>
+# Canarytrace
+quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-timestamp
 
-# Canarytrace Smoke Pro
-quay.io/canarytrace/smoke-pro:<Major>.<Minor>.<Patch>
-
-# Canarytrace Developer
-quay.io/canarytrace/developer:<Major>.<Minor>.<Patch>
-
-# Canarytrace Professional
-quay.io/canarytrace/professional:<Major>.<Minor>.<Patch>
+# Canarytrace Pro
+quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-timestamp
 ```
+
+### Canarytrace 4.2.16
+**Released 13. 06. 2021**
+
+📦 **Changes**
+- Upgrade [Lighthouse 8](https://developers.google.com/web/tools/lighthouse)
+- Upgrade [Webdriver.IO](https://webdriver.io/) from v6 on [v7.5](https://webdriver.io/)
+- Upgrade on [Selenium 4](https://www.selenium.dev/)
+- Canarytrace and Canarytrace Smoke editions are in one docker container. You can switch between them.
+- Print more metainformation into elasticsearch indices, e.g. version, edition etc.
+- Prepare for implementing [Cypress.io](https://www.cypress.io/)
+
+
+🐛 **Bug fixes**
+- Fix duplicate storage performance entries
+- Fix Canarytrace Smoke: accept only first navigate request
 
 ---
 

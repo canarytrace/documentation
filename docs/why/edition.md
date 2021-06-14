@@ -12,41 +12,34 @@ keywords:
 ---
 
 > ### What you’ll learn
-- What is different betwen Canarytrace Professional and Canarytrace Smoke Pro
+- What is different betwen Canarytrace and Canarytrace Pro
 
 
-## Canarytrace Smoke 
+## Canarytrace
 
 ---
 
-Canarytrace Smoke is a free edition and you can use it for study of web performance testing
+Canarytrace is a Plug’n'Play stack for testing and monitoring your web application from user perspective. E.g. open homepage -> search product -> add product to basket -> buy. From each step you get an overview of whether it is available and how fast it loads.
+
+
+You can switch on smoke mode, because smoke is a maintenance free stack and just enter only a collection of landing pages.
+You get an overview of whether each landing pages  works and how fast it loads.
+
 
 - [How to start with Canarytrace](/docs/canary/start)
 - [How to get deployment script](/docs/guides/kubernetes#deploy-canarytrace-smoke)
 
 
 
-## Canarytrace Smoke Pro
+## Canarytrace Pro
 
 ---
 
-Canarytrace Smoke Pro is maintenance free stack for test, measure and monitor web application.
+Canarytrace Pro adds additional audits such as performance audits, audit unused resources such as (javascript, css, etc.), hero elements and much more.
 - [Features overview](/docs/features/overview)
 - [How to get a docker image](/docs/features/docker#canarytrace-smoke-pro)
 - [How to get a deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
-- Features and parts of documentation has badge <a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
 
-
-## Canarytrace Professional 
-
----
-
-Canarytrace Professional is a Plug’n'Play stack for testing and monitoring your web application from user perspective.
-
-- [Features overview](/docs/features/overview)
-- [How to get a docker image](/docs/features/docker#canarytrace-professional)
-- [How to get a deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
-- Features and parts of documentation has badge <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
 ---
 
