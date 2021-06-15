@@ -28,6 +28,7 @@ Canarytrace is a Plug’n'Play stack for testing, monitoring availability  and m
 
 Only [Docker](https://www.docker.com/). If you don't know the docker, take a look at our examples.
 
+- [Contact us to obtain a trial license](/docs/support/contactus)
 - [How to run Canarytrace on Windows 10 Pro](/docs/guides/windows)
 - [How to run Canarytrace on Linux](/docs/guides/linux)
 
@@ -60,7 +61,7 @@ docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kib
 - [Canarytrace Installer](/docs/features/installer) prepare Elasticsearch and Kibana for Canarytrace use.
 
 ```bash
-docker run --name installer --net canary --rm quay.io/canarytrace/installer:7.3
+docker run --name installer --net canary --rm quay.io/canarytrace/installer:7.10.0
 ```
 
 ### Prepare script for run Canarytrace Smoke
@@ -70,14 +71,14 @@ For this demo we use [docker-compose](https://docs.docker.com/compose/). Create 
 version: "3.8"
 services:
   browser:
-    image: selenium/standalone-chrome:3.141.59-20200730
+    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20210207
     ports:
       - "4444:4444"
     network_mode: "host"
     volumes:
       - /dev/shm:/dev/shm
   canarytrace:
-    image: quay.io/canarytrace/smoke:3.0.5
+    image: quay.io/canarytrace/canarytrace-pub:4.2.16-20210614173445-45
     depends_on:
       - browser
     network_mode: "host"
@@ -98,7 +99,7 @@ docker-compose up
 
 ### What data is stored into Elasticsearch
 
-Canarytrace Smoke is community edition collect these data
+Canarytrace collect these data
 
 - `c.report-*` index with test step name and function result `passed / false`
 - `c.performance-entries-*` index with collected list of all [PerformanceEntry](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEntry) objects for the tested page.
@@ -110,7 +111,7 @@ That's all 🎉 Now you can explore dashboard and visualizations in Kibana. Open
 
 ![Architecture](../../static/docs-img/kibana-canarytrace-smoke-overview.png)
 
-For real use or for production use start your Canarytrace Smoke on cloud in Kubernetes.
+For real use or for production use start your Canarytrace on cloud in Kubernetes.
 
 ---
 
