@@ -28,11 +28,7 @@ In this first step we create a virtual machine with Windows 10 Pro and install D
 
 > Wait for validation passed message 
 
-![Azure and virtual machine](../../static/docs-img/azure-create-virtual-machine.png)
-
 - Click on `Create` button and wait on Your deployment is complete message
-
-![Azure deployment](../../static/docs-img/azure-deployment.png)
 
 - Show detail of deploy and click on `Connect` button. 
 - Select RDP and download configuration file. Use the configuration file for your favorite RDP client application.

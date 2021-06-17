@@ -116,12 +116,12 @@ Canarytrace is a dockerized stack and is ready for run in a [Kubernetes](https:/
 version: "3.8"
 services:
   chrome:
-    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20210207
+    image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
     network_mode: "host"
     volumes:
       - /dev/shm:/dev/shm
   canarytrace:
-    image: quay.io/canarytrace/canarytrace:latest
+    image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210614121258-13
     depends_on:
       - chrome
     network_mode: "host"
@@ -210,7 +210,7 @@ spec:
         spec:
           containers:
           - name: canary
-            image: quay.io/canarytrace/canarytrace:latest
+            image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210614121258-13
             env:
             - name: BASE_URL
               value: "https://the-internet.herokuapp.com/login"
@@ -247,7 +247,7 @@ spec:
                 name: secret-github
                 readOnly: true
           - name: selenium
-            image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20210207
+            image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
             ports:
               - containerPort: 4444
             resources:
@@ -282,8 +282,6 @@ spec:
             - name: "dshm"
               emptyDir:
                 medium: "Memory"
-          imagePullSecrets:
-            - name: canarytrace-labs-pull-secret
 
 ```
 
@@ -309,7 +307,7 @@ spec:
         spec:
           containers:
           - name: canary
-            image: quay.io/canarytrace/canarytrace:latest
+            image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210614121258-13
             env:
             - name: BASE_URL
               value: "https://the-internet.herokuapp.com/login"
@@ -326,7 +324,7 @@ spec:
                 cpu: "300m"
             imagePullPolicy: "IfNotPresent"
           - name: selenium
-            image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20210207
+            image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
             ports:
               - containerPort: 4444
             resources:
@@ -358,11 +356,7 @@ spec:
             - name: "dshm"
               emptyDir:
                 medium: "Memory"
-          imagePullSecrets:
-            - name: canarytrace-labs-pull-secret
 ```
-
-> `canarytrace-labs-pull-secret` is our secret for download docker image with Canarytrace. You can download docker image with Canarytrace and push to your docker repository.
 
 ### Environment variables
 

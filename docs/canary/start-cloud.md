@@ -71,7 +71,7 @@ We will go step by step to build your Canarytrace infrastructure based on Kubern
 version: "3.8"
 services:
   installer:
-    image: quay.io/canarytrace/installer:7.3
+    image: quay.io/canarytrace/installer:7.10.0
     environment:
       ELASTIC_ENDPOINT: 'https://9e0f4b1db5234c48b0933bd421b543f0.us-central1.gcp.cloud.es.io'
       ELASTIC_PORT: 9243
