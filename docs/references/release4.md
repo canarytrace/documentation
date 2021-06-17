@@ -35,14 +35,14 @@ Canarytrace is a dockerized stack for testing and monitoring vitality of web app
 
 Canarytrace adds features for non-invasive / agent-less monitoring of performance and high availability of web applications, equipment for undistorted and accurate measurements from cloud and without vendor-lock e.g. Kubernetes deployments, live reporting a lot of data from a browser for investigation of performance issues, implements tools such as Lighthouse for performance audit, settings for Elasticsearch and Kibana for the operators, testers or managers.
 
-You can via Webdriver.io monitoring and measurement any web application.
+You can monitor and measure any web application via Webdriver.io.
 
 ### Editions
 ---
 
-**Canarytrace** is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Is useful for testing and  monitoring user journeys. E.g. open homepage -> search product -> add product to basket -> buy
+**Canarytrace** is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Is useful for testing and  monitoring of user journeys. E.g. open homepage -> search product -> add product to basket -> buy
 
-**Canarytrace Smoke** is a Plug’n'Play stack and maintenance free stack for test, measure and monitor web application. Is useful for testing and monitoring collection of landing pages.
+**Canarytrace Smoke** is a Plug’n'Play and maintenance free stack for testing, measuring and monitoring of web applications. Is useful for testing and monitoring collection of landing pages.
 
 ### Write your first monitor script
 
@@ -153,7 +153,7 @@ canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] 1 passing (4.9s)
 ### Canarytrace in Kubernetes
 ---
 
-Canarytrace is designed for run in a Kubernetes and we have ready deployment objects.
+Canarytrace is designed for running in a Kubernetes and we have ready deployment objects.
 
 1). Create namespace
 
@@ -290,7 +290,7 @@ spec:
 ### Canarytrace Smoke in Kubernetes
 ---
 
-For Canarytrace Smoke you don't need any script or ssh keys. Enter only collections of landing pages.
+For Canarytrace Smoke you don't need any script or ssh keys. Enter only list of landing pages.
 
 - Create deployment `kubectl -n canarytrace create -f canarytrace.yaml`
 
@@ -366,8 +366,8 @@ spec:
 
 ### Environment variables
 
-This ENV is useful for setup Canarytrace behavior, switch edition, setup credentials to repository or elasticsearch etc.
-Some ENV have a default value, so do you have not to set them.
+This ENV are useful for setup Canarytrace behavior, switch edition, setup credentials to repository or elasticsearch etc.
+Some ENV have a default value, there's no need to set them.
 
 - `USER` - username used in your test case via `browser.config.username`
 - `PASS` - password used in your test case via ``browser.config.password``
@@ -388,7 +388,7 @@ Example
 
 - `BASE_URL` - one target URL or collection of urls
 
-In case Canarytrace edition, add start URL into `BASE_URL` and in test use only `browser.url('/');`
+If you are using Canarytrace edition, add start URL into `BASE_URL` and in test use only `browser.url('/');`
 
 Enter start URL in your deployment script (Kubernetes)
 ```yaml
@@ -403,7 +403,7 @@ and in your test case use only `/` in [browser.url()](https://webdriver.io/docs/
   });
 ```
 
-In case Canarytrace Smoke edition, add collection of landing pages into `BASE_URL` separated by a semicolon
+If you are using Canarytrace Smoke edition, add list of landing pages into `BASE_URL` separated by a semicolon
 ```yaml
 - name: BASE_URL
   value: "https://canarytrace.com/;https://canarytrace.com/docs/;https://canarytrace.com/docs/support/contactus"
