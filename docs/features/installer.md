@@ -22,7 +22,7 @@ Set up Elasticsearch and Kibana it's also fast, thanks to prepared Canarytrace I
 
 - **Latest supported version of Elasticsearch and Kibana is 7.10.0**
 - Dockerized - the [docker image](https://quay.io/repository/canarytrace/installer) tag corresponds to the version of the Elasticsearch for which it is intended 
-- Ready for [Canarytrace Professional](/docs/why/edition#canarytrace-professional) and for [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro)
+- Ready for [Canarytrace](/docs/why/edition/) and for [Canarytrace Pro](/docs/why/edition/)
 - Ready for local use
 - Ready for use on elastic.co
 
