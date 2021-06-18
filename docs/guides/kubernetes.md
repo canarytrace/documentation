@@ -46,7 +46,7 @@ Requirements on resource will be higher if you will be perform a performance aud
 | Resources | CPU requests | CPU limits | Memory requests | Memory limits |
 |-|-|-|-|-|
 | Canarytrace Runner | `200m` | `300m` | `300Mi` | `400Mi` |
-| Browser | `2000m` | `4000m` | `4000Mi` | `4000Mi` |
+| Browser | `2000m` | `4000m` | `2000Mi` | `4000Mi` |
 | Total | `2200m` | `4300m` | `4300Mi` | `4400Mi` |
 
 
@@ -64,111 +64,31 @@ canary-3bcb1
 
 ## How to get a deployment scripts
 
-All deployment scripts are distributed with [Canarytrace Professional](/docs/why/edition#canarytrace-professional) and [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) docker images
+All deployment scripts are distributed with [Canarytrace](/docs/why/edition) docker images.
 
 ```bash
 # Download deployments scripts from docker image
-docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/smoke-pro:3.0.2 /opt/canary/deployments/ /deployments/
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/canarytrace-pub:4.2.17-pro-20210618073421-28 /opt/canary/deployments/ /deployments/
 
 # deployments folder is transferred from the docker image to localhost
 ᐰ ls -lah deployments/
-total 8
-drwxr-xr-x@ 6 rdpanek  staff   192B  2 srp 19:43 .
-drwxr-xr-x  3 rdpanek  staff    96B  4 srp 00:07 ..
--rw-r--r--  1 rdpanek  staff   2,3K  2 srp 19:43 README.md
-drwxr-xr-x@ 3 rdpanek  staff    96B  6 čvc 18:47 beats
-drwxr-xr-x@ 7 rdpanek  staff   224B  2 srp 19:43 k8s
-drwxr-xr-x@ 6 rdpanek  staff   192B  2 srp 11:06 tf-k8s
+drwxr-xr-x@ 6 rdpanek  staff   192B 18 Jun 09:24 .
+drwxr-xr-x  3 rdpanek  staff    96B 18 Jun 10:19 ..
+-rw-r--r--  1 rdpanek  staff   365B 18 Jun 09:24 README.md
+-rw-r--r--  1 rdpanek  staff   3.4K 18 Jun 09:24 filebeat.yaml
+-rw-r--r--  1 rdpanek  staff   2.2K 18 Jun 09:24 smoke-desktop.yaml
+-rw-r--r--  1 rdpanek  staff   2.2K 18 Jun 09:24 smoke-mobile.yaml
 
 ```
 
-- `beats` contains [filebeat](https://www.elastic.co/beats/filebeat) deployment scripts for backup live logging stdout of all docker images of Canarytrace
+- [filebeat](https://www.elastic.co/beats/filebeat) logging stdout and stderr streams from all Canarytrace components
 
-- `k8s` contains Kubernetes deployment scripts of Canarytrace
+- `smoke-desktop.yaml` Canarytrace Smoke CronJob with desktop settings
 
-- `tf-k8s` is [Terraform](https://www.terraform.io/) demo script for create Kubernetes cluster on [DigitalOcean](https://www.digitalocean.com/)
+- `smoke-mobile.yaml` Canarytrace Smoke CronJob with mobile settings
 
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 
-
-## Deploy Canarytrace Smoke
-
-[Canarytrace Smoke](/docs) is a free edition and you can use it for study of web performance testing
-
-```yaml title="CronJob"
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: smoke-web
-spec:
-  concurrencyPolicy: Replace
-  failedJobsHistoryLimit: 2
-  schedule: "*/3 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: canary
-            image: quay.io/canarytrace/smoke-pro
-            env:
-            - name: BASE_URL
-              value: "https://www.tesla.com/;http://canarytrace.com/"
-            - name: SMOKE
-              value: allow
-            - name: ELASTIC_CLUSTER
-              value: "https://XXX.europe-west3.gcp.cloud.es.io:9243"
-            - name: ELASTIC_HTTP_AUTH
-              value: "elastic:XXX"
-            - name: AT_DRIVER_HOST_NAME
-              value: "localhost"
-            - name: PT_AUDIT
-              value: allow
-            - name: PT_AUDIT_THROTTLING
-              value: 'desktopDense4G'
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "400Mi"
-                cpu: "300m"
-            imagePullPolicy: "IfNotPresent"
-          - name: selenium
-            image: selenium/standalone-chrome:3.141.59-20200730
-            ports:
-              - containerPort: 4444
-            resources:
-              requests:
-                memory: "4000Mi"
-                cpu: "2000m"
-              limits:
-                memory: "6000Mi"
-                cpu: "4000m"
-            imagePullPolicy: "IfNotPresent"
-            volumeMounts:
-              - mountPath: "/dev/shm"
-                name: "dshm"
-            livenessProbe:
-              httpGet:
-                path: /wd/hub
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: /wd/hub
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-          restartPolicy: "Never"
-          volumes:
-            - name: "dshm"
-              emptyDir:
-                medium: "Memory"
-          imagePullSecrets:
-            - name: canarytrace-labs-pull-secret
-```
 
 ## RBAC and how to connect to Kubernetes
 > - ### You got from us
@@ -241,125 +161,6 @@ kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml edit cronjob canarytrace-xxx-1
 **You can display your Canarytrace instances**
 
 - `kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml get pods`
-
-## Prepare and deploy Canarytrace via Terraform
-
-1. Install [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
-2. Deploy Kubernetes objects via Terraform
-
-```bash
-ᐰ cd deployments/tf-k8s/
-terraform init
-terraform apply
-```
-
-## Prepare and manually deploy Canarytrace to Kubernetes
-
-```bash
-ᐰ ls -lah k8s/
-total 40
-drwxr-xr-x  7 rdpanek  staff   224B  3 srp 18:50 .
-drwxr-xr-x  6 rdpanek  staff   192B  3 srp 18:50 ..
--rw-r--r--  1 rdpanek  staff   568B  3 srp 18:50 config-map.yml
--rw-r--r--  1 rdpanek  staff    60B  3 srp 18:50 namespace.yaml
--rw-r--r--  1 rdpanek  staff   203B  3 srp 18:50 secret-aws.yml
--rw-r--r--  1 rdpanek  staff   127B  3 srp 18:50 secret-elastic.yml
--rw-r--r--  1 rdpanek  staff   113B  3 srp 18:50 secret-user.yml
-```
-
-**namespace.yaml**
-- first step is create namespace `canarytrace`
-
-```bash
-kubectl create -f namespace.yaml
-```
-
-**config-map.yaml**
-- setup path to git repository, WDIO log.level, wait.for.timeout for all waitFor* methods and allow the use of the services
-
-```bash
-pt.audit: "allow"
-coverage.audit: "allow"
-response.intercept: "allow"
-request.intercept: "allow"
-console.intercept: "allow"
-memory.intercept: "allow"
-performance.entries.intercept: "allow"
-```
-
-and deploy
-
-```bash
-kubectl -n canarytrace create -f config-map.yml
-```
-
-**secret-aws.yml**
-
-- setup for AWS S3 such as access.key, secret.key, region and bucket
-
-and deploy
-
-```bash
-kubectl -n canarytrace create -f secret-aws.yml
-```
-
-**secret-elastic.yml**
-
-- setup for live logging to elasticsearch such as cluster and http.auth
-
-and deploy
-
-```bash
-kubectl -n canarytrace create -f secret-elastic.yml
-```
-
-**secret-user.yml**
-
-- setup USERNAME and PASSWORD for logging to tested application
-
-and deploy
-
-```bash
-kubectl -n canarytrace create -f secret-user.yml
-```
-
-**Create secret with your id_rsa_no_pass for clone private git repository**
-
-```bash
-kubectl -n canarytrace create secret generic secret-github --from-file=ssh-privatekey=/Users/rdpanek/.ssh/id_rsa_no_pass
-```
-
-**Deploy CronJob with your monitor script**
-```bash
-kubectl -n canarytrace create -f https://raw.githubusercontent.com/canarytrace/demo-tests/master/k8s/tesla.yaml
-```
-
-Update environment variables of the deployment script with your monitor script
-
-- `image: rdpanek/canarytrace:c.2.9.31` set latest tag of docker image with Canarytrace Professional or use your private docker repository
-- set revision of test in your git repository
-
-```bash
-- name: GIT_REVISION
-  value: "aaa9d40"
-```
-
-- set name of test case
-
-```bash
-- name: SPEC
-  value: "tesla/smoke.js"
-```
-
-- set URI of tested application
-
-```bash
-- name: BASE_URL
-  value: "https://www.tesla.com/"
-```
-
-All values for other environment variables are provided via `secret-github`, `secret-elastic`, `secret-aws`, `secret-user`, `canary-config` and `canary-services`
-
 
 ## Filebeat
 
