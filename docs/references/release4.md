@@ -424,7 +424,8 @@ If you are using Canarytrace Smoke edition, add list of landing pages into `BASE
 - `GIT_REPOSITORY_HOST` - e.g. `22`
 - `GIT_REVISION` - `fd29508` revision of test case. Canarytrace perform git checkout before run test.
 - `LICENSE` - is unique key only for you.
-
+- `PT_AUDIT` - use `allow` if you want run performance audit
+- `PT_AUDIT_THROTTLING` - available options `mobileSlow4G`, `mobileRegular3G` or `desktopDense4G`
 
 > ### What next?
 - [Canarytrace in a nutshell](/docs/#in-a-nutshell)
