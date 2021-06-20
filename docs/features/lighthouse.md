@@ -239,6 +239,63 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - `modern-image-formats` Serve images in next-gen formats. https://web.dev/uses-webp-images/
 
+- `network-server-latency` Server Backend Latencies. https://web.dev/time-to-first-byte/
+
+- `third-party-facades` Lazy load third-party resources with facades. https://web.dev/third-party-facades/
+
+### Configuration
+
+- `maxWaitForFcp`
+
+- `maxWaitForLoad`
+
+- `formFactor`
+
+- `throttling.rttMs`
+
+- `throttling.throughputKbps`
+
+- `throttling.requestLatencyMs`
+
+- `throttling.downloadThroughputKbps`
+
+- `throttling.uploadThroughputKbps`
+
+- `throttling.cpuSlowdownMultiplier`
+
+- `emulatedUserAgent` - `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Safari/537.36 Chrome-Lighthouse`
+
+- `lighthouseReport` - name of HTML Lighthouse report `./assets/2021-06-18T18:10:46.330Z-http---164-90-240-72-email.html`
+
+### Other
+
+- `benchmarkIndex`
+
+- `requestedUrl` and `finalUrl`.
+
+- `labels` Canarytrace metainformation 
+```
+"edition=canarytrace-smoke-pro-4.2.16-alpha",
+"engine=wdio",
+"smoke-desktop, fra1, spot",
+"pt.audit=desktopDense4G",
+```
+
+- `uuidAction`is unique id for test step / for `it` method. This is useful for searching in Kibana. The same uuidAction is stored in other Elasticsearch indices, so by this uuidAction is possible pairing data from `c.report` index.
+
+- `uuid` is unique id of one running instance of Canarytrace runner. This same uuid is stored in other Elasticsearch indices, so by this uuid is possible pairing data from c.report index and from c.audit index.
+
+- `timestamp`
+
+- `network-requests` ???
+
+- `main-thread-tasks` ??? 
+
+- `largest-contentful-paint-element` ???
+
+- `preload-lcp-image` ???
+
+- `performance-budget` https://web.dev/use-lighthouse-for-performance-budgets/
 
 ### Visualizations of Lighthouse results
 
