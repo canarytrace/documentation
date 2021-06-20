@@ -263,15 +263,15 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - `throttling.cpuSlowdownMultiplier`
 
-- `emulatedUserAgent` - `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Safari/537.36 Chrome-Lighthouse`
+- `emulatedUserAgent` - e.g.`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Safari/537.36 Chrome-Lighthouse`
 
 - `lighthouseReport` - name of HTML Lighthouse report `./assets/2021-06-18T18:10:46.330Z-http---164-90-240-72-email.html`
 
 ### Other
 
-- `benchmarkIndex`
+- `benchmarkIndex` e.g. `1,720`, `1,590.5`, `1,717.5` etc. depends on your hardware and available [resources for browser](/docs/guides/kubernetes#required-resources-for-one-instance).
 
-- `requestedUrl` and `finalUrl`.
+- `requestedUrl` is entered url and `finalUrl` is url after last  redirect. They usually are the same.
 
 - `labels` Canarytrace metainformation 
 ```
@@ -296,6 +296,79 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 - `preload-lcp-image` ???
 
 - `performance-budget` https://web.dev/use-lighthouse-for-performance-budgets/
+
+### Lighthouse configuration
+
+Canarytrace has build-in latest version of Lighthouse and you can set behavior of Lighthouse via environment variables. If you use [smoke](/docs/why/edition) mode, the Lighthouse will be launched automatically for each landing page.
+
+- `PT_AUDIT` use `allow` for run performance audit / Lighthouse
+- `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
+- `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
+
+### Lighthouse `formFactor`
+
+You can run multiple instances of Canarytrace and via option `PT_AUDIT_THROTTLING` set different formFactor for each of them. This is useful for create work load model by your production load and by devices used your clients.
+
+```json title="desktopDense4G"
+"formFactor": "desktop",
+"throttling": {
+  "rttMs": 40,
+  "throughputKbps": 10240,
+  "requestLatencyMs": 0,
+  "downloadThroughputKbps": 0,
+  "uploadThroughputKbps": 0,
+  "cpuSlowdownMultiplier": 1
+},
+"throttlingMethod": "simulate",
+"screenEmulation": {
+  "mobile": false,
+  "width": 1350,
+  "height": 940,
+  "deviceScaleFactor": 1,
+  "disabled": false
+},
+```
+
+```json title="mobileRegular3G"
+"formFactor": "mobile",
+"throttling": {
+  "rttMs": 300,
+  "throughputKbps": 700,
+  "requestLatencyMs": 1125,
+  "downloadThroughputKbps": 630,
+  "uploadThroughputKbps": 630,
+  "cpuSlowdownMultiplier": 4
+},
+"throttlingMethod": "simulate",
+"screenEmulation": {
+  "mobile": true,
+  "width": 360,
+  "height": 640,
+  "deviceScaleFactor": 2.625,
+  "disabled": false
+},
+```
+
+```json title="mobileSlow4G"
+"formFactor": "mobile",
+"throttling": {
+  "rttMs": 150,
+  "throughputKbps": 1638.4,
+  "requestLatencyMs": 562.5,
+  "downloadThroughputKbps": 1474.5600000000002,
+  "uploadThroughputKbps": 675,
+  "cpuSlowdownMultiplier": 4
+},
+"throttlingMethod": "simulate",
+"screenEmulation": {
+  "mobile": true,
+  "width": 360,
+  "height": 640,
+  "deviceScaleFactor": 2.625,
+  "disabled": false
+}
+```
+
 
 ### Visualizations of Lighthouse results
 
