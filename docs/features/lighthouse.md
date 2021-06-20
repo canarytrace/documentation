@@ -13,32 +13,42 @@ Canarytrace Pro in `smoke` edition automatically run Lighthouse on every URL and
 
 Result of Performance Audit (lhr object) is stored to `c.audit-*` index
 
-### Audits
-
 An object containing the results of the audits, keyed by their name.
+
+### Performance score
+
+```performance.score``` In general, only metrics contribute to your Lighthouse Performance score, not the results of Opportunities or Diagnostics. https://web.dev/performance-scoring/
+
+  - [Why score fluctuates?](https://web.dev/performance-scoring/#fluctuations)
+
+
+### Metrics
 
 - ```first-contentful-paint```
 First Contentful Paint (FCP) is one of six metrics tracked in the Performance section of the Lighthouse report. Each metric captures some aspect of page load speed. https://web.dev/first-contentful-paint/ 
 
+- ```speed-index``` Speed Index measures how quickly content is visually displayed during page load. Lighthouse first captures a video of the page loading in the browser and computes the visual progression between frames. Lighthouse then uses the Speedline Node.js module to generate the Speed Index score. https://web.dev/speed-index/
+
+- ```interactive``` Measuring TTI is important because some sites optimize content visibility at the expense of interactivity. This can create a frustrating user experience: the site appears to be ready, but when the user tries to interact with it, nothing happens. https://web.dev/interactive/ 
+
+- ```total-blocking-time``` The Total Blocking Time (TBT) metric measures the total amount of time between First Contentful Paint (FCP) and Time to Interactive (TTI) where the main thread was blocked for long enough to prevent input responsiveness. https://web.dev/tbt/ 
+
 - ```largest-contentful-paint``` Largest Contentful Paint (LCP) is an important, user-centric metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. https://web.dev/lcp/ 
+
+- ```cumulative-layout-shift``` CLS measures the sum total of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page.
+A layout shift occurs any time a visible element changes its position from one rendered frame to the next. https://web.dev/cls/ 
+
+### Opportunities and audits
+
+- ```max-potential-fid``` Max Potential FID measures the worst-case First Input Delay that your users might experience. First Input Delay measures the time from when a user first interacts with your site, such as clicking a button, to the time when the browser is actually able to respond to that interaction. https://web.dev/lighthouse-max-potential-fid/ 
 
 - ```first-meaningful-paint``` 
 FMP measures when the primary content of a page is visible to the user. The raw score for FMP is the time in seconds between the user initiating the page load and the page rendering the primary above-the-fold content. FMP essentially shows the timing of the paint after which the biggest above-the-fold layout change happens. Learn more about the technical details of FMP in Google's Time to First Meaningful Paint: a layout-based approach. https://web.dev/first-meaningful-paint/
   - This metric is [deprecated in Lighthouse 6.0](https://web.dev/first-meaningful-paint/)
 
-- ```speed-index``` Speed Index measures how quickly content is visually displayed during page load. Lighthouse first captures a video of the page loading in the browser and computes the visual progression between frames. Lighthouse then uses the Speedline Node.js module to generate the Speed Index score. https://web.dev/speed-index/
-
-- ```total-blocking-time``` The Total Blocking Time (TBT) metric measures the total amount of time between First Contentful Paint (FCP) and Time to Interactive (TTI) where the main thread was blocked for long enough to prevent input responsiveness. https://web.dev/tbt/ 
-
-- ```max-potential-fid``` Max Potential FID measures the worst-case First Input Delay that your users might experience. First Input Delay measures the time from when a user first interacts with your site, such as clicking a button, to the time when the browser is actually able to respond to that interaction. https://web.dev/lighthouse-max-potential-fid/ 
-
-- ```cumulative-layout-shift``` CLS measures the sum total of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page.
-A layout shift occurs any time a visible element changes its position from one rendered frame to the next. https://web.dev/cls/ 
-
 - ```server-response-time``` This audit fails when the browser waits more than 600 ms for the server to respond to the main document request. Users dislike when pages take a long time to load. Slow server response times are one possible cause for long page loads.
 When users navigate to a URL in their web browser, the browser makes a network request to fetch that content. Your server receives the request and returns the page content. https://web.dev/time-to-first-byte/ 
 
-- ```interactive``` Measuring TTI is important because some sites optimize content visibility at the expense of interactivity. This can create a frustrating user experience: the site appears to be ready, but when the user tries to interact with it, nothing happens. https://web.dev/interactive/ 
 
 - ```critical-request-chains``` Critical request chains are series of dependent network requests important for page rendering. The greater the length of the chains and the larger the download sizes, the more significant the impact on page load performance. https://web.dev/critical-request-chains/ 
 
@@ -97,6 +107,138 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - ```uses-passive-event-listeners``` Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. https://web.dev/uses-passive-event-listeners/ 
 
+- `diagnostics` 
+
+```json
+
+{
+  "numRequests": 29,
+  "numScripts": 13,
+  "numStylesheets": 3,
+  "numFonts": 2,
+  "numTasks": 533,
+  "numTasksOver10ms": 9,
+  "numTasksOver25ms": 6,
+  "numTasksOver50ms": 6,
+  "numTasksOver100ms": 0,
+  "numTasksOver500ms": 0,
+  "rtt": 0.08685,
+  "throughput": 19116436.34372206,
+  "maxRtt": 0.8162,
+  "maxServerLatency": 66.7778,
+  "totalByteWeight": 1118431,
+  "totalTaskTime": 669.4620000000001,
+  "mainDocumentTransferSize": 3514
+}
+```
+
+- `resource-summary` Keep request counts low and transfer sizes small
+
+```json
+{
+  "Total": {
+    "resourceType": "total",
+    "requestCount": 27,
+    "transferSize": 1118431
+  },
+  "Image": {
+    "resourceType": "image",
+    "requestCount": 3,
+    "transferSize": 902953
+  },
+  "Script": {
+    "resourceType": "script",
+    "requestCount": 13,
+    "transferSize": 117368
+  },
+  "Other": {
+    "resourceType": "other",
+    "requestCount": 5,
+    "transferSize": 70552
+  },
+  "Font": {
+    "resourceType": "font",
+    "requestCount": 2,
+    "transferSize": 22170
+  },
+  "Document": {
+    "resourceType": "document",
+    "requestCount": 1,
+    "transferSize": 3514
+  },
+  "Stylesheet": {
+    "resourceType": "stylesheet",
+    "requestCount": 3,
+    "transferSize": 1874
+  },
+  "Media": {
+    "resourceType": "media",
+    "requestCount": 0,
+    "transferSize": 0
+  },
+  "Third-party": {
+    "resourceType": "third-party",
+    "requestCount": 3,
+    "transferSize": 23008
+  }
+}
+```
+
+- `metrics`
+```json
+{
+  "firstContentfulPaint": 775,
+  "firstMeaningfulPaint": 775,
+  "largestContentfulPaint": 905,
+  "interactive": 808,
+  "speedIndex": 843,
+  "totalBlockingTime": 65,
+  "maxPotentialFID": 57,
+  "cumulativeLayoutShift": 0.33013888888888887,
+  "cumulativeLayoutShiftMainFrame": 0.33013888888888887,
+  "totalCumulativeLayoutShift": 0.33013888888888887,
+  "observedTimeOrigin": 0,
+  "observedTimeOriginTs": 7410953153958,
+  "observedNavigationStart": 0,
+  "observedNavigationStartTs": 7410953153958,
+  "observedFirstPaint": 362,
+  "observedFirstPaintTs": 7410953516422,
+  "observedFirstContentfulPaint": 362,
+  "observedFirstContentfulPaintTs": 7410953516422,
+  "observedFirstContentfulPaintAllFrames": 362,
+  "observedFirstContentfulPaintAllFramesTs": 7410953516422,
+  "observedFirstMeaningfulPaint": 362,
+  "observedFirstMeaningfulPaintTs": 7410953516422,
+  "observedLargestContentfulPaint": 362,
+  "observedLargestContentfulPaintTs": 7410953516422,
+  "observedLargestContentfulPaintAllFrames": 362,
+  "observedLargestContentfulPaintAllFramesTs": 7410953516422,
+  "observedTraceEnd": 3060,
+  "observedTraceEndTs": 7410956214107,
+  "observedLoad": 650,
+  "observedLoadTs": 7410953803763,
+  "observedDomContentLoaded": 89,
+  "observedDomContentLoadedTs": 7410953242631,
+  "observedCumulativeLayoutShift": 0.33013888888888887,
+  "observedCumulativeLayoutShiftMainFrame": 0.33013888888888887,
+  "observedTotalCumulativeLayoutShift": 0.33013888888888887,
+  "observedFirstVisualChange": 279,
+  "observedFirstVisualChangeTs": 7410953432958,
+  "observedLastVisualChange": 879,
+  "observedLastVisualChangeTs": 7410954032958,
+  "observedSpeedIndex": 710,
+  "observedSpeedIndexTs": 7410953863987
+}
+```
+
+- `user-timings` User Timing marks and measures [Hero Elements](/docs/features/hero) / https://web.dev/user-timings/
+
+- `font-display` All text remains visible during webfont loads. https://web.dev/font-display/
+
+- `total-byte-weight` Avoids enormous network payloads. https://web.dev/total-byte-weight/
+
+- `modern-image-formats` Serve images in next-gen formats. https://web.dev/uses-webp-images/
+
 
 ### Visualizations of Lighthouse results
 
@@ -108,6 +250,8 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 ### Sources
 
 - Architecture https://github.com/GoogleChrome/lighthouse/blob/4d3bda1f14540266eb37f7e2ba8cabbc668db11d/docs/architecture.md
+- Metrics https://web.dev/lighthouse-performance/#metrics
+- Lighthouse Scoring Calculator https://googlechrome.github.io/lighthouse/scorecalc/
 
 ---
 
