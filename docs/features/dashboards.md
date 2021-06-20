@@ -46,7 +46,7 @@ The metrics scores and the perf score are colored according to these ranges:
 
 ### Canarytrace Smoke Overview
 
-This dashboard is very simple and allows you to get an overview of the availability of a web application and the loading speed of resources such as images, JS or CSS files. Contains visualizations from data, which are collected from [Canarytrace Smoke Pro](/docs/why/edition) and from Canarytrace Smoke.
+This dashboard is very simple and allows you to get an overview of the availability of a web application and the loading speed of resources such as images, JS or CSS files. Contains visualizations from data, which are collected from [Canarytrace](/docs/why/edition) in `smoke` edition.
 
 ## Dashboard versioning
 ---
