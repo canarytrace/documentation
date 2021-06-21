@@ -339,6 +339,8 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT` use `allow` for run performance audit / Lighthouse
 - `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
 - `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
+- `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
+- `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
 
 ### formFactor
 
