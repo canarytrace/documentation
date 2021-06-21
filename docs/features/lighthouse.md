@@ -1,25 +1,52 @@
 ---
 id: lighthouse
-title: Lighthouse 8.0.0
-sidebar_label: Lighthouse 8.0.0
+title: Performance audit
+sidebar_label: Performance audit
 custom_edit_url: false
 ---
 
+> ### What you’ll learn
+- What is Performance Audit
+- What metrics are stored in a Elasticsearch
+- What is form factor
+
 <a href="/docs/why/edition#canarytrace-pro"><span class="canaryBadge">Canarytrace Pro</span></a>
 
-[Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) use [Lighthouse](https://developers.google.com/web/tools/lighthouse) for performance audit and for obtaining metrics such as [Web Vitals](https://web.dev/vitals/) and more.
+[Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) use [Lighthouse 8](https://developers.google.com/web/tools/lighthouse) for performance audit and for obtaining metrics such as [Web Vitals](https://web.dev/vitals/) and more.
 
-Canarytrace Pro in `smoke` edition automatically run Lighthouse on every URL and [lhr](https://github.com/GoogleChrome/lighthouse/blob/4d3bda1f14540266eb37f7e2ba8cabbc668db11d/docs/understanding-results.md) object stored to Elasticsearch. Canarytrace Pro run Lighthouse at any time and on any tested site.
+## How to run performance audit
 
-Result of Performance Audit (lhr object) is stored to `c.audit-*` index
+> Performance audit is available in [Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) edition
 
-An object containing the results of the audits, keyed by their name.
+### smoke
+
+[Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) in `smoke` mode automatically run performance audit on every URL and rusults ( [lhr](https://github.com/GoogleChrome/lighthouse/blob/4d3bda1f14540266eb37f7e2ba8cabbc668db11d/docs/understanding-results.md) object ) is stored to Elasticsearch. 
+
+### user-journey
+
+If you use [Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) in `user-journey` mode, you can run performance audit on every page via `browser.performAudit()` function.
+
+```javascript title="run performance audit in your test case"
+// run performance audit
+it('performance audit', async () => {
+  await browser.performAudit(targetUrl, formFactor)
+})
+```
+
+- `targetUrl` e.g. https://canarytrace.com/
+- [`formFactor`](/docs/features/lighthouse#formfactor) is emulation performance profile ( e.g. [desktop](/docs/features/lighthouse#pt_audit_throttlingdesktopdense4g) or [mobile](/docs/features/lighthouse#pt_audit_throttlingmobileregular3g) )
+
+## Metrics, Opportunities and Audits
+
+Result of performance audit is stored into `c.audit-*` index and contains many metrics, opportunities a diagnostics information.
 
 ### Performance score
 
 ```performance.score``` In general, only metrics contribute to your Lighthouse Performance score, not the results of Opportunities or Diagnostics. https://web.dev/performance-scoring/
 
   - [Why score fluctuates?](https://web.dev/performance-scoring/#fluctuations)
+  - [How the Performance score is weighted](https://web.dev/performance-scoring/#weightings)
+  - [Lighthouse Scoring Calculator](https://googlechrome.github.io/lighthouse/scorecalc/#FCP=3000&SI=5800&FMP=4000&TTI=7300&FCI=6500&LCP=4000&TBT=600&CLS=0.25&device=desktop&version=8)
 
 
 ### Metrics
@@ -37,6 +64,14 @@ First Contentful Paint (FCP) is one of six metrics tracked in the Performance se
 
 - ```cumulative-layout-shift``` CLS measures the sum total of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page.
 A layout shift occurs any time a visible element changes its position from one rendered frame to the next. https://web.dev/cls/ 
+
+> ### Audits	and weight
+- `Total Blocking Time`	30%
+- `Largest Contentful Paint`	25%
+- `Cumulative Layout Shift`	15%
+- `First Contentful Paint`	10%
+- `Speed Index`	10%
+- `Time to Interactive`	10%
 
 ### Opportunities and audits
 
@@ -297,7 +332,7 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - `performance-budget` https://web.dev/use-lighthouse-for-performance-budgets/
 
-### Lighthouse configuration
+## Configuration
 
 Canarytrace has build-in latest version of Lighthouse and you can set behavior of Lighthouse via environment variables. If you use [smoke](/docs/why/edition) mode, the Lighthouse will be launched automatically for each landing page.
 
@@ -305,11 +340,14 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
 - `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
 
-### Lighthouse `formFactor`
+### formFactor
 
-You can run multiple instances of Canarytrace and via option `PT_AUDIT_THROTTLING` set different formFactor for each of them. This is useful for create work load model by your production load and by devices used your clients.
+You can run multiple instances of Canarytrace and via option `PT_AUDIT_THROTTLING` set different formFactor for each of them. This is useful for create work load model by your production profile and by devices used your clients.
 
-```json title="desktopDense4G"
+#### `PT_AUDIT_THROTTLING="desktopDense4G"`
+Lighthouse will be run with this configuration
+
+```json
 "formFactor": "desktop",
 "throttling": {
   "rttMs": 40,
@@ -329,7 +367,10 @@ You can run multiple instances of Canarytrace and via option `PT_AUDIT_THROTTLIN
 },
 ```
 
-```json title="mobileRegular3G"
+#### `PT_AUDIT_THROTTLING="mobileRegular3G"`
+Lighthouse will be run with this configuration
+
+```json
 "formFactor": "mobile",
 "throttling": {
   "rttMs": 300,
@@ -349,7 +390,10 @@ You can run multiple instances of Canarytrace and via option `PT_AUDIT_THROTTLIN
 },
 ```
 
-```json title="mobileSlow4G"
+#### `PT_AUDIT_THROTTLING="mobileSlow4G"`
+Lighthouse will be run with this configuration
+
+```json
 "formFactor": "mobile",
 "throttling": {
   "rttMs": 150,
