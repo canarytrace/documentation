@@ -280,9 +280,9 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 ### Configuration
 
-- `maxWaitForFcp`
+- `maxWaitForFcp` wait on render the first piece of DOM content.
 
-- `maxWaitForLoad`
+- `maxWaitForLoad` wait on full load page.
 
 - `formFactor`
 
