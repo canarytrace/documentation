@@ -71,20 +71,20 @@ For this demo we use [docker-compose](https://docs.docker.com/compose/). Create 
 version: "3.8"
 services:
   browser:
-    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20210207
-    ports:
-      - "4444:4444"
+    image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210527
     network_mode: "host"
     volumes:
       - /dev/shm:/dev/shm
   canarytrace:
-    image: quay.io/canarytrace/canarytrace-pub:4.2.16-20210614173445-45
+    image: quay.io/canarytrace/canarytrace-pub:4.3.0-pro-20210622134003-92
     depends_on:
       - browser
     network_mode: "host"
     environment:
       BASE_URL: 'https://canarytrace.com/;https://www.teststack.cz/'
       ELASTIC_CLUSTER: http://localhost:9200
+      LICENSE: 'XXXX-XXXX-XXXX-XXXX-XXXX-XXXX'
+      LABELS: 'compose, pipeline'
 ```
 
 ### Run Canarytrace Smoke. Run our first smoke with two URLs.
