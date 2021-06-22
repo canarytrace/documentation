@@ -8,7 +8,7 @@ custom_edit_url: false
 > ### What you’ll learn
 - What is Performance Audit
 - What metrics are stored in a Elasticsearch
-- What is form factor
+- What is a form factor
 
 <a href="/docs/why/edition#canarytrace-pro"><span class="canaryBadge">Canarytrace Pro</span></a>
 
@@ -280,23 +280,23 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 ### Configuration
 
-- `maxWaitForFcp` wait on render the first piece of DOM content.
+- `maxWaitForFcp` Wait on render the first piece of DOM content.
 
-- `maxWaitForLoad` wait on full load page.
+- `maxWaitForLoad` Wait on full load page.
 
-- `formFactor`
+- `formFactor` Determines how performance metrics are scored. [You can set performance profile](/docs/features/lighthouse#formfactor) for desktop or mobile.
 
-- `throttling.rttMs`
+- `throttling.rttMs` Controls simulated network RTT (TCP layer).
 
-- `throttling.throughputKbps`
+- `throttling.throughputKbps` Controls simulated network download throughput.
 
-- `throttling.requestLatencyMs`
+- `throttling.requestLatencyMs` Controls emulated network RTT (HTTP layer).
 
-- `throttling.downloadThroughputKbps`
+- `throttling.downloadThroughputKbps` Controls emulated network download throughput.
 
-- `throttling.uploadThroughputKbps`
+- `throttling.uploadThroughputKbps` Controls emulated network upload throughput.
 
-- `throttling.cpuSlowdownMultiplier`
+- `throttling.cpuSlowdownMultiplier` Controls simulated + emulated CPU throttling.
 
 - `emulatedUserAgent` - e.g.`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Safari/537.36 Chrome-Lighthouse`
 
@@ -342,9 +342,11 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
 - `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
 
-### formFactor
+### Network throttling preset
 
 You can run multiple instances of Canarytrace and via option `PT_AUDIT_THROTTLING` set different formFactor for each of them. This is useful for create work load model by your production profile and by devices used your clients.
+
+Simulated throttling, which Lighthouse uses by default, uses a simulation of a page load, based on the data observed in the initial unthrottled load. This approach makes it both very fast and deterministic.
 
 #### `PT_AUDIT_THROTTLING="desktopDense4G"`
 Lighthouse will be run with this configuration
