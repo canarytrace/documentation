@@ -18,6 +18,10 @@ module.exports = {
   organizationName: 'Canarytrace', // Usually your GitHub org/user name.
   projectName: 'Smoke', // Usually your repo name.
   themeConfig: {
+    googleAnalytics: {
+      trackingID: 'UA-54326167-6',
+      anonymizeIP: true,
+    },
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,
