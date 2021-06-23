@@ -304,7 +304,7 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 ### Other
 
-- `benchmarkIndex` e.g. `1,720`, `1,590.5`, `1,717.5` etc. depends on your hardware and available [resources for browser](/docs/guides/kubernetes#required-resources-for-one-instance).
+- `benchmarkIndex` (CPU/Memory Power) e.g. `1,720`, `1,590.5`, `1,717.5` etc. depends on your hardware and available [resources for browser](/docs/guides/kubernetes#required-resources-for-one-instance). Read more below in [Benchmarking CPU](/docs/features/lighthouse#benchmarking-cpu).
 
 - `requestedUrl` is entered url and `finalUrl` is url after last  redirect. They usually are the same.
 
@@ -411,8 +411,18 @@ Lighthouse will be run with this configuration
 }
 ```
 
+### Benchmarking CPU
 
-### Visualizations of Lighthouse results
+Unlike network throttling where objective criteria like RTT and throughput allow targeting of a specific environment, CPU throttling is expressed relative to the performance of the host device. This poses challenges to [variability in results](https://github.com/GoogleChrome/lighthouse/blob/master/docs/variability.md) across devices and this is reason, why Canarytrace [measures in a closed environment](/docs/guides/kubernetes) with fixed resources for each run.
+
+Canarytrace set resource for `benchmarkIndex` around 1.600
+
+| - | High-End Desktop | Low-End Desktop | High-End Mobile | Mid-Tier Mobile | Low-End Mobile |
+|-|-|-|-|-|-|
+| Example Device | 16" Macbook Pro | Intel NUC i3 | Samsung S10 | Moto G4 | Samsung Galaxy J2 |
+| **Lighthouse BenchmarkIndex** | 1500-2000 | 1000-1500 | 800-1200 | 125-800 | <125 |
+
+### Visualizations of performance audit results
 
 
 > **Dashboard documentation** <br/><br/>
