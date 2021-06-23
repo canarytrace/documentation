@@ -320,15 +320,9 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - `uuid` is unique id of one running instance of Canarytrace runner. This same uuid is stored in other Elasticsearch indices, so by this uuid is possible pairing data from c.report index and from c.audit index.
 
-- `timestamp`
+- `timestamp` Time stamp when the audit was performed.
 
-- `network-requests` ???
-
-- `main-thread-tasks` ??? 
-
-- `largest-contentful-paint-element` ???
-
-- `preload-lcp-image` ???
+- `preload-lcp-image` Preloading the Largest Contentful Paint (LCP) image can display your hero image or website banner much earlier in the page load. https://gtmetrix.com/preload-largest-contentful-paint-image.html
 
 - `performance-budget` https://web.dev/use-lighthouse-for-performance-budgets/
 
