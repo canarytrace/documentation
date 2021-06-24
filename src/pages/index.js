@@ -187,21 +187,20 @@ function Home() {
           <br />
           <div className="container" id="clients">
             <div className="row">
-              <div className="col col--3">
-                
+              <div className="col col--4">
+                <a href="https://www.kosik.cz/" target="_blank">
+                  <img src="clients/kosik.png" alt="Kosik.cz" width="300" height="121" />
+                </a>
               </div>
-              <div className="col col--3">
+              <div className="col col--4">
                 <a href="https://www.ifortuna.cz/" target="_blank">
-                  <img src="clients/feg.png" alt="FEG" />
+                  <img src="clients/feg.png" alt="FEG" width="300" height="121" />
                 </a>
               </div>
-              <div className="col col--3">
+              <div className="col col--4">
                 <a href="https://nakit.cz/" target="_blank">
-                  <img src="clients/nakit.png" alt="Nakit" />
+                  <img src="clients/nakit.png" alt="Nakit" width="300" height="121" />
                 </a>
-              </div>
-              <div className="col col--3">
-               
               </div>
             </div>
           </div>
