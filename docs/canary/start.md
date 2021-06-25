@@ -40,20 +40,20 @@ Data from Canarytrace are continuously stored to Elasticsearch.
 
 **Create a user-defined bridges**
 ```bash
-docker network create canary
+docker network create canarytrace
 ```
 
 - [Elasticsearch](/docs/guides/elasticsearch#what-is-elasticsearch) is the distributed search and analytics engine at the heart of the Elastic Stack.
 
 ```bash
-docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.0 bin/elasticsearch -Enetwork.host=0.0.0.0
+docker run --name elasticsearch --net canarytrace --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.0 bin/elasticsearch -Enetwork.host=0.0.0.0
 ```
 
 ### Run Kibana in a Docker
 [Kibana](/docs/guides/elasticsearch#what-is-kibana) is a web application with GUI for viewing data stored in Elasticsearch.
 
 ```bash
-docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.0
+docker run --name kibana --net canarytrace --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.0
 ```
 
 ### Setup Elasticsearch and Kibana
@@ -61,7 +61,7 @@ docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kib
 - [Canarytrace Installer](/docs/features/installer) prepare Elasticsearch and Kibana for Canarytrace use.
 
 ```bash
-docker run --name installer --net canary --rm quay.io/canarytrace/installer:7.10.0
+docker run --name installer --net canarytrace --rm quay.io/canarytrace/installer:7.10.0
 ```
 
 ### Prepare script for run Canarytrace Smoke
@@ -85,14 +85,38 @@ services:
       ELASTIC_CLUSTER: http://localhost:9200
       LICENSE: 'XXXX-XXXX-XXXX-XXXX-XXXX-XXXX'
       LABELS: 'compose, pipeline'
+      PT_AUDIT: 'allow'
+      PT_AUDIT_THROTTLING: 'desktopDense4G'
 ```
 
-### Run Canarytrace Smoke. Run our first smoke with two URLs.
+### Run Canarytrace smoke with two URLs.
 
 In this same location where is your `docker-compose.yaml` run docker compose 
 
 ```bash
 docker-compose up
+```
+
+and result is 
+
+```bash
+canarytrace_1  |  "spec" Reporter:
+canarytrace_1  | ------------------------------------------------------------------
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0] Running: chrome (v91.0.4472.77) on linux
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0] Session ID: 86b9c22616a6c062d8e991b24c747f70
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0] » /smoke/smoke.js
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0] Smoke
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]    ✓ smoke-setup
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]    ✓ https://canarytrace.com/
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]    ✓ performance audit
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]    ✓ https://www.teststack.cz/
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]    ✓ performance audit
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0]
+canarytrace_1  | [chrome 91.0.4472.77 linux #0-0] 5 passing (15.7s)
+canarytrace_1  | 
+canarytrace_1  | 
+canarytrace_1  | Spec Files:     1 passed, 1 total (100% completed) in 00:00:19 
 ```
 
 > If you have problem with docker-compose look at the bugs [#44](https://github.com/canarytrace/documentation/issues/44), [#45](https://github.com/canarytrace/documentation/issues/45) from the community
@@ -104,6 +128,7 @@ Canarytrace collect these data
 - `c.report-*` index with test step name and function result `passed / false`
 - `c.performance-entries-*` index with collected list of all [PerformanceEntry](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEntry) objects for the tested page.
 - `c.smoke-title-*` index with `entryURL`, `responseUrl`, `title`, `responseStatus` and `responseStatusText`
+- `c.audit-*` index with metrics from performance audit.
 
 ### View the result in Kibana
 
