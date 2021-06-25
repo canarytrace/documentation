@@ -118,60 +118,38 @@ Open Cronjob in your editor and edit labels in `env`:
 - `ELASTIC_CLUSTER` add your Elasticsearch endpoint
 - `ELASTIC_HTTP_AUTH` add your Elasticsearch credentials in a format `username:password`
 
-```yaml title="CronJob with Canarytrace Smoke"
+```yaml title="CronJob with Canarytrace smoke"
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: smoke-web
+  name: smoke-mobile
+  namespace: canarytrace
 spec:
   concurrencyPolicy: Replace
   failedJobsHistoryLimit: 2
-  schedule: "* * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: selenium
-            image: selenium/standalone-chrome:3.141.59-20200730
-            ports:
-              - containerPort: 4444
-            resources:
-              requests:
-                memory: "4000Mi"
-                cpu: "2000m"
-              limits:
-                memory: "6000Mi"
-                cpu: "4000m"
-            imagePullPolicy: "IfNotPresent"
-            volumeMounts:
-              - mountPath: "/dev/shm"
-                name: "dshm"
-            livenessProbe:
-              httpGet:
-                path: /wd/hub
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: /wd/hub
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-          - name: canary
-            image: quay.io/canarytrace/smoke:3.0.5
+          - name: canarytrace
+            image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210618063207-9
             env:
             - name: BASE_URL
-              value: "http://canarytrace.com/;https://www.teststack.cz/"
-            - name: SMOKE
-              value: allow
+              value: "https://the-internet.herokuapp.com/login"
+            - name: PT_AUDIT
+              value: "allow"
+            - name: PT_AUDIT_THROTTLING
+              value: "mobileRegular3G"
+            - name: LABELS
+              value: "mobile, smoke"
+            - name: LICENSE
+              value: "XXXXX-YYYYY-Z4WG5-5363C-CF0CB-A8647"
             - name: ELASTIC_CLUSTER
               value: "https://9e0f4b1db5234c48b0933bd421b543f0.us-central1.gcp.cloud.es.io:9243"
             - name: ELASTIC_HTTP_AUTH
               value: "elastic:GnkOwVswOkGqHRKuXzCBbwUE"
-            - name: AT_DRIVER_HOST_NAME
-              value: "localhost"
             resources:
               requests:
                 memory: "300Mi"
@@ -180,7 +158,35 @@ spec:
                 memory: "400Mi"
                 cpu: "300m"
             imagePullPolicy: "IfNotPresent"
+          - name: selenium
+            image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
+            ports:
+              - containerPort: 4444
+            resources:
+              requests:
+                memory: "2000Mi"
+                cpu: "2000m"
+              limits:
+                memory: "4000Mi"
+                cpu: "4000m"
+            imagePullPolicy: "IfNotPresent"
+            volumeMounts:
+              - mountPath: "/dev/shm"
+                name: "dshm"
+            livenessProbe:
+              httpGet:
+                path: /status
+                port: 4444
+              initialDelaySeconds: 10
+              timeoutSeconds: 5
+            readinessProbe:
+              httpGet:
+                path: /status
+                port: 4444
+              initialDelaySeconds: 10
+              timeoutSeconds: 5
           restartPolicy: "Never"
+          terminationGracePeriodSeconds: 5
           volumes:
             - name: "dshm"
               emptyDir:
