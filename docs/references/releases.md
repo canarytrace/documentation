@@ -22,6 +22,31 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-timestamp
 quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-timestamp
 ```
 
+### Canarytrace 4.3.2
+**Released 25. 06. 2021**
+
+🚀 **New features**
+
+- Lighthouse: added options [`PT_AUDIT_MAX_WAIT_FCP`](/docs/features/lighthouse#configuration-1) and [`PT_AUDIT_MAX_WAIT_LOAD`](/docs/features/lighthouse#configuration-1)
+
+💥 **Breaking Change**
+
+- Option `EDITION` was renamed to `MODE`. `MODE=smoke` is default.
+
+📦 **Changes**
+
+- Upgrade [Kubernetes deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
+
+📝 **Documentation**
+- [Performance audit](/docs/features/lighthouse)
+- [Start local demo](/docs/canary/start)
+- [Start in Kubernetes](/docs/canary/start-cloud)
+- [Docker images](/docs/features/docker)
+- [Kubernetes](/docs/guides/kubernetes)
+
+
+---
+
 ### Canarytrace 4.2.16
 **Released 13. 06. 2021**
 
