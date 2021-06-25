@@ -1,33 +1,17 @@
 ---
-id: releases4
-title: Canarytrace 4 alpha
+id: wdio
+title: WDIO Test Script
 custom_edit_url: false
-description: Release notes
+description: How to write our first Webdriver.io test script
 keywords:
   - canarytrace
   - webdriverio
-  - releases
 ---
 
-> - This page cover Canarytrace 4 alpha
-> - This is a living documentation and will be frequently updated into release Canarytrace 4.1.0
-> - Please create an [issue](https://github.com/canarytrace/documentation/issues/new/choose) if you find a mistake, or have any questions, thanks 👍
-
-## What news
----
-
-🚀 **New features**
-
-- Upgrade [Lighthouse 8](https://developers.google.com/web/tools/lighthouse)
-- Upgrade [Webdriver.IO](https://webdriver.io/) from [v6](https://v6.webdriver.io/) on [v7.5](https://webdriver.io/versions)
-- Upgrade Selenium 3 on [Selenium 4](https://github.com/SeleniumHQ/docker-selenium)
-- Editions of Canarytrace and Canarytrace Smoke is one docker container. You can switch between them.
-- Print more metainformation into elasticsearch indices, e.g. version, edition etc.
-- Prepare for implementing [Cypress.io](https://www.cypress.io/)
-
-🐛 **Bug fixes**
-
-- Fix duplicate storage performance entries
+> ### What you’ll learn
+> - What is a Werbdriver.IO
+> - How to write our first Webdriver.IO test script
+> - How to deploy into Kubernetes
 
 ## Get started
 ---

@@ -24,25 +24,21 @@ The easiest way to run Canarytrace is to use a [docker compose](https://docs.doc
 version: "3.8"
 services:
   browser:
-    image: selenium/standalone-chrome:3.141.59-20200730
-    ports:
-      - "4444:4444"
+    image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210527
     network_mode: "host"
     volumes:
       - /dev/shm:/dev/shm
   canarytrace:
-    image: quay.io/canarytrace/smoke:3.0.5
+    image: quay.io/canarytrace/canarytrace-pub:4.3.0-pro-20210622134003-92
     depends_on:
       - browser
     network_mode: "host"
     environment:
-      BASE_URL: 'https://canarytrace.com/'
+      BASE_URL: 'https://canarytrace.com/;https://www.teststack.cz/'
+      LICENSE: 'XXXX-XXXX-XXXX-XXXX-XXXX-XXXX'
 ```
 
-In this example is only one option `BASE_URL` which contain target URL.
-
-> - Always use docker image with exactly a tag, in this case is `3.0.5`. Never use
-`latest` tag or untagged version of the latest or docker image.
+In this example are only options `BASE_URL` which contain target URL and `LICENSE`.
 
 You can run a command using `docker-compose up`
 
@@ -52,91 +48,142 @@ You can run a command using `docker-compose up`
 Use Kubernetes CronJob for production use and for non-stop monitoring. 
 
 ```yaml title="smoke.yaml"
-
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: demo-smoke
+  name: smoke-mobile
+  namespace: canarytrace
 spec:
   concurrencyPolicy: Replace
   failedJobsHistoryLimit: 2
-  schedule: "*/2 * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: canary
-            image: quay.io/canarytrace/smoke-pro:3.0.5
+          - name: canarytrace
+            image: quay.io/canarytrace/canarytrace-pub:4.3.1-pro-20210625113429-82
             env:
             - name: BASE_URL
-              value: "https://canarytrace.com/;https://canarytrace.com/"
-            - name: ELASTIC_CLUSTER
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-stack
-                  key: elastic.endpoint
-            - name: ELASTIC_HTTP_AUTH
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-stack
-                  key: elastic.http.auth
-            - name: WAIT_FOR_TIMEOUT
-              value: "60000"
+              value: "https://the-internet.herokuapp.com/login"
             - name: PT_AUDIT
               value: "allow"
             - name: PT_AUDIT_THROTTLING
-              value: "desktopDense4G"
+              value: "mobileRegular3G"
+            - name: LABELS
+              value: "mobile, smoke"
+            - name: LICENSE
+              value: "XXXXX-YYYYY-Z4WG5-5363C-CF0CB-A8647"
+            - name: ELASTIC_CLUSTER
+              value: "https://ABCD.eu-central-1.aws.cloud.es.io:9243"
+            - name: ELASTIC_HTTP_AUTH
+              value: "elastic:password"
 ...
 ```
 
-This example isn't complete. But you can see option as environment variable `ELASTIC_CLUSTER` which is filled from [secret object](https://kubernetes.io/docs/concepts/configuration/secret/).
-Next used environment variables are `WAIT_FOR_TIMEOUT`, `PT_AUDIT`, `PT_AUDIT_THROTTLING`. Some of them are mandatory and some are optional.
+This example isn't complete, but contains more options as environment variable `ELASTIC_CLUSTER`, `PT_AUDIT`, `PT_AUDIT_THROTTLING` or `LABELS`. Some of them are mandatory and some are optional. 
 
-## Mandatory options 
+
+## Mode `smoke`
+
+> ### How to read this documentation
+> - You can run [Canarytrace in modes](/docs/why/edition) `smoke` or `user-journey`. Smoke mode is a default mode and is maintenance free and therefore you can use less mandatory options.
+> - If you have [Canarytrace Pro](/docs/why/edition) edition, you can run audits such as [performance audit](/docs/features/lighthouse). Features for Canarytrace Pro have this badge <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
+
+### Mandatory options
+> Mode `smoke` is a default.
+
+- `BASE_URL` add more URLs, e.g. `BASE_URL=https://canarytrace.com/;https://canarytrace.com/docs/canary/start`
+
+- `LICENSE` add your license key.
+
+### Elasticsearch
+
+If you want use live logging to [Elasticsearch](/docs/guides/elasticsearch/) and visualize data in a [Kibana](/docs/features/dashboards/), you must use this options.
+
+- `ELASTIC_CLUSTER` URI of elasticsearch cluster. E.g. `ELASTIC_CLUSTER="http://localhost:9200"` This option activate live reporting all data to elasticsearch. If left blank, documents will be printed to stdout.
+
+- `ELASTIC_HTTP_AUTH` Basic authentication in format username:password . E.g. `ELASTIC_HTTP_AUTH=elastic:1fKP17UklmiI14rekO6iCx9r`
+
+- `MIN_PTIME` Print requests to elasticsearch if is exceeded transactions time. Default min processing time is 300ms.
+
+- `ELASTIC_OBSERVABILITY` Use `allow` for print settings of elasticsearch and all requests and responses to stdout.
+
+- `INDEX_PREFIX` - Default is `c.`
+
+- `USE_ELASTIC_DOC_TYPE_BY_INDEX_NAME` Default is false and will be used type _doc. If you true will be used name of index just type.
+
+- `ELASTIC_REQUEST_COMPRESSION` Use `allow` for use compression.
+
+- `ELASTIC_TIMEOUT` Default is 5000ms.
+
+### Performance audit 
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
+Configuration is on separate page. [Performance audit configuration](/docs/features/lighthouse/#configuration-1)
+
+
+## Mode `user-journey`
+> - If you use this mode you need [test script / monitor script](/docs/references/glosary#test-case--monitor-script) writen in [Webdriver.IO](https://webdriver.io/). Try [how to write test script / monitor script](/docs/guides/wdio)
+> - In this mode you must use more mandatory options, because Canarytrace need to [download test cases](/docs/guides/lifecycle) from your git repositry.
+> - If you have [Canarytrace Pro](/docs/why/edition) edition, you can run audits such as [performance audit](/docs/features/lighthouse). Features for Canarytrace Pro have this badge <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
+
+- `BASE_URL` - is a start address 'https://the-internet.herokuapp.com/' for your test script. You test script can start with `/`
+
+```javascript
+  it('open home page', async () => {
+    await browser.url('/');
+    await expect(browser).toHaveTitle(title, {message: 'Element title not found. The page couldn\'t be loaded in time.'})
+  });
+```
+### Mandatory options
+
+- `SPEC` - is file with your test case / monitor script, e.g. `SPEC="test/specs/example.e2e.js"`
+
+- `GIT_REPOSITORY` - e.g. `git@github.com:canarytrace/wdio75-demo.git`
+
+- `GIT_REPOSITORY_PORT` - e.g. `22`
+
+- `GIT_REPOSITORY_HOST` - e.g. `github.com`
+
+- `GIT_REVISION` - `fd29508` revision of your test case. Canarytrace perform git checkout before run test.
+
+
+### Optional
+
+- `USER` username for TC, which use login to app. E.g. `USER=CYBERTRUCK`
+
+- `PASS` password for TC, which use login to app. E.g. `PASS=Cybertruck@250Mil`
+
+How to use in your test case
+
+```javascript
+  it('fill login and password inputs', async () => {
+    const userNameElm = await $(userNameInput)
+    await userNameElm.waitForClickable({timeoutMsg: 'Username input not exist.'})
+    await userNameElm.setValue(browser.config.username);
+
+    const passwordElm = await $(passwordInput)
+    await passwordElm.waitForClickable({timeoutMsg: 'Password button not exist.'})
+    await passwordElm.setValue(browser.config.password);
+  })
+```
+
+## Other
+> These options are not mandatory and are available for both mode.
+
+- `LABELS` is optional metainformation, which is stored in the elastic to each record in each index, e.g. `'relesease=7, environment=dev'`
 
 - `SPEC` is path and name of testcase / monitor script. E.g. `SPEC=tesla/smoke.js`
 
-### GIT repository
+- `ENGINE` - default is `wdio` for [Webdriver.IO](https://webdriver.io/) v7.5 and no need change it
 
-- `GIT_REPOSITORY` is URI of git repository with your tests. E.g. `GIT_REPOSITORY=https://github.com/canarytrace/canary-tests.git`
+- `ENV_PRINT` - Print all environment variables. Print all environment variables before execution of monitor script. All environment variables will be saved to Elasticsearch index `c.env-*`
 
-- `GIT_REPOSITORY_PORT` is port of git repository with your tests. E.g. `GIT_REPOSITORY_PORT=22`
+> It's useful for debugging but use with caution. This command print value all environment variables including sensitive if exist.
 
-- `GIT_REPOSITORY_HOST` is host of git repository with your tests. E.g. `GIT_REPOSITORY_HOST=github.com`
-
-- `GIT_REVISION` is revision of your test case. E.g. `GIT_REVISION=6d27ad1`
-
-
-## Optional
-<a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a><a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
-
-- `AT_DRIVER_HOST_NAME` is path to selenium instance. Default is `localhost`
-
-- `BASE_URL` is URI of a target application. E.g. `BASE_URL=https://www.tesla.com/`. If you use Canarytrace Smoke Pro, you can add to this option more URLs, e.g. `BASE_URL=https://canarytrace.com/;https://www.teststack.cz/`
-
-- `WAIT_FOR_TIMEOUT` explicit wait for all wait* commands. Default is 65000ms. E.g. -e `WAIT_FOR_TIMEOUT=65000`
-
-- `LABELS` you can add some text, which will save to all elasticsearch indices. It's useful for tagging some setting e.g. `LABELS=environment=production`
-
-- `ENV_PRINT` default no. E.g. `ENV_PRINT=allow`. Print all environment variables before execution of monitor script.
-All environment variables will be saved to Elasticsearch index `c.env-*` 
-
-> - It's useful for debugging but use with caution. This command print value all environment variables including sensitive if exist.
-
-- `ATTACHMENTS` default no. E.g. `ATTACHMENTS=allow` store screenshot to disk, when testStep is failed.
-
-  - Format HHmmss-YYYY-MM-DD-uuidAction.png
-
-  - You must bind volume -v $(pwd)/attachments/:/opt/canary/attachments for "move screenshot from docker container to local directory" /attachments.
-
-  - You can use AWS_S3_BUCKET option for upload screenshot to AWS S3 This option is described below.
-
-- `CAPTURE_EVERY_SCREEN=allow` create a screenshot on every test step.
-
-- `AVAILABILITY_CHECK` default no. before starting the test is executed curl command with BASE_URL value.
+- `AVAILABILITY_CHECK` - use `allow` if you want run check availability of web app before run Canarytrace.
 
 It's useful for check availability environment and tested application. 
 
@@ -152,37 +199,25 @@ time_starttransfer:  0.173897
 time_total:  0.477677
 ```
 
-- `LOG_LEVEL` default is `warn`. E.g. `LOG_LEVEL=info`
+- `WAIT_FOR_TIMEOUT` - Timeout limit for all [webdriver.io waitFor*](https://webdriver.io/docs/options/#waitfortimeout) commands. Default is 30.000ms
 
-You can use one of the values `["trace", "debug", "info", "warn", "error", "silent"]`
+- `LOG_LEVEL` - default is `warn`. [Level of logging verbosity](https://webdriver.io/docs/options/#loglevel)
 
-- `TESTS_PATH` default is /tmp/canary-tests there is no reason to change this option.
+- `ATTACHMENTS` Use `allow` for store screenshot to disk, when testStep is failed.
 
+  - Format HHmmss-YYYY-MM-DD-uuidAction.png
 
-### Elasticsearch
+  - You must bind volume -v $(pwd)/attachments/:/opt/canary/attachments for "move screenshot from docker container to local directory" /attachments.
 
-- `ELASTIC_CLUSTER` URI of elasticsearch cluster. E.g. `ELASTIC_CLUSTER=http://localhost:9200` This option activate live reporting all data to  elasticsearch.
+  - You can use AWS_S3_BUCKET option for upload screenshot to AWS S3 This option is described below.
 
-- `ELASTIC_HTTP_AUTH` Basic authentication in format username:password . E.g.  `ELASTIC_HTTP_AUTH=elastic:1fKP17UklmiI14rekO6iCx9r`
+- `CAPTURE_EVERY_SCREEN=allow` create a screenshot on every test step.
 
-- `INDEX_PREFIX` default is `c.`. E.g. `INDEX_PREFIX=dev.`
-
-  - Canarytrace create all Elasticsearch indices with prefix `dev.report-*`, `dev.requests-*` etc. It's useful for debugging.
-
-- `USE_ELASTIC_DOC_TYPE_BY_INDEX_NAME` default is false and will be used type _doc. If you true will be used name of index just type.
-
-- `ELASTIC_TIMEOUT` default is 5000ms. E.g. `ELASTIC_TIMEOUT=10000`
-
-  - Set timeout in ms for requestTimeout and pingTimeout.
-
-- `ELASTIC_OBSERVABILITY` default is no. E.g. `ELASTIC_OBSERVABILITY=allow`
-
-  - Print settings of elatsicsearch connection, request and response events and payload to stdout more info.
-
-- `ELASTIC_REQUEST_COMPRESSION` default no. E.g. `ELASTIC_REQUEST_COMPRESSION=allow`
+- `TESTS_PATH` default is `/opt/canary/tests` there is no reason to change this option.
 
 
 ### AWS
+<a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
 - `AWS_S3_ACCESS_KEY` your AWS_KEY_ID. E.g. `AWS_S3_ACCESS_KEY=ABC`
 
@@ -202,123 +237,40 @@ You can use one of the values `["trace", "debug", "info", "warn", "error", "sile
 
 - `AWS_S3_REGION` default is eu-central-1. E.g. `AWS_S3_REGION=eu-central-1`
 
+### Services
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
-- `USER` username for TC, which use login to app. E.g. `USER=CYBERTRUCK`
-
-- `PASS` password for TC, which use login to app. E.g. `PASS=Cybertruck@250Mil`
-
-
-### Services
-
-- `RESPONSE_INTERCEPT` default `no` store collection of arrived responses to browser to elasticsearch index `c.response-*`
+- `RESPONSE_INTERCEPT` default `no` store collection of arrived responses from server to browser into elasticsearch index [`c.response-*`](/docs/features/live-reporting)
 
   - For activate this features use `RESPONSE_INTERCEPT=allow`
 
-- `REQUEST_INTERCEPT` default `no` store collection of sending request from browser to elasticsearch index `c.request-*`
+- `REQUEST_INTERCEPT` default `no` store collection of sending request from browser into elasticsearch index [`c.request-*`](/docs/features/live-reporting)
 
   - For activate this features use `REQUEST_INTERCEPT=allow`
 
-- `CONSOLE_INTERCEPT` default `no` store console of browser to elasticsearch index `c.console-*`
+- `CONSOLE_INTERCEPT` default `no` store console of browser into elasticsearch index [`c.console-*`](/docs/features/live-reporting)
 
   - For activate this features use `CONSOLE_INTERCEPT=allow`
 
-- `COVERAGE_AUDIT` default `no` store percentage used and unused code of web application to elasticsearch index `c.coverage-audit-*`
+- `COVERAGE_AUDIT` default `no` store percentage used and unused code of web application into elasticsearch index [`c.coverage-audit-*`](/docs/features/live-reporting)
 
   - For activate this features use `COVERAGE_AUDIT=allow`
 
-- `MEMORY_INTERCEPT` default `no` store used javascript memory during loading and using the web application to elasticsearch index `c.memory-*`
+- `MEMORY_INTERCEPT` default `no` store used javascript memory during loading and using the web application into elasticsearch index [`c.memory-*`](/docs/features/live-reporting)
 
   - For activate this features use `MEMORY_INTERCEPT=allow`
 
-- `HERO_ELEMENTS` default `no` store marked hero elements to elasticsearch index `c.performance-entries-*`
+- `HERO_ELEMENTS` default `no` store marked hero elements in  to elasticsearch index [`c.performance-entries-*`](/docs/features/live-reporting)
 
   - For activate this features use `HERO_ELEMENTS=allow`
 
-<a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a><a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
-
-- `PERFORMANCE_ENTRIES_INTERCEPT` default `no` store performance.entries collection to elasticsearch index `c.performance-entries-*` This service is in Canarytrace Smoke and Canarytrace Smoke Pro allowed as default.
-
-- `PT_AUDIT` default `no` runs a performance audit, collect the performance metrics and store into elasticsearch into `c.audit-*` index.
-
-  - For activate this features use `PT_AUDIT=allow`
-
-**Throttling**
-
-Throttling is set by switch `PT_AUDIT_THROTTLING` and these configurations are available:
-
-**desktopDense4G** contains configuration
-```javascript
-{
-    onlyCategories: ['performance'],
-    maxWaitForFcp: 30 * 1000,
-    maxWaitForLoad: 45 * 1000,
-    throttlingMethod: 'simulate',
-    internalDisableDeviceScreenEmulation: false,
-    throttling: {
-        rttMs: 40,
-        throughputKbps: 10 * 1024,
-        cpuSlowdownMultiplier: 1,
-        requestLatencyMs: 0, // 0 means unset
-        downloadThroughputKbps: 0,
-        uploadThroughputKbps: 0,
-    }
-}
-```
-
-**mobileSlow4G** contains configuration
-```javascript
-{
-    onlyCategories: ['performance'],
-    maxWaitForFcp: 30 * 1000,
-    maxWaitForLoad: 45 * 1000,
-    throttlingMethod: 'simulate',
-    internalDisableDeviceScreenEmulation: false,
-    throttling: {
-        rttMs: 150,
-        throughputKbps: 1.6 * 1024,
-        requestLatencyMs: 150 * 3.75,
-        downloadThroughputKbps: 1.6 * 1024 * 0.9,
-        uploadThroughputKbps: 750 * 0.9,
-        cpuSlowdownMultiplier: 4,
-    }
-}
-```
-
-**mobileRegular3G** contains configuration
-```javascript
-{
-    onlyCategories: ['performance'],
-    maxWaitForFcp: 30 * 1000,
-    maxWaitForLoad: 45 * 1000,
-    throttlingMethod: 'simulate',
-    internalDisableDeviceScreenEmulation: false,
-    throttling: {
-        rttMs: 300,
-        throughputKbps: 700,
-        requestLatencyMs: 300 * 3.75,
-        downloadThroughputKbps: 700 * 0.9,
-        uploadThroughputKbps: 700 * 0.9,
-        cpuSlowdownMultiplier: 4,
-    }
-}
-```
-
-and you can use in a CronJob
-```yaml
-- name: PT_AUDIT_THROTTLING
-  value: 'desktopDense4G'
-```
-
-> - Data from all services is stored to elasticsearch indices in a format `INDEX_PREFIX+SERVICE-*` 
-
 #### Volumes
 
-- `-v $(pwd)/attachments/:/opt/canary/attachments` binding local directory with directory in docker container for screenshots.
+- `-v $(pwd)/assets/:/opt/canary/assets` binding local directory with directory in docker container for statical files, e.g. screenshots.
 
-- `-v $(pwd)/tests/:/tmp/canary-tests` binding local directory with tests to directory in docker container.
+- `-v $(pwd)/tests/:/opt/canary/tests` binding local directory with tests to directory in docker container.
 
-- `-v $(pwd)/config:/opt/canary/config` extended configuration
+- `-v $(pwd)/config:/opt/canary/config/wdio` for extended default configuration.
 
 ---
 

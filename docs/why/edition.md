@@ -6,9 +6,9 @@ custom_edit_url: false
 description: About Canarytrace Edition
 keywords:
   - Canarytrace
+  - Canarytrace Pro
   - Smoke
-  - Pro
-  - Professional
+  - User Journey
 ---
 
 > ### What you’ll learn
