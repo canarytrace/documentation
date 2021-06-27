@@ -323,11 +323,9 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - `emulatedUserAgent` - e.g.`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Safari/537.36 Chrome-Lighthouse`
 
-- `lighthouseReport` - name of HTML Lighthouse report `03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html`
-  - format: `uuid-uuidAction-lighthouse-report.html`
+- `lighthouseReport` - name of HTML Lighthouse report, e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html`
 
-- `traceReport` - records of activity in Chrome's processes for the [Trace Event Profiling Tool ](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool) `03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json`
-  - format: `uuid-uuidAction-traces.json`
+- `traceReport` - records of activity in Chrome's processes for the [Trace Event Profiling Tool ](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool) e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json`
 
 Trace Event Profiling Tool
 But there’s a lot that DevTools can’t tell you.
@@ -346,7 +344,7 @@ But there’s a lot that DevTools can’t tell you.
 "pt.audit=desktopDense4G",
 ```
 
-- `uuidAction`is unique id for test step / for `it` method. This is useful for searching in Kibana. The same uuidAction is stored in other Elasticsearch indices, so by this uuidAction is possible pairing data from `c.report` index.
+- `uuidAction` is unique id for test step / for `it` method. This is useful for searching in Kibana. The same uuidAction is stored in other Elasticsearch indices, so by this uuidAction is possible pairing data from `c.report` index.
 
 - `uuid` is unique id of one running instance of Canarytrace runner. This same uuid is stored in other Elasticsearch indices, so by this uuid is possible pairing data from c.report index and from c.audit index.
 
@@ -364,9 +362,14 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
 - `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
 - `PT_AUDIT_REPORT` use `allow` for generate Lighthouse HTML report. Report will be save into `/assets` directory. You can download [Lighthouse HTML report](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
+  - e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html`
+  - format: `uuid-uuidAction-lighthouse-report.html`
 - `PT_AUDIT_TRACE` use `allow` for generate json with records of activity in Chrome's processes. Report will be save into `/assets` directory. You can download [records in a JSON](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
+  - e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json`
+  - format: `uuid-uuidAction-traces.json`
 - `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
 - `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
+
 
 ### Network throttling preset
 

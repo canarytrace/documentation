@@ -72,20 +72,23 @@ docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytr
 
 # deployments folder is transferred from the docker image to localhost
 ᐰ ls -lah deployments/
-drwxr-xr-x@ 6 rdpanek  staff   192B 18 Jun 09:24 .
-drwxr-xr-x  3 rdpanek  staff    96B 18 Jun 10:19 ..
--rw-r--r--  1 rdpanek  staff   365B 18 Jun 09:24 README.md
--rw-r--r--  1 rdpanek  staff   3.4K 18 Jun 09:24 filebeat.yaml
--rw-r--r--  1 rdpanek  staff   2.2K 18 Jun 09:24 smoke-desktop.yaml
--rw-r--r--  1 rdpanek  staff   2.2K 18 Jun 09:24 smoke-mobile.yaml
+drwxr-xr-x   7 rdpanek  staff   224B 26 črv 15:57 .
+drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
+-rw-r--r--   1 rdpanek  staff   365B 21 črv 10:38 README.md
+-rw-r--r--   1 rdpanek  staff   3,4K 21 črv 10:38 filebeat.yaml
+-rw-r--r--   1 rdpanek  staff   2,8K 26 črv 15:57 smoke-desktop-shipper.yaml
+-rw-r--r--   1 rdpanek  staff   2,2K 26 črv 15:57 smoke-desktop.yaml
+-rw-r--r--   1 rdpanek  staff   2,2K 26 črv 15:57 smoke-mobile.yaml
 
 ```
 
-- [filebeat](https://www.elastic.co/beats/filebeat) logging stdout and stderr streams from all Canarytrace components
+- `filebeat.yaml` logging stdout and stderr streams from all Canarytrace components. [Read more](https://www.elastic.co/beats/filebeat).
 
-- `smoke-desktop.yaml` Canarytrace Smoke CronJob with desktop settings
+- `smoke-desktop-shipper.yaml` is full example. Shipper send static files into AWS S3. [Read more](/docs/features/shipper)
 
-- `smoke-mobile.yaml` Canarytrace Smoke CronJob with mobile settings
+- `smoke-desktop.yaml` Canarytrace Smoke CronJob with desktop settings.
+
+- `smoke-mobile.yaml` Canarytrace Smoke CronJob with mobile settings.
 
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 

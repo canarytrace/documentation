@@ -35,6 +35,18 @@ docker pull quay.io/canarytrace/installer
 - More info about [Canarytrace Installer](/docs/features/installer)
 
 
+### Canarytrace Shipper
+---
+
+Sync static files e.g. [Lighthouse HTML reports](/docs/features/lighthouse#reporting) with your [AWS S3](https://aws.amazon.com/s3/).
+
+```bash
+docker pull quay.io/canarytrace/shipper
+```
+- Tags https://quay.io/repository/canarytrace/shipper?tab=tags
+- More info about [Canarytrace Shipper](/docs/features/shipper)
+
+
 ---
 
 - Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍

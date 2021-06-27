@@ -9,115 +9,73 @@ custom_edit_url: false
 - What is a Canarytrace Shipper?
 - How this work?
  
-All data collected by Canarytrace are stored into Elasticsearch and are displayed in [Kibana](https://www.elastic.co/kibana) in the form of visualizations which are grouped into dashboards.
+Shipper is a third [Docker image](/docs/features/docker) in a Canarytrace stack which send all static files into [AWS S3](https://aws.amazon.com/s3/) such as [Lighthouse HTML report](/docs/features/lighthouse#reporting) or [records of activity in Chrome's processes](/docs/features/lighthouse#reporting) in stored a JSON format. Canarytrace save all static file into `/assets` directory and this directory is mounted between Docker images with Canarytrace and Shipper. All new files are push to AWS S3.
 
-![Canarytrace dashboards](../../static/docs-img/figma-dashboards.png)
+![Canarytrace dashboards](../../static/docs-img/shipper-lens.png)
 
-## How to get Canarytrace dashboards
----
+## How to work
 
-This dashboards are automaticaly installed via [Canarytrace Installer](/docs/features/installer). Select supported version of Elasticsearch and Kibana.
+Canarytrace Shipper run every 1s in a loop synchronization with your AWS S3 bucket `aws s3 sync assets/ s3://${AWS_BUCKET_NAME} --acl public-read`
 
+```bash title="Shipper log"
+Canarytrace Shipper started and waiting on assets
+bucket name: canarytrace-reports
 
-## Type of dashboards
----
+Completed 256.0 KiB/741.5 KiB (2.5 MiB/s) with 1 file(s) remaining Completed 512.0 KiB/741.5 KiB (3.7 MiB/s) with 1 file(s) remaining Completed 741.5 KiB/741.5 KiB (2.9 MiB/s) with 1 file(s) remaining upload: reports/92a10aac80f565388e91-27dbaa8bebf3469a07d3-lighthouse-report.html to s3://canarytrace-reports/92a10aac80f565388e91-27dbaa8bebf3469a07d3-lighthouse-report.html
+Completed 256.0 KiB/981.1 KiB (5.6 MiB/s) with 1 file(s) remaining Completed 512.0 KiB/981.1 KiB (8.5 MiB/s) with 1 file(s) remaining Completed 768.0 KiB/981.1 KiB (12.3 MiB/s) with 1 file(s) remaining Completed 981.1 KiB/981.1 KiB (7.2 MiB/s) with 1 file(s) remaining upload: reports/92a10aac80f565388e91-caa39632252dfbff4ec0-lighthouse-report.html to s3://canarytrace-reports/92a10aac80f565388e91-caa39632252dfbff4ec0-lighthouse-report.html
+Completed 256.0 KiB/1.1 MiB (3.2 MiB/s) with 1 file(s) remaining Completed 512.0 KiB/1.1 MiB (5.8 MiB/s) with 1 file(s) remaining Completed 768.0 KiB/1.1 MiB (8.3 MiB/s) with 1 file(s) remaining Completed 1.0 MiB/1.1 MiB (10.7 MiB/s) with 1 file(s) remaining Completed 1.1 MiB/1.1 MiB (5.4 MiB/s) with 1 file(s) remaining upload: reports/92a10aac80f565388e91-3e018a4987b240d250c1-lighthouse-report.html to s3://canarytrace-reports/92a10aac80f565388e91-3e018a4987b240d250c1-lighthouse-report.html
+Completed 256.0 KiB/540.5 KiB (3.3 MiB/s) with 1 file(s) remaining Completed 512.0 KiB/540.5 KiB (5.6 MiB/s) with 1 file(s) remaining Completed 540.5 KiB/540.5 KiB (3.7 MiB/s) with 1 file(s) remaining upload: reports/92a10aac80f565388e91-3599d21cefd8b7077b8e-lighthouse-report.html to s3://canarytrace-reports/92a10aac80f565388e91-3599d21cefd8b7077b8e-lighthouse-report.html
+```
 
-### Monitoring Overview
+## How to run
 
-This dashboard show visualizations with useful information about the loading speed of resources such as images, JS or CSS files, time makr of [HeroElements](/docs/features/hero), JS HeapSize, TestStep durations or Resources size etc.
+Canarytrace Shipper is a part of Canarytrace stack and you can add them into POD with Docker images Canarytrace and Browser.
 
+- [How to get a deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
 
-### Performance Audit
+## Configuration
 
-Performance Audit is dashboard which contains information known from tools such as [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights) or [Lighthouse](https://developers.google.com/web/tools/lighthouse).
-On the top this dashboard are chevrons with important performance metrics and their score. Your goal is for all scores to be over 90.
+- `AWS_S3_BUCKET_NAME` - e.g. `monitoring-assets`.
+- `AWS_ACCESS_KEY_ID` - your access key.
+- `AWS_SECRET_ACCESS_KEY` - you secret access key.
 
-In the same dashboard are additional graphs with metrics and their values on timeline.
+### Optional
+- `ENV_PRINT` - `allow` for print all environment variables.
+- `AWS_DEFAULT_REGION` - default is `eu-central-1`.
 
-Scores are color-coded by [score calculator](https://googlechrome.github.io/lighthouse/scorecalc/).
-The metrics scores and the perf score are colored according to these ranges:
+## Example
 
-- 0 to 49 (grey/red): Poor
-- 50 to 89 (orange): Needs Improvement
-- 90 to 100 (green): Good
+You can create your own shipper, just binding properly `/opt/canary/assets` directory in Canarytrace Docker image and directory in your Docker image.
 
-> [More info](/docs/features/lighthouse) about collected metrics of Lighthouse.
+- [Download full Cronjob](/docs/guides/kubernetes#how-to-get-a-deployment-scripts)
 
-
-### Canarytrace Smoke Overview
-
-This dashboard is very simple and allows you to get an overview of the availability of a web application and the loading speed of resources such as images, JS or CSS files. Contains visualizations from data, which are collected from [Canarytrace](/docs/why/edition) in `smoke` edition.
-
-## Dashboard versioning
----
-
-Version of dashboards with additional setup for Elasticsearch and Kibana are installed via [Canarytrace Installer](/docs/features/installer). We continue on upgrades of dashboards, add new improvements and fixing a bugs. 
-You can see via versioning on changes for newer or older version of Kibana, but is important select for installation correct version of Canarytrace Installer.
-
-E.g. For Kibana `7.2.0` select docker image with [Canarytrace Installer](/docs/features/installer) with tag `7.2.0` e.g. `quay.io/canarytrace/installer:7.2.0` etc.
-
-![Canarytrace dashboards versioning](../../static/docs-img/figma-dashboards-versioning.png)
-
-
-## Create your own or change exist dashboard
----
-
-If you need to create your own dashboard with a different visualization composition - no problem 👌
-
-![Kibana - change layout](../../static/docs-img/kibana-change-layout.png)
-
-## Examples
----
-
-We're happy when the applications we monitor work properly and load quickly. When a problem occurs, we'll display it in a graph and alert you. Let's look at the samples.
-
----
-
-![Problem into web app](../../static/docs-img/kibana-samples-502.jpeg)
-
-Increasing response times and then the server started returning response code 500 and the application was unavailable.
-With proper monitoring and timely notification, the application can still be saved.
-
----
-
-![Increase memory](../../static/docs-img/kibana-changes-on-frontend.jpeg)
-
-In the morning there was increase response times and later there was an increase in memory consumption by web application in the browser
-
---- 
-
-![Environment and performance testing](../../static/docs-img/kibana-lower-environment-and-pt.jpeg)
-
-Two performance tests in a row on a lower test environment - the infrastructure under load via performance tests has a negative effect on the front-end and negative effect on end user.
-
-It's good to know, so it's important to measure during performance tests or during peak on production.
-
---- 
-
-![Peak on production](../../static/docs-img/kibana-peak-on-production.jpeg)
-
-This graph show peak on production and negative impact on end user. Increased memory usage in the browser and increased response times for all requests.
-
---- 
-
-![Shutdown environment](../../static/docs-img/kibana-unvalaible-shut-down-production.jpeg)
-
-This graph shows the unavailability of the environment from the user's perspective.
-
---- 
-
-![Performance audit every 3 min](../../static/docs-img/kibana-speed-load-during-day.jpeg)
-
-We perform a performance audit every 3 minutes and thanks to that we see details and exact values every moment.
-This is very a important for debugging a front-end and for a realistic view of how fast your application is at any time of the day.
-
-
---- 
-
-![Backend or frontend](../../static/docs-img/kibana-backend-or-frontend.jpeg)
-
-If you occasionally have problems with the loading speed of a web application, so it's good to know where the problem starts, whether on the backend or frontend. 
-Graph with title Backend vs Frontend shows difference between metrics `Time To First Byte` a `First Contenful Paint`. 
+```yaml title="Kubernetes CronJob"
+containers:
+- name: canarytrace
+  image: quay.io/canarytrace/canarytrace-pub:4.3.5-pro-20210626074508-73
+  volumeMounts:
+  - name: assets
+    mountPath: /opt/canary/assets
+...
+- name: shipper
+  image: quay.io/canarytrace/shipper:1.4
+  volumeMounts:
+  - name: assets
+    mountPath: /opt/shipper/assets
+  env:
+  - name: ENV_PRINT
+    value: "no"
+  - name: AWS_S3_BUCKET_NAME
+    value: "XXXXX"
+  - name: AWS_ACCESS_KEY_ID
+    value: "XXXXX"
+  - name: AWS_SECRET_ACCESS_KEY
+    value: "XXXXX"
+...
+volumes:
+  - name: "assets"
+    emptyDir: {}
+```
 
 ---
 

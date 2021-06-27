@@ -215,28 +215,6 @@ time_total:  0.477677
 
 - `TESTS_PATH` default is `/opt/canary/tests` there is no reason to change this option.
 
-
-### AWS
-<a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
-
-- `AWS_S3_ACCESS_KEY` your AWS_KEY_ID. E.g. `AWS_S3_ACCESS_KEY=ABC`
-
-- `AWS_S3_SECRET_KEY` your AWS_SECRET_KEY. E.g. `AWS_S3_SECRET_KEY=XYZ`
-
-- `AWS_S3_BUCKET` name of AWS S3 bucket e2e-report-attachments.
-
-  - You must use option `AWS_S3_BUCKET=e2e-report-attachments` for create a screenshot. Canarytrace will try to send a screenshot to AWS S3.
-
-  - Successfully uploaded attachment to https://e2e-report-attachments.s3.amazonaws.com/134930-2020-07-31-ef9a4720-37b8-4a78-9379-cbdcba31ce1a.png
-
-  - Format HHmmss-YYYY-MM-DD-uuidAction.png
-
-- `CODECOMMIT_CREDENTIAL_HELPER` default is no. E.g.  `CODECOMMIT_CREDENTIAL_HELPER=allow`
-
-  - This option is required if yout want clone repository from AWS CodeCommit repositories more info
-
-- `AWS_S3_REGION` default is eu-central-1. E.g. `AWS_S3_REGION=eu-central-1`
-
 ### Services
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
