@@ -360,6 +360,8 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 
 - `PT_AUDIT` use `allow` for run performance audit / Lighthouse
 - `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
+- `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
+- `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
 - `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
 - `PT_AUDIT_REPORT` use `allow` for generate Lighthouse HTML report. Report will be save into `/assets` directory. You can download [Lighthouse HTML report](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
   - e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html`
@@ -367,8 +369,20 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT_TRACE` use `allow` for generate json with records of activity in Chrome's processes. Report will be save into `/assets` directory. You can download [records in a JSON](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
   - e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json`
   - format: `uuid-uuidAction-traces.json`
-- `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
-- `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
+
+
+If you use option `PT_AUDIT_REPORT` or `PT_AUDIT_TRACE` or both, generated reports will be printed to logs after end of the run.
+```bash
+...
+Saved assets
+total 3.4M
+drwxrwxrwx 2 root root 4.0K Jun 27 18:58 .
+drwxr-xr-x 1 node node 4.0K Jun 26 15:12 ..
+-rw-r--r-- 1 node node 977K Jun 27 18:58 f215600090abf0e2be01-07ae6e9629983f323a44-lighthouse-report.html
+-rw-r--r-- 1 node node 1.1M Jun 27 18:58 f215600090abf0e2be01-18321a953f6d44dc6823-lighthouse-report.html
+-rw-r--r-- 1 node node 744K Jun 27 18:57 f215600090abf0e2be01-60cfcdd9709f1343e335-lighthouse-report.html
+-rw-r--r-- 1 node node 563K Jun 27 18:58 f215600090abf0e2be01-c29ed4c40e384bcc42cd-lighthouse-report.html
+```
 
 
 ### Network throttling preset

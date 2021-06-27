@@ -20,7 +20,29 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-timestamp
 
 # Canarytrace Pro
 quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-timestamp
+
+# Canarytrace Shipper
+quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
+
+### Canarytrace 4.4.0
+**Released 27. 06. 2021**
+
+🚀 **New features**
+
+- [Trace events report](/docs/features/lighthouse#reporting) - Canarytrace records of activity in Chrome's processes for the Trace Event Profiling Tool.
+- Prints the generated reports ([Lighthouse HTML report](/docs/features/lighthouse#reporting) and [Trace evets report](/docs/features/lighthouse#reporting)) at the end of the run.
+- [Added Canarytrace Shipper](/docs/features/shipper#example) example.
+- Added option [`PT_AUDIT_REPORT`](/docs/features/lighthouse#configuration-1) and [`PT_AUDIT_TRACE`](/docs/features/lighthouse#configuration-1) for generate reports.
+
+📝 **Documentation**
+- [Performance audit](/docs/features/lighthouse)
+- [Canarytrace Shipper](/docs/features/shipper)
+- [CLI](/docs/guides/cli)
+- [Docker](/docs/features/docker)
+- [Kubernetes](/docs/guides/kubernetes)
+
+---
 
 ### Canarytrace 4.3.2
 **Released 25. 06. 2021**
