@@ -25,6 +25,17 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-times
 quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
+### Shipper 1.4
+
+🚀 **New features**
+- Canarytrace generate reports such as Lighthouse HTML report and Trace report and Shipper send them to the AWS S3.
+
+📝 **Documentation**
+- [Canarytrace Shipper](/docs/features/shipper)
+
+
+---
+
 ### Canarytrace 4.4.0
 **Released 27. 06. 2021**
 
