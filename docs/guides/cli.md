@@ -264,9 +264,9 @@ time_total:  0.477677
 
   - For activate this features use `HERO_ELEMENTS=allow`
 
-#### Volumes
+### Volumes
 
-- `-v $(pwd)/assets/:/opt/canary/assets` binding local directory with directory in docker container for statical files, e.g. screenshots.
+- `-v $(pwd)/assets/:/opt/canary/assets` binding local directory with directory in docker container for statical files, e.g. [Lighthouse HTML report](/docs/features/lighthouse#reporting) or [JSON records of activity in Chrome's processes](/docs/features/lighthouse#reporting).
 
 - `-v $(pwd)/tests/:/opt/canary/tests` binding local directory with tests to directory in docker container.
 

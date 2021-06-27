@@ -36,6 +36,29 @@ it('performance audit', async () => {
 - `targetUrl` e.g. https://canarytrace.com/
 - [`formFactor`](/docs/features/lighthouse#formfactor) is emulation performance profile ( e.g. [desktop](/docs/features/lighthouse#pt_audit_throttlingdesktopdense4g) or [mobile](/docs/features/lighthouse#pt_audit_throttlingmobileregular3g) )
 
+
+## Reporting
+
+**Live reporting**
+
+Canarytrace send result of performance audit into [Elasticsearch](/docs/guides/elasticsearch) into `c.audit-*` index. Read below for more information and a description of metrics.
+
+**Lighthouse HTML report**
+
+Canarytraces save full [Lighthouse](https://developers.google.com/web/tools/lighthouse) HTML report.
+  - open example HTML report: [03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html](https://canarytrace.com/lighthouse-reports/03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html)
+
+![Canarytrace dashboards](../../static/docs-img/lighthouse-report.png)
+
+**Trace**
+
+Canarytrace records of activity in Chrome's processes for the [Trace Event Profiling Tool ](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool)
+
+- download JSON example: [03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json](https://canarytrace.com/lighthouse-reports/03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json)
+- open `chrome://tracing` in your Google Chrome and click on Load button.
+
+![Canarytrace dashboards](../../static/docs-img/lighthouse-tracing.png)
+
 ## Metrics, Opportunities and Audits
 
 Result of performance audit is stored into `c.audit-*` index and contains many metrics, opportunities a diagnostics information.
@@ -300,7 +323,14 @@ Round-trip time (RTT) is the duration in milliseconds (ms) it takes for a networ
 
 - `emulatedUserAgent` - e.g.`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Safari/537.36 Chrome-Lighthouse`
 
-- `lighthouseReport` - name of HTML Lighthouse report `./assets/2021-06-18T18:10:46.330Z-http---164-90-240-72-email.html`
+- `lighthouseReport` - name of HTML Lighthouse report `03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html`
+  - format: `uuid-uuidAction-lighthouse-report.html`
+
+- `traceReport` - records of activity in Chrome's processes for the [Trace Event Profiling Tool ](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool) `03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json`
+  - format: `uuid-uuidAction-traces.json`
+
+Trace Event Profiling Tool
+But there’s a lot that DevTools can’t tell you.
 
 ### Other
 
@@ -333,6 +363,8 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT` use `allow` for run performance audit / Lighthouse
 - `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
 - `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
+- `PT_AUDIT_REPORT` use `allow` for generate Lighthouse HTML report. Report will be save into `/assets` directory. You can download [Lighthouse HTML report](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
+- `PT_AUDIT_TRACE` use `allow` for generate json with records of activity in Chrome's processes. Report will be save into `/assets` directory. You can download [records in a JSON](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
 - `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
 - `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
 

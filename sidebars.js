@@ -11,7 +11,7 @@ module.exports = {
   docs: {
     ['Overview']: ['why/canarytrace','why/edition'],
     ['Get Started']: ['canary/start', 'canary/start-cloud'],
-    Features: ['features/overview', 'features/live-reporting', 'features/filebeat', 'features/installer', 'features/docker', 'features/dashboards', 'features/lighthouse', 'features/hero'],
+    Features: ['features/overview', 'features/live-reporting', 'features/filebeat', 'features/installer', 'features/docker', 'features/dashboards', 'features/lighthouse', 'features/shipper', 'features/hero'],
     Guides: ['guides/architecture', 'guides/elasticsearch', 'guides/cli', 'guides/api', 'guides/lifecycle', 'guides/listener', 'guides/kubernetes', 'guides/linux', 'guides/windows', 'guides/wdio'],
     References: ['references/releases', 'references/roadmap', 'references/glosary', 'references/awesome', 'references/troubleshooting'],
     Media: ['media/webinars'],
