@@ -118,6 +118,52 @@ There may be several reasons for this
 
 ![Visualizations aren’t smoothly](../../static/docs-img/kibana-visu-arent-smoothly.png)
 
+## Canarytrace
+
+### JavaScript heap out of memory
+
+Sometimes a performance audit consumes more resources because individual audits can be more challenging.
+
+```bash title="Canarytrace log from docker container"
+...
+[0-0] Tue, 29 Jun 2021 07:49:41 GMT status Auditing: Serve images in next-gen formats
+[0-0] Tue, 29 Jun 2021 07:49:42 GMT status Auditing: Efficiently encode images
+[0-0] Tue, 29 Jun 2021 07:49:42 GMT status Auditing: Enable text compression
+[0-0] Tue, 29 Jun 2021 07:49:42 GMT status Auditing: Properly size images
+[0-0] Tue, 29 Jun 2021 07:49:42 GMT status Auditing: Use video formats for animated content
+[0-0] Tue, 29 Jun 2021 07:49:42 GMT status Auditing: Remove duplicate modules in JavaScript bundles
+[0-0] 
+[0-0] <--- Last few GCs --->
+[0-0] 
+[0-0] [17:0x7fee6af372c0]    87386 ms: Scavenge (reduce) 253.7 (256.1) -> 253.6 (257.8) MB, 90.5 / 0.0 ms  (average mu = 0.752, current mu = 0.603) allocation failure 
+[0-0] [17:0x7fee6af372c0]    88691 ms: Mark-sweep (reduce) 254.3 (256.8) -> 253.8 (258.4) MB, 1301.8 / 0.0 ms  (+ 0.0 ms in 28 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 1402 ms) (average mu = 0.551, current mu = 0.224) a
+[0-0] 
+[0-0] <--- JS stacktrace --->
+[0-0] 
+[0-0] FATAL ERROR: MarkCompactCollector: young object promotion failed Allocation failed - JavaScript heap out of memory
+[0-0] FAILED in chrome - /smoke/smoke.js
+2021-06-29T07:49:48.955Z INFO @wdio/cli:launcher: Run onComplete hook
+
+Spec Files:	 0 passed, 1 failed, 1 total (100% completed) in 00:01:33 
+```
+
+**Solutions**
+
+Please increase resource for Canarytrace docker image:
+
+```bash title="CronJob with Canarytrace docker image" {7}
+...
+  - name: LICENSE
+    value: XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
+resources:
+  limits:
+    cpu: 300m
+    memory: 600Mi
+  requests:
+    cpu: 200m
+    memory: 300Mi
+```
+
 ---
 
 Do you find mistake or have any questions? Please [create issue](https://github.com/canarytrace/documentation/issues/new/choose), thanks 👍
