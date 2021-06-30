@@ -16,6 +16,7 @@ custom_edit_url: false
 ```bash
 docker pull quay.io/canarytrace/canarytrace-pub:4.2.17-pro-20210618073421-28
 ```
+> #### Please push Docker image with Canarytrace to your docker registry!
 
 - [Contact us](/docs/support/contactus) for create a Docker image and license key. You will receive email with  link to download the Docker image and the license key.
 - What is [Canarytrace](http://localhost:3000/docs/why/edition)
