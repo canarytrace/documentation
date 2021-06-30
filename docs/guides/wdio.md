@@ -21,18 +21,18 @@ Canarytrace adds features for non-invasive / agent-less monitoring of performanc
 
 You can monitor and measure any web application via Webdriver.io.
 
-### Editions
+### Modes
 ---
 
-**Canarytrace** is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Is useful for testing and  monitoring of user journeys. E.g. open homepage -> search product -> add product to basket -> buy
+**Canarytrace in a smoke mode** is a Plug’n'Play and maintenance free stack for testing, measuring and monitoring of web applications and just enter only a collection of landing pages.
 
-**Canarytrace Smoke** is a Plug’n'Play and maintenance free stack for testing, measuring and monitoring of web applications. Is useful for testing and monitoring collection of landing pages.
+**Canarytrace in a user-journey mode** is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Is useful for testing and  monitoring of user journeys. E.g. open homepage -> search product -> add product to basket -> buy, and in this moment we need Webdriver.IO.
 
 ### Write your first monitor script
 
 If you want monitoring user journey, you must prepare test case / monitoring script in Webdriver.IO. 
 
-Webdriver.IO is a testing framework written in javascript and its installation is very simple.
+Webdriver.IO is a testing framework written in javascript and it's installation is very simple.
 
 #### Install and prepare Webdriver.IO
 
@@ -86,7 +86,7 @@ drwxr-xr-x    3 rdpanek  staff    96B 27 May 08:54 test
 More info on [Webdriver.IO documentation](https://webdriver.io/docs/gettingstarted#set-up)
 
 
-## Run Canarytrace 4 alpha
+## Run Canarytrace
 ---
 
 Canarytrace is a dockerized stack and is ready for run in a [Kubernetes](https://kubernetes.io/). You can run your test for example in a [Docker compose](https://docs.docker.com/compose/).
