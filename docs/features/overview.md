@@ -105,7 +105,7 @@ All attachments such as screenshots, HAR and videos are stored locally in the do
 
 ## Wait for load event end
 
-Canarytrace has implement advanced features that allow you to overcome unstable frontend issues. We know the internal processes of browser, therefore, we extend WDIO with more sophisticated functions e.g. `browser.waitForloadEventEnd()` for wait on latest browser event or `browser.waitForClickable()` for wait on active element and any more.
+Canarytrace has implement advanced features that allow you to overcome unstable frontend issues. We know the internal processes of browser, therefore, we extend WDIO with more sophisticated functions e.g. `browser.waitForloadEventEnd()` for wait on latest browser event.
 
 
 ## Waiting on network and mocking requests
@@ -128,7 +128,7 @@ Web application load a lot of more unused resources such as javascript or css. C
 
 ## Memory Intercept
 
-Web application use resources such as CPU and Memory for every opened tabs. One web application runs in one tab. If a web application consumes a large amount of memory in the browser, they may not work properly, because missing resources. Canarytrace coninuously collects information about used and available memory.
+Web application use resources such as CPU and Memory for every opened tabs. One web application runs in one tab. If a web application consumes a large amount of memory in the browser, they may not work properly, because missing resources. Canarytrace continuously collects information about used and available memory.
 
 ## Lighthouse and Performance Audit
 

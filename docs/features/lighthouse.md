@@ -362,13 +362,26 @@ Canarytrace has build-in latest version of Lighthouse and you can set behavior o
 - `PT_AUDIT_LOG_LEVEL` available options are `info`, `silent`, `error` and `verbose`. Default is `error`.
 - `PT_AUDIT_MAX_WAIT_FCP` e.g. `90000` in ms and default value is `30000` ms
 - `PT_AUDIT_MAX_WAIT_LOAD` e.g. `90000` in ms and default value is `45000` ms
-- `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`
-- `PT_AUDIT_REPORT` use `allow` for generate Lighthouse HTML report. Report will be save into `/assets` directory. You can download [Lighthouse HTML report](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
+- `PT_AUDIT_THROTTLING` is formFactor and has available options `mobileSlow4G`, `mobileRegular3G` and `desktopDense4G`. Default is `desktopDense4G`.
+- `PT_AUDIT_REPORT` use `always` for generate Lighthouse HTML report. Report will be save into `/assets` directory. You can download [Lighthouse HTML report](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
   - e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html`
   - format: `uuid-uuidAction-lighthouse-report.html`
-- `PT_AUDIT_TRACE` use `allow` for generate json with records of activity in Chrome's processes. Report will be save into `/assets` directory. You can download [records in a JSON](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
+
+- `PT_AUDIT_TRACE` use `always` for generate json with records of activity in Chrome's processes. Report will be save into `/assets` directory. You can download [records in a JSON](/docs/guides/cli#volumes) or use [Canarytrace Shipper](/docs/features/shipper).
   - e.g. `03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json`
   - format: `uuid-uuidAction-traces.json`
+
+**Conditions for generate report**
+
+You can generate reports (Lighthouse HTML report and Trace records) only if any of the metrics has a low score. E.g. generate report if metric `total-blocking-time` has score lower than 50%. Available metrics:
+ - `total-blocking-time` for Total Blocking Time (TBT) 
+ - `first-contentful-paint` for First Contentful Paint (FCP)
+ - `largest-contentful-paint` for Largest Contentful Paint (LCP)
+ - `cumulative-layout-shift` for Cumulative Layout Shift (CLS)
+ - `speed-index` for Speed Index (SI)
+ - `interactive` for Time to Interactive (TTI)
+
+And how to use: `PT_AUDIT_REPORT=total-blocking-time<50` or `PT_AUDIT_TRACE=interactive<70`
 
 
 If you use option `PT_AUDIT_REPORT` or `PT_AUDIT_TRACE` or both, generated reports will be printed to logs after end of the run.

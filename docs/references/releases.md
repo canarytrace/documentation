@@ -25,6 +25,27 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-times
 quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
+---
+
+### Canarytrace 4.7.0
+**Released 05. 07. 2021**
+
+🚀 **New features**
+
+- [Conditions for generate report](/docs/features/lighthouse#configuration-1) - Generate reports only if any of the metrics has a low score.
+- [Memory Intercept](/docs/features/memory) - Collects information about used and available memory during test.
+- [WaitForLoadEventEnd](/docs/features/overview#wait-for-load-event-end) - Added to `smoke` mode. Canarytrace wait for full load of the page.
+
+📦 **Changes**
+
+- [Performance audit](/docs/features/lighthouse) - `desktopDense4G` is a default network throttling preset. 
+- WDIO configuration: `connectionRetryCount` - Reduced the number of attemps on 1.
+
+📝 **Documentation**
+- [Performance audit](/docs/features/lighthouse)
+- [Memory Intercept](/docs/features/memory)
+
+
 ### Shipper 1.4
 
 🚀 **New features**
