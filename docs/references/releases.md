@@ -25,6 +25,17 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-times
 quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
+### Canarytrace 4.8.0
+**Released 05. 07. 2021**
+
+🚀 **New features**
+
+- [Hero Elements](/docs/features/hero) - Easily measure render time of individual parts of your web application with Hero Elements, e.g. when exactly is displayed to user login button or some banner?
+
+📝 **Documentation**
+- [Hero Elements](/docs/features/hero)
+
+
 ---
 
 ### Canarytrace 4.7.0
@@ -46,6 +57,9 @@ quay.io/canarytrace/shipper:<Major>.<Minor>
 - [Memory Intercept](/docs/features/memory)
 
 
+---
+
+
 ### Shipper 1.4
 
 🚀 **New features**
@@ -56,6 +70,7 @@ quay.io/canarytrace/shipper:<Major>.<Minor>
 
 
 ---
+
 
 ### Canarytrace 4.4.0
 **Released 27. 06. 2021**

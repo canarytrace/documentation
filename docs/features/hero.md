@@ -4,6 +4,8 @@ title: Hero Elements
 sidebar_label: Hero Elements
 ---
 
+<a href="/docs/why/edition#canarytrace-pro"><span class="canaryBadge">Canarytrace Pro</span></a>
+
 ### Your business probably has these questions:
  
 - When exactly does the user see the car?
@@ -65,7 +67,7 @@ For accurate measurements we use [DOMHighResTimeStamp](https://developer.mozilla
 
 **Elasticsearch index**
 
-- `c.performance-entries-*` performance mark timestamps are stored with the same index as [performance entries](/docs/features/live-reporting#cperformance-entries-).
+- Hero Elements are automatically stored into `c.performance-entries-*` index with [performance entries](/docs/features/live-reporting#cperformance-entries-).
 
 ### How to make it work
 

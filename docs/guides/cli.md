@@ -238,10 +238,6 @@ time_total:  0.477677
 
   - For activate this features use `MEMORY_INTERCEPT=allow`
 
-- `HERO_ELEMENTS` default `no` store marked hero elements in  to elasticsearch index [`c.performance-entries-*`](/docs/features/live-reporting)
-
-  - For activate this features use `HERO_ELEMENTS=allow`
-
 ### Volumes
 
 - `-v $(pwd)/assets/:/opt/canary/assets` binding local directory with directory in docker container for statical files, e.g. [Lighthouse HTML report](/docs/features/lighthouse#reporting) or [JSON records of activity in Chrome's processes](/docs/features/lighthouse#reporting).
