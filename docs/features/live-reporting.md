@@ -540,7 +540,7 @@ Memory is collected from `performance.memory` api.
 
 Console events are collected directly from devTools.
 
-> - More info about [Log.entryAdded](https://chromedevtools.github.io/devtools-protocol/tot/Log/#event-entryAdded)
+> - More info about [Console Intercept](/docs/features/console)
 
 ```json
 {
