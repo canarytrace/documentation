@@ -15,6 +15,7 @@ Web application use resources such as CPU and Memory for every opened tabs. One 
 
 ![Canarytrace dashboards](../../static/docs-img/memory-intercept.png)
 
+- [Performance.memory API](https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory)
 - [Live reporting memory intercept](/docs/features/live-reporting/#cmemory-)
 ---
 

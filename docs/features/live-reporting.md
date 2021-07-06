@@ -509,7 +509,7 @@ Responses are collected when HTTP response is available from devTools.
 
 Memory is collected from `performance.memory` api.
 
-> - More info about [Performance.memory](https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory)
+> - More info about [Memory Intercept](/docs/features/memory)
 
 - `jsHeapSizeLimit` The maximum size of the heap, in bytes, that is available to the context.
 - `totalJSHeapSize` The total allocated heap size, in bytes.
