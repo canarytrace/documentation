@@ -25,6 +25,20 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-times
 quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
+### Canarytrace 4.9.1
+**Released 06. 07. 2021**
+
+🚀 **New features**
+
+- [Console Intercept](/docs/features/console) - Collects messages, warnings, errors, debug, info etc. from browser console.
+
+📝 **Documentation**
+- [Console Intercept](/docs/features/console)
+
+
+---
+
+
 ### Canarytrace 4.8.0
 **Released 05. 07. 2021**
 
