@@ -123,6 +123,10 @@ If you want use live logging to [Elasticsearch](/docs/guides/elasticsearch/) and
 
 Configuration is on separate page. [Performance audit configuration](/docs/features/lighthouse/#configuration-1)
 
+### Optional
+
+- `PAUSE_BETWEEN_SMOKE` Default is 0ms. Pause between every tested URL.
+
 
 ## Mode `user-journey`
 > - If you use this mode you need [test script / monitor script](/docs/references/glosary#test-case--monitor-script) writen in [Webdriver.IO](https://webdriver.io/). Try [how to write test script / monitor script](/docs/guides/wdio)

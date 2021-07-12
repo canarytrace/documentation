@@ -25,6 +25,27 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-times
 quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
+### Canarytrace 4.10.3
+**Released 12. 07. 2021**
+
+🚀 **New features**
+
+- [Response Intercept](/docs/features/overview#response-intercept) - Collect all responses incoming from backend to the browser.
+- [`PAUSE_BETWEEN_SMOKE`](/docs/guides/cli#optional) - Added ENV for pause between every tested URL.
+- Print [`uuid`](/docs/features/live-reporting#creport-) and [`labels`](/docs/features/live-reporting#creport-) into command line after start.
+
+📦 **Changes**
+
+- [`ENV_PRINT`](/docs/guides/cli#other) - Better print into command line.
+- Count of PerformanceEntris - Better print into command line.
+
+
+📝 **Documentation**
+- [Command Line](/docs/guides/cli)
+
+
+---
+
 ### Canarytrace 4.9.1
 **Released 06. 07. 2021**
 
