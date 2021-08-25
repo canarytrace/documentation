@@ -15,6 +15,7 @@ module.exports = {
     Guides: ['guides/architecture', 'guides/elasticsearch', 'guides/cli', 'guides/api', 'guides/lifecycle', 'guides/listener', 'guides/kubernetes', 'guides/linux', 'guides/windows', 'guides/wdio'],
     References: ['references/releases', 'references/roadmap', 'references/glosary', 'references/awesome', 'references/troubleshooting'],
     Media: ['media/webinars'],
+    Newsroom: ['news/what-is-web-perf'],
     Support: ['support/bugs', 'support/contactus', 'support/subscribe'],
   },
 };
