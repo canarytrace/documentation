@@ -1,6 +1,6 @@
 ---
 id: hero-elements
-title: Heroes of your web application
+hide_title: Heroes of your web application
 sidebar_label: Heroes of your web application
 custom_edit_url: false
 description: WebPerf
@@ -9,14 +9,17 @@ keywords:
   - news
   - newsroom
   - hero elements
+  - web perf test
 ---
+<img src="/img/banner_clanek_hrdinove_04.png"/>
 
+<br/><br/><br/>
 <img src="/img/veronikaPankova_circle.png" width="80" />
 
 *Veronika Pánková, September 2021*
 
 
-Surely you know what you people need to see first when they open your website or e-shop. It can be video, logo, events, discounts, buy button, pictures of your work... the most important how you want to keep the user/customer on your page, but how quickly does the essential really appear to the user in the browser?
+Surely you know what people need to see first when they open your website or e-shop. It can be video, logo, events, discounts, buy button, pictures of your work... the most important how you want to keep the user/customer on your page, but how quickly does the essential really appear to the user in the browser?
 
 
 ### The madness around web performance
