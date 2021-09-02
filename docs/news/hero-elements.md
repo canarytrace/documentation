@@ -1,6 +1,6 @@
 ---
 id: hero-elements
-hide_title: Heroes of your web application
+title: Heroes of your web application
 sidebar_label: Heroes of your web application
 custom_edit_url: false
 description: WebPerf
@@ -11,7 +11,7 @@ keywords:
   - hero elements
   - web perf test
 ---
-<img src="/img/banner_clanek_hrdinove_04.png"/>
+
 
 <br/><br/><br/>
 <img src="/img/veronikaPankova_circle.png" width="80" />
@@ -24,6 +24,8 @@ Surely you know what people need to see first when they open your website or e-s
 
 ### The madness around web performance
 Are you caught too? Today, everyone tackles web speed, SEO optimization, compares results, measures competition, but does he really measure accurately and well? Are the results biased? And what does the total page load speed tell you about how long it takes for the user to see just that "Your Hero" in the browser? This is what hero elements find out for you.
+
+<img src="/img/banner_clanek_hrdinove_04.png"/>
 
 ### Hero elements and how fast they are?
 Let's talk more about "Hero elements" if you haven't heard this term before and don't know it, all the better,you'll  learn how simply the total time to load a particular element on your website can be measured. The exact time when your hero - the most important element the user sees and can react. By the way Did you know that after 3 seconds of loading a site, every second increases the likelihood of a user leaving you to join the competition?
