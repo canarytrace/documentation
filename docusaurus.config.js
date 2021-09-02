@@ -99,6 +99,10 @@ module.exports = {
             {
               label: 'Webinars',
               to: 'docs/media/webinars',
+            },
+            {
+              label: 'Newsroom',
+              to: 'docs/news/what-is-web-perf',
             }
           ],
         },
