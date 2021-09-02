@@ -1,6 +1,6 @@
 ---
 id: what-is-web-perf
-title: What is web performance test?
+hide_title: What is web performance test?
 sidebar_label: What is web performance test?
 custom_edit_url: false
 description: WebPerf
@@ -11,9 +11,12 @@ keywords:
   - web perf test
 ---
 
+<img src="/img/banner_performance_test_02.png" />
+<br/><br/><br/>
+
 <img src="/img/miroslavKret_circle.png" width="80" />
 
-*Miroslav Kret, August 2021*
+*Miroslav Kret, September 2021*
 
 ## What is web performance test?
 
@@ -39,6 +42,11 @@ Lab measuring is way how to identify any problem as soon as possible, before aff
 
 ### Web performance test as monitor of your application
 
+<img src="/img/performance_test_image_article.jpeg" />
+
+*Example of measured data during day. Problem was identifies by efective and frequest measurement*
+
+<br/>
 You can test your application, you can collect overal data from production, but still there is gap in data. None of this information give you information about how the application works during any time during dat, month or year. We would like to monitor main metrics on production using web performance test how application behaves during day. If there is any problem every evening or morning, Simply by this approach you’re able to identify problem in peak or of peak time and root cause of problem. 
 
 > To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
