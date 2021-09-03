@@ -1,28 +1,26 @@
 ---
 id: what-is-web-perf
-hide_title: What is web performance test?
+title: What is web performance test?
 sidebar_label: What is web performance test?
 custom_edit_url: false
-description: WebPerf
+description: Is useful monitoring of your web application from user perspective.
 keywords:
   - canarytrace
-  - news
-  - newsroom
-  - web perf test
+  - blog
+  - webperformance test
+image: https://canarytrace.com/img/banner_performance_test_02.png
 ---
 
-<img src="/img/banner_performance_test_02.png" />
-<br/><br/><br/>
+<br/><br/>
 
-<img src="/img/miroslavKret_circle.png" width="80" />
-
-*Miroslav Kret, September 2021*
-
-## What is web performance test?
 
 Web performance test or web site test is way to see how well your website performs. With this test we are getting information how web application is working. How fast is. How stable is and how user friendly is for customer.<br/>
 
 Classic or standard performance testing (load testing) is executed to provide accurate information of the readiness of an application through testing and monitoring the server side of application. Performance testing is way how to test our application under specific load. Peak load, minimal load, expected load and of course specific performance test type called stress test, where we would like to identify maximal performance of our application. However with using any performance test tool (JMeter, Gatling,...) you’re not using browser and you're not testing your web application in browser. You only simulate traffic from this application and generate load to backend part of application. Primary focus is on infrastructure and performance test will not give you answer how well web application will works for your customer.<br/> 
+
+![What is web performance test?](/img/banner_performance_test_02.png)
+
+<br/> <br/> 
 
 On other hand web performance test is fully focussed on browser. Web perf test is sitting itself and provide you information how well web application is working. Of course is good practise to use web performance tested isolated on Prod or pre-prod env. Without any heavy load to see how web application is working. But of course make sense to measure and monitor web performance test during load test or on production during peak time to see if heavy load will affect Vitality/Web performance of your web application itself.
 
@@ -50,6 +48,11 @@ Lab measuring is way how to identify any problem as soon as possible, before aff
 You can test your application, you can collect overal data from production, but still there is gap in data. None of this information give you information about how the application works during any time during dat, month or year. We would like to monitor main metrics on production using web performance test how application behaves during day. If there is any problem every evening or morning, Simply by this approach you’re able to identify problem in peak or of peak time and root cause of problem. 
 
 > To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
+
+<br/><br/>
+<img src="/img/miroslavKret_circle.png" width="80" />
+
+Miroslav Kret, <br />*September 2021*
 
 ---
 

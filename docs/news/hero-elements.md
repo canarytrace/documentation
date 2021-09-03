@@ -3,29 +3,24 @@ id: hero-elements
 title: Heroes of your web application
 sidebar_label: Heroes of your web application
 custom_edit_url: false
-description: WebPerf
+description: How long it takes for the user to see just that Your Hero in the browser?
 keywords:
   - canarytrace
   - news
-  - newsroom
+  - blog
   - hero elements
-  - web perf test
+  - webperformance test
+image: https://canarytrace.com/img/banner_clanek_hrdinove_04.png
 ---
 
-
-<br/><br/><br/>
-<img src="/img/veronikaPankova_circle.png" width="80" />
-
-*Veronika Pánková, September 2021*
-
-
+<br/><br/>
 Surely you know what people need to see first when they open your website or e-shop. It can be video, logo, events, discounts, buy button, pictures of your work... the most important how you want to keep the user/customer on your page, but how quickly does the essential really appear to the user in the browser?
 
 
 ### The madness around web performance
 Are you caught too? Today, everyone tackles web speed, SEO optimization, compares results, measures competition, but does he really measure accurately and well? Are the results biased? And what does the total page load speed tell you about how long it takes for the user to see just that "Your Hero" in the browser? This is what hero elements find out for you.
 
-<img src="/img/banner_clanek_hrdinove_04.png"/>
+![Heroes of your web application](/img/banner_clanek_hrdinove_04.png)
 
 ### Hero elements and how fast they are?
 Let's talk more about "Hero elements" if you haven't heard this term before and don't know it, all the better,you'll  learn how simply the total time to load a particular element on your website can be measured. The exact time when your hero - the most important element the user sees and can react. By the way Did you know that after 3 seconds of loading a site, every second increases the likelihood of a user leaving you to join the competition?
@@ -40,6 +35,13 @@ Now you know the Heroes and don't be afraid to use them.
 
 
 > To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
+
+<br/><br/>
+<img src="/img/veronikaPankova_circle.png" width="80" />
+
+Veronika Pánková, Performance Evangelist <br />*September 2021*
+
+
 
 ---
 
