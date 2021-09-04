@@ -47,7 +47,8 @@ Lab measuring is way how to identify any problem as soon as possible, before aff
 <br/>
 You can test your application, you can collect overal data from production, but still there is gap in data. None of this information give you information about how the application works during any time during dat, month or year. We would like to monitor main metrics on production using web performance test how application behaves during day. If there is any problem every evening or morning, Simply by this approach you’re able to identify problem in peak or of peak time and root cause of problem. 
 
-> To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
+> - To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
+> - **Open Office Hours** - let's call and talk about it [https://calendly.com/canarytrace/hello](https://calendly.com/canarytrace/hello)
 
 <br/><br/>
 <img src="/img/miroslavKret_circle.png" width="80" />

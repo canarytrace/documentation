@@ -33,8 +33,8 @@ By applying Hero elements not only to the main element on the page, but also to 
 Now you know the Heroes and don't be afraid to use them.
 
 
-
-> To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
+> - To stay tuned and follow [@canarytrace](https://twitter.com/canarytrace) Twitter
+> - **Open Office Hours** - let's call and talk about it [https://calendly.com/canarytrace/hello](https://calendly.com/canarytrace/hello)
 
 <br/><br/>
 <img src="/img/veronikaPankova_circle.png" width="80" />
