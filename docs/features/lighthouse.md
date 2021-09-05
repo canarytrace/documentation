@@ -46,7 +46,7 @@ Canarytrace send result of performance audit into [Elasticsearch](/docs/guides/e
 **Lighthouse HTML report**
 
 Canarytraces save full [Lighthouse](https://developers.google.com/web/tools/lighthouse) HTML report.
-  - open example HTML report: [03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html](https://canarytrace.com/lighthouse-reports/03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html)
+  - open example HTML report: [03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html](https://canarytrace.com/examples/03bbc6dac05072c42859-0f920da3db03fefb7cae-lighthouse-report.html)
 
 ![Canarytrace dashboards](../../static/docs-img/lighthouse-report.png)
 
@@ -54,7 +54,7 @@ Canarytraces save full [Lighthouse](https://developers.google.com/web/tools/ligh
 
 Canarytrace records of activity in Chrome's processes for the [Trace Event Profiling Tool ](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool)
 
-- download JSON example: [03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json](https://canarytrace.com/lighthouse-reports/03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json)
+- download JSON example: [03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json](https://canarytrace.com/examples/03bbc6dac05072c42859-0f920da3db03fefb7cae-traces.json)
 - open `chrome://tracing` in your Google Chrome and click on Load button.
 
 ![Canarytrace dashboards](../../static/docs-img/lighthouse-tracing.png)
