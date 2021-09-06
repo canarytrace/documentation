@@ -14,7 +14,7 @@ Get into your email an automatic report for the previous day every morning.
 
 ![Daily Report](../../static/docs-img/dailyReport.png)
 
-> [Download example daily report](https://canarytrace.com/examples/DailyReport.png)
+> [Download example daily report](https://canarytrace.com/reports/DailyReport.png)
 
 ### Availability
 
