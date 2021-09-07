@@ -74,11 +74,12 @@ docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytr
 ᐰ ls -lah deployments/
 drwxr-xr-x   7 rdpanek  staff   224B 26 črv 15:57 .
 drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
--rw-r--r--   1 rdpanek  staff   365B 21 črv 10:38 README.md
--rw-r--r--   1 rdpanek  staff   3,4K 21 črv 10:38 filebeat.yaml
--rw-r--r--   1 rdpanek  staff   2,8K 26 črv 15:57 smoke-desktop-shipper.yaml
--rw-r--r--   1 rdpanek  staff   2,2K 26 črv 15:57 smoke-desktop.yaml
--rw-r--r--   1 rdpanek  staff   2,2K 26 črv 15:57 smoke-mobile.yaml
+-rw-r--r--   1 rdpanek  staff   241B  5 zář 20:17 README.md
+-rw-r--r--   1 rdpanek  staff   3,4K 20 čvc 19:34 filebeat.yaml
+-rw-r--r--   1 rdpanek  staff   3,2K  5 zář 20:09 listener-report.yaml
+-rw-r--r--   1 rdpanek  staff   2,8K 20 čvc 19:34 smoke-desktop-shipper.yaml
+-rw-r--r--   1 rdpanek  staff   2,2K 20 čvc 19:34 smoke-desktop.yaml
+-rw-r--r--   1 rdpanek  staff   2,2K 20 čvc 19:34 smoke-mobile.yaml
 
 ```
 
@@ -89,6 +90,8 @@ drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
 - `smoke-desktop.yaml` Canarytrace Smoke CronJob with desktop settings.
 
 - `smoke-mobile.yaml` Canarytrace Smoke CronJob with mobile settings.
+
+- `listener-report.yaml` Stack for generate [Daily Report](/docs/features/daily-report).
 
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 
