@@ -143,6 +143,8 @@ Configuration is on separate page. [Performance audit configuration](/docs/featu
 ```
 ### Mandatory options
 
+- `MODE` - switch mode of Canarytrace on user journey `MODE="user-journey"`
+
 - `SPEC` - is file with your test case / monitor script, e.g. `SPEC="test/specs/example.e2e.js"`
 
 - `GIT_REPOSITORY` - e.g. `git@github.com:canarytrace/wdio75-demo.git`
@@ -241,6 +243,10 @@ time_total:  0.477677
 - `MEMORY_INTERCEPT` default `no` store used javascript memory during loading and using the web application into elasticsearch index [`c.memory-*`](/docs/features/live-reporting)
 
   - For activate this features use `MEMORY_INTERCEPT=allow`
+
+- `HERO_ELEMENTS` default `no` store [Hero Elements](/docs/features/hero) into elasticsearch index [`c.performance-entries-*`](/docs/features/live-reporting)
+
+  - For activate this features use `HERO_ELEMENTS=allow`
 
 ### Volumes
 
