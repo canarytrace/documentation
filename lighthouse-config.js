@@ -1,6 +1,6 @@
 module.exports = {
   extends: 'lighthouse:default',
   settings: {
-    formFactor: 'desktopDense4G'
+    formFactossssr: 'desktopDense4G'
   },
 }
