@@ -50,9 +50,9 @@ Do not forget that the speed of your web is really important for your business.
 > - **Open Office Hours** - let's call and talk about it [https://calendly.com/canarytrace/hello](https://calendly.com/canarytrace/hello)
 
 <br/><br/>
-<img src="/img/TODO.png" width="80" />
+<img src="/img/misaEgedova_circle.png" width="80" />
 
-Michaela Egedová, <br />*October 2021*
+Michaela Egedová, Performance Evangelist<br />*October 2021*
 
 ---
 
