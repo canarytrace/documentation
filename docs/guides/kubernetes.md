@@ -45,7 +45,7 @@ Requirements on resource will be higher if you will be perform a performance aud
 
 | Resources | CPU requests | CPU limits | Memory requests | Memory limits |
 |-|-|-|-|-|
-| Canarytrace Runner | `200m` | `300m` | `300Mi` | `400Mi` |
+| Canarytrace Runner | `200m` | `300m` | `300Mi` | `800Mi` |
 | Browser | `2000m` | `4000m` | `2000Mi` | `4000Mi` |
 | Total | `2200m` | `4300m` | `4300Mi` | `4400Mi` |
 
