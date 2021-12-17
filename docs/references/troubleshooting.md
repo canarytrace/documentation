@@ -2,7 +2,7 @@
 id: troubleshooting
 title: Troubleshooting
 sidebar_label: Troubleshooting
-custom_edit_url: false
+
 description: Canarytrace troubleshooting
 ---
 

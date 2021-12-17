@@ -2,7 +2,7 @@
 id: edition
 title: Canarytrace Edition
 sidebar_label: Canarytrace Edition
-custom_edit_url: false
+
 description: About Canarytrace Edition
 keywords:
   - Canarytrace

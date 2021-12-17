@@ -2,7 +2,6 @@
 id: lighthouse
 title: Performance audit
 sidebar_label: Performance audit
-custom_edit_url: false
 ---
 
 > ### What you’ll learn

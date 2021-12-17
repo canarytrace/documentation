@@ -2,7 +2,6 @@
 id: cli
 title: Command Line
 sidebar_label: Command Line
-custom_edit_url: false
 ---
 
 Canarytrace is distributed as a docker image and is run from command line. Behavior and functions are set using options. Some options are mandatory and some are optional. Canarytrace is based on WDIO v7 and therefore some options are described on [WDIO CLI Options page](https://webdriver.io/docs/clioptions.html).

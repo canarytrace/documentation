@@ -2,7 +2,7 @@
 id: linux
 title: Linux example
 sidebar_label: Linux example
-custom_edit_url: false
+
 ---
 
 ## Prepare Linux droplet on DigitalOcean

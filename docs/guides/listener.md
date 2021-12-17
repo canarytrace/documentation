@@ -2,7 +2,7 @@
 id: listener
 title: Canarytrace Listener
 sidebar_label: Listener
-custom_edit_url: false
+
 description: Analyze metrics and alerting by thresholds
 keywords:
   - canarytrace

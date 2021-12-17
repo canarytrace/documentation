@@ -2,7 +2,7 @@
 id: bugs
 title: Bugs or Questions
 sidebar_label: Bugs or Questions
-custom_edit_url: false
+
 ---
 
 If you have some question, problem or if you found some bugs, please create issue or send question.

@@ -2,7 +2,6 @@
 id: need-for-speed
 title: “The need for speed” for your websites
 sidebar_label: “The need for speed” for your websites
-custom_edit_url: false
 description: How speed can help to your business
 keywords:
   - canarytrace

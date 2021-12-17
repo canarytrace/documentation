@@ -2,7 +2,7 @@
 id: architecture
 title: Architecture
 sidebar_label: Architecture
-custom_edit_url: false
+
 description: Basic overview of Canarytrace architecture
 keywords:
   - canarytrace

@@ -16,16 +16,20 @@
     "prettier:diff": "prettier --config .prettierrc --list-different \"**/*.{js,md}\""
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.70",
-    "@docusaurus/preset-classic": "2.0.0-alpha.70",
+    "@docusaurus/core": "^2.0.0-beta.ff31de0ff",
+    "@docusaurus/preset-classic": "^2.0.0-beta.ff31de0ff",
     "@mdx-js/react": "1.6.21",
     "clsx": "1.1.1",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^8.1.0",
+    "postcss-loader": "^4.0.4",
     "react": "16.8.4",
     "react-dom": "16.8.4"
   },
   "devDependencies": {
+    "autoprefixer": "^9.8.8",
     "babel-eslint": "10.0.3",
-    "eslint": "6.7.1",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-header": "3.0.0",

@@ -2,7 +2,7 @@
 id: windows
 title: Windows 10Pro example
 sidebar_label: Windows example
-custom_edit_url: false
+
 ---
 
 If you have Windows with Docker Desktop installed, skip the first and second step

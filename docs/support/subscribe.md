@@ -2,7 +2,7 @@
 id: subscribe
 title: What’s New
 sidebar_label: Subscribe
-custom_edit_url: false
+
 ---
 
 

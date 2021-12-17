@@ -2,7 +2,7 @@
 id: installer
 title: Canarytrace Installer
 sidebar_label: Canarytrace Installer
-custom_edit_url: false
+
 ---
 
 > ### What you’ll learn

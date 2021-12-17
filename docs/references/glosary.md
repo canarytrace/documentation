@@ -2,7 +2,7 @@
 id: glosary
 title: Glosary
 sidebar_label: Glosary
-custom_edit_url: false
+
 description: Canarytrace Glosary
 keywords:
   - test

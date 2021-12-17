@@ -2,7 +2,7 @@
 id: webinars
 title: Webinars
 sidebar_label: Webinars
-custom_edit_url: false
+
 description: Records of our webinars
 keywords:
   - canarytrace
