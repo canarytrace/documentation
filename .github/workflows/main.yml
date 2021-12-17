@@ -30,7 +30,9 @@ jobs:
       # Build prod
       -
        name: 'build prod'
-       run: 'npm run build'
+       run: |
+        npm install
+        npm run build
        
       # Sync files
       - name: 📂 Sync files
