@@ -2,7 +2,7 @@
 id: lifecycle
 title: Lifecycle
 sidebar_label: Lifecycle
-custom_edit_url: false
+
 description: Lifecycle
 keywords:
   - canarytrace

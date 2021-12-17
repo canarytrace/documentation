@@ -2,7 +2,6 @@
 id: docker
 title: Docker images
 sidebar_label: Docker images
-custom_edit_url: false
 ---
 
 > ### What you’ll learn

@@ -1,7 +1,7 @@
 ---
 id: wdio
 title: WDIO Test Script
-custom_edit_url: false
+
 description: How to write our first Webdriver.io test script
 keywords:
   - canarytrace

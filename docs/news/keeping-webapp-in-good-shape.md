@@ -2,7 +2,6 @@
 id: good-shape
 title: Keeping web application in good shape
 sidebar_label: Keeping web application in good shape
-custom_edit_url: false
 description: WebPerf
 keywords:
   - canarytrace

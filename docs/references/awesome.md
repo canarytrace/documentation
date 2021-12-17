@@ -2,7 +2,7 @@
 id: awesome
 title: Awesome Web Performance
 sidebar_label: Awesome Web Performance
-custom_edit_url: false
+
 description: Awesome Web Performance
 keywords:
   - test

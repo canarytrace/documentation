@@ -2,7 +2,7 @@
 id: memory
 title: Memory Intercept
 sidebar_label: Memory Intercept
-custom_edit_url: false
+
 ---
 
 > ### What you’ll learn

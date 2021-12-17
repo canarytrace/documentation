@@ -2,7 +2,6 @@
 id: start
 title: First run of Canarytrace
 sidebar_label: Start local demo
-custom_edit_url: false
 description: First run of Canarytrace
 keywords:
   - canarytrace

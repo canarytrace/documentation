@@ -2,7 +2,7 @@
 id: dashboards
 title: Follow metrics, incidents and trends
 sidebar_label: Dashboards
-custom_edit_url: false
+
 ---
 
 > ### What you’ll learn

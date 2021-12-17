@@ -2,7 +2,7 @@
 id: roadmap
 title: Upcoming features
 sidebar_label: Roadmap
-custom_edit_url: false
+
 description: Perex
 ---
 

@@ -2,7 +2,6 @@
 id: console
 title: Console Intercept
 sidebar_label: Console Intercept
-custom_edit_url: false
 ---
 
 > ### What you’ll learn

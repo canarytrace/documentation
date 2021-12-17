@@ -2,7 +2,6 @@
 id: hero-elements
 title: Heroes of your web application
 sidebar_label: Heroes of your web application
-custom_edit_url: false
 description: How long it takes for the user to see just that Your Hero in the browser?
 keywords:
   - canarytrace

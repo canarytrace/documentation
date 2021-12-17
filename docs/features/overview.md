@@ -2,7 +2,6 @@
 id: overview
 title: Features overview
 sidebar_label: Overview
-custom_edit_url: false
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 id: releases
 title: Release notes
-custom_edit_url: false
+
 description: Release notes
 keywords:
   - canarytrace

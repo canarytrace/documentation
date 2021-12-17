@@ -2,7 +2,7 @@
 id: elasticsearch
 title: Elasticsearch and Kibana
 sidebar_label: Elasticsearch and Kibana
-custom_edit_url: false
+
 ---
 
 > ### What you’ll learn

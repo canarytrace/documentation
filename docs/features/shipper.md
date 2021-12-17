@@ -2,7 +2,7 @@
 id: shipper
 title: Shipper
 sidebar_label: Shipper
-custom_edit_url: false
+
 ---
 
 > ### What you’ll learn

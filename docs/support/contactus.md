@@ -2,7 +2,7 @@
 id: contactus
 title: Ready to see our Canarytrace in action?
 sidebar_label: Contact us
-custom_edit_url: false
+
 ---
 
 

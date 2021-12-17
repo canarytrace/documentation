@@ -2,7 +2,7 @@
 id: kubernetes
 title: Kubernetes
 sidebar_label: Kubernetes
-custom_edit_url: false
+
 description: Kubernetes
 keywords:
   - canarytrace

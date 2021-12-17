@@ -2,7 +2,6 @@
 id: start-cloud
 title: Canarytrace in Kubernetes
 sidebar_label: Start in Kubernetes
-custom_edit_url: false
 description: First run of Canarytrace in Kubernetes
 keywords:
   - canarytrace

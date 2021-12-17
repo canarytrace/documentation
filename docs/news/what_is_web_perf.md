@@ -2,7 +2,6 @@
 id: what-is-web-perf
 title: What is web performance test?
 sidebar_label: What is web performance test?
-custom_edit_url: false
 description: Is useful monitoring of your web application from user perspective.
 keywords:
   - canarytrace
