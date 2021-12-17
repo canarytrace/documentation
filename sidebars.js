@@ -17,7 +17,8 @@ module.exports = {
     Media: ['media/webinars'],
     Newsroom: ['news/what-is-web-perf',
                'news/hero-elements',
-               'news/need-for-speed'],
+               'news/need-for-speed',
+               'news/good-shape'],
     Support: ['support/bugs', 'support/contactus', 'support/subscribe'],
   },
 };
