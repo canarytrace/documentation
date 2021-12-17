@@ -26,20 +26,6 @@ jobs:
       - 
         name: 'Git Tag'
         run: echo ${{steps.previoustag.outputs.tag}}
-
-      # Prepare nodejs env
-      - 
-        name: 'Setup node environment'
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-        
-      # Install
-      - 
-        name: 'yarn install'
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install
           
       # Build prod
       -
