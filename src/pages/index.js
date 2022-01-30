@@ -193,9 +193,7 @@ function Home() {
                 </a>
               </div>
               <div className="col col--4">
-                <a href="https://www.ifortuna.cz/" target="_blank">
-                  <img src="clients/feg.png" alt="FEG" width="300" height="121" />
-                </a>
+                
               </div>
               <div className="col col--4">
                 <a href="https://nakit.cz/" target="_blank">

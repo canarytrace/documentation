@@ -92,26 +92,11 @@ function Home() {
                 <div class="avatar avatar--vertical">
                   <img
                     class="avatar__photo avatar__photo--xl"
-                    src="https://media-exp1.licdn.com/dms/image/C4D03AQGb3LaEULeD5w/profile-displayphoto-shrink_800_800/0/1516611360390?e=1627516800&v=beta&t=LC80XEWsZzAqt0gzj0cA-bl4CV_V79cJwwSQhy6_iE0"
-                  />
-                  <div class="avatar__intro">
-                    <br/>
-                    <h4 class="avatar__name">Thomas Kostka</h4>
-                    <small class="avatar__subtitle">
-                      Performance Tester <br />
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <div class="col col--4">
-                <div class="avatar avatar--vertical">
-                  <img
-                    class="avatar__photo avatar__photo--xl"
                     src="/img/undefined.png"
                   />
                   <div class="avatar__intro">
                     <br/>
-                    <h4 class="avatar__name">Tung</h4>
+                    <h4 class="avatar__name">Nquyen Le Thinh</h4>
                     <small class="avatar__subtitle">
                       Javascript Developer <br/>
                     </small>
