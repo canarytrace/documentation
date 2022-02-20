@@ -85,6 +85,21 @@ Start your Canarytrace with following configurations:
 - `POST_DATA_PATH='data[0].type'` activate cherry-picking and search value in `postData` property with expression.
 - `TRACE_ID_NAME='trace-id'` is name for extra header name with unique UUID.
 
+## Log
+Canarytrace print activities from RequestLog service into stdout.
+
+**Successfully cherry picking**
+
+```bash
+[0-0] Canarytrace:RequestLog:CherryPicker:Parsed: requestId: 3262.126, url: https://your-web.com/api/v1/events/web, parsed: {"id":"","biskoId":"b8660f9237a440e1a82ffca485c57cb4","dmpStorageId":null,"properties":{}}
+```
+
+**Successfully paired requests and responses**
+
+```bash
+# url:count
+[0-0] Canarytrace:RequestLog:Smoke https://your-web.com/:83
+```
 
 ---
 

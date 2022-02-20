@@ -25,6 +25,48 @@ quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-times
 quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
+
+### Canarytrace 4.21.5
+**Released 01. 19. 2022**
+
+🚀 **New features**
+- Added [RequestLog](/docs/features/request-log) service - [Collects all requests and responses](/docs/features/request-log#collects-requests-and-responses) between browser and server.
+- Pairing request and response from browser.
+- Added [Cherry-picking](/docs/features/request-log#cherry-picking) from `postData` payload from request.
+- Added [Trace ID](/docs/features/request-log#tracing-id) - send extra headers with all requests from a browser.
+- RequestLog: added totalEncodedDataLength and shouldReportCorbBlocking
+- CoverageAudit: added.
+- Added env [CONFIG](/docs/guides/cli) for custom Webdriver.io config.
+- Print environment variables, version of packages and UUID into stdout when Canarytrace start.
+```bash
+Canarytrace: 4.21.5 https://canarytrace.com
+WebdriverIO: 7.16.12
+Lighthouse: 8.0.0
+Node.js: v16.13.1
+
+Canarytrace uuid: b4c8ce4cc114934ac4edf3235321db0e
+Canarytrace mode: smoke
+```
+- preStopHook.sh added. - send alert when Canarytrace was stopped by Kubernetes.
+- lifecycle checker added - send alert if was Canarytrace stopped due internal error.
+
+📦 **Changes**
+- services/WdioPerformanceEntries.js save HERO ELEMENTS only if is allowed
+- Elasticsearch: print json with data if is observability allowed
+- Update BaseImage on 16.13.1-alpine3.14
+- Change format of UUID, now is 16bit lowercase string.
+
+💥 **Breaking Change**
+
+- Option `EDITION` was renamed to `MODE`. `MODE=smoke` is default.
+- Update WDIO on 7.16.3
+- ResponseIntercept and RequestIntercept services was removed. Replaced by a RequestLog service.
+
+🐛 **Bug fixes**
+- Fix clear cache in smoke mode
+- Ignore performance entries during performance audit
+
+
 ### Canarytrace 4.10.3
 **Released 12. 07. 2021**
 
