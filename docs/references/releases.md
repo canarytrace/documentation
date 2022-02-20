@@ -34,8 +34,8 @@ quay.io/canarytrace/shipper:<Major>.<Minor>
 - Pairing request and response from browser.
 - Added [Cherry-picking](/docs/features/request-log#cherry-picking) from `postData` payload from request.
 - Added [Trace ID](/docs/features/request-log#tracing-id) - send extra headers with all requests from a browser.
-- RequestLog: added totalEncodedDataLength and shouldReportCorbBlocking
-- CoverageAudit: added.
+- RequestLog: added `totalEncodedDataLength` and `shouldReportCorbBlocking` values.
+- Added [CoverageAudit](/docs/features/coverage-audit) measures how much resources ( javascript and css ) is not used.
 - Added env [CONFIG](/docs/guides/cli) for custom Webdriver.io config.
 - Print environment variables, version of packages and UUID into stdout when Canarytrace start.
 ```bash
@@ -47,24 +47,24 @@ Node.js: v16.13.1
 Canarytrace uuid: b4c8ce4cc114934ac4edf3235321db0e
 Canarytrace mode: smoke
 ```
-- preStopHook.sh added. - send alert when Canarytrace was stopped by Kubernetes.
-- lifecycle checker added - send alert if was Canarytrace stopped due internal error.
+- Added preStopHook - sends a notification when Canarytrace is stopped due to Kubernetes.
+- Added lifecycle checker - sends a notification if was Canarytrace stopped due internal error.
 
 📦 **Changes**
-- services/WdioPerformanceEntries.js save HERO ELEMENTS only if is allowed
-- Elasticsearch: print json with data if is observability allowed
-- Update BaseImage on 16.13.1-alpine3.14
-- Change format of UUID, now is 16bit lowercase string.
+- services/WdioPerformanceEntries.js save [Hero Elements](/docs/features/hero) only if is allowed.
+- Elasticsearch: print payload if is observability allowed.
+- Update base image on 16.13.1-alpine3.14.
+- Change format of UUID to 16 bit lowercase string.
 
 💥 **Breaking Change**
 
 - Option `EDITION` was renamed to `MODE`. `MODE=smoke` is default.
-- Update WDIO on 7.16.3
-- ResponseIntercept and RequestIntercept services was removed. Replaced by a RequestLog service.
+- Update [WDIO](https://webdriver.io/) on 7.16.3
+- ResponseIntercept and RequestIntercept services was removed. Replaced by a [RequestLog](/docs/features/request-log) service.
 
 🐛 **Bug fixes**
-- Fix clear cache in smoke mode
-- Ignore performance entries during performance audit
+- Fix clear cache in smoke mode.
+- Ignore performance entries during performance audit.
 
 
 ### Canarytrace 4.10.3
