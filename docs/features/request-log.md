@@ -6,6 +6,8 @@ sidebar_label: Request Log
 
 > ### What you’ll learn
 - What is Request Log
+- How to setup Request Log
+- What is Cherry picking and Tracing ID
 
 <a href="/docs/why/edition#canarytrace-pro"><span class="canaryBadge">Canarytrace Pro</span></a>
 

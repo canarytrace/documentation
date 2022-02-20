@@ -18,13 +18,13 @@ slug: /
 
 ## In a nutshell 
 
-Canarytrace is a Plug’n'Play stack for testing, monitoring availability of web application from user perspective and measurement performance metrics ( [web performance testing](/docs/references/glosary#web-performance-testing) ).
+Canarytrace is a Plug’n'Play stack for testing, monitoring availability of web application from user perspective and measurement performance metrics ( [web performance testing](/docs/references/glosary#web-performance-testing) ) for shipping better software faster.
 
 Web applications are tested with functional frameworks ( [functional testing](https://en.wikipedia.org/wiki/Functional_testing) ) and by performance tools ( [performance testing](https://en.wikipedia.org/wiki/Software_performance_testing) ). None of these approaches test performance and behaviour of browser.
 
 A desktop or mobile device browser is a small infrastructure and has different performance and behaviour according on resources (eg. CPU, RAM) depending on the device, condition of network and by quality of web application.
 
-The Canarytrace is first stack for in-depth analysis behaviour of browser and measure performance web application from end of user perspective.
+The Canarytrace is first stack for in-depth analysis behaviour of browser and measure performance web application from end of user perspective during shipping software into release.
 
 **Canarytrace is intended for scenarios**
 
@@ -40,7 +40,7 @@ Our mission is to build maintenance free stack for analyse web application and w
 
 We want to help developers, performance testers and DevOps build and test a new generation of modern applications better with maximum information about quality. We want to provide useful information about the availability of the application, about performance from user perspective and about processes inside the browser during a problem with web application.
 
-Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack. A service. And a community that everyone can learn and benefit from. 
+Browser is a small infrastructure, which finally deserves attention, we believe testing needs a lot of  and we are here to build a modern stack. A service and a community that everyone can learn and benefit from. 
 
 We’re solving the hardest pain points of web performance testing and monitoring availability from user perspective. We believe in this mission and hope that you will join us and Canarytrace will become a way for assurance of quality availability your web applications.
 
@@ -51,16 +51,22 @@ Our users are typically developers building web applications using modern JavaSc
 
 ## Two editions
 
-Canarytrace has build to two editions according to usage
+- **Canarytrace Pro** contains all features ans is useful for multiples roles in your company, e.g. Testers, DevOps, Productowner, Business etc.
 
-- **Canarytrace Smoke**: is maintenance free and is intended for testing and monitoring landing pages. Canarytrace itself evaluates a lot of metrics and evaluates quality and availability. 
+- **Canarytrace for Devops** is ideal for people from IT operations, because it contains ficures mainly for availability evaluation. It does not include, for example, performance audits etc.
 
-- **Canarytrace**: is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Is useful for testing and monitoring user journeys. E.g. open homepage -> search product -> add product to basket -> buy.
+## Two modes
+
+Both Canarytrace editions can work in two modes according to usage.
+
+- **Smoke** is maintenance free and is intended for testing and monitoring landing pages. Canarytrace itself evaluates a lot of metrics and evaluates quality and availability. 
+
+- **User-Journeys** is mode for testing and monitoring your web application from user perspective. Is useful for testing and monitoring user journeys. E.g. open homepage -> search product -> add product to basket -> buy.
 
 
 ## Key features
 
-- **Analyzes more than 60 metrics**: Canarytrace collection a lot of telemetry data from real browser (not headless) as used by the user.
+- **Analyzes more than 60 metrics**: Canarytrace collection a lot of telemetry data from real browser (not headless) as used by the user. Plus traffic between browser and server.
 
 - **Credible results**: Testing and measurement is performed with fixed sources for the browser - there is no distortion of metrics. The results will tell you the real state your web application and the impact on your client.
 
@@ -68,12 +74,12 @@ Canarytrace has build to two editions according to usage
 
 - **Browser based performance testing**: If is hard perform load testing your web application by traditional performance tools, for Canarytrace it's easy, because we uses a real browser. You can run a huge number of virtual users.
 
-- **Live reporting**: Canarytrace store immediately telemetry data from a browser. Be the first to know if your application is unavailable or the loading speed slows down
+- **Live reporting**: Canarytrace store immediately telemetry data from a browser. Be the first to know if your application is unavailable or the loading speed slows down.
 
-- **Plug’n'Play stack**: [Architecture of Canarytrace](/docs/guides/architecture) is designed by IaC ( [Infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) ) principles. Canarytrace and additional components is [Dockerized](/docs/features/docker). Very fast onboarding. Very fast deployment of Canarytrace - no lengthy deployment procedures.
+- **Plug’n'Play stack**: [Architecture of Canarytrace](/docs/guides/architecture) is designed by IaC ( [Infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) ) principles. Canarytrace and additional components are [Dockerized](/docs/features/docker). Very fast onboarding. Very fast deployment of Canarytrace - no lengthy deployment procedures.
 Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure](https://azure.microsoft.com/), or your [Kubernetes](https://kubernetes.io/) etc. within moments.
 
-- **Maintenance free**: Only set list of landing pages e.g. `https://canarytrace.com/;https://canarytrace.com/docs` that's all. Canarytrace automatically analysing lot of metrics from every landing page. 
+- **Maintenance free**: In smoke mode only set list of landing pages e.g. `https://canarytrace.com/;https://canarytrace.com/docs` that's all. Canarytrace automatically analysing lot of metrics from every landing page. 
 
 - **Testing and monitoring web application during development**: Due to the fact that Canarytrace is maintenance free you can testing and measure lot of metrics during development or during switching on new version of web application - early testing.
 
@@ -85,11 +91,11 @@ Deploying to cloud providers such as [AWS](https://aws.amazon.com/), [DigitalOce
 
 - **With 5 µs accuracy**: Canarytrace thanks to custom infrastructure measure very accurately. All results are reliable.
 
-- **Hero Element**: Canarytrace measure when exactly is the selected button, banner or text displayed to the user.
+- **Hero Element**: Canarytrace measure when exactly is displayed e.g. button, banner or text displayed in the user's browser.
 
 - **Performance audit and Web Performance Testing**: Canarytrace use custom implementation of Lighthouse and WebApi for measure web loading speed. We use an isolated web browser for every instace with precisely set resources. Canarytrace measure more than 60 non-functional metrics.
 
-- **Integration with your tools**: You can work with data collected by Canarytrace via REST-API.
+- **Integration with your tools**: You can work with out data collected by Canarytrace and stored in Elasticsearch via REST-API.
 
 
 ### Setting up Canarytrace
