@@ -18,9 +18,7 @@ Canarytrace save continuously  data to indices by type of data. Performance Audi
 
 - `c.performance-entries-*` contains data from performance entries API.
 
-- `c.request-*` contains all request fired from browser.
-
-- `c.response-*` contains all arrived responses.
+- `c.request-log-*` contains all requests and responses called between browser and server.
 
 - `c.memory-*` contains continuously stores data about total and usage JS Heap.
 
@@ -401,106 +399,120 @@ Canarytrace added additional properties
 }
 ```
 
-### `c.request-*`
+### `c.request-log-*`
 ---
-Requests are collected from devTools and every request is fired when page is about to send HTTP request.
+Requests and responses are collected from devTools.
 
-> - More info about [Network.requestWillBeSent](https://chromedevtools.github.io/devtools-protocol/tot/Network/#event-requestWillBeSent)
+> Read more info about [RequestLog](/docs/features/request-log) service.
 
-```json
+Request and response are paired by unique `requestId` and `sequence` is order of the request.
+
+```json title="One paired request and response"
 {
-	"url": "https://www.google-analytics.com/plugins/ua/linkid.js",
-	"method": "GET",
-	"headers": {
-		"Referer": "https://canarytrace.com/",
-		"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
-	},
-	"mixedContentType": "none",
-	"initialPriority": "Low",
-	"referrerPolicy": "no-referrer-when-downgrade",
-	"sequence": 86,
-	"type": "Script",
-	"requestId": "135.195",
-	"timestamp": "2021-01-28T11:37:07.540Z",
-	"labels": [
-		"canary=professional",
-		"pt.audit=desktopDefault"
-	],
-	"spec": "smoke.js",
-	"uuidAction": "7e80adfe-2a24-499e-81dc-228b529f3a50",
-	"uuid": "c3b00c23-6dd5-42ca-88b2-819edaaf3afc"
-}
-```
-
-### `c.response-*`
----
-
-Responses are collected when HTTP response is available from devTools.
-
-> - More info about [Network.responseReceived](https://chromedevtools.github.io/devtools-protocol/tot/Network/#event-responseReceived)
-
-```json
-{
-	"url": "https://www.google-analytics.com/analytics.js",
-	"status": 200,
-	"statusText": "",
-	"headers": {
-		"strict-transport-security": "max-age=10886400; includeSubDomains; preload",
-		"content-encoding": "gzip",
-		"x-content-type-options": "nosniff",
-		"last-modified": "Fri, 23 Oct 2020 03:00:57 GMT",
-		"server": "Golfe2",
-		"age": "6844",
-		"date": "Thu, 28 Jan 2021 09:47:06 GMT",
-		"vary": "Accept-Encoding",
-		"content-type": "text/javascript",
-		"status": "200",
-		"cache-control": "public, max-age=7200",
-		"cross-origin-resource-policy": "cross-origin",
-		"alt-svc": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
-		"content-length": "18817",
-		"expires": "Thu, 28 Jan 2021 11:47:06 GMT"
-	},
-	"mimeType": "text/javascript",
-	"connectionReused": true,
-	"connectionId": 0,
-	"remoteIPAddress": "216.58.211.110",
-	"remotePort": 443,
-	"fromDiskCache": false,
-	"fromServiceWorker": false,
-	"fromPrefetchCache": false,
-	"encodedDataLength": 151,
-	"timing": {
-		"requestTime": 15849.521951,
-		"proxyStart": -1,
-		"proxyEnd": -1,
-		"dnsStart": -1,
-		"dnsEnd": -1,
-		"connectStart": -1,
-		"connectEnd": -1,
-		"sslStart": -1,
-		"sslEnd": -1,
-		"workerStart": -1,
-		"workerReady": -1,
-		"sendStart": 0.958,
-		"sendEnd": 1.584,
-		"pushStart": 0,
-		"pushEnd": 0,
-		"receiveHeadersEnd": 10.36
-	},
-	"protocol": "http/2+quic/46",
-	"securityState": "secure",
-	"sequence": 82,
-	"type": "Script",
-	"requestId": "127.191",
-	"timestamp": "2021-01-28T11:41:10.558Z",
-	"labels": [
-		"canary=professional",
-		"pt.audit=desktopDefault"
-	],
-	"spec": "smoke.js",
-	"uuidAction": "eada6e81-c0f3-4dc9-a93a-2998f6af2976",
-	"uuid": "00e224c3-bd2b-4be0-8710-f4c228747c66"
+  "_index": "c.request-log-2022.02.20",
+  "_type": "_doc",
+  "_id": "X-HoFn8BhWv6tXOb7DrR",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "requestId": "91434.4",
+    "timestamp": "2022-02-20T11:33:52.264Z",
+    "labels": [
+      "mode=canarytrace-smoke-pro-4.21.4",
+      "engine=wdio",
+      "develop123348"
+    ],
+    "spec": "smoke.js",
+    "context": "Smoke https://webperf.canarytrace.com/",
+    "uuidAction": "d7125348302e71655e84",
+    "uuid": "25dd8dbc461658bd9f9257592818154e",
+    "sequence": 4,
+    "url": "https://webperf.canarytrace.com/img/webperf.webp",
+    "request": {
+      "requestId": "91434.4",
+      "timestamp": 368000.022,
+      "initiator": "parser",
+      "redirectHasExtraInfo": false,
+      "type": "Image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"",
+        "Referer": "https://webperf.canarytrace.com/",
+        "sec-ch-ua-mobile": "?0",
+        "canary-trace-id": "25dd8dbc461658bd9f9257592818154e",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36",
+        "sec-ch-ua-platform": "\"macOS\""
+      },
+      "initialPriority": "Low",
+      "postDataParsed": ""
+    },
+    "response": {
+      "status": 200,
+      "statusText": "",
+      "headers": {
+        "content-security-policy": "upgrade-insecure-requests",
+        "last-modified": "Mon, 27 Sep 2021 12:53:38 GMT",
+        "server": "nginx",
+        "etag": "\"a044-5ccf995f42b3e\"",
+        "content-type": "image/webp",
+        "date": "Sun, 20 Feb 2022 11:33:52 GMT",
+        "accept-ranges": "bytes",
+        "content-length": "41028"
+      },
+      "mimeType": "image/webp",
+      "connectionReused": true,
+      "connectionId": 30,
+      "remoteIPAddress": "178.238.37.215",
+      "remotePort": 443,
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "fromPrefetchCache": false,
+      "encodedDataLength": 166,
+      "timing": {
+        "requestTime": 368000.0435,
+        "proxyStart": -1,
+        "proxyEnd": -1,
+        "dnsStart": -1,
+        "dnsEnd": -1,
+        "connectStart": -1,
+        "connectEnd": -1,
+        "sslStart": -1,
+        "sslEnd": -1,
+        "workerStart": -1,
+        "workerReady": -1,
+        "workerFetchStart": -1,
+        "workerRespondWithSettled": -1,
+        "sendStart": 0.125,
+        "sendEnd": 0.25,
+        "pushStart": 0,
+        "pushEnd": 0,
+        "receiveHeadersEnd": 24.625
+      },
+      "responseTime": 1645356832310.141,
+      "protocol": "h2",
+      "securityState": "secure",
+      "requestId": "91434.4",
+      "timestamp": 368000.068625,
+      "totalEncodedDataLength": 41257,
+      "shouldReportCorbBlocking": false
+    }
+  },
+  "fields": {
+    "rt": [
+      0.03125
+    ],
+    "timestamp": [
+      "2022-02-20T11:33:52.264Z"
+    ]
+  },
+  "highlight": {
+    "labels": [
+      "@kibana-highlighted-field@develop123348@/kibana-highlighted-field@"
+    ]
+  },
+  "sort": [
+    1645356832264
+  ]
 }
 ```
 
