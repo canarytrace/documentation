@@ -27,7 +27,7 @@ quay.io/canarytrace/shipper:<Major>.<Minor>
 
 
 ### Canarytrace 4.21.5
-**Released 01. 19. 2022**
+**Released 02. 19. 2022**
 
 🚀 **New features**
 - Added [RequestLog](/docs/features/request-log) service - [Collects all requests and responses](/docs/features/request-log#collects-requests-and-responses) between browser and server.
