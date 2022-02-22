@@ -45,9 +45,9 @@ Requirements on resource will be higher if you will be perform a performance aud
 
 | Resources | CPU requests | CPU limits | Memory requests | Memory limits |
 |-|-|-|-|-|
-| Canarytrace Runner | `200m` | `800m` | `300Mi` | `1600Mi` |
-| Browser | `2000m` | `4000m` | `2000Mi` | `4000Mi` |
-| Total | `2200m` | `4300m` | `4300Mi` | `4400Mi` |
+| Canarytrace Runner | `200m` | `800m` | `300M` | `1600M` |
+| Browser | `2000m` | `4000m` | `2000M` | `4000M` |
+| Total | `2200m` | `4800m` | `2300M` | `5600M` |
 
 
 **Check resource quota on all nodes**
