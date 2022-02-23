@@ -22,7 +22,7 @@ Canarytrace is designed for use in Kubernetes and this has many advantages:
 - Canarytrace isn't testing framework, but complete test stack with additional components.
 - Designed for pattern 1:1:1 (= 1 monitor script, 1 Canarytrace runner, 1 instance of a browser) - due to strict isolation and predictable resource allocation for each run, the results are credible and comparable.
 - Many tasks are delegated to a lower level, on Kubernetes. It's a better approach than to solve all tasks on the testing framework level. Each Canarytrace component has its own responsibility. E.g.
-  - Canarytrace runner (WDIO + services) only loads, runs of test scripts and live reporting
+  - Canarytrace runner ([Webdriver.io](https://webdriver.io/) + services) only loads, runs of test scripts and live reporting.
   - [Elasticsearch stack](https://www.elastic.co/elastic-stack) for storing all data from Canarytrace runner and such as engine for agregate data for test report, backups, trends etc.
   - [Beats](https://www.elastic.co/beats/) are small datashippers and we use Beats for collect all logs from our docker containers.
   - [Kibana](https://www.elastic.co/kibana) for data analysis and visualizations from Canarytrace runner, for the preparation of a test report in many forms e.g. report for testers, architect, devops or test manager.
@@ -50,25 +50,13 @@ Requirements on resource will be higher if you will be perform a performance aud
 | Total | `2200m` | `4800m` | `2300M` | `5600M` |
 
 
-**Check resource quota on all nodes**
-
-```bash
-kubectl get nodes --no-headers | awk '{print $1}' | xargs -I {} sh -c 'echo {}; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo'
-
-# output
-canary-3bcb1
-  Resource           Requests      Limits
-  cpu                2302m (57%)   2102m (52%)
-  memory             3415Mi (51%)  3840Mi (57%)
-```
-
 ## How to get a deployment scripts
 
 All deployment scripts are distributed with [Canarytrace](/docs/why/edition) docker images.
 
 ```bash
 # Download deployments scripts from docker image
-docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/canarytrace-pub:4.2.17-pro-20210618073421-28 /opt/canary/deployments/ /deployments/
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/canarytrace-pub:4.21.6-pro-20220222144833-79 /opt/canary/deployments/ /deployments/
 
 # deployments folder is transferred from the docker image to localhost
 ᐰ ls -lah deployments/
@@ -76,7 +64,6 @@ drwxr-xr-x   7 rdpanek  staff   224B 26 črv 15:57 .
 drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
 -rw-r--r--   1 rdpanek  staff   241B  5 zář 20:17 README.md
 -rw-r--r--   1 rdpanek  staff   3,4K 20 čvc 19:34 filebeat.yaml
--rw-r--r--   1 rdpanek  staff   3,2K  5 zář 20:09 listener-report.yaml
 -rw-r--r--   1 rdpanek  staff   2,8K 20 čvc 19:34 smoke-desktop-shipper.yaml
 -rw-r--r--   1 rdpanek  staff   2,2K 20 čvc 19:34 smoke-desktop.yaml
 -rw-r--r--   1 rdpanek  staff   2,2K 20 čvc 19:34 smoke-mobile.yaml
@@ -91,50 +78,30 @@ drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
 
 - `smoke-mobile.yaml` Canarytrace Smoke CronJob with mobile settings.
 
-- `listener-report.yaml` Stack for generate [Daily Report](/docs/features/daily-report).
-
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 
+## How to deploy Canarytrace
 
-## RBAC and how to connect to Kubernetes
-> - ### You got from us
-> - `xxx.kubeconfig.yaml` e.g. `operator-kanarek-kubeconfig.yaml`
-> - `client-certificate` e.g. `kanarek.crt`
-> - `client-key` e.g. `kanarek.key`
+### Smoke mode
+Canarytrace in mode smoke is maintenance free approach. You just enter list of landing pages and deploy into your Kubernetes. Each landing page must be separated by a semicolon.
 
-**Prepare**
+1. Open and edit `smoke-desktop.yaml`
+2. Enter path for your docker image e.g. `image: quay.io/canarytrace/canarytrace-pub:4.21.6-pro-20220222144833-79`
 
-1. Create a directory on your localhost e.g. `~/canary` and move `client-certificate`, `client-key` and `xxx.kubeconfig.yaml` there.
-2. Edit your `xxx.kubeconfig.yaml` and setup absolute path to your `client-certificate` a `client-key`
+> ### Docker image
+Docker images in this documentation will not work - you must have a docker image with Canarytrace from us with licence. [Contact us](/docs/support/contactus) to obtain a docker image and license.
 
-```yaml title="example xxx.kubeconfig.yaml" {18,19}
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: LS0tLS1CRUdJTiBDR...
-    server: https://1ba1e227-xxx-43c1-yyy-f6458f37a083.k8s.ondigitalocean.com
-  name: do-fra1-ko-canary
-contexts:
-- context:
-    cluster: do-fra1-ko-canary
-    user: kanarek
-  name: do-fra1-ko-canary
-current-context: do-fra1-ko-canary
-kind: Config
-preferences: {}
-users:
-- name: kanarek
-  user:
-    client-certificate: ~/canary/kanarek.crt
-    client-key: ~/canary/kanarek.key
-```
-2. Test, than SSL/TLS connection was successful and user has authorization to list pods resources.
+3. Edit landing pages ( max. 5 URLs) `BASE_URL`
+4. Enter your license `LICENSE`
+5. Setup Elasticsearch cluster path `ELASTIC_CLUSTER` and credentials `ELASTIC_HTTP_AUTH`
+6. Deploy into your Kubernetes cluster `kubectl -n canarytrace create -f smoke-desktop.yaml`
 
-```bash
-kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml auth can-i get pods
+```bash title="List of running Canarytrace"
+kubectl --kubeconfig=/Users/rdpanek/Downloads/pribylak-kubeconfig.yaml -n canarytrace get pods                                    
 
 # output
-yes
+NAME                         READY   STATUS    RESTARTS   AGE
+canarytrace-27426165-6kbt2   2/2     Running   0          89s
 ```
 
 **How to edit list of landing pages**
