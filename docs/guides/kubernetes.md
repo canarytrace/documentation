@@ -60,13 +60,13 @@ docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytr
 
 # deployments folder is transferred from the docker image to localhost
 ᐰ ls -lah deployments/
-drwxr-xr-x   7 rdpanek  staff   224B 26 črv 15:57 .
-drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
--rw-r--r--   1 rdpanek  staff   241B  5 zář 20:17 README.md
--rw-r--r--   1 rdpanek  staff   3,4K 20 čvc 19:34 filebeat.yaml
--rw-r--r--   1 rdpanek  staff   2,8K 20 čvc 19:34 smoke-desktop-shipper.yaml
--rw-r--r--   1 rdpanek  staff   2,2K 20 čvc 19:34 smoke-desktop.yaml
--rw-r--r--   1 rdpanek  staff   2,2K 20 čvc 19:34 smoke-mobile.yaml
+drwxr-xr-x@ 7 rdpanek  staff   224B 27 úno 18:15 .
+drwxr-xr-x  3 rdpanek  staff    96B 27 úno 18:45 ..
+-rw-r--r--  1 rdpanek  staff   3,3K 27 úno 18:15 filebeat.yaml
+-rw-r--r--  1 rdpanek  staff   2,8K 27 úno 18:15 smoke-desktop-shipper.yaml
+-rw-r--r--  1 rdpanek  staff   2,3K 27 úno 18:15 smoke-desktop.yaml
+-rw-r--r--  1 rdpanek  staff   2,3K 27 úno 18:15 smoke-mobile.yaml
+-rw-r--r--  1 rdpanek  staff   2,7K 27 úno 18:15 user-journey.yaml
 
 ```
 
@@ -74,9 +74,11 @@ drwxr-xr-x  30 rdpanek  staff   960B 26 črv 17:03 ..
 
 - `smoke-desktop-shipper.yaml` is full example. Shipper send static files into AWS S3. [Read more](/docs/features/shipper)
 
-- `smoke-desktop.yaml` Canarytrace Smoke CronJob with desktop settings.
+- `smoke-desktop.yaml` Canarytrace CronJob with desktop settings in smoke mode.
 
-- `smoke-mobile.yaml` Canarytrace Smoke CronJob with mobile settings.
+- `smoke-mobile.yaml` Canarytrace CronJob with mobile settings in smoke mode.
+
+- `user-journey.yaml` Canarytrace CronJob in user-journey mode. [More info](/docs/guides/wdio)
 
 > - [Elasticsearch & Kibana](/docs/guides/elasticsearch) and [Canarytrace Installer](/docs/features/installer) are required for successful Canarytrace startup
 

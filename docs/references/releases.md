@@ -26,8 +26,8 @@ quay.io/canarytrace/shipper:<Major>.<Minor>
 ```
 
 
-### Canarytrace 4.21.5
-**Released 02. 19. 2022**
+### Canarytrace 4.21.6
+**Released 02. 28. 2022**
 
 🚀 **New features**
 - Added [RequestLog](/docs/features/request-log) service - [Collects all requests and responses](/docs/features/request-log#collects-requests-and-responses) between browser and server.
@@ -59,7 +59,7 @@ Canarytrace mode: smoke
 💥 **Breaking Change**
 
 - Option `EDITION` was renamed to `MODE`. `MODE=smoke` is default.
-- Update [WDIO](https://webdriver.io/) on 7.16.3
+- Update [WDIO](https://webdriver.io/) on 7.16.12
 - ResponseIntercept and RequestIntercept services was removed. Replaced by a [RequestLog](/docs/features/request-log) service.
 
 🐛 **Bug fixes**

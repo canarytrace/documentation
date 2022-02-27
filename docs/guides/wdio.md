@@ -19,20 +19,24 @@ Canarytrace is a dockerized stack for testing and monitoring vitality of web app
 
 Canarytrace adds features for non-invasive / agent-less monitoring of performance and high availability of web applications, equipment for undistorted and accurate measurements from cloud and without vendor-lock e.g. Kubernetes deployments, live reporting a lot of data from a browser for investigation of performance issues, implements tools such as Lighthouse for performance audit, settings for Elasticsearch and Kibana for the operators, testers or managers.
 
-You can monitor and measure any web application via Webdriver.io.
+For user-journey Canarytrace use [Webdriver.io](https://webdriver.io/)
 
-### Modes
+### How user-journey mode work
 ---
+Canarytrace can run in [modes](/docs/#two-modes) `smoke` or `user-journey` and only user-jourey mode use Webdriver.io monitor script. Monitor script is useful for monitoring user flow, e.g. buying process.
 
-**Canarytrace in a smoke mode** is a Plug’n'Play and maintenance free stack for testing, measuring and monitoring of web applications and just enter only a collection of landing pages.
+** Workflow**
 
-**Canarytrace in a user-journey mode** is a Plug’n'Play stack for testing and monitoring your web application from user perspective. Is useful for testing and  monitoring of user journeys. E.g. open homepage -> search product -> add product to basket -> buy, and in this moment we need Webdriver.IO.
+1. Write your first monitor script for test framework Webdriver.io
+2. Push your test case in your Git repository
+3. Setup Git environment variables in your `user-journey.yaml`
+4. Run Canarytrace in Kubernetes and your Git repository will be pulled automatically into Docker container with Canarytrace. In the next step will switch onto your monitor script by Git revision and will be run.
 
 ### Write your first monitor script
 
-If you want monitoring user journey, you must prepare test case / monitoring script in Webdriver.IO. 
+If you want monitoring user journey, you must prepare test case / monitoring script based on testing framework [Webdriver.io](https://webdriver.io/). 
 
-Webdriver.IO is a testing framework written in javascript and it's installation is very simple.
+[Webdriver.io](https://webdriver.io/) is a testing framework written in javascript and it's installation is very simple.
 
 #### Install and prepare Webdriver.IO
 
@@ -51,7 +55,7 @@ Webdriver.IO is a testing framework written in javascript and it's installation 
 - run configuration `npx wdio config`
 
 4). Configuration steps
-- `Where is your automation backend located? ` = select `On my local machine` and confirm
+- `Where is your automation backend located?` = select `On my local machine` and confirm
 - `Which framework do you want to use?` = select `mocha` and confirm
 - `Do you want to use a compiler?` = select `Babel` and confirm
 - `Where are your test specs located?` only confirm
@@ -59,7 +63,8 @@ Webdriver.IO is a testing framework written in javascript and it's installation 
 - `Do you want to use page objects` type `n` and confirm
 - `Which reporter do you want to use?` = select `spec` and confirm
 - `Do you want to add a service to your test setup?` = select `chromedriver` and confirm
-- `What is the base url?` only confirm
+- `What is the base url?` = only confirm
+- `Do you want me to run npm install?` = yes
 
 🎉 Great, Webdriver.IO is ready with including a demo test.
 
@@ -81,60 +86,12 @@ drwxr-xr-x    3 rdpanek  staff    96B 27 May 08:54 test
 
 #### Run demo test
 
-- In this same directory run your test `npx wdio run ./wdio.conf.js --spec test/specs/example.e2e.js`
+- In this same directory run your test `npx wdio run wdio.conf.js`
 
 More info on [Webdriver.IO documentation](https://webdriver.io/docs/gettingstarted#set-up)
 
 
-## Run Canarytrace
----
-
-Canarytrace is a dockerized stack and is ready for run in a [Kubernetes](https://kubernetes.io/). You can run your test for example in a [Docker compose](https://docs.docker.com/compose/).
-
-### Docker compose
----
-
-1). Create `docker-compose.yaml` file with this definition
-
-```yaml title="docker-compose.yaml"
-version: "3.8"
-services:
-  chrome:
-    image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
-    network_mode: "host"
-    volumes:
-      - /dev/shm:/dev/shm
-  canarytrace:
-    image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210614121258-13
-    depends_on:
-      - chrome
-    network_mode: "host"
-    volumes:
-      - ./test:/opt/canary/tests
-    environment:
-      BASE_URL: 'https://the-internet.herokuapp.com/'
-      SPEC: 'specs/example.e2e.js'
-      LICENSE: 'XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX'
-```
-
-> `./test` is a relative path to your directory with tests.
-
-2). and run via `docker-compose up` command
-
-```
-canarytrace_1  |  "spec" Reporter:
-canarytrace_1  | ------------------------------------------------------------------
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] Running: chrome (v88.0.4324.150) on linux
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] Session ID: 0bcc38ab96d09956d7e3c73f481034fb
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0]
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] » /tests/specs/example.e2e.js
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] My Login application
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0]    ✓ should login with valid credentials
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0]
-canarytrace_1  | [chrome 88.0.4324.150 linux #0-0] 1 passing (4.9s)
-```
-
-### Canarytrace in Kubernetes
+## Run Canarytrace in Kubernetes
 ---
 
 Canarytrace is designed for running in a Kubernetes and we have ready deployment objects.
@@ -176,171 +133,9 @@ The key's randomart image is:
 ```bash
 kubectl -n canarytrace create secret generic secret-github --from-file=ssh-privatekey=/Users/rdp/.ssh/id_ed25519
 ```
-
+- Download and edit `user-journey.yaml` from [Canarytrace Docker image](/docs/guides/kubernetes#how-to-get-a-deployment-scripts). 
 - Create deployment `kubectl -n canarytrace create -f canarytrace.yaml`
 
-```yaml title="canarytrace.yaml"
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: canarytrace
-spec:
-  concurrencyPolicy: Replace
-  failedJobsHistoryLimit: 2
-  schedule: "*/2 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: canary
-            image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210614121258-13
-            env:
-            - name: BASE_URL
-              value: "https://the-internet.herokuapp.com/login"
-            - name: GIT_REVISION
-              value: "fd29508"
-            - name: SPEC
-              value: "test/specs/example.e2e.js"
-            - name: LABELS
-              value: "wdio75, demo, smoke"
-            - name: EDITION
-              value: "canarytrace"
-            - name: GIT_REPOSITORY
-              value: "git@github.com:canarytrace/wdio75-demo.git"
-            - name: GIT_REPOSITORY_HOST
-              value: "github.com"
-            - name: GIT_REPOSITORY_PORT
-              value: "22"
-            - name: ELASTIC_CLUSTER
-              value: "https://abcdef.eu-central-1.aws.cloud.es.io:9243"
-            - name: ELASTIC_HTTP_AUTH
-              value: "elastic:SecretPassword"
-            - name: LICENSE
-              value: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "400Mi"
-                cpu: "300m"
-            imagePullPolicy: "IfNotPresent"
-            volumeMounts:
-              - mountPath: /secret
-                name: secret-github
-                readOnly: true
-          - name: selenium
-            image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
-            ports:
-              - containerPort: 4444
-            resources:
-              requests:
-                memory: "2000Mi"
-                cpu: "2000m"
-              limits:
-                memory: "4000Mi"
-                cpu: "3000m"
-            imagePullPolicy: "IfNotPresent"
-            volumeMounts:
-              - mountPath: "/dev/shm"
-                name: "dshm"
-            livenessProbe:
-              httpGet:
-                path: /status
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: /status
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-          restartPolicy: "Never"
-          terminationGracePeriodSeconds: 5
-          volumes:
-            - name: secret-github
-              secret:
-                secretName: secret-github
-            - name: "dshm"
-              emptyDir:
-                medium: "Memory"
-
-```
-
-### Canarytrace Smoke in Kubernetes
----
-
-For Canarytrace Smoke you don't need any script or ssh keys. Enter only list of landing pages.
-
-- Create deployment `kubectl -n canarytrace create -f canarytrace.yaml`
-
-```yaml title="canarytrace.yaml"
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: canarytrace
-spec:
-  concurrencyPolicy: Replace
-  failedJobsHistoryLimit: 2
-  schedule: "*/2 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: canary
-            image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210614121258-13
-            env:
-            - name: BASE_URL
-              value: "https://the-internet.herokuapp.com/login"
-            - name: LABELS
-              value: "wdio75, demo, smoke"
-            - name: LICENSE
-              value: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "400Mi"
-                cpu: "300m"
-            imagePullPolicy: "IfNotPresent"
-          - name: selenium
-            image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
-            ports:
-              - containerPort: 4444
-            resources:
-              requests:
-                memory: "2000Mi"
-                cpu: "2000m"
-              limits:
-                memory: "4000Mi"
-                cpu: "3000m"
-            imagePullPolicy: "IfNotPresent"
-            volumeMounts:
-              - mountPath: "/dev/shm"
-                name: "dshm"
-            livenessProbe:
-              httpGet:
-                path: /status
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: /status
-                port: 4444
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-          restartPolicy: "Never"
-          terminationGracePeriodSeconds: 5
-          volumes:
-            - name: "dshm"
-              emptyDir:
-                medium: "Memory"
-```
 
 ### Environment variables
 
@@ -352,7 +147,7 @@ Some ENV have a default value, there's no need to set them.
 
 Example
 
-```javascript
+```javascript title="Webdriver.io script"
   it('fill login and password inputs', async () => {
     const userNameElm = await $(userNameInput)
     await userNameElm.waitForClickable({timeoutMsg: 'Username input not exist.'})
@@ -364,60 +159,24 @@ Example
   })
 ```
 
-- `BASE_URL` - one target URL or collection of urls
+- `BASE_URL` - start URL and in test use only `browser.url('/');`
 
-If you are using Canarytrace edition, add start URL into `BASE_URL` and in test use only `browser.url('/');`
-
-Enter start URL in your deployment script (Kubernetes)
-```yaml
+```yaml title="user-journey.yaml"
 - name: BASE_URL
   value: "https://the-internet.herokuapp.com/login"
 ```
 and in your test case use only `/` in [browser.url()](https://webdriver.io/docs/api/browser/url) method
-```javascript
+```javascript title="Webdriver.io script"
   it('open home page', async () => {
     await browser.url('/');
     await expect(browser).toHaveTitle(title, {message: 'Element title not found. The page couldn\'t be loaded in time.'})
   });
 ```
 
-If you are using Canarytrace Smoke edition, add list of landing pages into `BASE_URL` separated by a semicolon
-```yaml
-- name: BASE_URL
-  value: "https://canarytrace.com/;https://canarytrace.com/docs/;https://canarytrace.com/docs/support/contactus"
-```
-
-- `ENGINE` - default `wdio` for Webdriver.IO v7.5 and no need change it
-- `LABELS` - optional metainformation, which is stored in the elastic to each record in each index, e.g. `'relesease=7, environment=dev'`
-
-- `ELASTIC_CLUSTER` - e.g. `localhost:9200` if left blank, documents will be printed to stdout.
-- `ELASTIC_HTTP_AUTH` - e.g. `username:password`
-- `ELASTIC_TIMEOUT` - default is 5000ms
-- `ELASTIC_OBSERVABILITY` - use `allow` for print settings of elasticsearch and all requests and responses to stdout
-- `INDEX_PREFIX` - default `c.`
-- `MIN_PTIME` - Print requests to elasticsearch if is exceeded transactions time. Default min processing time is 300ms
-
-- `EDITION` - Available options `canarytrace` or `smoke`, default is `smoke`
-- `ENV_PRINT` - Print all environment variables
-- `WAIT_FOR_TIMEOUT` - Timeout limit for all [webdriver.io waitFor* commands](https://webdriver.io/docs/options#waitfortimeout). Default is 30.000ms
-- `AVAILABILITY_CHECK` - use `allow` if you want run check availability of web app before run Canarytrace.
-- `LOG_LEVEL` - default `warn`. [Level of logging verbosity](https://webdriver.io/docs/options#loglevel)
-- `SPEC` - test case / monitor script
-- `GIT_REPOSITORY` - e.g. `git@github.com:canarytrace/wdio75-demo.git`
-- `GIT_REPOSITORY_PORT` - e.g. `github.com`
-- `GIT_REPOSITORY_HOST` - e.g. `22`
-- `GIT_REVISION` - `fd29508` revision of test case. Canarytrace perform git checkout before run test.
-- `LICENSE` - is unique key only for you.
-- `PT_AUDIT` - use `allow` if you want run performance audit
-- `PT_AUDIT_THROTTLING` - available options `mobileSlow4G`, `mobileRegular3G` or `desktopDense4G`
 
 > ### What next?
-- [Canarytrace in a nutshell](/docs/#in-a-nutshell)
-- [Start local demo](/docs/canary/start)
-- [Start in kubernetes](/docs/canary/start-cloud)
-- [Live reporting](/docs/features/live-reporting)
-- [Canarytrace Installer](/docs/features/installer)
-- [Dashboards](/docs/features/dashboards)
+- [Kubernetes](/docs/guides/kubernetes)
+- [CLI and Environment variables](/docs/guides/cli)
 
 ---
 
