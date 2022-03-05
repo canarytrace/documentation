@@ -47,16 +47,16 @@ Elasticsearch and Kibana is possible install via Docker or use [Elasticsearch cl
 **Create a user-defined bridges**
 
 ```bash
-docker network create canary
+docker network create canarytrace
 ```
 
 **Run dockerized Elasticsearch**
 
 ```bash
-docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.0 bin/elasticsearch -Enetwork.host=0.0.0.0
+docker run --name elasticsearch --net canarytrace --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.17.1 bin/elasticsearch -Enetwork.host=0.0.0.0
 ```
 
-`--net canary` is [user-defined bridges](https://docs.docker.com/network/bridge/) for all Canarytrace components
+`--net canarytrace` is [user-defined bridges](https://docs.docker.com/network/bridge/) for all Canarytrace components
 
 Wait 1 minute and check `docker logs -f elasticsearch`, that Elasticsearch is ready to use. The log doesn't contains no error messages.
 
@@ -64,17 +64,17 @@ Or you can call REST-API of Elaticsearch, just only open this URL `http://your-i
 
 ```bash
 {
-  "name" : "c04805db282a",
+  "name" : "158b9b93dcc6",
   "cluster_name" : "docker-cluster",
-  "cluster_uuid" : "mjzGN2OESuu3qDiKvNr1hw",
+  "cluster_uuid" : "rPWOsqy2TziaAyYoZHdBNg",
   "version" : {
-    "number" : "7.10.0",
+    "number" : "7.17.1",
     "build_flavor" : "default",
     "build_type" : "docker",
-    "build_hash" : "b5ca9c58fb664ca8bf9e4057fc229b3396bf3a89",
-    "build_date" : "2020-07-21T16:40:44.668009Z",
+    "build_hash" : "e5acb99f822233d62d6444ce45a4543dc1c8059a",
+    "build_date" : "2022-02-23T22:20:54.153567231Z",
     "build_snapshot" : false,
-    "lucene_version" : "8.5.1",
+    "lucene_version" : "8.11.1",
     "minimum_wire_compatibility_version" : "6.8.0",
     "minimum_index_compatibility_version" : "6.0.0-beta1"
   },
@@ -88,7 +88,7 @@ Or you can call REST-API of Elaticsearch, just only open this URL `http://your-i
 ### Kibana
 
 ```bash
-docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.1
+docker run --name kibana --net canarytrace --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.17.1
 ```
 
 Wait 1 minute and check `docker logs -f kibana`, that Kibana is ready to use. The log doesn't contains no error messages.
