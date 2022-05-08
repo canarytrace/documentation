@@ -10,20 +10,38 @@ keywords:
 ---
 
 ## Tagging Convention
-> **Useful links** <br/><br/>
-> - [Semantic Version 2.0](https://semver.org/)
-> - [Our docker registry](https://quay.io/organization/canarytrace)
+> **Important** <br/><br/>
+> - [Discussion about Canarytrace](https://github.com/canarytrace/documentation/discussions)
+> - [Our roadmaps](https://canarytrace.notion.site/Roadmap-2022-ca7e3d463ab74294b76632c475e651ea)
+> - [Issues](https://github.com/canarytrace/documentation/issues)
 
 ```bash
-# Canarytrace
-quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-timestamp
+# Canarytrace for DevOps
+quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-devops-timestamp
 
 # Canarytrace Pro
 quay.io/repository/canarytrace/canarytrace-pub:<Major>.<Minor>.<Patch>-pro-timestamp
 
 # Canarytrace Shipper
 quay.io/canarytrace/shipper:<Major>.<Minor>
+
+# Canarytrace Installer
+quay.io/canarytrace/installer:<Major>.<Minor>
 ```
+
+### Canarytrace 4.22.0, Installer 1.0
+**Released 08. 05. 2022**
+
+🚀 **New features**
+- [Add Kubernetes secret](https://www.notion.so/canarytrace/Add-Kubernetes-secret-5ea6f52137134e38af5eade1ff5c3db5)
+- [Add support for Elasticsearch 8.x](https://www.notion.so/canarytrace/Add-support-for-Elasticsearch-8-x-41f42f9913c94e449d15e0f0e573f89e)
+- [Installer1.0: autodetection version of the Elasticsearch and update v7 and add support for Elasticsearch v8](https://www.notion.so/canarytrace/Installer1-0-autodetection-version-of-the-Elasticsearch-and-update-v7-and-add-support-for-Elasticse-8e0b93b09fd54e9da5c6b2a2877a399a)
+
+📦 **Changes**
+- [Extension list of flags for faster start of a browser](https://www.notion.so/canarytrace/Extension-list-of-flags-for-faster-start-of-a-browser-a14549c8acb9421cac7b998813592975)
+- [Remove _type from Elasticsearch mapping](https://www.notion.so/canarytrace/Remove-_type-from-Elasticsearch-mapping-22c25637072240d6815aa8a91b238bd8)
+- [New Request log: improve recording of requests and responses](https://www.notion.so/canarytrace/New-Request-log-improve-recording-of-requests-and-responses-2d177ed447644bd2ae214d4ed6e62000)
+- [Upgrade for Elasticsearch 7.x](https://www.notion.so/canarytrace/Upgrade-for-Elasticsearch-7-x-520dd8f7781d4da7835421c58b7c075a)
 
 
 ### Canarytrace 4.21.6
