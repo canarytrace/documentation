@@ -23,17 +23,17 @@ The easiest way to run Canarytrace is to use a [docker compose](https://docs.doc
 version: "3.8"
 services:
   browser:
-    image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210527
+    image: selenium/standalone-chrome:4.1.1-20211217
     network_mode: "host"
     volumes:
       - /dev/shm:/dev/shm
   canarytrace:
-    image: quay.io/canarytrace/canarytrace-pub:4.3.0-pro-20210622134003-92
+    image: quay.io/canarytrace/canarytrace-pub:<your-canarytrace-docker-image-tag>
     depends_on:
       - browser
     network_mode: "host"
     environment:
-      BASE_URL: 'https://canarytrace.com/;https://www.teststack.cz/'
+      BASE_URL: 'https://canarytrace.com/;https://webperf.canarytrace.com/'
       LICENSE: 'XXXX-XXXX-XXXX-XXXX-XXXX-XXXX'
 ```
 
@@ -62,7 +62,7 @@ spec:
         spec:
           containers:
           - name: canarytrace
-            image: quay.io/canarytrace/canarytrace-pub:4.3.1-pro-20210625113429-82
+            image: quay.io/canarytrace/canarytrace-pub:<your-canarytrace-docker-image-tag>
             env:
             - name: BASE_URL
               value: "https://the-internet.herokuapp.com/login"
@@ -93,7 +93,7 @@ This example isn't complete, but contains more options as environment variable `
 ### Mandatory options
 > Mode `smoke` is a default.
 
-- `BASE_URL` add more URLs, e.g. `BASE_URL=https://canarytrace.com/;https://canarytrace.com/docs/canary/start`
+- `BASE_URL` add more URLs, e.g. `BASE_URL=https://canarytrace.com/;https://webperf.canarytrace.com/`
 
 - `LICENSE` add your license key.
 
@@ -212,9 +212,9 @@ time_total:  0.477677
 
   - Format HHmmss-YYYY-MM-DD-uuidAction.png
 
-  - You must bind volume -v $(pwd)/attachments/:/opt/canary/attachments for "move screenshot from docker container to local directory" /attachments.
+  - You must bind volume `-v $(pwd)/attachments/:/opt/canary/attachments` for "move screenshot from docker container to local directory" `/attachments`.
 
-  - You can use AWS_S3_BUCKET option for upload screenshot to AWS S3 This option is described below.
+  - You can use `AWS_S3_BUCKET` option for upload screenshot to AWS S3 This option is described below.
 
 - `CAPTURE_EVERY_SCREEN=allow` create a screenshot on every test step.
 
@@ -223,13 +223,9 @@ time_total:  0.477677
 ### Services
 <a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
 
-- `RESPONSE_INTERCEPT` default `no` store collection of arrived responses from server to browser into elasticsearch index [`c.response-*`](/docs/features/live-reporting)
+- `REQUEST_LOG` default `no` store collection all requests and responses directly from browser into elasticsearch index [`c.request-log-*`](/docs/features/request-log)
 
-  - For activate this features use `RESPONSE_INTERCEPT=allow`
-
-- `REQUEST_INTERCEPT` default `no` store collection of sending request from browser into elasticsearch index [`c.request-*`](/docs/features/live-reporting)
-
-  - For activate this features use `REQUEST_INTERCEPT=allow`
+  - For activate this features use `REQUEST_LOG=allow`
 
 - `CONSOLE_INTERCEPT` default `no` store console of browser into elasticsearch index [`c.console-*`](/docs/features/live-reporting)
 
