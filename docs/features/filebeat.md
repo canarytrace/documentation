@@ -6,7 +6,6 @@ sidebar_label: Filebeat
 
 Canarytrace live logging all activities during [life cycle](/docs/guides/lifecycle) of Canarytrace runner on [WDIO](https://webdriver.io/). [Filebeat](https://www.elastic.co/beats/filebeat) provides live logging all events before start of Canarytrace runner, [during lifecycle](/docs/guides/lifecycle) (from git pull repository,  Canarytrace runner start to stop and all post-end events. Filebeat logging all stdout and stderr streams from all Canarytrace docker containers in your cluster e.g. Canarytrace runner, container with a browser and Canarytrace Listener.
 
-- [How to get a deployment scripts](/docs/guides/kubernetes#how-to-get-a-deployment-scripts) / Filebeat
 - [Filebeat](/docs/guides/kubernetes#filebeat) in a Kubernetes
 
 > - If you have a problem with Canarytrace, you won't know about it without filebeat.
