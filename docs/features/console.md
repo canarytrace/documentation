@@ -112,14 +112,14 @@ Issued when console API was called.
         {
           "functionName": "loggedInPlayerHandlerX",
           "scriptId": "11",
-          "url": "https://login.example.cz/jswrapper/integration.js.php?casino=example.cz",
+          "url": "https://login.example.cz/jswrapper/integration.js.php?abc=example.cz",
           "lineNumber": 946,
           "columnNumber": 59
         },
         {
           "functionName": "",
           "scriptId": "11",
-          "url": "https://login.example.cz/jswrapper/integration.js.php?casino=example.cz",
+          "url": "https://login.example.cz/jswrapper/integration.js.php?abc=example.cz",
           "lineNumber": 2050,
           "columnNumber": 45
         }
@@ -265,23 +265,23 @@ Issued when exception was thrown and unhandled.
       "type": "object",
       "subtype": "error",
       "className": "TypeError",
-      "description": "TypeError: Playtech.fetchUserDetails is not a function\n    at <anonymous>:1:162\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7006:414\n    at c (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7008:160)\n    at Oe (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6733:499)\n    at e (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6826:278)\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6690:130\n    at Array.<anonymous> (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:358)\n    at Object.Kb (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:98)\n    at gn (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:828)\n    at on (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6831:43)",
+      "description": "TypeError: Apll.fetchUserDetails is not a function\n    at <anonymous>:1:162\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7006:414\n    at c (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7008:160)\n    at Oe (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6733:499)\n    at e (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6826:278)\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6690:130\n    at Array.<anonymous> (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:358)\n    at Object.Kb (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:98)\n    at gn (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:828)\n    at on (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6831:43)",
       "objectId": "-4975198532180155070.1.2",
       "preview": {
         "type": "object",
         "subtype": "error",
-        "description": "TypeError: Playtech.fetchUserDetails is not a function\n    at <anonymous>:1:162\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7006:414\n    at c (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7008:160)\n    at Oe (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6733:499)\n    at e (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6826:278)\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6690:130\n    at Array.<anonymous> (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:358)\n    at Object.Kb (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:98)\n    at gn (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:828)\n    at on (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6831:43)",
+        "description": "TypeError: Apll.fetchUserDetails is not a function\n    at <anonymous>:1:162\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7006:414\n    at c (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:7008:160)\n    at Oe (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6733:499)\n    at e (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6826:278)\n    at https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6690:130\n    at Array.<anonymous> (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:358)\n    at Object.Kb (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:98)\n    at gn (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6827:828)\n    at on (https://www.googletagmanager.com/gtm.js?id=GTM-KGGX2B:6831:43)",
         "overflow": false,
         "properties": [
           {
             "name": "stack",
             "type": "string",
-            "value": "TypeError: Playtech.fetchUserDetails is not a func…oogletagmanager.com/gtm.js?id=GTM-KGGX2B:6831:43)"
+            "value": "TypeError: Apll.fetchUserDetails is not a func…oogletagmanager.com/gtm.js?id=GTM-KGGX2B:6831:43)"
           },
           {
             "name": "message",
             "type": "string",
-            "value": "Playtech.fetchUserDetails is not a function"
+            "value": "Apll.fetchUserDetails is not a function"
           }
         ]
       }

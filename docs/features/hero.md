@@ -86,7 +86,7 @@ it('inject hero element measurement', function () {
   // configuration
   const configuration = {
     patterns: [{
-      urlPattern: 'https://gm.ifortuna.cz*',
+      urlPattern: 'https://your-web.cz*',
       resourceType: 'Document',
       requestStage: 'Response'
     }]
