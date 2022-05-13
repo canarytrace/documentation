@@ -60,17 +60,17 @@ docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytr
 
 # deployments folder is transferred from the docker image to localhost
 ᐰ ls -lah deployments/
-drwxr-xr-x@ 7 rdpanek  staff   224B 27 úno 18:15 .
-drwxr-xr-x  3 rdpanek  staff    96B 27 úno 18:45 ..
--rw-r--r--  1 rdpanek  staff   3,3K 27 úno 18:15 filebeat.yaml
--rw-r--r--  1 rdpanek  staff   2,8K 27 úno 18:15 smoke-desktop-shipper.yaml
--rw-r--r--  1 rdpanek  staff   2,3K 27 úno 18:15 smoke-desktop.yaml
--rw-r--r--  1 rdpanek  staff   2,3K 27 úno 18:15 smoke-mobile.yaml
--rw-r--r--  1 rdpanek  staff   2,7K 27 úno 18:15 user-journey.yaml
+drwxr-xr-x@ 7 rdpanek  staff   224B  7 kvě 23:55 .
+drwxr-xr-x  4 rdpanek  staff   128B 13 kvě 17:50 ..
+-rw-r--r--  1 rdpanek  staff   185B  7 kvě 23:55 secret.yaml
+-rw-r--r--  1 rdpanek  staff   2,8K  7 kvě 23:55 smoke-desktop-shipper.yaml
+-rw-r--r--  1 rdpanek  staff   2,6K  7 kvě 23:55 smoke-desktop.yaml
+-rw-r--r--  1 rdpanek  staff   2,3K  7 kvě 23:55 smoke-mobile.yaml
+-rw-r--r--  1 rdpanek  staff   2,7K  7 kvě 23:55 user-journey.yaml
 
 ```
 
-- `filebeat.yaml` logging stdout and stderr streams from all Canarytrace components. [Read more](https://www.elastic.co/beats/filebeat).
+- `secret.yaml` is example and contains credentials and endpoint for Elasticsearch and license (key:value). You can use together with `smoke-desktop.yaml`
 
 - `smoke-desktop-shipper.yaml` is full example. Shipper send static files into AWS S3. [Read more](/docs/features/shipper)
 
@@ -99,7 +99,7 @@ Docker images in this documentation will not work - you must have a docker image
 6. Deploy into your Kubernetes cluster `kubectl -n canarytrace create -f smoke-desktop.yaml`
 
 ```bash title="List of running Canarytrace"
-kubectl --kubeconfig=/Users/rdpanek/Downloads/pribylak-kubeconfig.yaml -n canarytrace get pods                                    
+kubectl --kubeconfig=/Users/rdpanek/Downloads/kubeconfig.yaml -n canarytrace get pods                                    
 
 # output
 NAME                         READY   STATUS    RESTARTS   AGE
@@ -107,7 +107,7 @@ canarytrace-27426165-6kbt2   2/2     Running   0          89s
 ```
 
 **How to edit list of landing pages**
-<a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
+
 
 1. Get list of CronJobs
 
@@ -139,7 +139,7 @@ kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml edit cronjob canarytrace-xxx-1
 
 ## Filebeat
 
-[Filebeat](/docs/features/filebeat) logging all stdout and stderr streams from all Canarytrace docker containers in your cluster.
+[Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-kubernetes.html) logging all stdout and stderr streams from all Canarytrace docker containers in your cluster.
 
 > - All data from Filebeat are stored to `filebeat-*` index
 
@@ -148,6 +148,7 @@ kubectl --kubeconfig=~/canary/xxx.kubeconfig.yaml edit cronjob canarytrace-xxx-1
 For manually debuging Canarytrace runner and other components in a docker containers - you can use command line tool [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) for tail stdout and stderr streams from all containers in your Kubernetes cluster or [Lens](https://k8slens.dev/)
 
 ```bash title="Get logs from Canarytrace pod from your localhost"
+# tesla-1597447320-2gg4r is name of your pod
 kubectl -n canary logs -f tesla-1597447320-2gg4r -c canary
 ```
 This is easy for learning and maintanance Canarytrace containers, but not but not effective. 
@@ -162,22 +163,12 @@ This is easy for learning and maintanance Canarytrace containers, but not but no
 
 ### How to run Filebeat
 
-- [Download deployment script for Filebeat](/docs/guides/kubernetes#how-to-get-a-deployment-scripts) `deployments/beats/filebeat-logging.yaml` from Canarytrace Professional and Canarytrace Smoke Pro docker container
-- Edit elasticsearch connection params
-
-```yaml title="deployments/beats/filebeat-logging.yaml"
-env:
-- name: ELASTICSEARCH_HOST
-  value: "https://elasticsearch-host"
-- name: ELASTICSEARCH_PORT
-  value: "9243"
-- name: ELASTICSEARCH_USERNAME
-  value: "elastic"
-- name: ELASTICSEARCH_PASSWORD
-  value: "pass"
+```bash title="Download Filebeat Kubernetes deployment"
+curl -L -O https://raw.githubusercontent.com/elastic/beats/8.2/deploy/kubernetes/filebeat-kubernetes.yaml
 ```
 
-- Deploy `kubectl apply -f deployments/beats/filebeat-logging.yaml`
+- Edit `ELASTICSEARCH_HOST` and next environemnt variables.
+- Deploy `kubectl create -f filebeat-kubernetes.yaml`
 
 **You can check filebeat logs, that it doesn't contain any error messages**
 
