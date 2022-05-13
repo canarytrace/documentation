@@ -4,12 +4,8 @@ title: API
 sidebar_label: API
 ---
 
-Canarytrace is distributed as a docker image and is run from command line. Behavior and functions are set using options. Some options are mandatory and some are optional. Canarytrace is based on WDIO v6 and therefore some options are described on [WDIO CLI Options page](https://webdriver.io/docs/clioptions.html).
+All data gathered by Canarytrace is stored into Elasticsearch a you can use REST-API of Elasticsearech for getting / filtering raw data.
 
-> ### What you’ll learn
-- How to run Canarytrace from the command line
-- Options for Canarytrace settings
-- All options are environment variables and they are used when running in both the docker and the kubernetes
 
 ## How to use api
 
@@ -39,7 +35,7 @@ Canarytrace is distributed as a docker image and is run from command line. Behav
   }
 }
 ```
-### Get slowly test steps and exclude other
+### Get slowly test steps and exclude others
 ---
 ```json title="GET /c.report-*/_search"
 {
@@ -251,7 +247,7 @@ Canarytrace is distributed as a docker image and is run from command line. Behav
 > - `hits.hits[]` = collection of hits
 > - `_id` = is unique identificator of records
 
-### Get .css entries with higher TTFB than 100ms 
+### Get .css entries with higher than 100ms TTFB 
 ---
 ```json title="GET /c.performance-entries-*/_search"
 {
@@ -326,7 +322,7 @@ Canarytrace is distributed as a docker image and is run from command line. Behav
 
 ### Get all test steps for which it was measured more than 40MB used memory in a browser
 
-```json title="GET /c.response-*/_search"
+```json title="GET /c.request-log-*/_search"
 {
   "_source": [
     "uuid",
@@ -352,25 +348,25 @@ Canarytrace is distributed as a docker image and is run from command line. Behav
 ```
 
 
-## `c.response-*`
+## `c.request-log-*`
 
-### Get all javascripts which do not contain `headers.content-encoding=gzip` in the response header
+### Get all javascripts which do not contain `response.headers.content-encoding=gzip` in the response header
 
-```json title="GET /c.response-*/_search"
+```json title="GET /c.request-log-*/_search"
 {
   "_source": [
     "uuid",
     "labels",
     "timestamp",
     "url",
-    "headers.content-encoding"
+    "response.headers.content-encoding"
   ],
   "query": {
     "bool": {
       "must": [
         {
           "query_string": {
-            "default_field": "headers.content-type",
+            "default_field": "response.headers.content-type",
             "query": "javascript"
           }
         }
@@ -378,7 +374,7 @@ Canarytrace is distributed as a docker image and is run from command line. Behav
       "must_not": [
         {
           "query_string": {
-            "default_field": "headers.content-encoding",
+            "default_field": "response.headers.content-encoding",
             "query": "gzip"
           }
         }
@@ -391,22 +387,21 @@ Canarytrace is distributed as a docker image and is run from command line. Behav
 
 ### Get all responses transfer over network is higher than 500kB
 
-```json title="GET /c.response-*/_search"
+```json title="GET /c.request-log-*/_search"
 {
   "_source": [
     "uuid",
     "labels",
     "timestamp",
     "url",
-    "headers.content-type",
-    "encodedDataLength"
+    "response.totalEncodedDataLength"
   ],
   "query": {
     "bool": {
       "must": [
         {
           "range": {
-            "encodedDataLength": {
+            "response.totalEncodedDataLength": {
               "gte": 500000
             }
           }
