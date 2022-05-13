@@ -12,7 +12,7 @@ keywords:
 ---
 
 > ### What you’ll learn
-- You will know how to run Canarytrace Smoke on cloud
+- You will know how to run Canarytrace on cloud
 - You will know how to setup [Elasticsearch cloud](https://www.elastic.co/)
 - You will know how to start [Kubernetes](https://kubernetes.io/) on [DigitalOcean](https://www.digitalocean.com/)
 - You will be know how to prepare the [cronjob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) for deploy and rotate Canarytrace Smoke 
@@ -29,7 +29,7 @@ We will go step by step to build your Canarytrace infrastructure based on Kubern
 - Create deployment (Elasticsearch and Kibana) on [https://www.elastic.co/](https://www.elastic.co/)
 - Create Kubernetes cluster on [https://www.digitalocean.com/](https://www.digitalocean.com/)
 - Setup Elasticsearch and Kibana via [Canarytrace Installer](/docs/features/installer)
-- Prepare and deploy Canarytace Smoke to Kubernetes
+- Prepare and deploy Canarytace to Kubernetes
 
 ### Create deployment on Elastic cloud
 ---
@@ -70,7 +70,7 @@ We will go step by step to build your Canarytrace infrastructure based on Kubern
 version: "3.8"
 services:
   installer:
-    image: quay.io/canarytrace/installer:7.10.0
+    image: quay.io/canarytrace/installer:1.0
     environment:
       ELASTIC_ENDPOINT: 'https://9e0f4b1db5234c48b0933bd421b543f0.us-central1.gcp.cloud.es.io'
       ELASTIC_PORT: 9243
@@ -121,7 +121,7 @@ Open Cronjob in your editor and edit labels in `env`:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: smoke-mobile
+  name: smoke-desktop
   namespace: canarytrace
 spec:
   concurrencyPolicy: Replace
@@ -133,16 +133,16 @@ spec:
         spec:
           containers:
           - name: canarytrace
-            image: quay.io/canarytrace/canarytrace-pub:4.2.16-pro-20210618063207-9
+            image: quay.io/canarytrace/canarytrace-pub:<your-Canarytrace-Docker-image>
             env:
             - name: BASE_URL
-              value: "https://the-internet.herokuapp.com/login"
+              value: "https://webperf.canarytrace.com/;https://battle.canarytrace.com/"
             - name: PT_AUDIT
               value: "allow"
             - name: PT_AUDIT_THROTTLING
-              value: "mobileRegular3G"
+              value: "desktopDense4G"
             - name: LABELS
-              value: "mobile, smoke"
+              value: "desktop, smoke"
             - name: LICENSE
               value: "XXXXX-YYYYY-Z4WG5-5363C-CF0CB-A8647"
             - name: ELASTIC_CLUSTER
@@ -154,11 +154,14 @@ spec:
                 memory: "300Mi"
                 cpu: "200m"
               limits:
-                memory: "400Mi"
-                cpu: "300m"
+                memory: "1600Mi"
+                cpu: "800m"
+            volumeMounts:
+              - name: assets
+                mountPath: /opt/canary/assets
             imagePullPolicy: "IfNotPresent"
           - name: selenium
-            image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210517
+            image: selenium/standalone-chrome:4.1.1-20211217
             ports:
               - containerPort: 4444
             resources:

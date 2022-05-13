@@ -27,7 +27,7 @@ Canarytrace is a Plug’n'Play stack for testing, monitoring availability  and m
 
 Only [Docker](https://www.docker.com/). If you don't know the docker, take a look at our examples.
 
-- [Contact us to obtain a trial license](/docs/support/contactus)
+- [Contact us to obtain a Canarytrace Docker image and your license](/docs/support/contactus)
 - [How to run Canarytrace on Windows 10 Pro](/docs/guides/windows)
 - [How to run Canarytrace on Linux](/docs/guides/linux)
 
@@ -39,28 +39,29 @@ Data from Canarytrace are continuously stored to Elasticsearch.
 
 **Create a user-defined bridges**
 ```bash
-docker network create canarytrace
+docker network create canary
 ```
 
 - [Elasticsearch](/docs/guides/elasticsearch#what-is-elasticsearch) is the distributed search and analytics engine at the heart of the Elastic Stack.
 
 ```bash
-docker run --name elasticsearch --net canarytrace --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.0 bin/elasticsearch -Enetwork.host=0.0.0.0
+docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_SETTING_XPACK_SECURITY_ENABLED=false -e ES_SETTING_ACTION_DESTRUCTIVE__REQUIRES__NAME=false docker.elastic.co/elasticsearch/elasticsearch:8.2.0 bin/elasticsearch -Enetwork.host=0.0.0.0
 ```
 
 ### Run Kibana in a Docker
 [Kibana](/docs/guides/elasticsearch#what-is-kibana) is a web application with GUI for viewing data stored in Elasticsearch.
 
 ```bash
-docker run --name kibana --net canarytrace --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.0
+docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:8.2.0
 ```
+Open `localhost:5601` in your browser and wait for Kibana will be ready.
 
 ### Setup Elasticsearch and Kibana
 
 - [Canarytrace Installer](/docs/features/installer) prepare Elasticsearch and Kibana for Canarytrace use.
 
 ```bash
-docker run --name installer --net canarytrace --rm quay.io/canarytrace/installer:7.10.0
+docker run --name installer --net canary --rm quay.io/canarytrace/installer:1.0
 ```
 
 ### Prepare script for run Canarytrace Smoke
@@ -70,17 +71,18 @@ For this demo we use [docker-compose](https://docs.docker.com/compose/). Create 
 version: "3.8"
 services:
   browser:
-    image: selenium/standalone-chrome:4.0.0-beta-4-prerelease-20210527
+    image: selenium/standalone-chrome:4.1.1-20211217
     network_mode: "host"
+    shm_size: '2gb'
     volumes:
       - /dev/shm:/dev/shm
   canarytrace:
-    image: quay.io/canarytrace/canarytrace-pub:4.3.0-pro-20210622134003-92
+    image: quay.io/canarytrace/canarytrace-pub:<your-canarytrace-image-tag>
     depends_on:
       - browser
     network_mode: "host"
     environment:
-      BASE_URL: 'https://canarytrace.com/;https://www.teststack.cz/'
+      BASE_URL: 'https://canarytrace.com/;https://webperf.canarytrace.com/'
       ELASTIC_CLUSTER: http://localhost:9200
       LICENSE: 'XXXX-XXXX-XXXX-XXXX-XXXX-XXXX'
       LABELS: 'compose, pipeline'
