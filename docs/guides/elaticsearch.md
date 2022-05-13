@@ -53,7 +53,8 @@ docker network create canarytrace
 **Run dockerized Elasticsearch**
 
 ```bash
-docker run --name elasticsearch --net canarytrace --rm -d -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.17.1 bin/elasticsearch -Enetwork.host=0.0.0.0
+docker run --name elasticsearch --net canarytrace --rm -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_SETTING_XPACK_SECURITY_ENABLED=false -e ES_SETTING_ACTION_DESTRUCTIVE__REQUIRES__NAME=false docker.elastic.co/elasticsearch/elasticsearch:8.2.0 bin/elasticsearch -Enetwork.host=0.0.0.0
+
 ```
 
 `--net canarytrace` is [user-defined bridges](https://docs.docker.com/network/bridge/) for all Canarytrace components
@@ -68,7 +69,7 @@ Or you can call REST-API of Elaticsearch, just only open this URL `http://your-i
   "cluster_name" : "docker-cluster",
   "cluster_uuid" : "rPWOsqy2TziaAyYoZHdBNg",
   "version" : {
-    "number" : "7.17.1",
+    "number" : "8.2.0",
     "build_flavor" : "default",
     "build_type" : "docker",
     "build_hash" : "e5acb99f822233d62d6444ce45a4543dc1c8059a",
@@ -88,7 +89,8 @@ Or you can call REST-API of Elaticsearch, just only open this URL `http://your-i
 ### Kibana
 
 ```bash
-docker run --name kibana --net canarytrace --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.17.1
+docker run --name kibana --net canarytrace --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:8.2.0
+
 ```
 
 Wait 1 minute and check `docker logs -f kibana`, that Kibana is ready to use. The log doesn't contains no error messages.
