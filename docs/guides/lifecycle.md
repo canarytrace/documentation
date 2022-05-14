@@ -39,7 +39,9 @@ Canarytrace is encapsulated in a Pod which contains docker containers with Canar
 - Pod  is reusable for every test execution.
 - Every runned instance of Canarytrace need `one monitor script`, `one Canarytrace runner` and `one instance of a browser` and this is known as **pattern 1:1:1**
 
-<iframe src="https://viewer.diagrams.net/?highlight=0000ff&layers=0&nav=1&title=Lifecycle%20of%20Canarytrace%20Runner%20in%20a%20Docker%20container#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1QSFSGysLL-5sYUZwUdZPaxNAwO5bS8ot%26export%3Ddownload" width="100%" height="500" className="diagramIframe"></iframe>
+## Canarytrace in a user-journey mode
+
+![Canarytrace in a smoke mode](../../static/docs-img/phases-user-journey.png)
 
 ## Canarytrace runner phases
 
@@ -89,13 +91,13 @@ Each run of Canarytrace runner goes through phases
 - Filebeat logs all instances independently.
 
 
-## Canarytrace Smoke Pro Lifecycle
+## Canarytrace in a smoke mode
 
-- [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) it's a way for test and analysis web application without writing a test. Enter only URLs separated by a semicolon.
-- [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) open every URL in a real browser,  check existing title element, loadEventEnd and response code of navigate request and the result save to elasticsearch.
-- [Canarytrace Smoke Pro](/docs/why/edition#canarytrace-smoke-pro) contains tools for web performance testing such as [Lighthouse](/docs/features/lighthouse)
+- [Canarytrace in a smoke mode](/docs/why/edition) it's a way for test and analysis web application without writing a test. Enter only URLs separated by a semicolon.
+- [Canarytrace in a smoke mode](/docs/why/edition) open every URL in a real browser,  check existing title element, loadEventEnd and response code of navigate request and the result save to elasticsearch.
+- [Canarytrace in a smoke mode](/docs/why/edition) contains tools for web performance testing such as [Lighthouse](/docs/features/lighthouse)
 
-<iframe src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=Canarytrace%20Smoke%20PRO%20phase%20for%20every%20URL#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1xLb2_oV1wqF8j2J6mhAeAdEVfKImFk5p%26export%3Ddownload" width="100%" height="500" className="diagramIframe"></iframe>
+![Canarytrace in a smoke mode](../../static/docs-img/phases-smoke.png)
 
 ---
 
