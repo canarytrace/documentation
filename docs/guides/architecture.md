@@ -18,11 +18,11 @@ keywords:
 The architecture of Canarytrace is based on dockerized components, which are orchestrated in [Kubernetes](https://kubernetes.io/) or [OpenShift](https://www.openshift.com/). Thanks to this approach is easy deploy Canarytrace to in cloud e.g. [AWS](https://aws.amazon.com/), [Google Cloud Engine](https://cloud.google.com/), [DigitalOcean](https://www.digitalocean.com/), [Azure Cloud](https://azure.microsoft.com/) etc. or in your own datacenter where is possible install of Kubernetes.
 
 
-![Architecture](../../static/docs-img/canarytrace-v3.0.png)
+![Architecture](../../static/docs-img/architecture-4.0.png)
 
 ### What is Canarytrace?
-<a href="/docs/why/edition#canarytrace-professional"><span class="canaryBadge">Professional</span></a>
-<a href="/docs/why/edition#canarytrace-smoke-pro"><span class="canaryBadge">Smoke Pro</span></a>
+<a href="/docs/why/edition"><span class="canaryBadge">Professional</span></a>
+<a href="/docs/why/edition"><span class="canaryBadge">for DevOps</span></a>
 
 Canarytrace is a stack based on [Webdriver.io](https://webdriver.io/) and uses a hybrid approach to testing of the web application. We are using combination of a webdriver and [devTools](https://developers.google.com/web/tools/chrome-devtools) for full control on a web browser during monitoring and measure.
 Canarytrace isn't a substitute for monitoring tools of lower level e.g. Zabbix or Nagios but they complement each other. 
@@ -37,20 +37,16 @@ Every run of Canarytrace starts with a monitor script cloning from git repositor
 Every part of architecture has own responsibility.
 
 - Cloning git repository with monitor scripts directly to container with Canarytrace.
-
 - Run selected monitor script.
-
 - Access to browser via webdriver and devTools during monitoring and measure non-functional metrics and collect additional telemetrics data from browser API.
-
 - Assertation function requirements.
-
 - Continuously sending all data from Canarytrace to Elasticsearch.
 
 > - Canarytrace doesn't measure anything, this is responsibility on a web browser and its embedded tools. In this moment is a web browser quarantor of reliability data.
 > - Canarytrace has internal algorithms for collect data from browser, filtering and sending data to analysis to Elasticsearch.
 > - Canarytrace never run two instances in a single browser, but uses a 1: 1: 1 
 > - Parallelization is performed on lower level of this architecture. We use Kubernetes for parallelization, izolation of monitorin and for set exactly resources for every runned a web browser.
-> - Canarytrace didn't sending any notifications. This is a responsibility of Canarytrace Listener.
+> - Canarytrace didn't sending any notifications. This is a responsibility of [Listener](/docs/guides/listener).
 
 ### Browser instance
 
@@ -68,7 +64,7 @@ Elasticsearch is distributed search and analytics engine and is the centerpiece 
 
 This is a big advantage because elasticsearch is powerful and a lot of people know it. It allows access to data via rest api and other tools can work with data collected from Canarytrace
 
-Data from Elasticsearch are used by Kibana for visualize them and by Canarytrace Listener for automatically analyses of incidentes, bugs, trigering alert by thresholds and for generate reports.
+Data from Elasticsearch are used by Kibana for visualize them and by [Listener](/docs/guides/listener) for automatically analyses of incidentes, bugs, trigering alert by thresholds and for generate reports.
 
 **Main responsibility**
 
@@ -97,11 +93,11 @@ Filebeat a Metricbeat are lightweight data shippers. Their tasks is collect logs
 
 - Send logs and metrics from docker containers to elaticsearch.
 
-### Canarytrace Listener
+### Listener
 
-Canarytrace Listener is a component, which automatically analyse data from Elasticsearch and fired notification by threshold on output reporters e.g. slack.
+[Listener](/docs/guides/listener) is a separate component, which automatically analyse data from Elasticsearch and fired notification by threshold on output reporters e.g. slack.
 Compares type of errors, their frequency, examines incoming resources to the browser, their headers etc.
-Canarytrace Listener work also an observer and monitoring work of Canarytrace collectors.
+[Listener](/docs/guides/listener) work also an observer and monitoring work of Canarytrace collectors.
 
 **Main responsibility**
 
