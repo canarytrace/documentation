@@ -21,6 +21,45 @@ Canarytrace adds features for non-invasive / agent-less monitoring of performanc
 
 For user-journey Canarytrace use [Webdriver.io](https://webdriver.io/)
 
+### Browser Capabilities
+WDIO for start `goog:chromeOptions` use these flags, which help faster start the browser.
+
+```javascript
+...
+capabilities: [{
+    browserName: 'chrome',
+    acceptInsecureCerts: true,
+    'goog:chromeOptions': {
+      args: [
+        '--remote-debugging-port=9222',
+        '--remote-debugging-host=0.0.0.0',
+        '--start-fullscreen',
+        '--disable-notifications',
+        '--window-size=1920,1080',
+        '--no-default-browser-check',
+        '--no-first-run',
+        '--disable-breakpad',
+        '--disable-component-update',
+        '--disable-sync',
+        '--allow-running-insecure-content',
+        '--disable-client-side-phishing-detection',
+        '--disable-default-apps',
+        '--disable-device-discovery-notifications',
+        '--disable-domain-reliability',
+        '--disable-background-timer-throttling',
+        '--load-media-router-component-extension=0',
+        '--mute-audio',
+        '--disable-hang-monitor',
+        '--password-store=basic',
+        '--dont-require-litepage-redirect-infobar',
+        '--override-https-image-compression-infobar',
+        '--disable-site-isolation-trials'
+      ]
+    }
+  }],
+...
+```
+
 ### How user-journey mode work
 ---
 Canarytrace can run in [modes](/docs/#two-modes) `smoke` or `user-journey` and only user-jourey mode use Webdriver.io monitor script. Monitor script is useful for monitoring user flow, e.g. buying process.
