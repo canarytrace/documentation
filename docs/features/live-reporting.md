@@ -409,67 +409,76 @@ Request and response are paired by unique `requestId` and `sequence` is order of
 
 ```json title="One paired request and response"
 {
-  "_index": "c.request-log-2022.02.20",
+  "_index": "c.request-log-2022.05.14",
   "_type": "_doc",
-  "_id": "X-HoFn8BhWv6tXOb7DrR",
+  "_id": "0QnywoABEKRFGvdLRmqj",
   "_version": 1,
-  "_score": null,
+  "_score": 1,
   "_source": {
-    "requestId": "91434.4",
-    "timestamp": "2022-02-20T11:33:52.264Z",
+    "requestId": "262.122",
+    "timestamp": "2022-05-14T14:21:38.227Z",
     "labels": [
-      "mode=canarytrace-smoke-pro-4.21.4",
+      "mode=canarytrace-smoke-pro-<version>",
       "engine=wdio",
-      "develop123348"
+      "desktop, smoke, fulltest",
+      "pt.audit=desktopDense4G",
+      "pt.audit=desktopDense4G"
     ],
     "spec": "smoke.js",
-    "context": "Smoke https://webperf.canarytrace.com/",
-    "uuidAction": "d7125348302e71655e84",
-    "uuid": "25dd8dbc461658bd9f9257592818154e",
-    "sequence": 4,
-    "url": "https://webperf.canarytrace.com/img/webperf.webp",
+    "context": "Smoke https://www.vyfakturuj.cz/",
+    "uuidAction": "8b5408818201d6edfcaa",
+    "uuid": "14052214210403253600000000000000",
+    "sequence": 63,
+    "url": "https://www.vyfakturuj.cz/prj/themes/www.vyfakturuj.cz/img/function-list/ikona-homeslider-vzhled.png",
     "request": {
-      "requestId": "91434.4",
-      "timestamp": 368000.022,
-      "initiator": "parser",
-      "redirectHasExtraInfo": false,
+      "requestId": "262.122",
+      "timestamp": 500713.303145,
+      "wallTime": 1652538098.212543,
+      "initiator": {
+        "type": "parser",
+        "url": "https://www.vyfakturuj.cz/",
+        "lineNumber": 1010,
+        "columnNumber": 12
+      },
       "type": "Image",
       "method": "GET",
       "headers": {
-        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"",
-        "Referer": "https://webperf.canarytrace.com/",
+        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"",
+        "Referer": "https://www.vyfakturuj.cz/",
         "sec-ch-ua-mobile": "?0",
-        "canary-trace-id": "25dd8dbc461658bd9f9257592818154e",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36",
-        "sec-ch-ua-platform": "\"macOS\""
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
+        "sec-ch-ua-platform": "\"Linux\""
       },
       "initialPriority": "Low",
+      "isSameSite": true,
       "postDataParsed": ""
     },
     "response": {
       "status": 200,
       "statusText": "",
       "headers": {
-        "content-security-policy": "upgrade-insecure-requests",
-        "last-modified": "Mon, 27 Sep 2021 12:53:38 GMT",
-        "server": "nginx",
-        "etag": "\"a044-5ccf995f42b3e\"",
-        "content-type": "image/webp",
-        "date": "Sun, 20 Feb 2022 11:33:52 GMT",
+        "date": "Sat, 14 May 2022 14:21:38 GMT",
+        "x-unique-id": "Yn@68vS9jQyMB-Mc7yFbTwAAFh4",
+        "last-modified": "Thu, 09 Jan 2020 01:38:40 GMT",
+        "server": "Apache",
+        "etag": "\"bceb-59bab119ee86f\"",
+        "content-type": "image/png",
+        "cache-control": "max-age=2592000",
         "accept-ranges": "bytes",
-        "content-length": "41028"
+        "content-length": "48363",
+        "expires": "Mon, 13 Jun 2022 14:21:38 GMT"
       },
-      "mimeType": "image/webp",
+      "mimeType": "image/png",
       "connectionReused": true,
-      "connectionId": 30,
-      "remoteIPAddress": "178.238.37.215",
+      "connectionId": 204,
+      "remoteIPAddress": "95.168.193.101",
       "remotePort": 443,
       "fromDiskCache": false,
       "fromServiceWorker": false,
       "fromPrefetchCache": false,
-      "encodedDataLength": 166,
+      "encodedDataLength": 68,
       "timing": {
-        "requestTime": 368000.0435,
+        "requestTime": 500713.304677,
         "proxyStart": -1,
         "proxyEnd": -1,
         "dnsStart": -1,
@@ -482,37 +491,338 @@ Request and response are paired by unique `requestId` and `sequence` is order of
         "workerReady": -1,
         "workerFetchStart": -1,
         "workerRespondWithSettled": -1,
-        "sendStart": 0.125,
-        "sendEnd": 0.25,
+        "sendStart": 1.171,
+        "sendEnd": 1.741,
         "pushStart": 0,
         "pushEnd": 0,
-        "receiveHeadersEnd": 24.625
+        "receiveHeadersEnd": 13.44
       },
-      "responseTime": 1645356832310.141,
+      "responseTime": 1652538098227.269,
       "protocol": "h2",
       "securityState": "secure",
-      "requestId": "91434.4",
-      "timestamp": 368000.068625,
-      "totalEncodedDataLength": 41257,
+      "requestId": "262.122",
+      "timestamp": 500713.344858,
+      "totalEncodedDataLength": 48458,
       "shouldReportCorbBlocking": false
+    },
+    "har": {
+      "blocked": 1.171,
+      "dns": -1,
+      "connect": -1,
+      "send": 0.57,
+      "wait": 11.699,
+      "receive": 1.913,
+      "ssl": -1,
+      "comment": "",
+      "time": 15.353
     }
   },
   "fields": {
-    "rt": [
-      0.03125
+    "response.timing.sendStart": [
+      1.171
+    ],
+    "request.headers.User-Agent": [
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+    ],
+    "request.initialPriority": [
+      "Low"
+    ],
+    "response.timing.workerFetchStart": [
+      -1
+    ],
+    "labels.raw": [
+      "mode=canarytrace-smoke-pro-<version>",
+      "engine=wdio",
+      "desktop, smoke, fulltest",
+      "pt.audit=desktopDense4G",
+      "pt.audit=desktopDense4G"
+    ],
+    "response.fromDiskCache": [
+      false
+    ],
+    "response.headers.content-length.keyword": [
+      "48363"
+    ],
+    "response.timing.workerReady": [
+      -1
+    ],
+    "response.requestId": [
+      "262.122"
+    ],
+    "response.timing.sslStart": [
+      -1
+    ],
+    "context": [
+      "Smoke https://www.vyfakturuj.cz/"
+    ],
+    "response.remoteIPAddress": [
+      "95.168.193.101"
+    ],
+    "response.headers.last-modified": [
+      "Thu, 09 Jan 2020 01:38:40 GMT"
+    ],
+    "response.headers.date": [
+      "Sat, 14 May 2022 14:21:38 GMT"
+    ],
+    "labels": [
+      "mode=canarytrace-smoke-pro-<version>",
+      "engine=wdio",
+      "desktop, smoke, fulltest",
+      "pt.audit=desktopDense4G"
+    ],
+    "request.headers.Referer.keyword": [
+      "https://www.vyfakturuj.cz/"
+    ],
+    "response.headers.expires": [
+      "Mon, 13 Jun 2022 14:21:38 GMT"
+    ],
+    "request.wallTime": [
+      1652538110
+    ],
+    "response.responseTime": [
+      1652538080000
+    ],
+    "response.headers.cache-control": [
+      "max-age=2592000"
+    ],
+    "request.initiator.lineNumber": [
+      1010
+    ],
+    "request.headers.sec-ch-ua-mobile": [
+      "?0"
+    ],
+    "response.totalEncodedDataLength": [
+      48458
+    ],
+    "response.headers.server.keyword": [
+      "Apache"
+    ],
+    "response.headers.content-type.keyword": [
+      "image/png"
+    ],
+    "har.dns": [
+      -1
+    ],
+    "har.send": [
+      0.57
+    ],
+    "response.timing.dnsStart": [
+      -1
+    ],
+    "request.initiator.type": [
+      "parser"
+    ],
+    "har.wait": [
+      11.699
+    ],
+    "response.timing.sslEnd": [
+      -1
+    ],
+    "requestId": [
+      "262.122"
+    ],
+    "response.connectionReused": [
+      true
+    ],
+    "response.headers.server": [
+      "Apache"
+    ],
+    "har.comment": [
+      ""
+    ],
+    "response.headers.expires.keyword": [
+      "Mon, 13 Jun 2022 14:21:38 GMT"
+    ],
+    "har.ssl": [
+      -1
+    ],
+    "response.protocol": [
+      "h2"
+    ],
+    "request.initiator.url": [
+      "https://www.vyfakturuj.cz/"
     ],
     "timestamp": [
-      "2022-02-20T11:33:52.264Z"
+      "2022-05-14T14:21:38.227Z"
+    ],
+    "response.timing.pushEnd": [
+      0
+    ],
+    "response.headers.x-unique-id": [
+      "Yn@68vS9jQyMB-Mc7yFbTwAAFh4"
+    ],
+    "uuidAction": [
+      "8b5408818201d6edfcaa"
+    ],
+    "response.timing.pushStart": [
+      0
+    ],
+    "request.method": [
+      "GET"
+    ],
+    "response.headers.date.keyword": [
+      "Sat, 14 May 2022 14:21:38 GMT"
+    ],
+    "response.mimeType": [
+      "image/png"
+    ],
+    "url": [
+      "https://www.vyfakturuj.cz/prj/themes/www.vyfakturuj.cz/img/function-list/ikona-homeslider-vzhled.png"
+    ],
+    "request.initiator.url.keyword": [
+      "https://www.vyfakturuj.cz/"
+    ],
+    "request.headers.sec-ch-ua-mobile.keyword": [
+      "?0"
+    ],
+    "response.timing.connectStart": [
+      -1
+    ],
+    "request.timestamp": [
+      500713.3
+    ],
+    "request.requestId": [
+      "262.122"
+    ],
+    "response.status": [
+      "200"
+    ],
+    "response.timing.dnsEnd": [
+      -1
+    ],
+    "response.headers.content-length": [
+      "48363"
+    ],
+    "response.headers.etag": [
+      "\"bceb-59bab119ee86f\""
+    ],
+    "request.initiator.columnNumber": [
+      12
+    ],
+    "response.headers.content-type": [
+      "image/png"
+    ],
+    "request.headers.User-Agent.keyword": [
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+    ],
+    "uuid": [
+      "14052214210403253600000000000000"
+    ],
+    "response.timing.receiveHeadersEnd": [
+      13.44
+    ],
+    "spec": [
+      "smoke.js"
+    ],
+    "response.timing.requestTime": [
+      500713.3
+    ],
+    "har.receive": [
+      1.913
+    ],
+    "response.remotePort": [
+      443
+    ],
+    "response.headers.accept-ranges": [
+      "bytes"
+    ],
+    "response.timing.connectEnd": [
+      -1
+    ],
+    "response.timing.sendEnd": [
+      1.741
+    ],
+    "response.headers.etag.keyword": [
+      "\"bceb-59bab119ee86f\""
+    ],
+    "sequence": [
+      63
+    ],
+    "response.timing.workerStart": [
+      -1
+    ],
+    "request.isSameSite": [
+      true
+    ],
+    "request.headers.Referer": [
+      "https://www.vyfakturuj.cz/"
+    ],
+    "response.headers.last-modified.keyword": [
+      "Thu, 09 Jan 2020 01:38:40 GMT"
+    ],
+    "response.statusText": [
+      ""
+    ],
+    "response.connectionId": [
+      204
+    ],
+    "request.headers.sec-ch-ua": [
+      "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+    ],
+    "request.type": [
+      "Image"
+    ],
+    "response.timing.workerRespondWithSettled": [
+      -1
+    ],
+    "response.timing.proxyStart": [
+      -1
+    ],
+    "response.headers.cache-control.keyword": [
+      "max-age=2592000"
+    ],
+    "response.timing.proxyEnd": [
+      -1
+    ],
+    "request.headers.sec-ch-ua-platform": [
+      "\"Linux\""
+    ],
+    "response.fromServiceWorker": [
+      false
+    ],
+    "response.shouldReportCorbBlocking": [
+      false
+    ],
+    "response.timestamp": [
+      500713.34
+    ],
+    "response.headers.accept-ranges.keyword": [
+      "bytes"
+    ],
+    "request.headers.sec-ch-ua.keyword": [
+      "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+    ],
+    "url.raw": [
+      "https://www.vyfakturuj.cz/prj/themes/www.vyfakturuj.cz/img/function-list/ikona-homeslider-vzhled.png"
+    ],
+    "response.fromPrefetchCache": [
+      false
+    ],
+    "har.blocked": [
+      1.171
+    ],
+    "har.connect": [
+      -1
+    ],
+    "response.securityState": [
+      "secure"
+    ],
+    "request.postDataParsed": [
+      ""
+    ],
+    "response.headers.x-unique-id.keyword": [
+      "Yn@68vS9jQyMB-Mc7yFbTwAAFh4"
+    ],
+    "request.headers.sec-ch-ua-platform.keyword": [
+      "\"Linux\""
+    ],
+    "response.encodedDataLength": [
+      68
+    ],
+    "har.time": [
+      15.353
     ]
-  },
-  "highlight": {
-    "labels": [
-      "@kibana-highlighted-field@develop123348@/kibana-highlighted-field@"
-    ]
-  },
-  "sort": [
-    1645356832264
-  ]
+  }
 }
 ```
 
