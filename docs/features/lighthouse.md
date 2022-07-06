@@ -11,19 +11,19 @@ sidebar_label: Performance audit
 
 <a href="/docs/why/edition#canarytrace-pro"><span class="canaryBadge">Canarytrace Pro</span></a>
 
-[Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) use [Lighthouse 8](https://developers.google.com/web/tools/lighthouse) for performance audit and for obtaining metrics such as [Web Vitals](https://web.dev/vitals/) and more.
+[Canarytrace Pro](/docs/why/edition#canarytrace-pro) use [Lighthouse 8](https://developers.google.com/web/tools/lighthouse) for performance audit and for obtaining metrics such as [Web Vitals](https://web.dev/vitals/) and more.
 
 ## How to run performance audit
 
-> Performance audit is available in [Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) edition
+> Performance audit is available in [Canarytrace Pro](/docs/why/edition#canarytrace-pro) edition
 
 ### smoke
 
-[Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) in `smoke` mode automatically run performance audit on every URL and rusults ( [lhr](https://github.com/GoogleChrome/lighthouse/blob/4d3bda1f14540266eb37f7e2ba8cabbc668db11d/docs/understanding-results.md) object ) is stored to Elasticsearch. 
+[Canarytrace Pro](/docs/why/edition#canarytrace-pro) in `smoke` mode automatically run performance audit on every URL and rusults ( [lhr](https://github.com/GoogleChrome/lighthouse/blob/4d3bda1f14540266eb37f7e2ba8cabbc668db11d/docs/understanding-results.md) object ) is stored to Elasticsearch. 
 
 ### user-journey
 
-If you use [Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) in `user-journey` mode, you can run performance audit on every page via `browser.performAudit()` function.
+If you use [Canarytrace Pro](/docs/why/edition#canarytrace-pro) in `user-journey` mode, you can run performance audit on every page via `browser.performAudit()` function.
 
 ```javascript title="run performance audit in your test case"
 // run performance audit

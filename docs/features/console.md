@@ -9,7 +9,7 @@ sidebar_label: Console Intercept
 
 <a href="/docs/why/edition#canarytrace-pro"><span class="canaryBadge">Canarytrace Pro</span></a>
 
-[Canarytrace Pro](http://localhost:3000/docs/why/edition#canarytrace-pro) continuously collects messages, warnings, errors, debug, info etc. from browser console. All information are stored into [`c.console-*`](/docs/features/live-reporting#cconsole-) Elasticsearch index.
+[Canarytrace Pro](/docs/why/edition#canarytrace-pro) continuously collects messages, warnings, errors, debug, info etc. from browser console. All information are stored into [`c.console-*`](/docs/features/live-reporting#cconsole-) Elasticsearch index.
 
 ## Type of messages
 
