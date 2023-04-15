@@ -7,9 +7,9 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className="bg-blue-500">
+    <header className="bg-slate-50 dark:bg-slate-800">
       <div className="container mx-auto text-center py-24">
-        <h1 className="text-4xl font-bold text-white">{siteConfig.title}</h1>
+        <h1 className="text-7xl font-bold text-rose-500 font-sans">{siteConfig.tagline}</h1>
         <p className="text-xl py-6 text-white">{siteConfig.tagline}</p>
 
         <div className="py-10">
