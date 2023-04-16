@@ -20,10 +20,9 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --aa-primary-color-rgb: 255, 0, 0 !important;
+  --aa-primary-color-rgb: 233, 127, 55 !important;
   --aa-muted-color-rgb: 255, 0, 0 !important;
-  --docusaurus-highlighted-code-line-bg: rgb(72, 77, 91);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 .code-block-error-line {
   background-color: #ff000020;
