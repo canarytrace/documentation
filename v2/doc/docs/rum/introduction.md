@@ -6,16 +6,9 @@ tags:
   - rum
 ---
 
-## Real User Monitoring {#rum}
+# Real User Monitoring
 
-## Nadpis
----
-
-### Podnadpis
-
-**RUM** pomáhá zjistit, jak webová aplikace funguje koncovému uživateli. Měří výkon webové aplikace a webového browseru, zjišťuje, kdy přesně se načetla jaká část webové aplikace, jak je rychlá komunikace mezi prohlížečem a serverem a jakou má server odezvu. Zachytává kliknutí uživatele na tlačítka a další uživatelskou interakci a měří výkonnostní problémy webové aplikace jako je například plynulost a odezvu na uživatelskou interakci.
-
-## Druhy nadpis
+RUM pomáhá zjistit, jak webová aplikace funguje koncovému uživateli. Měří výkon webové aplikace a webového browseru, zjišťuje, kdy přesně se načetla jaká část webové aplikace, jak je rychlá komunikace mezi prohlížečem a serverem a jakou má server odezvu. Zachytává kliknutí uživatele na tlačítka a další uživatelskou interakci a měří výkonnostní problémy webové aplikace jako je například plynulost a odezvu na uživatelskou interakci.
 
 RUM získává informace o použitém prohlížeči, zařízení koncového uživatele, jeho typu a výkonu. Zároveň zachytává chyby webové aplikace, porušení bezpečnostních zásad CSP, uživatelské události jako je například - uživatel něco zobrazil nebo uživatel odeslal formulář atp.
 

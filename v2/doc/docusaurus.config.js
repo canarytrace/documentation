@@ -76,12 +76,16 @@ const config = {
             position: 'left',
             label: 'Documentation',
           },
+          /*
           {to: '/blog', label: 'Blog', position: 'left'},
+          */
+          /*
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
             position: 'right',
           },
+          */
         ],
       },
       footer: {
@@ -145,6 +149,16 @@ const config = {
           },
         ],
       },
+      /*
+      announcementBar: {
+        id: 'support_us',
+        content:
+          'We are looking to revamp our docs, please fill <a target="_blank" rel="noopener noreferrer" href="#">this survey</a>',
+        backgroundColor: '#fafbfc',
+        textColor: '#091E42',
+        isCloseable: false,
+      },
+      */
     }),
     plugins: [
       async function myPlugin(context, options) {

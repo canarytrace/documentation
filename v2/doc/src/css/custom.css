@@ -12,16 +12,19 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #f1b24f;
+  --ifm-color-primary-dark: #eea737;
+  --ifm-color-primary-darker: #d88e1a;
+  --ifm-color-primary-darkest: #b67104;
+  --ifm-color-primary-light: #f0b963;
+  --ifm-color-primary-lighter: #efc17a;
+  --ifm-color-primary-lightest: #eecc95;
+  --ifm-navbar-background-color: #f8fafc;
+  --ifm-navbar-link-color: #121826;
+  --ifm-menu-color-background-active: #f8fafc;
   --ifm-code-font-size: 95%;
-  --aa-primary-color-rgb: 233, 127, 55 !important;
-  --aa-muted-color-rgb: 255, 0, 0 !important;
+  --aa-primary-color-rgb: 18, 24, 38 !important;
+  --aa-muted-color-rgb: 18, 24, 38 !important;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 .code-block-error-line {
@@ -33,16 +36,20 @@
 }
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #eecc95;
+  --ifm-color-primary-dark: #eea737;
+  --ifm-color-primary-darker: #d88e1a;
+  --ifm-color-primary-darkest: #b67104;
+  --ifm-color-primary-light: #f0b963;
+  --ifm-color-primary-lighter: #efc17a;
+  --ifm-color-primary-lightest: #eecc95;
+  --ifm-navbar-background-color: #21222b;
+  --ifm-navbar-link-color: #f8fafc;
+  --ifm-menu-color-background-active: #755b32;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-  --aa-primary-color-rgb: 252, 211, 77 !important; 
-  --aa-muted-color-rgb: 252, 211, 77 !important;
+  --aa-primary-color-rgb: 241, 178, 79 !important; 
+  --aa-muted-color-rgb: 248, 250, 252 !important;
+  --aa-background-color-rgb: 33, 34, 42 !important;
   /* Color which works with dark mode syntax highlighting theme */
   --docusaurus-highlighted-code-line-bg: rgb(255 251 235);
 }
