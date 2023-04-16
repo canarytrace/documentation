@@ -1,18 +1,19 @@
 ---
 sidebar_position: 2
-description: Create a doc page with rich content.
+description: How and Why to use a RUM for your usecases.
 title: Use Cases
 tags:
   - rum
 ---
 
-## Nadpis
----
+Canarytrace RUM je měřící skript, který se vkládá do šablon webové aplikace a díky tomu změří, jak funguje webová aplikace ve webový prohlížeči vašeho zákazníka a jak je vás zákazník spokojený.
 
-- Monitoring spokojenosti koncových uživatelů na produkci.
-- Střežení kvality webové aplikace ( rychlost, bezpečnost a chybovost ).
-- RUM se používá i na testovacích prostředích jako doplněk pro manuální testery, automatizované testy a vývojáře. 
-- Měří, jak rychlá je komunikace mezi backendem a frontendem.
+Canarytrace RUM is important tool for guarding your web business. You will be know, how your web application works for your customers. Canarytrace RUM provides a lot of data, which can be used for next scenarios.
+
+- Monitoring of end-user satisfaction on your production environment.
+- Monitoring the quality of the web application (speed, security and error rate).
+- Canarytrace RUM can be also used on the test environments as a supplement for manual testers, automated tests and developers.
+- It measures how fast the communication between the backend and frontend is.
 - Měří, jak rychle se načítají jednotlivé části webové aplikace.
 - Měří, které části webové aplikace jsou nejvíce využívané a kolik uživatelů aktivně s webovou aplikací pracuje.
 - Jaké akce uživatel ve webové aplikaci udělal a jaká byla její odezva.

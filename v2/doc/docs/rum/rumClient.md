@@ -1,21 +1,36 @@
 ---
 sidebar_position: 4
-description: Create a doc page with rich content.
+description: RUM Client is a client part of the Canarytrace RUM. Is it a small piece of a javascript, which gathering data from a web browser about a web application and user behavior and send them into RUM Server.
 title: RUM Client
 tags:
   - rum
+  - rumClient
 ---
 
+> ### What you’ll learn
+- What is a RUM Client
+- How to use of the RUM Client
 
+## What is a RUM Client
+RUM Client is a client part of the Canarytrace RUM. Is it a small piece of a javascript, which gathering data from a web browser about a web application and user behavior and send them into [RUM Server](doc/rum/rumServer).
 
-## RUM Client
-- je klientská část RUM, která sbírá metriky, informace o zařízení, informace o prohlížeči a o uživatelských akcích a odesílá je na RUM Serveru.
-- RUM Client používá WebApi webového browseru, takže garantem za získaná data je samotný webový browser.
+- RUM Client gathering data from a [WebApis](https://developer.mozilla.org/en-US/docs/Web/API) directly from the web browser. Thanks to this, are the metrics and measurements accurate - so, the web browser is a guarantor of the results and values.
+- RUM Client gathering many metrics about your web application, about a client web browser, information about client device, about a user actions and behavior and errors. The obtained data are sent to the [RUM Server](doc/rum/rumServer) for storage in the database and analysis.
 
-### Implementace měřícího kódu do HTML stránky
-- RUM Client script vložte před `</head>` do každé webové šablony, kterou chcete měřit.
+:::note RUM Client does not slow down your application
+Most of the data are provided by the web browser e.g. Google Chrome, which measures and obtains information about your web application for its own use. Canarytrace RUM only uses data from the browser, it does not measure anything itself.
+:::
 
-**Minimal configuration**
+## How to start
+:::tip
+You must start the [RUM Server](doc/rum/rumServer) before proceeding. Make sure, that [RUM Server](doc/rum/rumServer) expose endpoint `/rum` and that it is available for your frontend.
+:::
+
+### Implementation
+For start of gathering data from your frontend, you must insert the RUM Client javascript into your HTML template. That is all.
+The RUM Client javascript insert before `</head>` tag into every HTML template.
+
+Minimal configuration.
 ```javascript
 <script>
   (function(w,d,u,a,o){
@@ -30,30 +45,31 @@ tags:
 ```
 
 
-**How to setup RUM Client**
+Configuration with additional settings.
 ```javascript
 <head>
-	<!-- your client scripts -->
-	...
-	<!-- insert before </head> element -->
-	<script>
-		(function(w,d,u,a,o){
-		w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
-		o=d.getElementsByTagName(u)[0];o.parentNode.insertBefore(w,o)
-		})(window,document,'script','https://your-domain.com/rum','CRUM')
-		CRUM = {
-			samplingRate: 3000,
-			viewId: 'homePageManual',
-			labels: 'env=production, versionApp=1',
-			trackResources: false,
-			trackHeroes: false,
-			trackErrors: false,
-			trackConsole: false,
-		}
-	</script>
+  <!-- your client scripts -->
+  ...
+  <!-- insert before </head> element -->
+  <script>
+    (function(w,d,u,a,o){
+    w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
+    o=d.getElementsByTagName(u)[0];o.parentNode.insertBefore(w,o)
+    })(window,document,'script','https://your-domain.com/rum','CRUM')
+    CRUM = {
+      samplingRate: 3000,
+      viewId: 'homePageManual',
+      labels: 'env=production, versionApp=1',
+      trackResources: false,
+      trackHeroes: false,
+      trackErrors: false,
+      trackConsole: false,
+    }
+  </script>
 </head>
 ```
 
+Po vložení aa spuštění html stránky zkontrolujte, že RUM Client běží.
 
 ### Debug
 RUM Client defaultně vypisuje pouze chybové zprávy. Chceteli vidět životní cyklus a data, které RUM Client sbírá a odesílá na RUM server, zapněte si debug mód pomocí parametru v querystring.
@@ -99,6 +115,7 @@ RUM Client čeká na událost `load` a potom se spustí. Událost `load` se spu
 - [x] `CRUM.addToLabels('env=UAT')` umožňuje libovolně přidávat další label.
 - [x] `CRUM.addEvent()` umožňuje ukládat libovolné hodnoty během životního cyklu webové aplikace. Například, obsah formulářů, uživatelské akce, výsledky práce requestů atp.
 Example:
+
 ```javascript
 // add events
 CRUM.addEvent('addToBasket', {
@@ -119,8 +136,7 @@ CRUM.addToLabels(`user=${userName}`)
 > Každé použité api je potřeba ověřit, že funkce nebo api je v daném browseru podporováno, pokud ne, tak hlásit přes RUM Server jako chybu.
 > Jako je třeba [[Performance API#Resource Timing API]] a velikost bufferu pro [[PerformanceEntry]]
 > - [[Web API Check]]
-> - 22 APIs
-> 
+> - 22 APIs 
 
 - [[Page Visibility API]] pro získání informace o tom, jestli je stránka viditelná nebo ne.
 - document.hidden vrací true nebo false
@@ -144,3 +160,6 @@ CRUM.addToLabels(`user=${userName}`)
 - console.error, console.warn, console.debug
 - window.addEventListener
 - [[FPS]] a requestAnimationFrame
+
+## Limitations
+některé prohlížeče nemuí poslat všechny data

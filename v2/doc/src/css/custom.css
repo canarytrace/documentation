@@ -20,6 +20,7 @@
   --ifm-color-primary-lighter: #efc17a;
   --ifm-color-primary-lightest: #eecc95;
   --ifm-navbar-background-color: #f8fafc;
+  --ifm-heading-color: #374251;
   --ifm-navbar-link-color: #121826;
   --ifm-menu-color-background-active: #f8fafc;
   --ifm-code-font-size: 95%;
@@ -44,6 +45,7 @@
   --ifm-color-primary-lighter: #efc17a;
   --ifm-color-primary-lightest: #eecc95;
   --ifm-navbar-background-color: #21222b;
+  --ifm-heading-color: #f8fafc;
   --ifm-navbar-link-color: #f8fafc;
   --ifm-menu-color-background-active: #755b32;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);

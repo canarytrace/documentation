@@ -64,6 +64,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
+        hideOnScroll: false,
         title: 'Canarytrace',
         logo: {
           alt: 'Canarytrace',
@@ -75,6 +76,28 @@ const config = {
             sidebarId: 'docSidebar',
             position: 'left',
             label: 'Documentation',
+          },
+          {
+            type: 'dropdown',
+            label: 'Support',
+            position: 'left',
+            items: [
+              {
+                label: 'Forum',
+                href: 'https://github.com/canarytrace/documentation/discussions',
+              },
+              {
+                type: 'doc',
+                label: 'Contact us',
+                docId: 'rum/rumServer',
+              },
+              // ... more items
+            ],
+          },
+          {
+            type: 'search',
+            position: 'right',
+            //className: ''
           },
           /*
           {to: '/blog', label: 'Blog', position: 'left'},
