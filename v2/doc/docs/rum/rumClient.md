@@ -27,7 +27,7 @@ You must start the [RUM Server](doc/rum/rumServer) before proceeding. Make sure,
 :::
 
 ### Implementation
-For start of gathering data from your frontend, you must insert the RUM Client javascript into your HTML template. That is all.
+For start of gathering data from your frontend, you must insert the RUM Client javascript into your HTML template. That's all.
 The RUM Client javascript insert before `</head>` tag into every HTML template.
 
 Minimal configuration.
@@ -69,29 +69,33 @@ Configuration with additional settings.
 </head>
 ```
 
-Po vložení aa spuštění html stránky zkontrolujte, že RUM Client běží.
+:::tip Check, that RUM Client works properly.
+Open the web page and DevTools on Network tab and you should see requests with name `rum`
+:::
 
-### Debug
-RUM Client defaultně vypisuje pouze chybové zprávy. Chceteli vidět životní cyklus a data, které RUM Client sbírá a odesílá na RUM server, zapněte si debug mód pomocí parametru v querystring.
+### Debugging
+The RUM client works in silent mode, meaning that it only writes errors to the browser console. If you want to see the lifecycle of the RUM client and the data being sent to the RUM server, you can turn on debug mode. Add only query string into your address bar.
 
-- `https://canarytrace.com/?debug=1` bude do console v DevTools vypisovat životní cyklus a payload, který se odesílá do RUM Server
-- `https://canarytrace.com/?debug=dry` stejné jako `debug=1` a navíc neodesílá data na RUM Server
+- `https://canarytrace.com/?debug=1` Print the lifecycle of the RUM Client and the data which is being send to the RUM Server.
+- `https://canarytrace.com/?debug=dry` The same as `debug=1` but data is not being sent.
 
 
-### Životní cyklus
+### Lifecycle
 
-**První Spuštění**
-RUM Client čeká na událost `load` a potom se spustí. Událost `load` se spustí, když je celá stránka načtená, včetně všech závislých zdrojů, jako jsou CSS, javascript skripty, iframy a obrázky.
-- Po události [[window.onload]] nebo `loadEventEnd` nebo [[DOMContentLoaded]] 
-- RUM Client se snaží získat všechny údaje a odeslat je na server
+![Example banner](./assets/rum-phases.webp)
+
+**Init phase**
+
+The data collector in the RUM Client wait on `load` event. This event is run in time, when is whole page is loaded with all dependencies such as CSS, Javascript, IFrames and images.
+- Init phase: After loading the RUM Client JavaScript from the RUM Server, this script immediately runs gathering first events and metrics such as Core Web Vitals.
+- First round: In the first round, after the `load` event, the data collector runs and data from the init phase, as well as new data from the first round, is sent to the RUM server.
 
 **Sampling**
-- Po prvním odesláním dat se čeká na nastavený `samplingRate` a další kolečku sbírání a odeslání dat se opakuje. Jde o nekonečnou smyčku. Smyslem je, nečekat na všechny data ( někdy nemusejí být k dispozici), ale odeslat co nejdříve data, které jsou k dispozici a následně sbírání všech nových hodnot po dobu používání webové aplikace uživatelem.
+- The RUM Client works in loops by setting an interval, which is named Sampling. During one sample, new metrics and data are collected. Thanks to sampling, the RUM Client can monitor browser events and user activities. After every sample ends, new data is saved to the RUM Server.
+- The duration of one sample can be set by the `samplingRate` property. After one sample ends, a new sample starts. So, during the lifecycle of one page, the RUM Client can send many samples one by one to the RUM Server.
+- Every sample contains data or metrics that are available during the currently running sample. For example, in sample 1 there may be data from network and Hero elements, while in sample 2 there may be data about page load or FPS, and subsequent samples may contain data about user events such as clicking on a button.
 
-**Odesílaná data**
-- RUM Client odesílá nasbíraná data po uplynutí nastavené doby `samplingRate`. Někdy můžete vidět, že některá data nejsou k dispozici, nebo se odešlou až při další smyčce - je to v závislosti na dostupných API použitého webového prohlížeče, jeho verzi a platformě. Nejvíce hodnot získáte z Google Chrome.
-
-### Nastavení RUM Clienta
+## Settings
 
 **CRUM Properties**
 > Umožňuje měnit nastavení, zapínat či vypínat funkce RUM Clienta, při jeho startu.
@@ -162,4 +166,6 @@ CRUM.addToLabels(`user=${userName}`)
 - [[FPS]] a requestAnimationFrame
 
 ## Limitations
-některé prohlížeče nemuí poslat všechny data
+The RUM client can obtain the most data from Google Chrome because this browser has many APIs and focuses on adopting new web standards and improving web performance.
+
+Everything depends on the available APIs that each web browser offers. Google Chrome offers many APIs that provide important data about the browser, web app, and user activities. However, some browsers do not have certain APIs, and in these cases, the RUM Client returns empty values.
