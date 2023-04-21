@@ -92,13 +92,15 @@ The data collector in the RUM Client wait on `load` event. This event is run in 
 
 ## Browser Data Collected
 
-The RUM Client collects data and events at regular intervals during the user's session into to the queues. The RUM Client creates a payload of data to send to the RUM Server, which includes categorize data into sections by origin or topics of the data
+The RUM Client collects data and events at regular intervals during the user's session into to the queues. The RUM Client creates a payload of data and send to the RUM Server, which includes categorize data into sections by origin or topics of the data.
 
-- `session`
-- `view`
-- `attributes`
-- `audits`
-- `metrics`
+- `session` - Session of the user.
+- `view` - Sources of the behavior of the web page and user activities.
+- `attributes` - Browser and device.
+- `audits` - Autonomous audits.
+- `metrics` - How long does each phase of loading a web page take.
+
+Here is an example of a complete payload which is sent in pieces by the sampler. In the real world, this payload contains metrics and values that are collected over time, as they become available.
 
 ```javascript title="Payload"
 const payload = {
@@ -106,22 +108,21 @@ const payload = {
     id: '123456',
     startTime: 1675377137759,
     lastLoop: 1675377354738,
-    duration: 4,
+    duration: 40,
   },
   view: {
     id: 'homepage',
-    startTime: 1679327449180, // odstranit, neuzitecne, timestamp je +/- v elasticu
-    visit: 0, // 1 poprve (v ramci aktivni session), 2 vicekrat (v ramci aktivni session)
-    href: 'https://www.alza.cz/sandisk-ultra-flair?dq=4016974',
+    startTime: 1679327449180,
+    href: 'https://www.your-domain.com/category?id=4016974',
     protocol: 'https:',
-    host: 'www.alza.cz',
-    hostname: 'www.alza.cz',
+    host: 'www.your-domain.com',
+    hostname: 'www.your-domain',
     port: '',
-    pathname: '/sandisk-ultra-flair',
-    search: '?dq=4016974',
+    pathname: '/category',
+    search: '?id=4016974',
     hash: '', 
-    origin: 'https://www.alza.cz',
-    referer: 'https://www.alza.cz/pocitace-a-notebooky',
+    origin: 'https://www.your-domain.com',
+    referer: 'https://www.your-domain.com/contact-us',
     longTasks: [
 		{
 		  duration: 109,
@@ -181,18 +182,22 @@ const payload = {
       {
         timeStamp: 18136.59999999404,
         fps: 119
+      },
+      {
+        timeStamp: 18336.73399999414,
+        fps: 120
       }
     ],
     marks: [
       {
-        'name': 'HE-start-rum',
-        'detail': 'Load RUM script from the RUM Server.',
+        'name': 'HE-start-main-menu',
+        'detail': 'Main menu loaded.',
         'startTime': 486
       },
       {
-        'name': 'HE-end-rum',
-        'detail': '',
-        'startTime': 488
+        'name': 'HE-start-catalog',
+        'detail': 'Product catalog loaded.',
+        'startTime': 788
       }
     ],
     console: [
@@ -200,13 +205,10 @@ const payload = {
         "type": "warn",
         "timeStamp": 892483.7999999821,
         "value": {
-          "0": "warn zprava"
+          "0": "warn message"
         }
       }
     ],
-    /*
-    analyzersErrors: [],
-    */
     actions: [
       {
         "pointerType": "mouse",
@@ -220,14 +222,13 @@ const payload = {
       {
         "addToBasket": {
           "product": "iPhone",
-          "variant": [
-            "blue"
-          ]
+          "variant": [13,14],
+          'soldout': false
         }
       }
     ],
     visibility: 'visible',
-    usedMemory: 35494235 // bytes
+    usedMemory: 35494235
   },
   attributes: {
     labels: ['env=dev', 'versionApp=19'],
@@ -272,14 +273,14 @@ const payload = {
 ```
 
 ### session 
-jsou ukazately aktivity uživatele a odesílají se na RUM Server v každém odeslaném payloadu.
+Are timestamps indicated activity of the user. These values are sent with every payload to the RUM Server.
 
-| attribute name | type | description |
+| Attribute name | Type | Description |
 |--|--|--|
-|`session.id`|`string`|UUID aktivního uživatele, ukládá se do prohlížeče.|
-|`session.startTime`|`integer`|Je to časové razítko vytvoření uživatelské relace. Slouží k určení délky session. Ukládá se do prohlížeče.|
-|`session.lastLoop`|`integer`|Je časové razítko každého loopu collectoru. Pokud je `session.lastLoop` starší pěti minut (tzn. za 5min nebylo aktualizováno), je vytvořené nové `session.id` a `session.startTime`. Ukládá se do prohlížeče.|
-|`session.duration`|`integer`|Je délka session v sekundách.
+|`session.id`|`string`|UUID of the active user. This UUID is store to the browser.|
+|`session.startTime`|`integer`|A timestamp is created when a user session begins. It is useful for determining the length of the session, and this value is stored in the browser.|
+|`session.lastLoop`|`integer`|A timestamp is added to each loop of the collector. If `session.lastLoop` is older than five minutes (meaning it has not been updated in the last 5 minutes), a new `session.id` and `session.startTime` are created. These are stored in the browser.|
+|`session.duration`|`integer`| This is the length of the user session in minutes.
 
 **Session lifecycle**
 - Při první návštěvě uživatele na stránce je vytvořeno `session.id` a `session.startTime`. Tyto hodnoty se uloží do prohlížeče uživatele.
