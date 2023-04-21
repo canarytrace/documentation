@@ -30,8 +30,7 @@ You must start the [RUM Server](./rumServer) before proceeding. Make sure, that 
 For start of gathering data from your frontend, you must insert the RUM Client javascript into your HTML template. That's all.
 The RUM Client javascript insert before `</head>` tag into every HTML template.
 
-Minimal configuration.
-```javascript
+```javascript title="Minimal configuration."
 <script>
   (function(w,d,u,a,o){
   w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
@@ -41,8 +40,7 @@ Minimal configuration.
 ```
 
 
-Configuration with additional settings.
-```javascript
+```javascript title="Configuration with additional settings."
 <head>
   <!-- your client scripts -->
   ...
@@ -106,71 +104,45 @@ You can insert the RUM client on every page you want to measure, and you can cus
 |`maxEntries`|Number of entries sent in a single request to the RUM Server from a queue of entries. If the payload size of these entries exceeds a certain limit, the RUM Server will reject the request and keep it in a pending state. Default value is 50.|
 |`ignoreResources`|The collector will ignore entries that contain certain strings in their URLs. By default, the value `/rum` is used, so any requests with the name `rum` will be ignored. If you want to collect all requests, you can set the value to `no`. Default value is `/rum`.|
 |`savingMode`|In saving mode, the RUM client compares the previous payload to the latest payload. If the latest payload does not contain any new data, then the payload will not be sent to the RUM server. Default value is `true`|
-|`newSessionAfter`|After what period of user inactivity on the page should a new `session.id` and `session.startTime` be created? Default value is 300 ms|
-
-- `newSessionAfter: 300` After what period of user inactivity on the page should a new `session.id` and `session.startTime` be created? Default is 300s. Tato vlastnost je použita, pokud uživatel stránku zavře a znovu otevře. Limit pro vytvoření nové `session.id` a `session.startTime` pro pouze skrytou stránku nastavuje vlastnost `stopCollectorAfter`.
-
-- `stopCollectorAfter: 60` When should the collection and sending of data to the RUM server be stopped in case of user inactivity? The user is not actively using the page, although it is open, but hidden
-Po jaké době se má zastavit sběr dat a odesílání na RUM Server v případě nečinnosti uživatele. Stránku uživatel aktivně nepoužívá, je sice otevřená, ale je skryta. Default je 60s. Collector se znovu spustí, když je stránka opět viditelná. Při znovuspuštění Collectoru je nastaveno nové `session.id` a `session.startTime`. Je užitečné nastavit spíše vyšší než nižší hodnotu, pokud chcete sbírat data o webovém prohlížeči a o webové aplikaci, která se načítá na pozadí.
-- `viewId: 'production-home-page'` Jak má RUM Client pojmenovat aktuální stránku. Pokud se nepoužije, bude vzgenerováno UUID.
-- `labels: 'env=production, versionApp=1'` Umožňuje k datům odesílaným do RUM serveru přidat příznaky, které se společně s daty uloží do Elasticsearch. Ideální pro označování dat a událostí.
-- `trackResources` sbírá requesty odesíláné webovým prohlížečem. Default is `true`
-- `trackHeroes` sbírá HeroElements události. Default is `true`
-- `trackErrors` sbírá informace o chybách ve webové aplikaci. Default is `true`
-- `trackConsole` sbírá události vytisknuté do console webového prohlížeče. Default is `true` 
+|`newSessionAfter`|After what period of user inactivity on the page should a new `session.id` and `session.startTime` be created? User inactivity means that the user closes the page and later reopens it. Default value is 300 ms|
+|`stopCollectorAfter`|Stop the collector and sending payload to the RUM server in case, that a user is not actively using the page, although it is open, but hidden. The collector is re-run when the page will be again visible and is created a new `session.id` a `session.startTime`. If you want to collect data in multi-window applications, it is useful to set a higher value rather than a lower value. Default is 60 s
+|`viewId`|Name of the opened page. E.g. `'home-page'`. If the `viewId` is not set, the RUM Client will use the currently visible pathname as the name of the page (e.g. `/product-a`)|
+|`labels`|Labels can be added to a payload to mark data. These labels are useful for later analysis, sorting, and searching. An example label is `'env=production, versionApp=12'`. Labels can help to provide additional context and metadata about the data being collected, which can make it easier to understand and analyze the data later on.|
+|`trackResources`|The RUM Client will be collect resources / entries. Default is `true`|
+|`trackHeroes`|The RUM Client will be collect a HeroElement events. Default is `true`|
+|`trackConsole`|The RUM Client will be collect the browser console message such as `debug`,`warn` and `error`. Collecting console messages can be useful for monitoring and troubleshooting purposes, as it can provide insight into any errors or issues that users may be encountering while using the website or application. Default is `true`|
 
 ### CRUM Functions
 
-Umožňuje pomocí funkcí nastavit RUM Clienta.
-- `CRUM.setViewId('string')` umožňuje nastavit vlastní pojmenování `view`.
-- `CRUM.addToLabels('env=UAT')` umožňuje libovolně přidávat další label.
-- `CRUM.addEvent()` umožňuje ukládat libovolné hodnoty během životního cyklu webové aplikace. Například, obsah formulářů, uživatelské akce, výsledky práce requestů atp.
-Example:
+Thanks to CRUM Functions, you can add additional information into a running sample during a whole the lifecycle of the web application or during the user activities.
 
-```javascript
-// add events
+When the RUM Client starts after the `load` event, you can access the functions through the RUM object named `CRUM`.
+
+|Function|Description|
+|-|-|
+|`CRUM.setViewId('string')`|Set a new `viewId`. Is useful especialy for the SPA applications to set a custom view ID that is associated with the performance data collected by the RUM Client. In a web application with soft navigation, where the page content changes dynamically without a full page reload, setting a custom view ID can help you distinguish between different views and track their performance separately.|
+|`CRUM.addToLabels('env=UAT')`|Add another label. Label added via this function will be added into every samplers until to end of lifecycle actual page.|
+|`CRUM.addEvent('addToBasket')`|Allows you to store arbitrary values during the lifecycle of a web application. For example, form contents, user actions, request results, etc. This function allows you to add custom events with associated data to the RUM monitoring data. For example, you could track when a user adds an item to their shopping cart, along with the details of the item they added. By adding custom events with relevant data, you can gain deeper insights into how users are interacting with your web application and identify areas for improvement.|
+
+#### Examples
+
+```javascript title=CRUM.addEvent()
+// minimal, first parameter is mandatory
+CRUM.addEvent('logout')
+
+// add event with context. Second parameter is optional.
 CRUM.addEvent('addToBasket', {
   'product': 'iPhone',
   'variant': [13,14],
   'soldout': false
 })
+```
 
-// add username from html into labels
+```javascript title="CRUM.addToLabels()"
+// add username from html into the labels
 let userName = $x('//a[@id="lnkUserProfile"]/text()')[0].nodeValue
 CRUM.addToLabels(`user=${userName}`)
 ```
-
-- [ ] CRUM.trackOnlyOrigin
-
-### WebAPIs
-> [! Ověřování api]
-> Každé použité api je potřeba ověřit, že funkce nebo api je v daném browseru podporováno, pokud ne, tak hlásit přes RUM Server jako chybu.
-> Jako je třeba [[Performance API#Resource Timing API]] a velikost bufferu pro [[PerformanceEntry]]
-> - [[Web API Check]]
-> - 22 APIs 
-
-- [[Page Visibility API]] pro získání informace o tom, jestli je stránka viditelná nebo ne.
-- document.hidden vrací true nebo false
--  [[🧪 PerformanceLongTaskTiming]] experimentální api, nefunguje ve FF
-- [[Document.referrer]] podpora ve všech prohlizecich.
-- [[navigator.getBattery]] pouze v chrome. Poskytuje informaci o tom, jestli se zařízení nabíjí nebo ne.
-- [[PerformanceMark]] podporují všechny prohlížeče.
-- [[PerformanceObserver]] podporují všechny prohlížeče.
-- [[PerformanceEntry]] vrací list zdrojů a dalších entries jako jsou paiting, mark, document atp.
-- [[Window.location]] poskytuje detaily o URL a její části
-- [[WebVitals RUM implementace]] poskytuje Core Web Vitals metriky.
-- [[🧪 navigator.connection]] poskytuje informace o připojení systému.
-- navigator.deviceMemory vrací velikost paměti zařízení v gigabytech.
-- hardwareConcurrency vrací počet logických procesorů dostupných pro spouštění podprocesů v počítači uživatele.
-- localStorage
-- [[🧪 performance.measureUserAgentSpecificMemory()]]
-- [[⭕ Performance.memory]]
-- [[UserAgent a detekce zařízení]] navigator.userAgentData
-- [[UserAgent a detekce zařízení]] navigator.userAgent
-- crossOriginIsolated vrací `true` pokud je web cross-origin isolation state.
-- console.error, console.warn, console.debug
-- window.addEventListener
-- [[FPS]] a requestAnimationFrame
 
 ## Limitations
 The RUM client can obtain the most data from Google Chrome because this browser has many APIs and focuses on adopting new web standards and improving web performance.
