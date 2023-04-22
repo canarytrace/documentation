@@ -506,7 +506,7 @@ The RUM client collects these marks from the timeline and sends them to the RUM 
 ...
 ```
 
-## Tracking the user activities 
+## Tracking user activity 
 
 RUM is superb for collecting information about devices, browsers, bugs, etc. on your production, but the most interesting value is what the user is doing.
 
@@ -522,7 +522,7 @@ For these cases, use the additional attribute `crum-send`, which instructs the R
 
 #### Syntax
 
-`crum-action="action-name"`, `crum-send`
+Attributes `crum-action="action-name"`, `crum-send`
 
 ```javascript title="Examples"
 // Add the crum-action attribute and name to the element you want to monitor. The RUM client will then record clicks on this element.
@@ -534,17 +534,27 @@ For these cases, use the additional attribute `crum-send`, which instructs the R
 
 ### Events
 
+The RUM Client can record various issues such as FPS drops, LongTasks, Durations, Console errors, etc. While this is useful information, it may lack context. For example, it's important to know if the user has many items in their view or only one or user type, how many dates they have stored in your systems or what components are being displayed etc.
 
-**How to use addEvent**
-```javascript
-// first parameter is requires, second param is optional
+Thanks to Events, you can store additional information about activities in a user's browser. This information provides context and helps you investigate what exactly happened from the user's point of view.
+
+During the entire time that a user interacts with your page, whether it's loading or they are actively working on it, you can save interesting information by calling a function `CRUM.addEvent()`. You can call `CRUM.addEvent()` multiple times to save different events or information during a user's interaction with your page.
+
+#### Syntax
+
+`CRUM.addEvent('event-name', {items:10})`
+- `event-name` is mandatory.
+- The second parameter for context is optional.
+
+```javascript title="Examples"
 CRUM.addEvent('best-training', {
   'name': 'webPerf',
   'days': ['MON','THU'],
   'open': true,
 })
 
-// or minimal
+// or
+
 CRUM.addEvent('addToBasket')
 ```
 
