@@ -273,7 +273,7 @@ const payload = {
 ```
 
 ### session 
-Are timestamps indicated activity of the user. These values are sent with every payload to the RUM Server.
+Are the timestamps attributes indicates activity of the user. These values are sent with every payload to the RUM Server.
 
 | Attribute name | Type | Description |
 |--|--|--|
@@ -283,109 +283,44 @@ Are timestamps indicated activity of the user. These values are sent with every 
 |`session.duration`|`integer`| This is the length of the user session in minutes.
 
 **Session lifecycle**
-- Při první návštěvě uživatele na stránce je vytvořeno `session.id` a `session.startTime`. Tyto hodnoty se uloží do prohlížeče uživatele.
-- Při setrvání uživatele na stránce je pravidelně aktualizováno `session.lastLoop` ve smyčce podle nastaveného `crum.samplingRate`.
-- Při další návštěvě stránky uživatelem se hodnoty `session.id` a `session.startTime` načtou z prohllížeče.
-- Při další návštěvě stránky uživatelem se zjistí čas `session.lastLoop` a pokud je starší než `crum.newSessionAfter` bude vytvořeno nové `session.id` a `session.startTime`. Časové razítko `session.lastLoop`  není aktualizováno pokud uživatel stránku zavře, nebo pokud je stránka skryta. Díky tomu můžeme zjistit aktuální počet aktivních uživatelů a délku každé návštěvy s odchylkou pár minut. 
-
-**Jak zjistit**
-- Počet aktuálně živých session: Vypsat všechny unikátní `session.id`, které nemají `session.lastLoop` starší v řádech několika minut, například dvě minuty.
-- Jak zjistit délku jedné session: Vypsat konkrétní `session.startTime` a následně `( now-session.startTime )` = výsledný čas v milisekundách.
-
+- On the first visit to the page, a `session.id` and `session.startTime` are created, and these values are saved in the user's web browser. 
+- The `session.lastLoop` is regularly updated in the loop by `crum.samplingRate`.
+- On the next visit to the page, the `session.id` and `session.startTime` are loaded from the browser.
+- The time from the `session.lastLoop` is read, and if it is older than `crum.newSessionAfter`, a new `session.id` and `session.startTime` are created.
+- The timestamp in the `session.lastLoop` is not updated if the user closes the web page or if the page is hidden. This allows us to find out the number of active users and their session duration.
 
 ### view 
-je stránka, kterou uživatel prochází a váže se ke každému payloadu
+Metrics from the currently opened page. These values are sent with every payload to the RUM Server.
 
-| attribute name | type | description |
+| Attribute name | Type | Description |
 |--|--|--|
-|`view.id`|`string`|Automaticky generované UUID stránky. UUID je vždy unikátní. Lze manuálně nastavit při vložení RUM Kolektor scriptu do šablony pomocí vlastnosti `CRUM.viewId='homePage'` a nebo lze kdykoliv dodatečně nastavit pomocí `CRUM.setViewId='homePage'`.|
-|`view.startTime`|`integer`|Je to časové razítko otevření stránky. Je využíváno k identifikaci počtu náštěv na konkrétní stránku. `view.startTime` je vždy jiné po novém otevření stránky.
-|`view.href`|`string`|String s celou URL [[Window.location]]|
-|`view.protocol`|`string`|String obsahující schéma včetně `:` [[Window.location]]|
-|`view.host`|`string`|Obsahuje název hostitele a případně i port [[Window.location]]|
-|`view.hostname`|`string`|Obsahuje doménu URL adresy [[Window.location]]|
-|`view.port`|`string`|Obsahuje port URL adresy [[Window.location]]|
-|`view.pathname`|`string`|Obsahuje `/` následovaný cestou ale bez query [[Window.location]]|
-|`view.search`|`string`|Obsahuje `?` následovaný `querystringem` [[Window.location]]|
-|`view.hash`|`string`|Obsahuje `#` následovaný identifikátorem fragmentu [[Window.location]]|
-|`view.origin`|`string`|Origin [[Window.location]]|
-|`view.referer`|`string`|Předchozí URL, pokud uživatel přišel na stránku pomocí odkazu. Prázdné, pokud uživatel přišel na stránku přímo.|
-|`view.visibility`|`string`|Viditelnost stránky při načítání. Může mít hodnoty `visible` or `hidden` [[Page Visibility API]] Pokud se stav mění, je zaznamenán poslední stav. Visibilita může být v rámci samplingu i jiná než během načítání.|
-|`view.longTasks`|`array`|Zaznamenané tasky a jejich délka. [[🧪 PerformanceLongTaskTiming]]|
-|`view.resources`|`array`|Zaznamenané navigation a resources z `performance.getEntries()`. [[PerformanceNavigationTiming]] and [[PerformanceResourceTiming]]|
-|`view.resourceTypes`|`object`|Seznam zaznamenaných typů resources a jejich počet [[PerformanceResourceTiming#test & snippet]]|
-|`view.marks`|`array`|Zaznamená všechny `performance.mark`, jejichž název obsahuje string `HE`. |
-|`view.fps`|`array`|Vypočítává každou vteřinu plynulost animací. [[FPS]]|
-|`view.console`|`array`|Zachytává zprávy z konzole typu `error`, `warn` a `debug`. [[Console]]|
-|`view.usedMemory`|`integer`|Využitá paměť webovou aplikací v bytes. RUM Client se snaží využít hned dvě api pro přesné změření, ale ne všechny browsery toto měření umožňují. [[🧪 performance.measureUserAgentSpecificMemory()]]|
-|`view.actions`|`array`|Seznam akcí, které uživatel provedl. RUM Client hledá elementy, které mají atribut `crum-action="name"`. Při použití atributu `crum-send` je zaznamenaná událost odeslána ihned a navíc se odesílají i `events`.|
-|`view.events`|`array`|Seznam událostí, které můžete libovolně během životního cyklu aplikace odesílat přímo do RUM Clienta pomocí `CRUM.addEvent()` CRUM Client automaticky přidá `timeStamp`.|
-
-**Jak vyhledávat v datech**
-[[RUM v2 Kibana syntaxe#Vyhledávání ve `view` v Kibana]]
-
-**How to use `performance.mark()`**
-```html
-<!-- hero element is surrounded by the measurement marks -->
-<html>
-...
-<script>performance.mark('HE-start-tailwind')</script>
-	<script src="https://cdn.tailwindcss.com"></script>
-<script>performance.mark('HE-end-tailwind')</script>
-
-<!-- You can use performance.mark for measure moment when the element was loaded -->
-<img src="./img/webperf.webp" onload="performance.mark('HE-main-banner')" alt="Web Performance Testing" width="800" height="424">
-...
-<body>
-
-<!-- Or measure, when server responsed -->
-<script>
-	fetch("http://example.com/movies.json")
-	  .then((response) => response.json())
-	  .then((data) => {
-	    performance.mark('HE-response-movies')
-	    console.log(data)
-	  });
-</script>
-
-<!-- you can use in your events -->
-<script>
-	document.addEventListener("scroll", function handler() {
-	    //Remove the event listener so that it only triggers once
-	    document.removeEventListener("scroll", handler);
-	    // for timestamp for first scroll event
-	    performance.mark('HE-first-scroll')
-	});
-</script>
-...
-```
+|`view.id`|`string`|Name of the opened page. e.g. 'home-page'. If the `viewId` is not set by `crum.viewId`, the RUM Client will use the currently visible pathname as the name of the page (e.g. `/product-a`). You can set the name whenewer thanks to crum function `CRUM.setViewId('string')`. |
+|`view.startTime`|`integer`|A timestamp when the web page was opened. The `view.startTime` is after open the page always differently.
+|`view.href`|`string`|The URL of the current page.|
+|`view.protocol`|`string`|The protocol scheme of the URL, including the final ':'.|
+|`view.host`|`string`|The host, that is the hostname, a ':', and the port of the URL.|
+|`view.hostname`|`string`|The domain of the URL.|
+|`view.port`|`string`|The port number of the URL.|
+|`view.pathname`|`string`|An initial `/` followed by the path of the URL, not including the query string or fragment.|
+|`view.search`|`string`|A string containing a `?` followed by the parameters or "querystring" of the URL.|
+|`view.hash`|`string`|A string containing a `#` followed by the fragment identifier of the URL.|
+|`view.origin`|`string`|The canonical form of the origin of the specific location.|
+|`view.referer`|`string`|The URI of the page that linked to this page.|
+|`view.visibility`|`string`|Returns `visible` or `hidden` indicating if the page is considered hidden or not. RUM Client record last status of the visibility because is important watching if is the page loaded in the `hidden` state. In the `hidden` state the browser stop some self functions and reduce performance for hidden tab. When a page is considered hidden, the web browser may suspend or limit certain background tasks or updates, such as animations, timers, or network requests, to conserve resources and improve performance. This behavior is intended to prevent hidden pages from consuming excessive CPU or battery power and affecting the user experience. However, some tasks or updates may still occur even when a page is hidden, depending on the browser implementation and configuration.|
+|`view.longTasks`|`array`|Array of the tasks that occupy the UI thread for 50 milliseconds or more.|
+|`view.resources`|`array`|Requests on resources, their timing and blocking/non-blocking states.|
+|`view.resourceTypes`|`object`|List of the resource types and their count. e.g. JavaScript, images, CSS etc.|
+|`view.marks`|`array`|List of the HeroElements.|
+|`view.fps`|`array`|A frame rate is the speed at which the browser is able to recalculate, layout, and paint content on the display. A lower FPS indicates problems with the main thread and performance issues on the web page.|
+|`view.console`|`array`|Catched message from the browser console such as `error`, `warn` and `debug`. It can be useful for debugging and monitoring web page behavior.|
+|`view.usedMemory`|`integer`|The currently used memory of a web page, often referred to as memory usage, is a metric that indicates how much memory the browser is currently allocating to the web page. The value is reported in bytes. Monitoring memory usage is important for detecting memory leaks, which occur when a program or script uses more memory than necessary and fails to release it. Memory leaks can cause performance issues, crashes, or other unexpected behavior, and can be difficult to debug. By keeping track of the memory usage of a web page and comparing it to expected values, developers can identify and fix memory leaks and improve the overall performance of the page.|
+|`view.actions`|`array`|List of the user actions e.g. click on button. The RUM Client searches for elements that have the attribute `crum-action="name"`. When using the `crum-send` attribute, the recorded actions is sent immediately, and additionally, recorded `view.events` are also sent.|
+|`view.events`|`array`|List of the events, which can be add whole lifecycle of the web page. For adding new event plse use crum function `CRUM.addEvent()`.|
 
 
-**How to user client actions**
-values are available in `view.actions`
-```javascript
-// add crum-action attribute and name to monitored element. The RUM Client record the click on this element.
-<span class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600" crum-action="header-order-button">Objednat</span>
-
-// immediately send
-<span class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600" 
-crum-action="header-order-button" crum-send>Objednat</span>
-```
-
-**How to use addEvent**
-```javascript
-// first parameter is requires, second param is optional
-CRUM.addEvent('best-training', {
-  'name': 'webPerf',
-  'days': ['MON','THU'],
-  'open': true,
-})
-
-// or minimal
-CRUM.addEvent('addToBasket')
-```
-
-
+:::tip
+podivejte se na demo
+:::
 
 ### attributes
 attributy měření
@@ -490,7 +425,7 @@ When the RUM Client starts after the `load` event, you can access the functions 
 
 |Function|Description|
 |-|-|
-|`CRUM.setViewId('string')`|Set a new `viewId`. Is useful especialy for the SPA applications to set a custom view ID that is associated with the performance data collected by the RUM Client. In a web application with soft navigation, where the page content changes dynamically without a full page reload, setting a custom view ID can help you distinguish between different views and track their performance separately.|
+|`CRUM.setViewId('string')`|Set a new `viewId`. Is useful especialy for the SPA applications to set a custom `view.id` that is associated with the performance data collected by the RUM Client. In a web application with soft navigation, where the page content changes dynamically without a full page reload, setting a custom `view.id` can help you distinguish between different views and track their performance separately.|
 |`CRUM.addToLabels('env=UAT')`|Add another label. Label added via this function will be added into every samplers until to end of lifecycle actual page.|
 |`CRUM.addEvent('addToBasket')`|Allows you to store arbitrary values during the lifecycle of a web application. For example, form contents, user actions, request results, etc. This function allows you to add custom events with associated data to the RUM monitoring data. For example, you could track when a user adds an item to their shopping cart, along with the details of the item they added. By adding custom events with relevant data, you can gain deeper insights into how users are interacting with your web application and identify areas for improvement.|
 
@@ -515,6 +450,79 @@ CRUM.addEvent('addToBasket', {
 let userName = $x('//a[@id="lnkUserProfile"]/text()')[0].nodeValue
 CRUM.addToLabels(`user=${userName}`)
 ```
+
+## HeroElements
+
+## Tracking the user activities 
+
+### Actions
+
+### Events
+
+
+**How to use `performance.mark()`**
+```html
+<!-- hero element is surrounded by the measurement marks -->
+<html>
+...
+<script>performance.mark('HE-start-tailwind')</script>
+	<script src="https://cdn.tailwindcss.com"></script>
+<script>performance.mark('HE-end-tailwind')</script>
+
+<!-- You can use performance.mark for measure moment when the element was loaded -->
+<img src="./img/webperf.webp" onload="performance.mark('HE-main-banner')" alt="Web Performance Testing" width="800" height="424">
+...
+<body>
+
+<!-- Or measure, when server responsed -->
+<script>
+	fetch("http://example.com/movies.json")
+	  .then((response) => response.json())
+	  .then((data) => {
+	    performance.mark('HE-response-movies')
+	    console.log(data)
+	  });
+</script>
+
+<!-- you can use in your events -->
+<script>
+	document.addEventListener("scroll", function handler() {
+	    //Remove the event listener so that it only triggers once
+	    document.removeEventListener("scroll", handler);
+	    // for timestamp for first scroll event
+	    performance.mark('HE-first-scroll')
+	});
+</script>
+...
+```
+
+
+**How to user client actions**
+values are available in `view.actions`
+```javascript
+// add crum-action attribute and name to monitored element. The RUM Client record the click on this element.
+<span class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600" crum-action="header-order-button">Objednat</span>
+
+// immediately send
+<span class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600" 
+crum-action="header-order-button" crum-send>Objednat</span>
+```
+
+**How to use addEvent**
+```javascript
+// first parameter is requires, second param is optional
+CRUM.addEvent('best-training', {
+  'name': 'webPerf',
+  'days': ['MON','THU'],
+  'open': true,
+})
+
+// or minimal
+CRUM.addEvent('addToBasket')
+```
+
+
+
 
 ## Limitations
 The RUM client can obtain the most data from Google Chrome because this browser has many APIs and focuses on adopting new web standards and improving web performance.
