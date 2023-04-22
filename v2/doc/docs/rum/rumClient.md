@@ -430,9 +430,8 @@ When the RUM Client starts after the `load` event, you can access the functions 
 |`CRUM.addEvent('addToBasket')`|Allows you to store arbitrary values during the lifecycle of a web application. For example, form contents, user actions, request results, etc. This function allows you to add custom events with associated data to the RUM monitoring data. For example, you could track when a user adds an item to their shopping cart, along with the details of the item they added. By adding custom events with relevant data, you can gain deeper insights into how users are interacting with your web application and identify areas for improvement.|
 
 #### Examples
-:::tip
 Open console in DevTools and try the following functions.
-:::
+
 ```javascript title=CRUM.addEvent()
 // minimal, first parameter is mandatory
 CRUM.addEvent('logout')
@@ -453,28 +452,39 @@ CRUM.addToLabels(`user=${userName}`)
 
 ## HeroElements
 
-## Tracking the user activities 
+The HeroElements is the only method for accurately measuring when and what is displayed in the user's web browser on their device (mobile or desktop).
+You can easily mark pieces of code in your HTML template, such as menus, lists of products, buttons, etc. You can also mark third-party JavaScript code, allowing you to know how long it takes to load the third-party scripts.
 
-### Actions
+The `performance.mark` native browser API is used to measure HeroElements. When the browser's analyzer hits a mark, the mark and description are saved into the timeline. The RUM client collects these marks, and you can use any number of performance.mark on a single HTML template.
 
-### Events
+:::info
+The name of the marks is optional but must start with the prefix `HE-`. Only marks with this prefix are collected.
+:::
 
 
-**How to use `performance.mark()`**
-```html
-<!-- hero element is surrounded by the measurement marks -->
+The RUM client collects these marks from the timeline and sends them to the RUM server. You can view the time of the marks on graphs.
+- Collected marks are available in `view.marks`.
+
+#### Syntax
+
+`performance.mark('HE-any-name', {detail: 'description'})`
+- `HE-any-name` is mandatory.
+- `{detail: 'description'}` is optional.
+
+```html title="Examples"
+<!-- Third-party JavaScript is surrounded by performance.mark -->
 <html>
 ...
 <script>performance.mark('HE-start-tailwind')</script>
-	<script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 <script>performance.mark('HE-end-tailwind')</script>
 
-<!-- You can use performance.mark for measure moment when the element was loaded -->
-<img src="./img/webperf.webp" onload="performance.mark('HE-main-banner')" alt="Web Performance Testing" width="800" height="424">
+<!-- You can use performance.mark to measure the moment when an element was loaded. -->
+<img src="./img/webperf.webp" onload="performance.mark('HE-main-banner', {detail: 'Main banner loaded.'})" alt="Web Performance Testing" width="800" height="424">
 ...
 <body>
 
-<!-- Or measure, when server responsed -->
+<!-- You can also use it to measure when the server responded. -->
 <script>
 	fetch("http://example.com/movies.json")
 	  .then((response) => response.json())
@@ -484,7 +494,7 @@ CRUM.addToLabels(`user=${userName}`)
 	  });
 </script>
 
-<!-- you can use in your events -->
+<!-- You can use performance.mark in your events. -->
 <script>
 	document.addEventListener("scroll", function handler() {
 	    //Remove the event listener so that it only triggers once
@@ -496,17 +506,34 @@ CRUM.addToLabels(`user=${userName}`)
 ...
 ```
 
+## Tracking the user activities 
 
-**How to user client actions**
-values are available in `view.actions`
-```javascript
-// add crum-action attribute and name to monitored element. The RUM Client record the click on this element.
-<span class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600" crum-action="header-order-button">Objednat</span>
+RUM is superb for collecting information about devices, browsers, bugs, etc. on your production, but the most interesting value is what the user is doing.
 
-// immediately send
-<span class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600" 
-crum-action="header-order-button" crum-send>Objednat</span>
+### Actions
+
+Actions is a method for recording the user's interactions with the page, such as clicking on a button. Add the attribute `crum-action` to your elements, and the RUM client will watch and record user actions, such as clicks.
+
+New recorded actions are stored in the timeline and sent to the RUM server at the end of the sampling period. But if, for example, you have an action on the Login button, and after clicking on it, the browser starts a new navigation, then the payload sent from the RUM Client to the RUM Server may not need to be sent because the browser stops some actions from the original page, such as network activities.
+
+For these cases, use the additional attribute `crum-send`, which instructs the RUM client to send new actions and events immediately.
+
+- Collected actions are available in `view.actions`
+
+#### Syntax
+
+`crum-action="action-name"`, `crum-send`
+
+```javascript title="Examples"
+// Add the crum-action attribute and name to the element you want to monitor. The RUM client will then record clicks on this element.
+<span crum-action="header-order-button">Order</span>
+
+// Add the additional attribute crum-send to immediately send the recorded action.
+<span crum-action="header-order-button" crum-send>Order</span>
 ```
+
+### Events
+
 
 **How to use addEvent**
 ```javascript
