@@ -317,58 +317,54 @@ Metrics from the currently opened page. These values are sent with every payload
 |`view.actions`|`array`|List of the user actions e.g. click on button. The RUM Client searches for elements that have the attribute `crum-action="name"`. When using the `crum-send` attribute, the recorded actions is sent immediately, and additionally, recorded `view.events` are also sent.|
 |`view.events`|`array`|List of the events, which can be add whole lifecycle of the web page. For adding new event plse use crum function `CRUM.addEvent()`.|
 
-
-:::tip
-podivejte se na demo
-:::
-
 ### attributes
-attributy měření
 
-| attribute name | type | description |
+Attributes about a client's web browser and device are useful information that can help you identify the conditions under which the user worked with your web page. These attributes represent the client's environment when they use a web page.
+
+| Attribute name | Type | Description |
 |--|--|--|
-|`attributes.labels`|`array`|Libovolné informace, které se posílají s každým payloadem. Může obsahovat verzi aplikace, prostředí a další doplňkové informace.
-|`attributes.browser`|`string`|Vendor browser name. [[UserAgent a detekce zařízení]]|
-|`attributes.browserVersion`|`string`|Verze prohlížeče. [[UserAgent a detekce zařízení]]|
-|`attributes.uaParser`|`string`|Metoda identifikace zařízení a prohlížeče. `userAgent` parsování z běžného UA stringu a `userAgentData` je nové api, poskytuje identifikaci, ale není podporováno ve všech prohlížečích. [[UserAgent a detekce zařízení]]|
-|`attributes.ua`|`string`|UA string, které bylo parserem zpracováno. [[UserAgent a detekce zařízení]]|
-|`attributes.connection.effectiveType`|`string`|Vrací řetězec `slow-2g`, `2g`, `3g` nebo `4g`. Vzchází se z posledního pozorování propustnosti downlinku na aplikační vrstvě. [[🧪 navigator.connection]]|
-|`attributes.connection.rtt`|`integer`|Je doba v _milisekundách_ potřebná k odeslání datového paketu na místo určení plus doba, za kterou je paket přijat zpět na místo určení. [[🧪 navigator.connection]]|
-|`attributes.connection.downlink`|`integer`|Vrací odhad šířky efektivního pásma v _megabitech_ za sekundu, zaokrouhlený na nejbližší násobek 25kilobitů za sekundu. [[🧪 navigator.connection]]|
-|`attributes.connection.saveData`|`boolean`|Vrátí `true`, pokud uživatel nastavil možnost sníženého využití dat na uživatelském agentovi. [[🧪 navigator.connection]]|
-|`attributes.device.type`|`string`|`mobile` or `desktop`.|
-|`attributes.device.platform`|`string`|Název vendora zařízení, např. `Apple`|
-|`attributes.device.memory`|`integer`|Dostupná paměť v zařízení. Ne všechny prohlížeče toto měření podporují.|
-|`attributes.device.cpu`|`integer`|Dostupný počet dostupných logických processors pro spuštění vláken v zařízení.|
-|`attributes.device.charging`|`boolean`|`true` Pokud se zařízení nabíjí a `false` pokud se nenabíjí. V něketerých prohlížečích nefunguje, proto vrací `false`|
+|`attributes.labels`|`array`|Labels can be added to a payload to mark data. These labels are useful for later analysis, sorting, and searching. 
+|`attributes.browser`|`string`|A string containing the brand. For example, "Google Chrome".|
+|`attributes.browserVersion`|`string`|A string containing the version. For example, "120".|
+|`attributes.uaParser`|`string`|Type of the source with browser and device identification. Value can be userAgent or userAgentData|
+|`attributes.ua`|`string`|UserAgent string.|
+|`attributes.connection.effectiveType`|`string`|The effective type of the connection meaning one of `slow-2g`, `2g`, `3g`, or `4g`. This value is determined using a combination of recently observed, round-trip time and downlink values.|
+|`attributes.connection.rtt`|`integer`|The estimated effective round-trip time of the current connection, rounded to the nearest multiple of 25 milliseconds. This value is based on recently observed application-layer RTT measurements across recently active connections. It excludes connections made to a private address space. If no recent measurement data is available, the value is based on the properties of the underlying connection technology.|
+|`attributes.connection.downlink`|`integer`|The effective bandwidth estimate in megabits per second, rounded to the nearest multiple of 25 kilobits per seconds. This value is based on recently observed application layer throughput across recently active connections, excluding connections made to a private address space. In the absence of recent bandwidth measurement data, the attribute value is determined by the properties of the underlying connection technology.|
+|`attributes.connection.saveData`|`boolean`|Returns true if the user has set a reduced data usage option on the user agent.|
+|`attributes.device.type`|`string`|The `mobile` or `desktop`.|
+|`attributes.device.platform`|`string`|The platform brand information, e.g. `Apple`|
+|`attributes.device.memory`|`integer`|The approximate amount of device memory in gigabytes.|
+|`attributes.device.cpu`|`integer`|The number of logical processors available to run threads on the user's computer.|
+|`attributes.device.charging`|`boolean`|The current charging state of the battery.|
 
 
 ### audits
-provedené audity
+An audit evaluates the properties of a webpage and the web browser used by user.
 
-| audit name | type | description |
+| Audit name | Type | Description |
 |--|--|--|
-|`audits.crossOriginIsolated`|`boolean`|Vrátí `true` pokud běží stránka v secure contextu. [[🧪 performance.measureUserAgentSpecificMemory()]]|
+|`audits.crossOriginIsolated`|`boolean`| Returns a boolean value that indicates whether the website is in a cross-origin isolation state. That state mitigates the risk of side-channel attacks.|
 
 ### metrics
-získané metriky
+Metrics are timelines with events triggered by a web browser, such as loading content, user interactivity, or rendering time of the frontend.
 
-| attribute name | type | description |
+| Attribute name | Type | Description |
 |--|--|--|
-|`metrics.fp`|`integer`|Čas kdy poprvé se na obrazovce vykreslní první pixel od začátku navigace. [[FP]]|
-|`metrics.fcp`|`integer`|Čas, kdy prohlížeč vykreslil první část obsahu DOMu. [[FCP]]|
-|`metrics.cls`|`integer`|Měření vizuální stability. [[CLS]]|
-|`metrics.lcp`|`integer`|Čas vyrenderování největšího obrázku nebo textu ve viewportu. [[LCP]]|
-|`metrics.fid`|`integer`|Měří čas mezi první interakcí uživatele a jejím skutečným provedením. [[FID]]|
-|`metrics.inp`|`integer`|Tato metrika sleduje většinu uživatelských interakcí a nízké INP znamená, že stránka bude reagovat pro většinu uživatelských interakcí. [[WebPerf/Metrics/INP]]|
-|`metrics.domComplete`|`integer`|Dokončilo se načítání dokumentu a všech dílčích zdrojů. [[PerformanceNavigationTiming]]|
-|`metrics.domContentLoadedEventStart`|`integer`|Čas bezprostředně předtím, než se spustí event handler `DOMContentLoaded`. Na tento okamžik zpravidla čekají různé Javascriptové knihovny a frameworky. |
-|`metrics.domContentLoadedEventEnd`|`integer`|HTML dokument je kompletně zparsován, všechny deferované skritpy jsou načtené a spuštěné. Nečeká se na obrázky, iframy a dokončení async skriptů. [[PerformanceNavigationTiming]]|
-|`metrics.domContentLoadedDuration`|`integer`|Jak dlouho trvá zpracování `DOMContentLoaded` události.|
-|`metrics.renderDuration`|`integer`|Doba mezi `loadEventEnd` a `domContentLoadedEventStart`, tedy od začátku zpracovávání dokumentu po událost `loadEventEnd`, tedy celá stránka je zpracovaná včetně stažených resources. |
-|`metrics.duration`|`integer`|Celková doba navigace, včetně zpracování dokumentu.|
-|`metrics.ttfb`|`integer`|Doba od začátku navigace po `responseStart`.|
-|`metrics.responseTime`|`integer`|Celková doba odesílání odpovědi ze serveru.|
+|`metrics.fp`|`integer`|First Paint - the first time any pixel becomes visible to the user.|
+|`metrics.fcp`|`integer`|First Contentful Paint metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen.|
+|`metrics.cls`|`integer`|Cumulative Layout Shift is a measure of the largest burst of layout shift scores for every unexpected layout shift that occurs during the entire lifespan of a page.|
+|`metrics.lcp`|`integer`|Largest Contentful Paint metric reports the render time of the largest image or text block visible within the viewport, relative to when the page first started loading.|
+|`metrics.fid`|`integer`|First Input Delay measures the time from when a user first interacts with a page (that is, when they click a link, tap on a button, or use a custom, JavaScript-powered control) to the time when the browser is actually able to begin processing event handlers in response to that interaction.|
+|`metrics.inp`|`integer`|Interaction to Next Paint metric tracks most user interactions, and low INP means that the page will respond to most user interactions. [[WebPerf/Metrics/INP]]|
+|`metrics.domComplete`|`integer`|The time elapsed from the beginning of loading the page to the completion of loading all the elements on the page, including images, videos, and other content.|
+|`metrics.domContentLoadedEventStart`|`integer`|The time immediately before the DOMContentLoaded event handler is triggered. Various JavaScript libraries and frameworks usually wait for this moment.|
+|`metrics.domContentLoadedEventEnd`|`integer`|The time when the HTML document is fully parsed, all deferred scripts are loaded and executed. It does not wait for images, iframes, and completion of async scripts.|
+|`metrics.domContentLoadedDuration`|`integer`|How long does it take to process the `DOMContentLoaded` event. (`domContentLoadedEventEnd - domContentLoadedEventStart`)|
+|`metrics.renderDuration`|`integer`|The time between the `loadEventEnd` and `domContentLoadedEventStart` events represents the period from when the initial HTML document processing begins, until the point where the entire page is loaded and ready with all downloaded resources. (`loadEventEnd - domContentLoadedEventStart`)|
+|`metrics.duration`|`integer`|The total time from navigation start to DOM processing completion.|
+|`metrics.ttfb`|`integer`|The time it takes for the server to begin responding to a request.|
+|`metrics.responseTime`|`integer`|The total amount of time it takes to fully received response from a server.|
 
 
 ## Settings
