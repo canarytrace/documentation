@@ -9,7 +9,10 @@ tags:
 
 > ### What you’ll learn
 - What is a RUM Client
-- How to use of the RUM Client
+- How to implement the RUM Client
+- What data and metrics are collected
+- How to setting the RUM Client
+- How to tracking a user activities
 
 ## What is a RUM Client
 RUM Client is a client part of the Canarytrace RUM. Is it a small piece of a javascript, which gathering data from a web browser about a web application and user behavior and send them into [RUM Server](./rumServer).
