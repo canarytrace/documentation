@@ -79,7 +79,7 @@ The RUM client works in silent mode, meaning that it only writes errors to the b
 
 ### Lifecycle
 
-![Example banner](./assets/rum-phases.webp)
+![RUM Client Phases](./assets/rum-phases.webp)
 
 **Init phase**
 
@@ -368,6 +368,11 @@ Metrics are timelines with events triggered by a web browser, such as loading co
 |`metrics.duration`|`integer`|The total time from navigation start to DOM processing completion.|
 |`metrics.ttfb`|`integer`|The time it takes for the server to begin responding to a request.|
 |`metrics.responseTime`|`integer`|The total amount of time it takes to fully received response from a server.|
+
+### Entries
+
+
+## Content Security Policy
 
 
 ## Settings
