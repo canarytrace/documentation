@@ -29,11 +29,12 @@ Most of the data are provided by the web browser e.g. Google Chrome, which measu
 You must start the [RUM Server](./rumServer) before proceeding. Make sure, that [RUM Server](./rumServer) expose endpoint `/rum` and that it is available for your frontend.
 :::
 
-### Implementation
-For start of gathering data from your frontend, you must insert the RUM Client javascript into your HTML template. That's all.
-The RUM Client javascript insert before `</head>` tag into every HTML template.
+### Init script
+For start of gathering data from your frontend, you must insert the Init JavaScript into your HTML template before `</head>` tag into every HTML template. That's all.
+The Init JavaScript load the RUM Client script directly from `/rum` endpoint which is exposed the RUM Server.
 
 ```javascript title="Minimal configuration."
+// Init JavaScript
 <script>
   (function(w,d,u,a,o){
   w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
@@ -47,7 +48,7 @@ The RUM Client javascript insert before `</head>` tag into every HTML template.
 <head>
   <!-- your client scripts -->
   ...
-  <!-- insert before </head> element -->
+  <!-- insert the Init JavaScript before </head> element -->
   <script>
     (function(w,d,u,a,o){
     w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
