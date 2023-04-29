@@ -57,31 +57,315 @@ Canarytrace RUM is designed to work with the latest versions of Elasticsearch an
 
 ### Endpoints
 
-|Method|Endpoint|Description|
-|-|-|
-|`GET`|`/rum`|získání javascriptu s RUM Client|
-|`POST`|`/rum`|odeslání payloadu s daty z RUM Client do RUM Server|
-|`GET`|`/health`|healthcheck pro kontrolu připravenosti RUM Server|
-|`POST`|`/rum/report-uri`||
-|`POST`|`/rum/reporting-api`||
+The RUM Server expose a few REST API endpoints which are used by the RUM Client.
 
+|Method|Endpoint|Description|
+|-|-|-|
+|`GET`|`/rum`|The init script calls this endpoint to obtain the RUM client|
+|`POST`|`/rum`|The RUM client sends payloads to this endpoint.|
+|`GET`|`/health`|This endpoint returns `Canarytrace RUM is ready!` if the RUM server is ready to use.|
+|`POST`|`/rum/report-uri`|Endpoint for sending the Content Security Policy report from older browsers.|
+|`POST`|`/rum/reporting-api`|Endpoint for sending the Content Security Policy Report from Google Chrome.|
+
+
+### Security
 
 :::info Data is kept within your system and not shared with third-party destinations
 One major advantage is that the data collected by the RUM Client and stored via the RUM Server remains in your environment. The RUM Server does not send the collected data to any undefined destination.
-:::
+::: 
 
-## How to run
-
+## Docker image
 The RUM Server is distributed via a Docker image, so you can deploy the RUM Server on various platforms such as localhost, cloud environments, Kubernetes, etc.
 - This approach enables run the RUM Server as a plug-and-play solution in just a few minutes.
 - You can run the RUM Server anywhere you need it, so the data from a particular country stays within that country.
 - Thanks to the fact that the RUM Server runs on Docker, you can run multiple instances depending on the number of visits to your production.
 
-### Docker image
+:::tip Please always use a latest Docker image
+- List of Docker image tags https://quay.io/repository/canarytrace/rum?tab=tags
+:::
+
+- Download the Docker image containing the RUM Server.
+- Please do not permanently use our Docker repository with RUM Server for your production environments. 
+- Always push downloaded the Docker image with the RUM Server to your Docker repository.
+```bash
+docker pull quay.io/canarytrace/rum:2.8.6
+```
+
+- Run and test on your localhost.
+```bash title="Run Docker image"
+docker run --name rum --rm -it -p 3000:3000 -e ELASTIC_CLUSTER -e ELASTIC_HTTP_AUTH -e LICENSE quay.io/canarytrace/rum:2.8.6
+```
+- `ELASTIC_CLUSTER` e.g. http://localhost:9200
+- `ELASTIC_HTTP_AUTH` e.g. username:password. Remove if isn't used.
+- `LICENSE` put your licence.
+- Open `http://localhost:3000/health` address in your browser and you should see "Canarytrace RUM is a ready!".
+
+```bash title="Log"
+    ____  __  ____  ___
+   / __ \/ / / /  |/  /
+  / /_/ / / / / /|_/ / 
+ / _, _/ /_/ / /  / /  
+/_/ |_|\____/_/  /_/   
+                       
+Canarytrace RUM: https://canarytrace.com
+Node.js: v18.15.0
+
+2023-04-28T16:27:41.323Z RUM server listening on port 3000
+2023-04-28T16:27:47.049Z GET /  
+2023-04-28T16:27:51.318Z Queue size: 0, send into Elasticsearch when size of queue is min. 2
+2023-04-28T16:27:54.696Z GET /health  
+2023-04-28T16:27:54.758Z GET /favicon.ico  
+...
+```
+
+Congratulations, the RUM Server is ready.
 
 
+## Kubernetes
+The Kubernetes environment is a preferred option for running the RUM Server. You can use our example deployment or deployment with [NGINX](https://www.nginx.com/).
 
-### Kubernetes
+### Resources
+
+Requirements on resource will be higher if you will be perform a performance audit. Without performance audit will be perform availability check and download information about network trafic in a browser.
+
+:::info Recommended requirements for performance audit
+- Loading web pages into a modern browser is not an easy task. The measurement results may be skewed by insufficient resources and therefore the following settings are recommended for performance audit.
+- Minimum 2 dedicated cores (4 recommended)
+- Minimum 2GB RAM (4-8GB recommended)
+- [Resource units in Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
+:::
+
+|Resources|CPU Request|CPU Limits|Memory requests|Memory limits|
+|-|-|-|-|-|
+|The RUM Server|`100m`|`500m`|`300Mi`|`800Mi`|
+|NGINX|`100m`|`500m`|`300Mi`|`800Mi`|
+|NGINXTotal|`200m`|`1000m`|`600Mi`|`1600Mi`|
+
+### Deployment
+
+#### How to get a deployment scripts
+All deployment objects are distributed with Canarytrace docker images.
+:::tip
+All deployment objects distribute in the Docker image are always updated.
+:::
+
+```bash title="Download deployments scripts from docker image"
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/rum:2.8.6 /opt/canary-rum/deployments/ /deployments/
+```
+
+```bash title="Print directory deployments"
+ls -lah deployments 
+drwxr-xr-x@ 5 rdpanek  staff   160B 28 dub 03:59 .
+drwxr-xr-x  4 rdpanek  staff   128B 29 dub 07:46 ..
+-rw-r--r--@ 1 rdpanek  staff   2,0K 28 dub 03:59 deployment.yaml
+-rw-r--r--@ 1 rdpanek  staff   2,0K 28 dub 03:59 nginx-config.yaml
+-rw-r--r--@ 1 rdpanek  staff   185B 28 dub 03:59 secret.yaml
+```
+
+Which Kubernetes objects are used in this example?
+
+**Full example with NGINX**
+You can use all of these objects for production use of the RUM Server.
+
+- `canarytrace-namespace.yaml` Create your own namespace in Kubernetes. All objects will be created in the namespace `canarytrace`.
+- `nginx-config.yaml` Configuration for NGINX.
+- `secret.yaml` Contains auth to the Elasticsearch and license.
+- `deployment.yaml` The deployment includes Docker images, configurations for the RUM Server, and resource requirements. It also utilizes a LoadBalancer.
+
+**Without NGINX**
+
+If you have your own NGINX or other solutions for providing HTTP2, you can use the deployment alone without NGINX.
+Remove the NGINX Docker image and configuration from deployment.yaml, and then deploy it.
+
+#### Deployment
+
+```yaml title="canarytrace-namespace.yaml"
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: canarytrace
+  labels:
+    name: canarytrace
+```
+
+```yaml title="nginx-config.yaml"
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rum-nginx-config
+  namespace: canarytrace
+data:
+  config: |
+    events { }
+
+    http {
+      gzip on;
+      gzip_comp_level 6;
+      gzip_vary on;
+      gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
+
+      server {
+        listen 80;
+        server_name localhost;
+        return 301 https://localhost$request_uri;
+      }
+
+      keepalive_timeout  65;
+
+      server {
+        listen 443 ssl http2;
+        server_name localhost;
+
+        ssl_certificate /ssl/crt;
+        ssl_certificate_key /ssl/privkey;
+        
+        access_log /var/log/nginx/data-access.log combined;
+
+        location / {
+
+          # Tell client that this pre-flight info is valid for 20 days
+          if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            add_header 'Access-Control-Allow-Origin' *;
+            add_header 'Access-Control-Allow-Headers' *;
+            return 204;
+          }
+
+          add_header 'Access-Control-Allow-Origin' *;
+          add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+
+          proxy_read_timeout 2;
+          proxy_connect_timeout 2;
+          proxy_send_timeout 2;
+
+          proxy_pass http://localhost:3000/;
+          proxy_set_header X-Real-IP  $remote_addr;
+          proxy_set_header X-Forwarded-For $remote_addr;
+          proxy_set_header Host $host;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_redirect http://localhost:3000/ $scheme://$http_host/;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_buffering off;
+        }
+      }
+    }
+```
+
+```yaml title="secret.yaml"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: canarytrace-secret
+  namespace: canarytrace
+type: Opaque
+stringData:
+  elastic.cluster: ""
+  elastic.http.auth: "elastic:XYZ"
+  license: ""
+```
+
+:::tip Please always use a latest Docker image
+- List of Docker image tags https://quay.io/repository/canarytrace/rum?tab=tags
+:::
+
+```yaml title="deployment.yaml"
+apiVersion: v1
+kind: Service
+metadata:
+  name: rum
+  namespace: canarytrace
+spec:
+  type: LoadBalancer
+  ports:
+  - name: https
+    port: 443
+    targetPort: 443
+  selector:
+    name: rum
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rum
+  namespace: canarytrace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: rum
+  template:
+    metadata:
+      labels:
+        name: rum
+    spec:
+      containers:
+      - name: rum
+        image: quay.io/canarytrace/rum:2.8.6
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000
+        env:
+        - name: ENV_PRINT
+          value: "allow"
+        - name: LABELS
+          value: "production"
+        - name: ELASTIC_CLUSTER
+          valueFrom:
+            secretKeyRef:
+              name: canarytrace-secret
+              key: elastic.cluster
+        - name: ELASTIC_HTTP_AUTH
+          valueFrom:
+            secretKeyRef:
+              name: canarytrace-secret
+              key: elastic.http.auth
+        - name: LICENSE
+          value: "XYZ"
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "100m"
+          limits:
+            memory: "800Mi"
+            cpu: "500m"
+      - name: nginx
+        image: nginx:1.23.1
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: rum-crt
+          readOnly: true
+          mountPath: "/ssl/"
+        - name: rum-nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: config
+          readOnly: true
+        ports:
+          - containerPort: 443
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "100m"
+          limits:
+            memory: "800Mi"
+            cpu: "500m"
+      volumes:
+        - name: canarytrace-secret
+          secret:
+            secretName: secret
+        - name: rum-crt
+          secret:
+            secretName: rum-crt
+        - name: rum-nginx-config
+          configMap:
+            name: rum-nginx-config
+            items:
+              - key: config
+                path: config
+```
+
 
 ### Log
 Logování RUM serveru poskytuje informace o dotazech na APIs.
