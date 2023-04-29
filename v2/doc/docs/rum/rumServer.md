@@ -124,30 +124,33 @@ Congratulations, the RUM Server is ready.
 ## Kubernetes
 The Kubernetes environment is a preferred option for running the RUM Server. You can use our example deployment or deployment with [NGINX](https://www.nginx.com/).
 
+To run the RUM Server, you need a Kubernetes deployment that includes the Docker image, resources, configurations, and additional parameters. We provide a deployment that you can use as is or modify to your preferences.
+
 ### Resources
 
-Requirements on resource will be higher if you will be perform a performance audit. Without performance audit will be perform availability check and download information about network trafic in a browser.
+The resource requirements depend on the amount of data that the RUM Client sends to the RUM Server, including the number of captured requests, user actions, events, and so on.
+If you have a big traffic, you can run the RUM Server in a more instancies.
 
-:::info Recommended requirements for performance audit
-- Loading web pages into a modern browser is not an easy task. The measurement results may be skewed by insufficient resources and therefore the following settings are recommended for performance audit.
-- Minimum 2 dedicated cores (4 recommended)
-- Minimum 2GB RAM (4-8GB recommended)
+
+:::info How many resources we need?
+- Start with the RUM Server on your minor pages or on an environment with lower visits.
+- Measure used resources by the RUM Server on your Kubernetes cluster. If the RUM Server use 85% resources, please run the second instance ensure optimal performance. Alternatively, you could optimize the amount of data arriving from the RUM Client.
 - [Resource units in Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
 :::
+
+To deploy the RUM Server on Kubernetes, there are several requirements that need to be met. Here is specifying the appropriate resource requests and limits.
 
 |Resources|CPU Request|CPU Limits|Memory requests|Memory limits|
 |-|-|-|-|-|
 |The RUM Server|`100m`|`500m`|`300Mi`|`800Mi`|
 |NGINX|`100m`|`500m`|`300Mi`|`800Mi`|
-|NGINXTotal|`200m`|`1000m`|`600Mi`|`1600Mi`|
+|Total|`200m`|`1000m`|`600Mi`|`1600Mi`|
 
 ### Deployment
 
-#### How to get a deployment scripts
-All deployment objects are distributed with Canarytrace docker images.
-:::tip
-All deployment objects distribute in the Docker image are always updated.
-:::
+All deployment objects necessary for running the RUM Server are packaged and distributed inside the Docker image. This includes any required configuration files, scripts, and dependencies needed for the deployment process.
+
+#### Download the deployments scripts from the Docker image
 
 ```bash title="Download deployments scripts from docker image"
 docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/rum:2.8.6 /opt/canary-rum/deployments/ /deployments/
@@ -162,14 +165,14 @@ drwxr-xr-x  4 rdpanek  staff   128B 29 dub 07:46 ..
 -rw-r--r--@ 1 rdpanek  staff   185B 28 dub 03:59 secret.yaml
 ```
 
-Which Kubernetes objects are used in this example?
+All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
 
-**Full example with NGINX**
-You can use all of these objects for production use of the RUM Server.
+#### Full example with NGINX
+All of these objects can be used in production for deploying and managing the RUM Server
 
 - `canarytrace-namespace.yaml` Create your own namespace in Kubernetes. All objects will be created in the namespace `canarytrace`.
-- `nginx-config.yaml` Configuration for NGINX.
-- `secret.yaml` Contains auth to the Elasticsearch and license.
+- `nginx-config.yaml` Configuration for the NGINX web server.
+- `secret.yaml` Contains auth to the Elasticsearch, as well as a license for using the RUM Server.
 - `deployment.yaml` The deployment includes Docker images, configurations for the RUM Server, and resource requirements. It also utilizes a LoadBalancer.
 
 **Without NGINX**
