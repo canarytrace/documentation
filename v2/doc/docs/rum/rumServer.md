@@ -235,15 +235,18 @@ The RUM Server logs all interesting information. This includes access to your pa
 
 ## Settings
 Nastavení a vlastnosti se provádí pomocí environment variables.
+All parameters of the RUM Server can be changed via environment variables directly in the `deployment.yaml` file.
 
-- `SERVER_PORT` RUM Server port, default is `3000`
-- `BODY_PARSER_LIMIT` limit for size of the payload from RUM Client, default is `10mb`
-- `MIN_QUEUE_SIZE` how much payloads stored in the RUM Server to be sent to Elasticsearch. Default is `2` . If you increase this queue size, RUM server will not sent data much frequently and size of bulk of data for store into Elasticsearch will be higher. 
-- `STORE_BULK_INTERVAL` how often will be data send into Elasticsearch, Default is: one per `10000` ms.
-- `ELASTIC_CLUSTER` path to your Elasticsearch cluster. e.g. `https://XYZ.eu-central-1.aws.cloud.es.io:9243`
-- `ELASTIC_HTTP_AUTH` username and password, e.g. `elastic:password`
-- `ELASTIC_TIMEOUT` default is `5000` ms
-- `ELASTIC_OBSERVABILITY` Print all Elasticsearch configuration and payloads. Default is `false`
-- `INDEX_PREFIX` Default is `c.` for Elasticsearch indices, e.g. `c.rum.metrics-*`
-- `MIN_PTIME` Print information about time spent for store data. Default is `300` ms
-- `LABELS`
+|Property|Default value|Description|
+|-|-|-|
+|`SERVER_PORT`|`3000`|The RUM Server port.|
+|`BODY_PARSER_LIMIT`|`10mb`|There is a limit for the size of the payload that can be received from the RUM Client.|
+|`MIN_QUEUE_SIZE`|`2`|This parameter determines the maximum number of payloads that can be stored in the RUM Server's queue to be sent to Elasticsearch. Increasing this queue size will reduce the frequency of data transmission to Elasticsearch, resulting in larger request with bulk data sizes being stored in Elasticsearch.|
+|`STORE_BULK_INTERVAL`|`10000`|The frequency of data transmission to Elasticsearch, in milliseconds.|
+|`ELASTIC_CLUSTER`||Path to your Elasticsearch cluster. e.g. `https://XYZ.eu-central-1.aws.cloud.es.io:9243`|
+|`ELASTIC_HTTP_AUTH`||The username and password required to access your Elasticsearch cluster, e.g. `elastic:password`.|
+|`ELASTIC_TIMEOUT`|`5000`|In ms.|
+|`ELASTIC_OBSERVABILITY`|`false`|To print all Elasticsearch configuration and payloads, set the `allow` value to activate this feature.|
+|`INDEX_PREFIX`|`c.`|Prefix for the name conventions used for Elasticsearch indices, such as `c.rum.metrics-*`.|
+|`LABELS`||You can add a string that will be included in the arrived payload from the RUM Client and added to the `.labels` property. E.g. `environment=development` or `app14`.|
+|`ENV_PRINT`|`false`|Print all environment variables. Set the `allow` value for activate this feature.|
