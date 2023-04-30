@@ -8,11 +8,9 @@ tags:
 ---
 
 > ### What you’ll learn
-- What is a RUM Client
-- How to implement the RUM Client
-- What data and metrics are collected
-- How to setting the RUM Client
-- How to tracking a user activities
+- What is a RUM Server?
+- How the RUM Server run?
+- How to set up the RUM Server?
 
 
 ## What is a RUM Server
