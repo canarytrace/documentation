@@ -168,247 +168,70 @@ drwxr-xr-x  4 rdpanek  staff   128B 29 dub 07:46 ..
 All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
 
 #### Full example with NGINX
-All of these objects can be used in production for deploying and managing the RUM Server
+All of these objects can be used in production for deploying and managing the RUM Server and deploy it in order:
 
-- `canarytrace-namespace.yaml` Create your own namespace in Kubernetes. All objects will be created in the namespace `canarytrace`.
-- `nginx-config.yaml` Configuration for the NGINX web server.
-- `secret.yaml` Contains auth to the Elasticsearch, as well as a license for using the RUM Server.
-- `deployment.yaml` The deployment includes Docker images, configurations for the RUM Server, and resource requirements. It also utilizes a LoadBalancer.
+1. `namespace.yaml` Create your own namespace in Kubernetes. All objects will be created in the namespace `canarytrace`.
+2. `nginx-config.yaml` Configuration for the NGINX web server.
+3. `secret.yaml` Contains auth to the Elasticsearch, as well as a license for using the RUM Server.
+4. `deployment.yaml` The deployment includes Docker images, configurations for the RUM Server, and resource requirements. It also utilizes a LoadBalancer.
+
+:::note
+Please open the `secret.yaml` and `deployment.yaml` files and make the necessary changes before deploying them to the Kubernetes cluster. Update the `secret.yaml` file with your correct secrets and in the `deployment.yaml` file, update the version of the RUM Server and its configuration according to your preferences.
+:::
+
+```bash title=Example
+# create namespace
+kubectl create -f namespace.yaml
+# create config for NGINX in canarytrace namespace
+kubectl -n canarytrace -f nginx-config.yaml
+# create secret in canarytrace namespace
+kubectl -n canarytrace -f secret.yaml
+# create deployment in canarytrace namespace
+kubectl -n canarytrace -f deployment.yaml
+```
+
+#### Check
+
+You have created four objects in your Kubernetes cluster. If everything is okay, you can verify this by checking the running Kubernetes pods and printing their status.
+
+Your `deployment.yaml` file contains definitions for both the RUM Server and NGINX. Therefore, when you deploy it in Kubernetes, it runs two Docker images. If the deployment is successful, the status of the `rum-****` [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) should be Running, and in the READY column, it should show 2 running Docker containers out of two in total.
+
+```bash title="Check your pod named rum"
+kubectl -n canarytrace get pods
+NAME                                         READY   STATUS      RESTARTS   AGE
+rum-7f48fd769c-dzrkp                         2/2     Running     0          14d
+```
+
 
 **Without NGINX**
 
 If you have your own NGINX or other solutions for providing HTTP2, you can use the deployment alone without NGINX.
-Remove the NGINX Docker image and configuration from deployment.yaml, and then deploy it.
-
-#### Deployment
-
-```yaml title="canarytrace-namespace.yaml"
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: canarytrace
-  labels:
-    name: canarytrace
-```
-
-```yaml title="nginx-config.yaml"
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: rum-nginx-config
-  namespace: canarytrace
-data:
-  config: |
-    events { }
-
-    http {
-      gzip on;
-      gzip_comp_level 6;
-      gzip_vary on;
-      gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
-
-      server {
-        listen 80;
-        server_name localhost;
-        return 301 https://localhost$request_uri;
-      }
-
-      keepalive_timeout  65;
-
-      server {
-        listen 443 ssl http2;
-        server_name localhost;
-
-        ssl_certificate /ssl/crt;
-        ssl_certificate_key /ssl/privkey;
-        
-        access_log /var/log/nginx/data-access.log combined;
-
-        location / {
-
-          # Tell client that this pre-flight info is valid for 20 days
-          if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Max-Age' 1728000;
-            add_header 'Content-Type' 'text/plain; charset=utf-8';
-            add_header 'Content-Length' 0;
-            add_header 'Access-Control-Allow-Origin' *;
-            add_header 'Access-Control-Allow-Headers' *;
-            return 204;
-          }
-
-          add_header 'Access-Control-Allow-Origin' *;
-          add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
-
-          proxy_read_timeout 2;
-          proxy_connect_timeout 2;
-          proxy_send_timeout 2;
-
-          proxy_pass http://localhost:3000/;
-          proxy_set_header X-Real-IP  $remote_addr;
-          proxy_set_header X-Forwarded-For $remote_addr;
-          proxy_set_header Host $host;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_redirect http://localhost:3000/ $scheme://$http_host/;
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_buffering off;
-        }
-      }
-    }
-```
-
-```yaml title="secret.yaml"
-apiVersion: v1
-kind: Secret
-metadata:
-  name: canarytrace-secret
-  namespace: canarytrace
-type: Opaque
-stringData:
-  elastic.cluster: ""
-  elastic.http.auth: "elastic:XYZ"
-  license: ""
-```
-
-:::tip Please always use a latest Docker image
-- List of Docker image tags https://quay.io/repository/canarytrace/rum?tab=tags
-:::
-
-```yaml title="deployment.yaml"
-apiVersion: v1
-kind: Service
-metadata:
-  name: rum
-  namespace: canarytrace
-spec:
-  type: LoadBalancer
-  ports:
-  - name: https
-    port: 443
-    targetPort: 443
-  selector:
-    name: rum
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: rum
-  namespace: canarytrace
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: rum
-  template:
-    metadata:
-      labels:
-        name: rum
-    spec:
-      containers:
-      - name: rum
-        image: quay.io/canarytrace/rum:2.8.6
-        imagePullPolicy: IfNotPresent
-        ports:
-          - containerPort: 3000
-        env:
-        - name: ENV_PRINT
-          value: "allow"
-        - name: LABELS
-          value: "production"
-        - name: ELASTIC_CLUSTER
-          valueFrom:
-            secretKeyRef:
-              name: canarytrace-secret
-              key: elastic.cluster
-        - name: ELASTIC_HTTP_AUTH
-          valueFrom:
-            secretKeyRef:
-              name: canarytrace-secret
-              key: elastic.http.auth
-        - name: LICENSE
-          value: "XYZ"
-        resources:
-          requests:
-            memory: "300Mi"
-            cpu: "100m"
-          limits:
-            memory: "800Mi"
-            cpu: "500m"
-      - name: nginx
-        image: nginx:1.23.1
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-        - name: rum-crt
-          readOnly: true
-          mountPath: "/ssl/"
-        - name: rum-nginx-config
-          mountPath: /etc/nginx/nginx.conf
-          subPath: config
-          readOnly: true
-        ports:
-          - containerPort: 443
-        resources:
-          requests:
-            memory: "300Mi"
-            cpu: "100m"
-          limits:
-            memory: "800Mi"
-            cpu: "500m"
-      volumes:
-        - name: canarytrace-secret
-          secret:
-            secretName: secret
-        - name: rum-crt
-          secret:
-            secretName: rum-crt
-        - name: rum-nginx-config
-          configMap:
-            name: rum-nginx-config
-            items:
-              - key: config
-                path: config
-```
+Remove the NGINX Docker image and configuration from `deployment.yaml`, and then deploy it.
 
 
 ### Log
-Logování RUM serveru poskytuje informace o dotazech na APIs.
+The RUM Server logs all interesting information. This includes access to your pages, endpoints, and the size of the payload received from the RUM Client.
 
-**Syntaxe posílání dat**
-`dateTime | method | endpoint | href | size` a informace o odesílání dat do Elasticsearch. 
+#### Syntax
+`dateTime | method | endpoint | href | size` and information about the queue with payloads received from the RUM Client and how they are sent to Elasticsearch.
 
-Example
-```bash
+```bash title="The RUM Server log"
 2023-04-02T10:39:28.191Z RUM server listening on port 3000
-2023-04-02T10:39:30.175Z POST /rum https://www.alza.cz/ 0.765kB
 2023-04-02T10:39:31.470Z GET /rum  
-2023-04-02T10:39:34.112Z POST /rum https://www.alza.cz/ 1.665kB
-2023-04-02T10:39:34.647Z POST /rum https://www.alza.cz/ 33.259kB
+2023-04-02T10:39:34.112Z POST /rum https://www.your-comain.com/companies 1.665kB
+2023-04-02T10:39:34.647Z POST /rum https://www.your-comain.com/companies 33.259kB
 2023-04-02T10:39:38.192Z Queue size: 1, send into Elasticsearch when size of queue is min. 2
-2023-04-02T10:39:39.147Z POST /rum https://www.alza.cz/ 1.862kB
-2023-04-02T10:39:39.660Z POST /rum https://www.alza.cz/ 33.357kB
-2023-04-02T10:39:44.148Z POST /rum https://www.alza.cz/ 1.195kB
-2023-04-02T10:39:44.670Z POST /rum https://www.alza.cz/ 32.982kB
+2023-04-02T10:39:39.147Z POST /rum https://www.your-comain.com/orders 1.862kB
+2023-04-02T10:39:39.660Z POST /rum https://www.your-comain.com/orders 33.357kB
+2023-04-02T10:39:44.148Z POST /rum https://www.your-comain.com/orders 1.195kB
+2023-04-02T10:39:44.670Z POST /rum https://www.your-comain.com/orders 32.982kB
 2023-04-02T10:39:48.193Z Queue size: 3, save data into Elasticsearch.
-2023-04-02T10:39:49.138Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:39:49.665Z POST /rum https://www.alza.cz/ 32.634kB
-2023-04-02T10:39:54.160Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:39:54.658Z POST /rum https://www.alza.cz/ 34.288kB
-2023-04-02T10:39:58.195Z Queue size: 2, save data into Elasticsearch.
-2023-04-02T10:39:59.145Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:39:59.666Z POST /rum https://www.alza.cz/ 44.387kB
-2023-04-02T10:40:04.172Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:40:04.677Z POST /rum https://www.alza.cz/ 6.846kB
-2023-04-02T10:40:08.196Z Queue size: 2, save data into Elasticsearch.
-2023-04-02T10:40:09.182Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:40:09.684Z POST /rum https://www.alza.cz/ 1.388kB
-2023-04-02T10:40:14.196Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:40:14.679Z POST /rum https://www.alza.cz/ 1.346kB
-2023-04-02T10:40:18.197Z Queue size: 2, save data into Elasticsearch.
-2023-04-02T10:40:19.179Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:40:19.687Z POST /rum https://www.alza.cz/ 1.374kB
-2023-04-02T10:40:24.234Z POST /rum https://www.alza.cz/ 1.197kB
-2023-04-02T10:40:24.688Z POST /rum https://www.alza.cz/ 1.387kB
+...
 ```
+
+- A line that starts with `GET` indicates that there is an initialization script on a certain page that calls the RUM Client.
+- A line that starts with `POST` indicates that the RUM Client is sending a payload to the RUM Server.
+- A line that starts with `Queue size...` provides information about the required size of the queue with payloads waiting to be sent to Elasticsearch, or it provides information, that queue with payload was stored in Elasticsearch.
 
 ## Settings
 Nastavení a vlastnosti se provádí pomocí environment variables.
