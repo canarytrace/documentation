@@ -373,9 +373,6 @@ Metrics are timelines with events triggered by a web browser, such as loading co
 ### Entries
 
 
-## Content Security Policy
-
-
 ## Settings
 
 You can insert the RUM client on every page you want to measure, and you can customize it differently for each page based on your preferences. Some pages may be more important than others, so you can name each page as you wish. For less important pages, you can collect only user visits, while for important pages, you can collect all data about user devices, activities, network traffic, etc.

@@ -72,6 +72,68 @@ The RUM Server expose a few REST API endpoints which are used by the RUM Client.
 One major advantage is that the data collected by the RUM Client and stored via the RUM Server remains in your environment. The RUM Server does not send the collected data to any undefined destination.
 ::: 
 
+## Content Security Policy
+
+Content Security Policy (CSP) is a security standard used to prevent various types of attacks, such as cross-site scripting (XSS) and data injection attacks, by allowing the website administrators to specify the trusted sources of content that the website can load or execute.
+
+The CSP works by defining a set of rules that dictate which types of resources are allowed to be loaded or executed by the website. This includes scripts, stylesheets, images, and other resources.
+
+CSP allows website administrators to specify a list of trusted sources, which can be used to whitelist trusted resources, as well as define policies for how the website handles various types of content, such as inline scripts or external resources. By using CSP, websites can protect themselves against a variety of security vulnerabilities, and help to ensure that their users are safe from attacks.
+
+:::tip You can learn more about
+- [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/API/Reporting_API)
+- [CSP: report-to](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
+- [CSP: report-uri](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-uri)
+:::
+
+If you define a Content Security Policy (CSP) for your website and a violation of the policy occurs, the web browser will detect the violation and log an error in the console. If you have configured a reporting endpoint, the browser will send a CSP report to the endpoint when a violation occurs. The reporting API for CSP violations is offered by the RUM Server.
+
+```javascript title="Stored report about CSP violation"
+// The caught and stored report is stored in the Elasticsearch index c.rum.csp.reporting-*.
+{
+  "age": 26336,
+  "body": {
+    "blockedURL": "inline",
+    "disposition": "report",
+    "documentURL": "https://your-website.com",
+    "effectiveDirective": "script-src-elem",
+    "lineNumber": 50,
+    "originalPolicy": "default-src http://localhost:3000/ style-src https://cdn.tailwindcss.com/ 'report-sample'; report-uri https://your-website.com/rum/report-uri; report-to reporting-api",
+    "referrer": "",
+    "sample": "document.addEventListener(\"scroll\", func",
+    "sourceFile": "https://your-website.com",
+    "statusCode": 200
+  },
+  "type": "csp-violation",
+  "url": "https://your-website.com",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+  "timestamp": "2023-04-14T06:02:31.015Z"
+}
+```
+
+CSP violation reports are collected by the RUM Server, not by the RUM Client. The web browser has its own mechanism for detecting violations and sending reports to the reporting API exposed by the RUM Server.
+
+### Reporting api setup
+
+By default, the RUM Server exposes two [endpoints](./rumServer#endpoints) for the reporting API.
+- `/rum/report-uri` is [deprecated](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-uri), but it is still used by some web browsers, including Firefox, Safari, Firefox for Android, and Safari for iOS, to report CSP violations.
+- `/rum/reporting-api` for CSP report from web browser: Google Chrome, Edge, Opera, Chrome Android, Opera Android, Samsung Internet and WebView Android. [Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to#browser_compatibility)
+
+To activate CSP and reporting, you must add two headers to your response on the main document or request.
+
+|Header|Descriptions|
+|-|-|
+|`Content-Security-Policy-Report-Only`|Add your CSP rules and endpoints to the reporting API. [Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)|
+|`report-to`|Add endpoint to the reporting API. [Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)|
+
+- Please use `Content-Security-Policy-Report-Only` instead of `Content-Security-Policy`. The first option allows reporting of violations, while the second option only enforces your rules without sending CSP reports.
+- Use both headers.
+
+```javascript title="Example"
+Content-Security-Policy-Report-Only: default-src http://localhost:3000/ style-src https://cdn.tailwindcss.com/ 'report-sample'; report-uri https://your-domain.com/rum/report-uri; report-to reporting-api
+Report-To: reporting-api="https://your-domain.com/rum/reporting-api"
+```
+
 ## Docker image
 The RUM Server is distributed via a Docker image, so you can deploy the RUM Server on various platforms such as localhost, cloud environments, Kubernetes, etc.
 - This approach enables run the RUM Server as a plug-and-play solution in just a few minutes.
