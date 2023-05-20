@@ -36,8 +36,8 @@ You may only see two indices, which means that the RUM server is not sending dat
 |-|-|
 |`c.rum.metrics-*`|Main index which contains metrics, user actions, attributes etc. This inde will be exists always.|
 |`c.rum.entries-*`|Secondary important index with entries (requests called from the browser) with their timing.|
-|`c.rum.csp.reporting-*`|Index for reporting Content Security Policy violation from the Google Chrome.|
-|`c.rum.csp.uri-*`|Index for reporting Content Security Policy violation from other browsers.|
+|`c.rum.csp.reporting-*`|An index of reports for Content Security Policy violations from Google Chrome, Edge, Opera, Chrome Android, Opera Android, Samsung Internet, and WebView Android.|
+|`c.rum.csp.uri-*`|An index of reports for Content Security Policy violations from Firefox, Safari, Firefox for Android, and Safari for iOS.|
 
 
 ## Settings
@@ -49,9 +49,19 @@ In this case, aggregation, searching, or saving of subsequent data may not work 
 The RUM server sends the payload in pieces depending on the data available from the RUM client. Therefore, the first payload stored in Elasticsearch may not have the full payload, but only a piece of it. If the RUM server sends a second or third payload to Elasticsearch with a different data schema, Elasticsearch may return an exception.
 
 
+Therefore we recommend settings mapping of the two indices `c.rum.metrics-*` and `c.rum.entries-*`
+
+:::tip
+- Learn more about [Index templates](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-templates.html)
+:::
+
+### Index template for `c.rum.metrics-*`
+
 ```javascript
-{
-	"index_patterns": ["{{elastic.index.prefix}}report-*"],
+curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.metrics' \
+--header 'Content-Type: application/json' \
+--data '{
+	"index_patterns": ["c.rum.metrics-*"],
 	"settings": {
 		"number_of_shards": 2,
 		"number_of_replicas": 1,
@@ -61,78 +71,540 @@ The RUM server sends the payload in pieces depending on the data available from 
 	"version": 2,
 	"mappings": {
 		"properties": {
-			"uuid": {
-				"type": "keyword"
-			},
-			"uuidAction": {
-				"type": "keyword"
-			},
-			"title": {
-				"type": "keyword"
-			},
-			"fullTitle": {
-				"type": "keyword"
-			},
-			"parent": {
-				"type": "keyword"
-			},
-			"baseUrl": {
-				"type": "keyword"
-			},
-			"errMessage": {
-				"type": "text",
-				"fields": {
-					"raw": {
-						"type": "keyword"
+			"attributes": {
+				"properties": {
+					"browser": {
+						"type": "keyword",
+						"ignore_above": 256
+					},
+					"browserVersion": {
+						"type": "keyword",
+						"ignore_above": 256
+					},
+					"connection": {
+						"properties": {
+							"downlink": {
+								"type": "short"
+							},
+							"effectiveType": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"rtt": {
+								"type": "integer"
+							},
+							"saveData": {
+								"type": "boolean"
+							}
+						}
+					},
+					"device": {
+						"properties": {
+							"charging": {
+								"type": "boolean"
+							},
+							"cpu": {
+								"type": "integer"
+							},
+							"memory": {
+								"type": "integer"
+							},
+							"type": {
+								"type": "keyword"
+							},
+							"platform": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							}
+						}
+					},
+					"labels": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"ua": {
+						"type": "keyword",
+						"ignore_above": 256
+					},
+					"uaParser": {
+						"type": "text"
 					}
 				}
 			},
-			"errType": {
-				"type": "keyword"
+			"audits": {
+				"properties": {
+					"crossOriginIsolated": {
+						"type": "boolean"
+					}
+				}
 			},
-			"event": {
-				"type": "keyword"
+			"metrics": {
+				"properties": {
+					"cls": {
+						"type": "long"
+					},
+					"domComplete": {
+						"type": "long"
+					},
+					"domContentLoadedDuration": {
+						"type": "long"
+					},
+					"domContentLoadedEventEnd": {
+						"type": "long"
+					},
+					"domContentLoadedEventStart": {
+						"type": "long"
+					},
+					"duration": {
+						"type": "long"
+					},
+					"fcp": {
+						"type": "long"
+					},
+					"fid": {
+						"type": "long"
+					},
+					"fp": {
+						"type": "long"
+					},
+					"inp": {
+						"type": "long"
+					},
+					"lcp": {
+						"type": "long"
+					},
+					"renderDuration": {
+						"type": "long"
+					},
+					"responseTime": {
+						"type": "long"
+					},
+					"ttfb": {
+						"type": "long"
+					}
+				}
 			},
-			"sequence": {
-				"type": "short"
-			},
-			"passed": {
-				"type": "boolean"
-			},
-			"sessionId": {
-				"type": "keyword"
-			},
-			"spec": {
-				"type": "keyword"
-			},
-			"attachments": {
-				"type": "keyword"
-			},
-			"testStepDuration": {
-				"type": "long"
-			},
-			"totalRunnerDuration": {
-				"type": "long"
-			},
-			"totalTestStepsDuration": {
-				"type": "long"
+			"session": {
+				"properties": {
+					"duration": {
+						"type": "long"
+					},
+					"id": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"lastLoop": {
+						"type": "long"
+					},
+					"startTime": {
+						"type": "long"
+					}
+				}
 			},
 			"timestamp": {
 				"type": "date"
 			},
-			"capabilities": {
+			"view": {
 				"properties": {
-					"browserName": {
-						"type": "keyword"
-					},
-					"goog:chromeOptions": {
+					"actions": {
 						"properties": {
-							"args": {
-								"type": "keyword"
+							"name": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"pointerType": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"target": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"timeStamp": {
+								"type": "float"
+							},
+							"type": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							}
+						}
+					},
+					"fps": {
+						"properties": {
+							"fps": {
+								"type": "long"
+							},
+							"timeStamp": {
+								"type": "long"
+							}
+						}
+					},
+					"hash": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"host": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"hostname": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"href": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"id": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"longTasks": {
+						"properties": {
+							"duration": {
+								"type": "long"
+							},
+							"name": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"startTime": {
+								"type": "long"
+							}
+						}
+					},
+					"marks": {
+						"properties": {
+							"detail": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"name": {
+								"type": "text",
+								"fields": {
+									"keyword": {
+										"type": "keyword",
+										"ignore_above": 256
+									}
+								}
+							},
+							"startTime": {
+								"type": "long"
+							}
+						}
+					},
+					"origin": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"pathname": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"port": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"protocol": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"referer": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"resourceTypes": {
+						"properties": {
+							"css": {
+								"properties": {
+									"count": {
+										"type": "long"
+									}
+								}
+							},
+							"fetch": {
+								"properties": {
+									"count": {
+										"type": "long"
+									}
+								}
+							},
+							"image": {
+								"properties": {
+									"count": {
+										"type": "long"
+									}
+								}
+							},
+							"other": {
+								"properties": {
+									"count": {
+										"type": "long"
+									}
+								}
+							}
+						}
+					},
+					"search": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"startTime": {
+						"type": "long"
+					},
+					"usedMemory": {
+						"type": "long"
+					},
+					"visibility": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
 							}
 						}
 					}
 				}
+			}
+		}
+	}
+}'
+```
+
+### Index template for `c.rum.entries-*`
+
+```javascript
+curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.entries' \
+--header 'Content-Type: application/json' \
+--data '{
+	"index_patterns": ["c.rum.entries-*"],
+	"settings": {
+		"number_of_shards": 2,
+		"number_of_replicas": 1,
+		"index.translog.durability": "async",
+		"index.refresh_interval": "10s"
+	},
+	"version": 1,
+	"mappings": {
+		"properties": {
+			"connectEnd": {
+				"type": "float"
+			},
+			"connectStart": {
+				"type": "float"
+			},
+			"decodedBodySize": {
+				"type": "integer"
+			},
+			"domComplete": {
+				"type": "float"
+			},
+			"domContentLoadedEventEnd": {
+				"type": "float"
+			},
+			"domContentLoadedEventStart": {
+				"type": "float"
+			},
+			"domInteractive": {
+				"type": "float"
+			},
+			"domainLookupEnd": {
+				"type": "float"
+			},
+			"domainLookupStart": {
+				"type": "float"
+			},
+			"duration": {
+				"type": "float"
+			},
+			"encodedBodySize": {
+				"type": "integer"
+			},
+			"sequence": {
+				"type": "long"
+			},
+			"entryType": {
+				"type": "keyword"
+			},
+			"fetchStart": {
+				"type": "float"
+			},
+			"initiatorType": {
+				"type": "keyword"
+			},
+			"loadEventEnd": {
+				"type": "float"
+			},
+			"loadEventStart": {
+				"type": "float"
+			},
+			"name": {
+				"type": "keyword"
+			},
+			"nextHopProtocol": {
+				"type": "keyword"
+			},
+			"redirectCount": {
+				"type": "short"
+			},
+			"redirectEnd": {
+				"type": "float"
+			},
+			"redirectStart": {
+				"type": "float"
+			},
+			"requestStart": {
+				"type": "float"
+			},
+			"responseEnd": {
+				"type": "float"
+			},
+			"responseStart": {
+				"type": "float"
+			},
+			"responseTime": {
+				"type": "float"
+			},
+			"ttfb": {
+				"type": "float"
+			},
+			"secureConnectionStart": {
+				"type": "float"
+			},
+			"startTime": {
+				"type": "float"
+			},
+			"toJSON": {
+				"type": "object"
+			},
+			"transferSize": {
+				"type": "long"
+			},
+			"type": {
+				"type": "keyword"
+			},
+			"unloadEventEnd": {
+				"type": "float"
+			},
+			"unloadEventStart": {
+				"type": "float"
+			},
+			"workerStart": {
+				"type": "float"
+			},
+			"timestamp": {
+				"type": "date"
+			},
+			"transactionId": {
+				"type": "keyword"
+			},
+            "spanId": {
+				"type": "keyword"
 			},
 			"labels": {
 				"type": "text",
@@ -144,8 +616,16 @@ The RUM server sends the payload in pieces depending on the data available from 
 			}
 		}
 	}
-}
+}'
 ```
 
 
-## Development environment
+## Test environment
+
+```bash title="Run Elasticsearch and Kibana in a Docker"
+# Run Elasticsearch
+docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_SETTING_XPACK_SECURITY_ENABLED=false -e ES_SETTING_ACTION_DESTRUCTIVE__REQUIRES__NAME=false docker.elastic.co/elasticsearch/elasticsearch:8.7.1 bin/elasticsearch -Enetwork.host=0.0.0.0
+
+# Run Kibana
+docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:8.7.1
+```
