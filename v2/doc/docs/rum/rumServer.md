@@ -39,18 +39,8 @@ NGINX provides HTTP/2, compresses communication, and adds custom headers such as
 To continue reading this documentation, we assume that your Elasticsearch and Kibana are set up and ready to use.
 - Elasticsearch documentation https://www.elastic.co/guide/en/elasticsearch/reference/8.7/index.html
 - You can use a Elasticsearch cloud service https://www.elastic.co/cloud
+- Canarytrace RUM is designed to work with the latest versions of Elasticsearch and Kibana, specifically version 8 and higher.
 - Alternatively, you can run Elasticsearch and Kibana on your local machine for testing purposes.
-```bash title="Run Elasticsearch and Kibana in a Docker"
-# Run Elasticsearch
-docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_SETTING_XPACK_SECURITY_ENABLED=false -e ES_SETTING_ACTION_DESTRUCTIVE__REQUIRES__NAME=false docker.elastic.co/elasticsearch/elasticsearch:8.4.1 bin/elasticsearch -Enetwork.host=0.0.0.0
-
-# Run Kibana
-docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:8.4.1
-```
-:::
-
-:::info
-Canarytrace RUM is designed to work with the latest versions of Elasticsearch and Kibana, specifically version 8 and higher.
 :::
 
 ### Endpoints

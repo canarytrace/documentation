@@ -40,7 +40,7 @@ You may only see two indices, which means that the RUM server is not sending dat
 |`c.rum.csp.uri-*`|An index of reports for Content Security Policy violations from Firefox, Safari, Firefox for Android, and Safari for iOS.|
 
 
-## Settings
+## Settings and index templates
 
 If the RUM Server send the first data to Elasticsearch without any settings, Elasticsearch will create a new index and store data. For functions such as aggregation, indexing, and search, Elasticsearch needs data to be indexed. Elasticsearch tries, by default, to identify the type of data arrived from the RUM Server by analyzing which data are strings, numbers, booleans, etc., and which data will be used for aggregating.
 
@@ -55,7 +55,7 @@ Therefore we recommend settings mapping of the two indices `c.rum.metrics-*` and
 - Learn more about [Index templates](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-templates.html)
 :::
 
-### Index template for `c.rum.metrics-*`
+### `c.rum.metrics-*`
 
 ```javascript
 curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.metrics' \
@@ -476,7 +476,7 @@ curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.m
 }'
 ```
 
-### Index template for `c.rum.entries-*`
+### `c.rum.entries-*`
 
 ```javascript
 curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.entries' \
