@@ -12,11 +12,10 @@ tags:
 - How the RUM Server run?
 - How to set up the RUM Server?
 
-
 ## What is a RUM Server
-The RUM Server is a backend part of the Canarytrace RUM (Real User Monitoring). It is responsible for receiving and processing data from the RUM Clients and storing that data in Elasticsearch for later analysis.
+The RUM Server is a backend part of the Canarytrace RUM (Real User Monitoring). It is responsible for receiving and processing data from the RUM Clients and storing that data in [Elasticsearch](./elasticsearch.md) for later analysis.
 
-Once the RUM Server is up, you can configure the RUM Client to start sending data to the RUM Server. This typically involves adding a small piece of code to your website or application that initializes the RUM client and configures it to send data to the server.
+Once the RUM Server is up, you can configure the [RUM Client](./rumClient.md) to start sending data to the RUM Server. This typically involves adding a small piece of code to your website or application that initializes the [RUM client](./rumClient.md) and configures it to send data to the server.
 
 ## Architecture
 
@@ -25,15 +24,18 @@ Here is an example of how the Canarytrace RUM can be used in a production enviro
 
 ### RUM Docker image
 
-The RUM Server is distributed via a Docker image and exposes several API endpoints, including one for getting the RUM Client JavaScript, another for receiving data from the RUM Client, and additional endpoints for the browser CSP reporter. The RUM Server stores incoming data to an Elasticsearch database.
+The RUM Server is distributed via a Docker image and exposes several API endpoints, including one for getting the [RUM Client](./rumClient.md) JavaScript, another for receiving data from the [RUM Client](./rumClient.md), and additional endpoints for the browser CSP reporter. The RUM Server stores incoming data to an [Elasticsearch](./elasticsearch.md) database.
 
 ### NGINX Docker image
 
-NGINX provides HTTP/2, compresses communication, and adds custom headers such as Access-Control-Allow-Origin. It also handles the OPTIONS method in case of a pre-flight request. You do not need to use it if you have your own solutions for exposing APIs to a frontend.
+[NGINX](https://www.nginx.com/) provides HTTP/2, compresses communication, and adds custom headers such as Access-Control-Allow-Origin. It also handles the OPTIONS method in case of a pre-flight request. You do not need to use it if you have your own solutions for exposing APIs to a frontend.
+
+### Services
+Services provide a load balancer between PODs running the RUM Server and expose an external IP for public use. You can run one or more PODs with the RUM Server depending on the traffic your pages receive. Running more PODs with the RUM Server can collect more data from the [RUM Client](./rumClient.md).
 
 ### Elasticsearch and Kibana
 
-[Elasticsearch](https://www.elastic.co/elasticsearch/) is a database for the data collected by Canarytrace RUM. [Kibana](https://www.elastic.co/kibana/) is a web interface for viewing and searching this data in Elasticsearch, as well as for creating graphs, visualizations, and dashboards.
+[Elasticsearch](https://www.elastic.co/elasticsearch/) is a database for the data collected by Canarytrace RUM. [Kibana](https://www.elastic.co/kibana/) is a web interface for viewing and searching this data in [Elasticsearch](./elasticsearch.md), as well as for creating graphs, visualizations, and dashboards.
 
 :::info
 To continue reading this documentation, we assume that your Elasticsearch and Kibana are set up and ready to use.
@@ -49,8 +51,8 @@ The RUM Server expose a few REST API endpoints which are used by the RUM Client.
 
 |Method|Endpoint|Description|
 |-|-|-|
-|`GET`|`/rum`|The init script calls this endpoint to obtain the RUM client|
-|`POST`|`/rum`|The RUM client sends payloads to this endpoint.|
+|`GET`|`/rum`|The init script calls this endpoint to obtain the [RUM Client](./rumClient.md)|
+|`POST`|`/rum`|The [RUM Client](./rumClient.md) sends payloads to this endpoint.|
 |`GET`|`/health`|This endpoint returns `Canarytrace RUM is ready!` if the RUM server is ready to use.|
 |`POST`|`/rum/report-uri`|Endpoint for sending the Content Security Policy report from older browsers.|
 |`POST`|`/rum/reporting-api`|Endpoint for sending the Content Security Policy Report from Google Chrome.|
@@ -58,7 +60,7 @@ The RUM Server expose a few REST API endpoints which are used by the RUM Client.
 
 ### Security
 
-:::info Data is kept within your system and not shared with third-party destinations
+:::info Data is kept within your infrastructure and not shared with third-party destinations
 One major advantage is that the data collected by the RUM Client and stored via the RUM Server remains in your environment. The RUM Server does not send the collected data to any undefined destination.
 ::: 
 
@@ -77,6 +79,8 @@ CSP allows website administrators to specify a list of trusted sources, which ca
 :::
 
 If you define a Content Security Policy (CSP) for your website and a violation of the policy occurs, the web browser will detect the violation and log an error in the console. If you have configured a reporting endpoint, the browser will send a CSP report to the endpoint when a violation occurs. The reporting API for CSP violations is offered by the RUM Server.
+
+The [RUM Client](./rumClient.md) does not set up or manage CSP / that is entirely up to the web browser.
 
 ```javascript title="Stored report about CSP violation"
 // The caught and stored report is stored in the Elasticsearch index c.rum.csp.reporting-*.
@@ -124,6 +128,9 @@ Content-Security-Policy-Report-Only: default-src http://localhost:3000/ style-sr
 Report-To: reporting-api="https://your-domain.com/rum/reporting-api"
 ```
 
+These endpoints `https://your-domain.com/rum/report-uri` and `https://your-domain.com/rum/reporting-api` are exposed by the RUM Server on your domain.
+
+
 ## Docker image
 The RUM Server is distributed via a Docker image, so you can deploy the RUM Server on various platforms such as localhost, cloud environments, Kubernetes, etc.
 - This approach enables run the RUM Server as a plug-and-play solution in just a few minutes.
@@ -137,13 +144,14 @@ The RUM Server is distributed via a Docker image, so you can deploy the RUM Serv
 - Download the Docker image containing the RUM Server.
 - Please do not permanently use our Docker repository with RUM Server for your production environments. 
 - Always push downloaded the Docker image with the RUM Server to your Docker repository.
+
 ```bash
-docker pull quay.io/canarytrace/rum:2.8.6
+docker pull quay.io/canarytrace/rum:latest
 ```
 
 - Run and test on your localhost.
 ```bash title="Run Docker image"
-docker run --name rum --rm -it -p 3000:3000 -e ELASTIC_CLUSTER -e ELASTIC_HTTP_AUTH -e LICENSE quay.io/canarytrace/rum:2.8.6
+docker run --name rum --rm -it -p 3000:3000 -e ELASTIC_CLUSTER -e ELASTIC_HTTP_AUTH -e LICENSE quay.io/canarytrace/rum:latest
 ```
 - `ELASTIC_CLUSTER` e.g. http://localhost:9200
 - `ELASTIC_HTTP_AUTH` e.g. username:password. Remove if isn't used.
@@ -203,7 +211,7 @@ All deployment objects necessary for running the RUM Server are packaged and dis
 #### Download the deployments scripts from the Docker image
 
 ```bash title="Download deployments scripts from docker image"
-docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/rum:2.8.6 /opt/canary-rum/deployments/ /deployments/
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/rum:latest /opt/canary-rum/deployments/ /deployments/
 ```
 
 ```bash title="Print directory deployments"

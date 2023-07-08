@@ -9,7 +9,6 @@ const config = {
   title: 'Canarytrace',
   tagline: 'Guardians of your web business',
   favicon: 'img/favicon.ico',
-
   // Set the production url of your site here
   url: 'https://canarytrace.com',
   // Set the /<baseUrl>/ pathname under which your site is served
