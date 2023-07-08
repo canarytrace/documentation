@@ -180,19 +180,20 @@ Congratulations, the RUM Server is ready.
 
 
 ## Kubernetes
-The Kubernetes environment is a preferred option for running the RUM Server. You can use our example deployment or deployment with [NGINX](https://www.nginx.com/).
+The [Kubernetes](https://kubernetes.io/) environment is a preferred option for running the RUM Server. You can use our example deployment or deployment with [NGINX](https://www.nginx.com/).
 
 To run the RUM Server, you need a Kubernetes deployment that includes the Docker image, resources, configurations, and additional parameters. We provide a deployment that you can use as is or modify to your preferences.
 
 ### Resources
 
-The resource requirements depend on the amount of data that the RUM Client sends to the RUM Server, including the number of captured requests, user actions, events, and so on.
+The resource requirements depend on the amount of data that the [RUM Client](./rumClient.md) sends to the RUM Server, including the number of captured requests, user actions, events, and so on.
 If you have a big traffic, you can run the RUM Server in a more instancies.
 
 
 :::info How many resources we need?
 - Start with the RUM Server on your minor pages or on an environment with lower visits.
-- Measure used resources by the RUM Server on your Kubernetes cluster. If the RUM Server use 85% resources, please run the second instance ensure optimal performance. Alternatively, you could optimize the amount of data arriving from the RUM Client.
+- Measure used resources by the RUM Server on your Kubernetes cluster. If the RUM Server use 85% resources, please run the second instance ensure optimal performance. Alternatively, you could optimize the amount of data arriving from the [RUM Client](./rumClient.md).
+- If you have significantly more visits than the RUM Server can process, your frontend will not be affected.
 - [Resource units in Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
 :::
 
@@ -200,9 +201,9 @@ To deploy the RUM Server on Kubernetes, there are several requirements that need
 
 |Resources|CPU Request|CPU Limits|Memory requests|Memory limits|
 |-|-|-|-|-|
-|The RUM Server|`100m`|`500m`|`300Mi`|`800Mi`|
+|One instance of the RUM Server|`800m`|`1500m`|`800Mi`|`1000Mi`|
 |NGINX|`100m`|`500m`|`300Mi`|`800Mi`|
-|Total|`200m`|`1000m`|`600Mi`|`1600Mi`|
+|Total|`900m`|`2000m`|`1100Mi`|`1800Mi`|
 
 ### Deployment
 
@@ -216,11 +217,10 @@ docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytr
 
 ```bash title="Print directory deployments"
 ls -lah deployments 
-drwxr-xr-x@ 5 rdpanek  staff   160B 28 dub 03:59 .
-drwxr-xr-x  4 rdpanek  staff   128B 29 dub 07:46 ..
--rw-r--r--@ 1 rdpanek  staff   2,0K 28 dub 03:59 deployment.yaml
--rw-r--r--@ 1 rdpanek  staff   2,0K 28 dub 03:59 nginx-config.yaml
--rw-r--r--@ 1 rdpanek  staff   185B 28 dub 03:59 secret.yaml
+-rw-r--r--@ 1 rdp  staff   2,6K  8 čvc 11:43 deployment.yaml
+-rw-r--r--@ 1 rdp  staff    92B  8 čvc 11:43 namespace.yaml
+-rw-r--r--@ 1 rdp  staff   2,0K  8 čvc 11:43 nginx-config.yaml
+-rw-r--r--@ 1 rdp  staff   189B  8 čvc 11:43 secret.yaml
 ```
 
 All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
@@ -228,10 +228,10 @@ All Kubernetes objects can be deployed using the `kubectl -n` command, followed 
 #### Full example with NGINX
 All of these objects can be used in production for deploying and managing the RUM Server and deploy it in order:
 
-1. `namespace.yaml` Create your own namespace in Kubernetes. All objects will be created in the namespace `canarytrace`.
-2. `nginx-config.yaml` Configuration for the NGINX web server.
-3. `secret.yaml` Contains auth to the Elasticsearch, as well as a license for using the RUM Server.
-4. `deployment.yaml` The deployment includes Docker images, configurations for the RUM Server, and resource requirements. It also utilizes a LoadBalancer.
+1. `namespace.yaml` Create your own [namespace in Kubernetes](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/). All objects will be created in the namespace `canarytrace`.
+2. `nginx-config.yaml` [Configuration for the NGINX](https://www.plesk.com/blog/various/nginx-configuration-guide/) web server.
+3. `secret.yaml` [Secret](https://kubernetes.io/docs/concepts/configuration/secret/) contains auth to the [Elasticsearch](./rumClient.md), as well as a license for using the RUM Server.
+4. `deployment.yaml` The deployment includes [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) Docker images, configurations for the RUM Server, NGINX, [Services](https://kubernetes.io/docs/concepts/services-networking/service/), and resource requirements. It also utilizes a LoadBalancer.
 
 :::note
 Please open the `secret.yaml` and `deployment.yaml` files and make the necessary changes before deploying them to the Kubernetes cluster. Update the `secret.yaml` file with your correct secrets and in the `deployment.yaml` file, update the version of the RUM Server and its configuration according to your preferences.
@@ -257,14 +257,28 @@ Your `deployment.yaml` file contains definitions for both the RUM Server and NGI
 ```bash title="Check your pod named rum"
 kubectl -n canarytrace get pods
 NAME                                         READY   STATUS      RESTARTS   AGE
-rum-7f48fd769c-dzrkp                         2/2     Running     0          14d
+rum-app-5c8b9d76fb-5dqnz                     1/1     Running     0          18h
+rum-app-5c8b9d76fb-fz7dv                     1/1     Running     0          18h
+rum-nginx-66cb99d7f4-nhjnk                   1/1     Running     0          20h
 ```
 
+The deployment created two pods with the RUM Server and one pod with NGINX.
+
+```bash title="Check your services"
+kubectl -n canarytrace get svc
+NAME            TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)         AGE
+nginx-service   LoadBalancer   10.245.158.80   <your-ip-address> 443:31207/TCP   20h
+rum-service     ClusterIP      10.245.165.92   <none>            3000/TCP        20h
+```
+
+The deployment created two services: one to handle requests and redirect them to NGINX, serving as a reverse proxy, and a second service functioning as a group of PODs with the RUM Server.
+
+If your deployment is successful, you can open your favorite browser and navigate to https://your-ip-address/health, which will return: Canarytrace RUM is ready.
 
 **Without NGINX**
 
 If you have your own NGINX or other solutions for providing HTTP2, you can use the deployment alone without NGINX.
-Remove the NGINX Docker image and configuration from `deployment.yaml`, and then deploy it.
+Remove the NGINX Docker image, NGINX configuration and `nginx-service` service from `deployment.yaml`, and then deploy it.
 
 
 ### Log
