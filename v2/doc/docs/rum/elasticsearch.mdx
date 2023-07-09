@@ -14,30 +14,30 @@ tags:
 
 
 ## Why Elasticsearch
-The RUM Server store data arrived from the RUM Client into [Elasticsearch](https://www.elastic.co/elasticsearch/). We use the Elasticsearch as a database for analyze data from the Canarytrace Synthetic and from the Canarytrace RUM. 
+The [RUM Server](./rumServer.md) store data arrived from the [RUM Client](./rumClient.md) into [Elasticsearch](https://www.elastic.co/elasticsearch/). We use the Elasticsearch as a database for analyze data from the Canarytrace Synthetic and from the Canarytrace RUM. 
 
-Elasticsearch is a timeseries database that contains indices with data from the RUM Server. Each index is analogous to a table in a relationship database, such as MSSQL. The naming convention is `c.index-name.*`, where `c.` is the namespace for data from the Canarytrace toolset, such as Canarytrace RUM. `index-name` contains data for the domain, for example, `c.metrics.*` contains metrics, and the asterisk represents the date because a new index is created every day with the date in its name."
+Elasticsearch is a timeseries database that contains indices with data from the [RUM Server](./rumServer.md). Each index is analogous to a table in a relationship database, such as MSSQL. The naming convention is `c.index-name.*`, where `c.` is the namespace for data from the Canarytrace toolset, such as Canarytrace RUM. `index-name` contains data for the domain, for example, `c.metrics.*` contains metrics, and the asterisk represents the date because a new index is created every day with the date in its name."
 
 :::caution Before the first use
-Please read about the [Settings](./Elasticsearch#setup) of the indices.
+Please read about the [Settings](./Elasticsearch#settings-and-index-templates) of the indices.
 :::
 
 ## Indices
 
-The RUM server sends data to Elasticsearch into to four indices. If an index does not exist, Elasticsearch will automatically create it when the RUM server sends the first set of data.
+The [RUM server](./rumServer.md) sends data to Elasticsearch into to four indices. If an index does not exist, Elasticsearch will automatically create it when the RUM server sends the first set of data.
 
 :::note
-You may only see two indices, which means that the RUM server is not sending data from the CSP reporter. You should always see the `c.rum.metrics-*` index, and if it is not present, it could indicate that the RUM server is not working or that the RUM client is not sending any data.
+You may only see two indices, which means that the RUM server is not sending data from the [CSP reporter](./rumServer#content-security-policy). You should always see the `c.rum.metrics-*` index, and if it is not present, it could indicate that the RUM server is not working or that the RUM client is not sending any data.
 :::
 
 ### List of indices
 
 |Indices name|Description|
 |-|-|
-|`c.rum.metrics-*`|Main index which contains metrics, user actions, attributes etc. This inde will be exists always.|
+|`c.rum.metrics-*`|Main index which contains metrics, user actions, attributes etc. This index will be exists always.|
 |`c.rum.entries-*`|Secondary important index with entries (requests called from the browser) with their timing.|
-|`c.rum.csp.reporting-*`|An index of reports for Content Security Policy violations from Google Chrome, Edge, Opera, Chrome Android, Opera Android, Samsung Internet, and WebView Android.|
-|`c.rum.csp.uri-*`|An index of reports for Content Security Policy violations from Firefox, Safari, Firefox for Android, and Safari for iOS.|
+|`c.rum.csp.reporting-*`|An index of reports for [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) violations from Google Chrome, Edge, Opera, Chrome Android, Opera Android, Samsung Internet, and WebView Android.|
+|`c.rum.csp.uri-*`|An index of reports for [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) violations from Firefox, Safari, Firefox for Android, and Safari for iOS.|
 
 
 ## Settings and index templates
@@ -622,6 +622,8 @@ curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.e
 
 ## Test environment
 
+You can use Docker images to run Elasticsearch and Kibana for testing and initial familiarization.
+
 ```bash title="Run Elasticsearch and Kibana in a Docker"
 # Run Elasticsearch
 docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_SETTING_XPACK_SECURITY_ENABLED=false -e ES_SETTING_ACTION_DESTRUCTIVE__REQUIRES__NAME=false docker.elastic.co/elasticsearch/elasticsearch:8.7.1 bin/elasticsearch -Enetwork.host=0.0.0.0
@@ -629,3 +631,8 @@ docker run --name elasticsearch --net canary --rm -d -p 9200:9200 -p 9300:9300 -
 # Run Kibana
 docker run --name kibana --net canary --rm -d -p 5601:5601 docker.elastic.co/kibana/kibana:8.7.1
 ```
+
+
+import FeedbackFooter from '../../src/components/FeedbackFooter';
+
+<FeedbackFooter />
