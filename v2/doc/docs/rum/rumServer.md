@@ -240,6 +240,8 @@ Please open the `secret.yaml` and `deployment.yaml` files and make the necessary
 ```bash title=Example
 # create namespace
 kubectl create -f namespace.yaml
+# deploy your cert for NGINX
+kubectl -n canarytrace create secret generic rum-crt --from-file=crt=./certificates/your-cert.crt --from-file=privkey=./certificates/your_privkey.pem 
 # create config for NGINX in canarytrace namespace
 kubectl -n canarytrace -f nginx-config.yaml
 # create secret in canarytrace namespace
@@ -282,10 +284,10 @@ Remove the NGINX Docker image, NGINX configuration and `nginx-service` service f
 
 
 ### Log
-The RUM Server logs all interesting information. This includes access to your pages, endpoints, and the size of the payload received from the RUM Client.
+The RUM Server logs all interesting information. This includes access to your pages, endpoints, and the size of the payload received from the [RUM Client](./rumClient.md).
 
 #### Syntax
-`dateTime | method | endpoint | href | size` and information about the queue with payloads received from the RUM Client and how they are sent to Elasticsearch.
+`dateTime | method | endpoint | href | size` and information about the queue with payloads received from the [RUM Client](./rumClient.md) and how they are sent to [Elasticsearch](./elasticsearch.md).
 
 ```bash title="The RUM Server log"
 2023-04-02T10:39:28.191Z RUM server listening on port 3000
