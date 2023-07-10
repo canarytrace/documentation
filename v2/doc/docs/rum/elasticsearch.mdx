@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 description: Elasticsearch
 title: Elasticsearch
 tags:
@@ -14,9 +14,9 @@ tags:
 
 
 ## Why Elasticsearch
-The [RUM Server](./rumServer.md) store data arrived from the [RUM Client](./rumClient.md) into [Elasticsearch](https://www.elastic.co/elasticsearch/). We use the Elasticsearch as a database for analyze data from the Canarytrace Synthetic and from the Canarytrace RUM. 
+The [RUM Server](./rumServer) store data arrived from the [RUM Client](./rumClient.mdx) into [Elasticsearch](https://www.elastic.co/elasticsearch/). We use the Elasticsearch as a database for analyze data from the Canarytrace Synthetic and from the Canarytrace RUM. 
 
-Elasticsearch is a timeseries database that contains indices with data from the [RUM Server](./rumServer.md). Each index is analogous to a table in a relationship database, such as MSSQL. The naming convention is `c.index-name.*`, where `c.` is the namespace for data from the Canarytrace toolset, such as Canarytrace RUM. `index-name` contains data for the domain, for example, `c.metrics.*` contains metrics, and the asterisk represents the date because a new index is created every day with the date in its name."
+Elasticsearch is a timeseries database that contains indices with data from the [RUM Server](./rumServer). Each index is analogous to a table in a relationship database, such as MSSQL. The naming convention is `c.index-name.*`, where `c.` is the namespace for data from the Canarytrace toolset, such as Canarytrace RUM. `index-name` contains data for the domain, for example, `c.metrics.*` contains metrics, and the asterisk represents the date because a new index is created every day with the date in its name."
 
 :::caution Before the first use
 Please read about the [Settings](./Elasticsearch#settings-and-index-templates) of the indices.
@@ -24,7 +24,7 @@ Please read about the [Settings](./Elasticsearch#settings-and-index-templates) o
 
 ## Indices
 
-The [RUM server](./rumServer.md) sends data to Elasticsearch into to four indices. If an index does not exist, Elasticsearch will automatically create it when the RUM server sends the first set of data.
+The [RUM server](./rumServer) sends data to Elasticsearch into to four indices. If an index does not exist, Elasticsearch will automatically create it when the RUM server sends the first set of data.
 
 :::note
 You may only see two indices, which means that the RUM server is not sending data from the [CSP reporter](./rumServer#content-security-policy). You should always see the `c.rum.metrics-*` index, and if it is not present, it could indicate that the RUM server is not working or that the RUM client is not sending any data.
@@ -618,6 +618,65 @@ curl --location --request PUT 'https://your-elasticsearch:9243/_template/c.rum.e
 	}
 }'
 ```
+
+## How to read the data
+
+Canarytrace RUM stores data into Elasticsearch, and you have two options for reading and interpreting the data.
+
+### REST API
+The Elasticsearch REST API is available at `https://your-elasticsearch:9243`, and you can use it to query data from all indices.
+
+#### Examples
+
+Get all records where `view.fps.fps` is lower than 30. This indicates that the page was not rendering smoothly on the client's device.
+
+```bash title="Get all fps lower than 30"
+curl -XGET "https://your-elasticsearch:9243/c.rum.metrics-*/_search" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+  "_source": ["view.fps.fps","view.fps.timeStamp", "timestamp", "attributes.labels"],
+  "query": { 
+    "bool": { 
+      "must": [
+        {
+          "range": {
+            "view.fps.fps": {
+              "lte": "30"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [{ "timestamp": "desc" }]
+}'
+```
+
+or, get all records where the user clicked the button with the `search-input` action on the view with the ID `basket`. This refers to the page named basket.
+
+
+```bash title="Get all records for view with id 'basket' and action 'search-input'"
+GET c.rum.metrics-*/_search
+{
+  "_source": ["view.actions.name","timestamp", "attributes.labels"],
+  "query": { 
+    "bool": { 
+      "must": [
+        { "match": { "view.actions.name":"search-input"}},
+        { "match": { "view.id":"basket"}}
+      ]
+    }
+  },
+  "sort": [{ "timestamp": "desc" }]
+}
+```
+
+and many more... 
+
+You can use these results to create your own alerting or automation in your other tools or systems, e.g., Zabbix or Jira.
+
+### Kibana
+
+Second option is to use [Kibana](./kibana), which is a visualization tool for Elasticsearch. You can use it to create dashboards, alerts, and other visualizations.
 
 
 ## Test environment
