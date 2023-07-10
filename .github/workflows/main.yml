@@ -42,4 +42,4 @@ jobs:
           username: ${{ secrets.FTP_USER_PIPELINE }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: './build/'
-          server-dir: 'v2doc/'
+          server-dir: '/public_html/v2doc/'
