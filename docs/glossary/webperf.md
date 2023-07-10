@@ -128,6 +128,18 @@ More information about [CLS](https://web.dev/cls/).
 
 A frame rate is the speed at which a browser can recalculate, layout, and paint content on the display. A lower Frames Per Second (FPS) rate indicates issues with the main thread and performance problems on the web page, such as long-running [Long Task](./webperf#longtask) due to complex JavaScript.
 
+:::tip
+Certainly, when evaluating FPS (Frames Per Second) in Canarytrace, it's important to remember that the metric isn't solely influenced by the web application's performance. The monitor's refresh rate plays a critical role in the number of frames per second it can display. As a developer or tester, while optimizing your application's performance, also consider the target device's refresh rate, as it directly affects the perceived fluidity of your application.
+:::
+
+Consider a scenario where you have two systems: one with a display having a refresh rate of 120 Hz and the other with a refresh rate of 60 Hz. The web application running on both systems could theoretically generate 120 FPS, but the display with a 60 Hz refresh rate will only be able to show up to 60 FPS, regardless of the system's CPU or GPU capabilities. On the other hand, the system with a 120 Hz display would be capable of displaying up to 120 FPS, resulting in a smoother visual experience. The difference in FPS between the two systems is due to the refresh rate of their displays, not the performance of their CPUs or GPUs.
+
+:::tip
+A second point of interest is that the FPS can decrease and even drop to 0 when a page is loading in a hidden state or when a visible page is switched to a hidden state.
+:::
+
+So minimal acceptable FPS si 30-40 FPS, but if is FPS betwen 60 - 120 is not important.
+
 #### Recommendations for FPS Optimization
 
 Optimizing Frames Per Second (FPS) is crucial for a smooth and responsive performance of a web page or application. Here are some recommendations:

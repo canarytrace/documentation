@@ -68,16 +68,36 @@ Please read [Kibana documentation](https://www.elastic.co/what-is/kibana)
 
 
 ## Visualizations
-All data stored in Elasticsearch is organized in a timeline, so Kibana visualizations also display data on a timeline.
+All data stored in Elasticsearch is organized in a timeline, so Kibana visualizations also display data on a timeline. In the visualizations below, you can see the timeline on the x-axis, while the y-axis displays the values of the metrics. The timeline can be adjusted to display data for a specific time period, such as the last 24 hours, last 7 days, or last 30 days. You can also zoom in on a specific time period by selecting a portion of the timeline. The data displayed in the visualizations will be updated to reflect the selected time period.
+
+The data displayed in these visualizations is not truncated; what the [RUM Client](./rumClient) sends to the [RUM Server](./rumServer) is stored in Elasticsearch and displayed in Kibana.
 
 ### FPS and long tasks
-One of the most useful visualizations for identifying a website's performance on a real device involves Frames Per Second (FPS) and Long Task visualizations.
+One of the most useful visualizations for identifying a website's performance on a real device involves [Frames Per Second (FPS)](../glossary/webperf#fps) and [Long Task](../glossary/webperf#long-task) visualizations.
+
+For your is important to know, that your web application run smoothly on the client device. The FPS and Long Tasks visualizations can help you identify performance issues that may be causing your web application to run slowly.
+
+Lower is better.
+
 ![FPS and longtasks graph](./assets/kibana-fps-longtasks.webp)
 
+This graph illustrates the FPS and Long Tasks for a specific page. The FPS is represented both as a line graph (actual) and as a bar graph (minimal), while the Long Tasks are depicted as red circles, each indicating the count of Long Tasks. FPS is measured in frames per second, whereas Long Tasks are measured in milliseconds. Both FPS and Long Tasks are plotted on a timeline, enabling a view of their changes over time.
+
+This graph aggregate fields `view.fps.fps` and `view.longTasks.duration > 50` from `c.rum.metrics-*` index.
+
+
+
 ### Active sessions
+Easy view on active users which are currently work with your web application.
 ![Active sessions graph](./assets/kibana-active-sessions.webp)
 
-### WebPerf metrics
+This graph aggregates all unique `session.id` fields from the `c.rum.metrics-*` index, as each user has a unique session id. If a user is inactive for a long period, the session is closed and a new one is created. Read more about the [session lifecycle](../rum/rumClient#session).
+
+### Metrics
+This graphs show all important metrics on timeline and you can follow the relationships between them. For more information about metrics in this graph, please read our glossary [webperf](../glossary/webperf).
+
+These graphs display all important metrics on a timeline, allowing you to track the relationships between them. For more information about the metrics in these graphs, please refer to our [web performance glossary](../glossary/webperf).
+
 ![Metrics graph](./assets/kibana-metrics.webp)
 
 ### Hero Elements
