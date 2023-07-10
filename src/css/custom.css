@@ -1,11 +1,8 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @format
- */
+@tailwind base;
+@tailwind components;
+*/
+@tailwind utilities;
 
 /**
  * Any CSS included here will be global. The classic template
@@ -15,130 +12,46 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #272727;
-  --ifm-color-primary-dark: #232323;
-  --ifm-color-primary-darker: #212121;
-  --ifm-color-primary-darkest: #1b1b1b;
-  --ifm-color-primary-light: #2b2b2b;
-  --ifm-color-primary-lighter: #2d2d2d;
-  --ifm-color-primary-lightest: #333333;
+  --ifm-color-primary: #f1b24f;
+  --ifm-color-primary-dark: #eea737;
+  --ifm-color-primary-darker: #d88e1a;
+  --ifm-color-primary-darkest: #b67104;
+  --ifm-color-primary-light: #f0b963;
+  --ifm-color-primary-lighter: #efc17a;
+  --ifm-color-primary-lightest: #eecc95;
+  --ifm-navbar-background-color: #f8fafc;
+  --ifm-heading-color: #374251;
+  --ifm-navbar-link-color: #121826;
+  --ifm-menu-color-background-active: #f8fafc;
   --ifm-code-font-size: 95%;
-  --ifm-font-color-base-inverse: #e3e3e3;
-  --ifm-color-white: #e3e3e3;
-  --ifm-hero-background-color: #272727;
-  --ifm-background-surface-color: #272727;
-  --ifm-navbar-background-color: #e3e3e3; 
-  --ifm-navbar-link-hover-color: #0a0a0a;
-  --ifm-navbar-link-color: #3b3b3b;
+  --aa-primary-color-rgb: 18, 24, 38 !important;
+  --aa-muted-color-rgb: 18, 24, 38 !important;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
-
-.docusaurus-highlight-code-line {
-  background-color: #e3e3e3;
+.code-block-error-line {
+  background-color: #ff000020;
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid #ff000080;
 }
-
-.header-twitter-link:hover,
-.header-chat-link:hover
-{
-  opacity: 0.6;
-}
-
-.header-twitter-link:before,
-.header-chat-link:before
-{
-  content: '';
-  width: 18px;
-  height: 18px;
-  display: flex;
-  opacity: 0.8;
-}
-
-.header-chat-link:before {
-  background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 225 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-1 20.2-.2 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z'/%3E%3C/svg%3E") no-repeat;
-}
-
-.header-twitter-link:before {
-  background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z'/%3E%3C/svg%3E") no-repeat;
-}
-
-.docusaurus-highlight-code-line {
-  background-color: rgb(91, 88, 72);
-  display: block;
-  margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0 var(--ifm-pre-padding);
-}
-
-.canaryBadge {
-  background-color:white;
-  border: var(--ifm-badge-border-width) solid #0c65a5;
-  border-radius: var(--ifm-badge-border-radius);
-  color: #0c65a5;
-  display: inline-block;
-  font-size: 75%;
-  font-weight: var(--ifm-font-weight-bold);
-  line-height: 1;
-  padding: var(--ifm-badge-padding-vertical) var(--ifm-badge-padding-horizontal);
-  vertical-align: baseline;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-.screencast {
-  width: 100%;
-}
-
-hr {
-  border-color: #e6e6e6;
-  border-style: dotted;
-  border-width: 0,1 px;
-  box-sizing: content-box;
-  margin: var(--ifm-hr-margin-vertical) 0;
-  overflow: hidden;
-}
-
-.diagramIframe {
-  border:none;
-}
-
-.featuresTopic_src-pages- {
-  color: rgb(72, 72, 75);
-}
-
-input.email {
-  background-color:white;
-  border: var(--ifm-badge-border-width) solid #0c65a5;
-  border-radius: var(--ifm-badge-border-radius);
-  color: rgb(72, 72, 75);
-  display: inline-block;
-  font-size: 95%;
-  font-weight: var(--ifm-font-weight-bold);
-  line-height: 1;
-  padding: var(--ifm-badge-padding-vertical) var(--ifm-badge-padding-horizontal);
-  vertical-align: baseline;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  width: 400px;
-}
-
-.contactus {
-  background-color:white;
-  border: var(--ifm-badge-border-width) solid #0c65a5;
-  border-radius: var(--ifm-badge-border-radius);
-  color: rgb(72, 72, 75);
-  display: inline-block;
-  font-size: 95%;
-  font-weight: var(--ifm-font-weight-bold);
-  line-height: 1;
-  padding: var(--ifm-badge-padding-vertical) var(--ifm-badge-padding-horizontal);
-  vertical-align: baseline;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  width: 300px;
-}
-
-input, select, button {
-  float:left;
-  height: 40px;
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #eecc95;
+  --ifm-color-primary-dark: #eea737;
+  --ifm-color-primary-darker: #d88e1a;
+  --ifm-color-primary-darkest: #b67104;
+  --ifm-color-primary-light: #f0b963;
+  --ifm-color-primary-lighter: #efc17a;
+  --ifm-color-primary-lightest: #eecc95;
+  --ifm-navbar-background-color: #21222b;
+  --ifm-heading-color: #f8fafc;
+  --ifm-navbar-link-color: #f8fafc;
+  --ifm-menu-color-background-active: #755b32;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --aa-primary-color-rgb: 241, 178, 79 !important; 
+  --aa-muted-color-rgb: 248, 250, 252 !important;
+  --aa-background-color-rgb: 33, 34, 42 !important;
+  /* Color which works with dark mode syntax highlighting theme */
+  --docusaurus-highlighted-code-line-bg: rgb(255 251 235);
 }

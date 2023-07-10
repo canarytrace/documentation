@@ -1,41 +1,41 @@
-# Canarytrace documentation, issues and questions 
-Canarytrace Smoke Pro is a Plug’n'Play stack for testing and monitoring your web application from user perspective.
+# Website
 
-![GitHub issues](https://img.shields.io/github/issues/canarytrace/documentation?color=red&style=flat-square) ![GitHub closed issues](https://img.shields.io/github/issues-closed/canarytrace/documentation?color=green&style=flat-square) 
----
-
-- [Canarytrace Documentation](https://canarytrace.com/)
-- Do you found an error or have you a question, please create [issue](https://github.com/canarytrace/documentation/issues/new/choose), Thanks 👍
-
-
----
-
-## Download and build offline documentation
-
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
-
-**Sources**
-
-- [uiDraw](https://undraw.co/search)
+This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
 ### Installation
 
 ```
-$ npm install
+$ yarn
 ```
 
 ### Local Development
 
 ```
-$ npm run start
+$ yarn start
 ```
 
-This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
 ### Build
 
 ```
-$ npm run build
+$ yarn build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+### Deployment
+
+Using SSH:
+
+```
+$ USE_SSH=true yarn deploy
+```
+
+Not using SSH:
+
+```
+$ GIT_USER=<Your GitHub username> yarn deploy
+```
+
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
