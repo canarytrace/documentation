@@ -4,7 +4,7 @@ name: Build & Push documentation
 on:
   push:
     branches: 
-    - master
+    - develop
 jobs:
 
   job1:
@@ -42,4 +42,4 @@ jobs:
           username: ${{ secrets.FTP_USER_PIPELINE }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: './build/'
-          server-dir: 'www/'
+          server-dir: 'v2doc/'
