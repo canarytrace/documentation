@@ -8,9 +8,9 @@ tags:
 ---
 
 > ### What you’ll learn
-- What is a Elasticsearch?
-- How the RUM Server run?
-- How to set up the RUM Server?
+- Why Elasticsearch?
+- Settings and Indices?
+- Reading Data?
 
 
 ## Why Elasticsearch
@@ -672,7 +672,10 @@ GET c.rum.metrics-*/_search
 
 and many more... 
 
-You can use these results to create your own alerting or automation in your other tools or systems, e.g., Zabbix or Jira.
+The fields `view.actions.name`, `view.id`, `view.fps.fps`, and others are stored in the indices `c.rum.metrics-*` and `c.rum.transactions-*`. You can find more information about the data structure in the [RUM Client](./rumClient) documentation.
+
+- You can view data and labels in [Kibana](./kibana).
+- You can use these results to create your own alerting or automation in your other tools or systems, e.g., Zabbix or Jira.
 
 ### Kibana
 
