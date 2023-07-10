@@ -7,12 +7,109 @@ tags:
   - glossary
 ---
 
+:::info
+Web Performance is, metrics is...
+
+:::
+
 ## Metrics
 
 
 ### INP
 
-INP je experimentální user-centrik metrika, která hodnotí odezvu. INP sleduje odezvu všech nebo většiny interakcí, které uživatel se stránkou provedl. Nízké INP znamená, že stránka je schopna rychle reagovat na všechnu nebo většinu uživatelských interakcí.
-Úkolem INP není měřit všechny interakce ( například. načtení ze sítě, aktualizace UI z jiných async operací), ale blokování dalšího paintingu. Jinak řečeno doba od které uživatel zahájil interakci do vykreslení dalšího snímku.
-https://web.dev/inp/
-Jaký je rozdíl mezi FID https://web.dev/inp/#how-is-inp-different-from-first-input-delay-fid
+INP is an experimental user-centric metric that evaluates response. INP tracks the response of all or most of the interactions that a user has made with a page. A low INP means that the page is able to quickly respond to all or most user interactions.
+The task of INP is not to measure all interactions (e.g., network loading, UI updates from other async operations), but to block further painting. In other words, the time from when the user initiated the interaction to the rendering of the next frame.
+
+#### What's in an interaction?
+
+![What is an interaction](https://web-dev.imgix.net/image/jL3OLOhcWUQDnR4XjewLBx4e3PC3/Ng0j5yaGYZX9Bm3VQ70c.svg)
+The life of an interaction. An input delay occurs until event handlers begin running, which may be caused by factors such as long tasks on the main thread. The interaction's event handlers then run, and a delay occurs before the next frame is presented.
+
+
+#### Recommended INP Values
+
+- **Good:** INP less than 200 milliseconds.
+- **Needs Improvement:** INP between 200 and 500 milliseconds.
+- **Poor:** INP greater than 300 milliseconds.
+
+#### Recommendations for INP Optimization
+
+Interactivity is a key part of user experience, and optimizing for Interactivity and Navigation Profiling (INP) can greatly improve the perceived performance of your web page or application. Here are some recommendations:
+
+- **Minimize JavaScript Execution:** Reducing the time spent executing JavaScript can greatly improve INP. This could be achieved through various strategies, such as reducing the size of JavaScript files, deferring non-critical JavaScript until after the first load, or running scripts asynchronously.
+
+- **Optimize Main Thread Usage:** The browser's main thread is responsible for most rendering tasks as well as parsing and executing JavaScript. Long tasks can block this thread, making your page unresponsive. Identifying and optimizing these tasks can improve INP.
+
+- **Code Splitting:** This technique allows you to split your code into smaller chunks which can then be loaded on demand. This can help in reducing the amount of code that needs to be parsed and executed at once, improving INP.
+
+- **Use Web Workers for Background Tasks:** Web Workers allow you to run JavaScript in the background on a separate thread. This can be used to offload non-UI tasks from the main thread, improving INP.
+
+- **Optimize Resource Loading:** Prioritize loading of critical resources and defer non-critical ones. This includes optimizing your network requests, using efficient loading strategies like lazy loading, and implementing effective caching strategies.
+
+- **Listen to User Interactions Passively:** In JavaScript, you can set up event listeners that either block the main thread until they finish running, or are set up as "passive" to run without blocking. Whenever possible, set your event listeners to be passive to improve INP.
+
+As always, the best strategy can depend on the specifics of your webpage or application. Regular monitoring and performance profiling can help you quickly identify and address any issues affecting your INP.
+
+- More information https://web.dev/inp/
+- What is the difference between FID and INP? https://web.dev/inp/#how-is-inp-different-from-first-input-delay-fid
+
+
+### FPS
+
+A frame rate is the speed at which a browser can recalculate, layout, and paint content on the display. A lower Frames Per Second (FPS) rate indicates issues with the main thread and performance problems on the web page, such as long-running [Long Task](./webperf#longtask) due to complex JavaScript.
+
+#### Recommendations for FPS Optimization
+
+Optimizing Frames Per Second (FPS) is crucial for a smooth and responsive performance of a web page or application. Here are some recommendations:
+
+- **Minimize Complex Computations:** If your application is performing complex calculations or data processing, try to minimize or perform them asynchronously to avoid blocking the main thread.
+
+- **Avoid Redundant Rendering:** Not every state or data change requires a re-render. Use techniques like memoization to improve performance and reduce unnecessary renders.
+
+- **Optimize CSS and JavaScript:** Unnecessarily complex CSS or JavaScript can cause the browser to do more work, potentially leading to lower FPS. Optimize your code and minimize the use of demanding CSS properties, like complex transitions or animations.
+
+- **Leverage Hardware Acceleration:** Some CSS properties, like transforms and opacity, can be hardware-accelerated. This can result in improved FPS.
+
+- **Throttling and Debouncing:** These techniques can be helpful in limiting the number of tasks generated by events like scrolling or browser window resizing, improving FPS.
+
+- **Use Request Animation Frame for Animations:** Instead of setting an interval or timer for animations, use requestAnimationFrame. This function is optimized for the browser and allows for smoother animations.
+
+- **Monitoring and Profiling:** Use tools like Chrome DevTools to monitor and profile your application's performance, helping to identify areas that require optimization.
+
+Remember, the right strategy depends on the specific scenario and the type of application you are building. Regular monitoring and testing of your application's performance can be helpful in quickly identifying and addressing performance issues.
+
+- [Analyze frames per seconds](https://developer.chrome.com/docs/devtools/performance/#analyze_frames_per_second) in your browser.
+
+
+### Long Task
+
+As a page loads or a user interacts with an application, the browser assigns tasks to the User Interface (UI) thread for processing. If any task takes longer than 50ms, the page will appear choppy, and typing into an input field will not be smooth.
+
+#### Long tasks exceeding 50ms cause problems such as:
+
+- Delayed Time to Interactive (TTI).
+- High/variable input latency.
+- High/variable event handling latency.
+- Jank in animations and scrolling.
+
+#### A long task is any uninterrupted period when the main UI thread is busy for 50ms or more. Common examples include:
+
+- Long-running event handlers.
+- Expensive reflows and other re-rendering tasks.
+- Work that the browser performs between different event loop rotations that exceed 50ms.
+
+#### Recommendations for Long Task Optimization
+
+- **Task Splitting:** Complex computational tasks often result in long tasks. If possible, try to break these tasks down into smaller, less demanding ones.
+
+- **Asynchronous Processing:** Some tasks can be executed asynchronously. This prevents the blocking of the main thread, allowing the page to respond to user actions while the task is underway.
+
+- **Web Workers:** Web Workers are scripts that run in the background without blocking the main webpage thread. They can be helpful in executing demanding tasks without affecting page performance.
+
+- **Code Optimization:** Try to avoid complex and demanding operations where possible. Optimizing JavaScript and CSS can help reduce task processing time.
+
+- **Throttling and Debouncing:** These techniques can help limit the number of tasks generated by events such as scrolling or browser window resizing.
+
+- **Performance Monitoring Tools:** Tools like Chrome DevTools can help identify long tasks and provide suggestions for performance improvements.
+
+Remember, the right strategy depends on the specific scenario and the types of tasks you are handling.

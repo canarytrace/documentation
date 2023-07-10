@@ -13,7 +13,20 @@ tags:
 - What interpret graphs?
 - How to build custom visualizations?
 
-**Hlavní RUM Vizualizace**
+
+## What is a Kibana?
+
+[Kibana](https://www.elastic.co/what-is/kibana) Kibana is an free and open frontend application that sits on top of the Elastic Stack, providing search and data visualization capabilities for data indexed in [Elasticsearch](./elasticsearch).
+
+We utilize Kibana as a powerful data visualization tool to interpret and analyze the data acquired from the [RUM Server](./rumServer) and stored in [Elasticsearch](./elasticsearch). Kibana enables us to gain valuable insights into the vitality and potential issues with the web pages monitored by Canarytrace on real client devices. By leveraging the capabilities of Kibana, we can effectively visualize and explore the data collected from Canarytrace RUM to identify performance patterns, diagnose problems, and make informed decisions for optimizing web performance.
+
+:::info
+
+Please read [Kibana documentation](https://www.elastic.co/what-is/kibana)
+
+:::
+
+## Hlavní RUM Vizualizace
 - [x] Aktuálně aktivních session
 - [x] Počet návštěv
 - [x] 95%th LoadTime aktuální a trend
@@ -54,43 +67,46 @@ tags:
 - Resource timings
 
 
-# Visualizations
+## Visualizations
+All data stored in Elasticsearch is organized in a timeline, so Kibana visualizations also display data on a timeline.
+
+### FPS and long tasks
+One of the most useful visualizations for identifying a website's performance on a real device involves Frames Per Second (FPS) and Long Task visualizations.
+![FPS and longtasks graph](./assets/kibana-fps-longtasks.webp)
+
+### Active sessions
+![Active sessions graph](./assets/kibana-active-sessions.webp)
+
+### WebPerf metrics
+![Metrics graph](./assets/kibana-metrics.webp)
+
+### Hero Elements
+![Hero Elements graph](./assets/kibana-hero-elements.webp)
+
+### Actions
+![Actions graph](./assets/kibana-actions.webp)
+
+### Visits pages
+![Visits pages table](./assets/kiabana-visits-pages.webp)
+
+### Resources
+![Resources graph](./assets/kiabana-visits-pages.webp)
 
 
-![FPS and longtasks graph](./assets/kibana-fps-longtasks.png)
+![Resources table](./assets/kibana-resources-table.webp)
+
+### Browser console
+![Browser console](./assets/kibana-browser-console.webp)
+
+### Content Security Policy
+![CSP](./assets/kibana-csp-graph.webp)
 
 
-![Active sessions graph](./assets/kibana-active-sessions.png)
+![CSP](./assets/kibana-csp-table.webp)
 
 
-![Metrics graph](./assets/kibana-metrics.png)
-
-
-![Hero Elements graph](./assets/kibana-hero-elements.png)
-
-
-![Actions graph](./assets/kibana-actions.png)
-
-
-![Visits pages table](./assets/kiabana-visits-pages.png)
-
-
-![Resources graph](./assets/kiabana-visits-pages.png)
-
-
-![Resources table](./assets/kibana-resources-table.png)
-
-
-![Browser console](./assets/kibana-browser-console.png)
-
-
-![CSP](./assets/kibana-csp-graph.png)
-
-
-![CSP](./assets/kibana-csp-table.png)
-
-
-![Mini graph](./assets/kibana-mini-graphs.png)
+### Others
+![Mini graph](./assets/kibana-mini-graphs.webp)
 
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
