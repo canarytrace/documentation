@@ -122,7 +122,12 @@ It is very useful to know which buttons and other parts of the your web are most
 This graph shows `max(view.actions.timeStamp)` from the `c.rum.metrics-*` index. More information about Actions can be found in the [RUM Client](./rumClient#actions) documentation.
 
 ### Visits pages
+
+This graph helps you to identify the most visited pages, how long users stay on the page, and how smoothly and quickly the pages load. It provides an instant look at the most important pages.
+
 ![Visits pages table](./assets/kiabana-visits-pages.webp)
+
+This graph aggregates fields `view.id`, `unique_count(view.startTime)`, [`percentile(session.duration, percentile=95)`](./rumClient#session), [`percentile(view.fps.fps, percentile=95)`](../glossary/webperf#fps) and [`percentile(metrics.lcp, percentile=95)`](../glossary/webperf#lcp) from the `c.rum.metrics-*` index.
 
 ### Resources
 ![Resources graph](./assets/kiabana-visits-pages.webp)
