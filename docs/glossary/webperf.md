@@ -16,6 +16,50 @@ All of these key metrics are collected by Canarytrace, making it an effective to
 
 :::
 
+#### Website Performance Metrics: From Navigation Start to Fully Interactive
+
+- **Navigation Start:** This marks the point at which the user or client initiates the navigation process. It's the beginning of the performance timeline.
+
+- **Redirect Time:** The duration it takes for any HTTP redirects to happen - if any. Redirection can affect the loading speed of a webpage.
+
+- **App Cache:** This refers to the time spent retrieving the webpage's files from the cache if they're stored there. Cached resources can load more quickly.
+
+- **DNS Lookup:** The duration it takes to perform the DNS lookup. During this process, the browser translates the domain name to an IP address.
+
+- **TCP Connection:** This refers to the time taken for the TCP handshake, which establishes the network connection between the user's browser and the server.
+
+- **SSL Handshake:** If applicable, this is the time it takes to perform an SSL handshake, which establishes a secure connection if the website uses HTTPS.
+
+- **Time to First Byte (TTFB):** This measures the time from the user or client making an HTTP request to the first byte of the page being received by the client's browser.
+
+- **Server Response Time:** This is the time taken by the server to respond to the browser's request. It starts with the request sent by the browser and ends with the response start from the server.
+
+- **First Paint (FP) / First Contentful Paint (FCP):** This marks the time when the browser first renders any content from the DOM such as text, images, or SVG elements.
+
+- **DOM Loading:** This point occurs when the browser has finished parsing all of the HTML and the Document Object Model (DOM) construction is complete.
+
+- **DOM Interactive:** This marks the point at which the DOM is fully constructed, but still loading sub-resources like images, CSS, etc.
+
+- **JavaScript Parse and Compile Time:** This measures the time the browser spends parsing and compiling JavaScript code. High JS parse/compile times can slow down your site.
+
+- **DOM Complete:** This is the moment when the webpage and all its subresources are completely loaded.
+
+- **Largest Contentful Paint (LCP):** This is the time it takes for the largest content element in the viewport to become visible. It could be an image, block of text, or other block-level element.
+
+- **Time to First Interactive (TTFI):** This is the time when the page becomes capable of responding to user input in a meaningful yet potentially unstable way.
+
+- **Time to Consistently Interactive (TTCI):** This is the point when the page can consistently respond to user input without any noticeable delay.
+
+- **Max Potential First Input Delay (Max Potential FID):** This estimates the maximum duration a user might experience before the page responds to user input.
+
+- **Time to Interactive (TTI):** This measures the time from navigation start to the point where the page is fully interactive and can respond reliably to all user input.
+
+- **Total Blocking Time (TBT):** This measures the total time that the main thread was blocked, preventing it from responding to user input.
+
+- **First Input Delay (FID):** This is the time from when a user first interacts with a page to the time when the browser is able to respond to that interaction.
+
+This sequence of events might vary depending on the size of your files, the order they're loaded in, the capabilities of the device viewing the page, network conditions, and more. Always follow the current recommendations and best practices concerning web performance metrics.
+
 ## Core Web Vitals
 
 Core Web Vitals are the subset of Web Vitals that apply to all web pages, should be measured by all site owners, and will be surfaced across all Google tools. Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome.
@@ -124,6 +168,62 @@ More information about [CLS](https://web.dev/cls/).
 
 ## Metrics
 
+### FCP
+
+The First Contentful Paint (FCP) metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen. For this metric, "content" refers to text, images (including background images), `<svg>` elements, or non-white `<canvas>` elements.
+
+#### Recommendations for FCP Optimization
+
+Optimizing FCP can enhance the user experience on a website, as fast content loading can help retain users on the page. Here are some strategies for improving FCP:
+
+- **Optimize Resources:** Reducing the size of CSS and JavaScript files can shorten loading times. This might involve minifying code, removing unnecessary code, or applying lazy loading techniques.
+
+- **Leverage Caching:** Setting up caching for static resources (like images, CSS, JavaScript) can significantly speed up page loads.
+
+- **Implement Compression:** By compressing text files, you can reduce the size of files that need to be loaded, cutting down the time needed for rendering.
+
+- **Server Optimization:** A quick server response is key to fast page loading. You can optimize your server by increasing its capacity, adjusting its configuration, or using a Content Delivery Network (CDN) for faster content delivery.
+
+- **Use HTTP/2 or HTTP/3:** These newer versions of the HTTP protocol allow for more efficient loading of resources.
+
+Remember, FCP is just one of many page performance metrics. It's also essential to track other metrics, such as [TTI](./webperf#tti), [LCP](./webperf#fcp), and [CLS](./webperf#cls), to get a complete picture of page performance.
+
+More information about [FPC](https://web.dev/fcp/).
+
+### TTI
+
+TTI, or Time to Interactive, is a web page performance metric that measures the time from when the page starts loading to when it becomes fully interactive and capable of responding to user interactions in real-time.
+
+"Fully interactive" means that most or all elements on the page, including JavaScript and other third-party content, have loaded and are ready to interact with the user. This metric is crucial as it can indicate when the page is "user-ready," which can be significantly later than when the page is visually loaded.
+
+Determining exactly when a web page is "ready" for user interaction can be complex as it depends on various factors, including how the page is constructed and what elements it contains.
+
+One way a browser might gauge this is by monitoring the loading and processing state of JavaScript and other page resources. For example, if a page is still loading or processing JavaScript, this could suggest that it is not fully interactive yet.
+
+For the Time to Interactive (TTI) metric, a page is considered "interactive" at the point when:
+
+- The page displays useful content (measured by the First Contentful Paint metric).
+- Event handlers are registered for most visible page elements.
+- The page responds to user interactions within 50 milliseconds.
+
+The calculation of the TTI metric also involves the concept of a "quiet window" - a minimum of a 5-second period when both network and main thread activity is low. This is because even though a page might theoretically be "interactive" at a certain point, if it's still intensively loading or processing resources, the actual response to user interactions may be slow.
+
+![TTI](https://web-dev.imgix.net/image/admin/WZM0n4aXah67lEyZugOT.svg)
+
+These definitions and metrics help developers better understand and measure how quickly a page becomes useful and responsive to users, which is key to providing a quality user experience.
+
+#### Recommendations for FCP Optimization
+
+- Deferring or asynchronously loading JavaScript and other third-party content that isn't essential for the initial page view.
+- Server optimization for faster response.
+- Utilizing a web worker to perform tasks in the background and keep the main thread free for user interactions.
+- Optimizing the resources of the page so that they are loaded and processed as efficiently as possible.
+
+As with other web page performance metrics, it's important to monitor TTI in the overall context of page performance and also track other metrics such as [FCP](./webperf#fcp), [LCP](./webperf#lcp), and [CLS](./webperf#cls).
+
+More information about [TTI](https://web.dev/tti/).
+
+
 ### FPS
 
 A frame rate is the speed at which a browser can recalculate, layout, and paint content on the display. A lower Frames Per Second (FPS) rate indicates issues with the main thread and performance problems on the web page, such as long-running [Long Task](./webperf#longtask) due to complex JavaScript.
@@ -195,3 +295,115 @@ As a page loads or a user interacts with an application, the browser assigns tas
 - **Performance Monitoring Tools:** Tools like Chrome DevTools can help identify long tasks and provide suggestions for performance improvements.
 
 Remember, the right strategy depends on the specific scenario and the types of tasks you are handling.
+
+
+## Processing
+
+### duration
+
+Is the total time taken for a certain process or action to complete. In the context of web pages and performance, the "duration" metric can refer to the total time taken to load and render a web page, from the initial request to when the page is fully interactive and ready to use.
+
+"Duration" can include the following processes:
+
+1. Time needed to get a response from the server (Time to First Byte - TTFB)
+2. Time required to load the HTML content
+3. Time needed to load and process external resources, such as CSS, JavaScript, and images
+4. Time needed to render the page in the browser
+5. Time required to initialize JavaScript libraries and functions
+
+Factors that can slow down "duration" include:
+
+1. Slow server: A server that responds slowly can increase the time it takes to get a response from the server.
+2. Large number of external resources: Each external resource that the page has to load (CSS, JavaScript, images, etc.) adds to the overall load time.
+3. Complex DOM: More complex Document Object Model (DOM) structures can slow down page rendering.
+4. Heavy JavaScript files: Large JavaScript libraries can slow down page load time.
+
+What a programmer can do to improve "duration":
+
+1. Optimize the server: Make sure your server is fast and well-configured.
+2. Minimize the number of external resources: Reduce the number of external resources the page has to load, if possible.
+3. Optimize DOM: Keep the structure of your DOM as simple as possible.
+4. Minimize and optimize JavaScript: Minimize the size of JavaScript files where possible, and ensure JavaScript is written correctly and efficiently.
+
+### domComplete
+
+This metric is one of the key metrics monitored when measuring the performance of web pages. It marks the time when the loading of the Document Object Model (DOM) of the page is fully completed. In other words, all synchronous scripts have been executed, all images and sub-resources have been loaded, and the entire DOM tree is completely built.
+
+This metric includes:
+
+1. Time needed to get a response from the server (TTFB)
+2. Time required to load and process the HTML content
+3. Time needed to load and process external resources such as CSS, JavaScript, images, etc.
+4. Time needed to render the page in the browser
+
+Factors that can slow down the `domComplete` metric include:
+
+1. Slow server response
+2. Large number of external resources
+3. Complex DOM tree
+4. Heavy JavaScript libraries or scripts
+
+What a programmer can do to improve `domComplete`:
+
+1. Optimize the server: A fast and well-configured server can shorten the time it takes to get a response.
+2. Minimize the number of external resources: The fewer external resources the page has to load, the quicker the DOM can be loaded.
+3. Optimize DOM: Maintaining a simple and clean DOM structure can enhance loading and processing speed.
+4. Minimize and optimize JavaScript: Efficient and optimized JavaScript files can shorten the time required to load and process JavaScript.
+
+The `domComplete` metric is part of the [Navigation Timing API](https://www.w3.org/TR/navigation-timing-2/#dom-performancenavigationtiming-domcomplete), which provides detailed information on navigation and page load performance. This metric is recorded at the time when the browser completes loading the document, including its dependent resources such as styles, scripts, images, etc. Specifically, this time is measured as the time interval from the start of navigation (clicking on a link, entering a URL, etc.) to the point when the entire DOM is loaded and processed and all synchronous scripts are executed.
+
+The calculation of `domComplete` involves the following processes and steps:
+
+1. **Navigation Start**: A user clicks on a link, enters a URL in the address bar, or refreshes a page. This is the starting point for measuring `domComplete`.
+
+2. **Server Response (TTFB)**: The browser sends a request to the server and waits for the first byte of data. This step includes network latency, the time taken by the server to process the request, and the time taken to send the first byte of the response back to the browser.
+
+3. **HTML Load and Processing**: The browser loads the HTML content of the page, processes it, and constructs the DOM tree.
+
+4. **Dependent Resources Load**: The browser loads and processes all the dependent resources, such as CSS files, JavaScript scripts, images, etc.
+
+5. **Page Rendering**: The browser renders the page on the screen, including applying all styles and executing all scripts.
+
+6. **DOM Loading Completion**: The browser completes the processing and loading of the entire DOM tree, including all synchronous scripts.
+
+The `domComplete` value is then recorded as the time interval from the start of navigation to the completion of DOM loading.
+
+Dependencies for `domComplete` include all of the page's dependent resources (styles, scripts, images, etc.), as well as network latency and server speed. If these resources are slow to load or process, or if the server is slow to respond, it can slow down the `domComplete` time.
+
+### domContentLoadedEventEnd
+
+This metric is another important metric that focuses on the loading of a web page's content. It represents the time when the DOM processing is complete and all events related to the downloading of the page's content, such as loading CSS, JavaScript, and images, are triggered. This metric indicates when the page is ready for interaction with the actual content.
+
+The processes and steps involved in `domContentLoadedEventEnd` include:
+
+1. **Navigation Start**: The user initiates navigation by clicking on a link, entering a URL in the address bar, or refreshing the page.
+
+2. **HTML Loading**: The browser loads the HTML content of the page and progressively processes it.
+
+3. **CSS Parsing**: The browser parses CSS files and creates the CSSOM (CSS Object Model), which represents the styling structure of the page.
+
+4. **JavaScript Loading and Processing**: The browser loads and processes JavaScript files. This may involve parsing, compiling, and executing the scripts.
+
+5. **Image and Other External Resource Loading**: The browser loads images and other external resources that are part of the page.
+
+6. **Completion of DOM Processing**: The browser completes the processing and rendering of the DOM tree.
+
+The `domContentLoadedEventEnd` value is recorded as the time interval from the start of navigation to the completion of DOM processing and the triggering of the `DOMContentLoaded` event.
+
+Dependencies for the `domContentLoadedEventEnd` metric include the size and complexity of the page's content, network and server speed, as well as the impact of CSS and JavaScript parsing and processing. Optimizing these processes can help improve `domContentLoadedEventEnd` and overall page performance.
+
+
+
+## Interesting bookmarks
+
+Here is a list of links to interesting articles and studies related to web performance:
+
+1. [Web.dev Performance Guides](https://web.dev/performance/): Official documentation and guides focused on web performance, provided by Google.
+2. [The State of the Web](https://httparchive.org/reports/state-of-the-web): Regularly updated overview of web development and performance with detailed statistics and analysis.
+3. [Web Performance Best Practices](https://developer.mozilla.org/en-US/docs/Web/Performance): Documentation from Mozilla Developer Network (MDN) providing best practices for improving web performance.
+4. [Google Developers: Web Performance](https://developers.google.com/web/fundamentals/performance): Collection of articles and guides from Google Developers focused on optimizing web performance.
+5. [HTTP Archive](https://httparchive.org/): Open-source dataset containing a comprehensive collection of web data and analysis that provides detailed insights into web performance.
+6. [Web Performance Case Studies](https://wpostats.com/): A series of case studies on web performance, covering various types of websites and optimization techniques.
+8. [Web Performance Today](https://www.soasta.com/blog/): Blog by SOASTA (now part of Akamai) focused on current trends and tips in web performance.
+
+These resources should provide you with detailed information on web performance and how to optimize it.

@@ -100,7 +100,13 @@ These graphs display all important metrics on a timeline, allowing you to track 
 
 ![Metrics graph](./assets/kibana-metrics.webp)
 
+This graph aggregate fields: [`percentile(metrics.fcp, percentile=95)`](../glossary/webperf#fcp), [`percentile(metrics.fid, percentile=95)`](../glossary/webperf#fid), [`percentile(metrics.cls, percentile=95)`](../glossary/webperf#cls), [`percentile(metrics.inp, percentile=95)`](../glossary/webperf#inp), [`percentile(metrics.lcp, percentile=95)`](../glossary/webperf#lcp), [`percentile(metrics.duration, percentile=95)`](../glossary/webperf#duration), [`percentile(metrics.domComplete, percentile=95)`](../glossary/webperf#domcomplete), [`percentile(metrics.domContentLoadedEventEnd, percentile=95)`](../glossary/webperf#domcontentloadedeventend)
+
+from the `c.rum.metrics-*` index.
+
 ### Hero Elements
+Thanks to [Hero Elements](./rumClient#heroelements), you will know what was displayed to the user in the viewport on their real device. This could include elements such as the menu, images, text, products, server responses, etc.
+
 ![Hero Elements graph](./assets/kibana-hero-elements.webp)
 
 ### Actions
