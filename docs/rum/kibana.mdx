@@ -84,6 +84,7 @@ Lower is better.
 This graph illustrates the FPS and Long Tasks for a specific page. The FPS is represented both as a line graph (actual) and as a bar graph (minimal), while the Long Tasks are depicted as red circles, each indicating the count of Long Tasks. FPS is measured in frames per second, whereas Long Tasks are measured in milliseconds. Both FPS and Long Tasks are plotted on a timeline, enabling a view of their changes over time.
 
 This graph aggregate fields `view.fps.fps` and `view.longTasks.duration > 50` from `c.rum.metrics-*` index.
+More information about [FPS](../glossary/webperf#fps) and [Long Tasks](../glossary/webperf#long-task).
 
 
 
@@ -109,8 +110,16 @@ Thanks to [Hero Elements](./rumClient#heroelements), you will know what was disp
 
 ![Hero Elements graph](./assets/kibana-hero-elements.webp)
 
+This graph aggregates fields `max(view.marks.startTime)` from the `c.rum.metrics-*` index. More information about Hero Elements can be found in the [RUM Client](./rumClient#heroelements) documentation.
+
 ### Actions
+This graph shows the number of clicks on the page. 
+
+It is very useful to know which buttons and other parts of the your web are most used by users and together with [Visits pages](#visits-pages) you can identify the most important user actions and user journeys.
+
 ![Actions graph](./assets/kibana-actions.webp)
+
+This graph shows `max(view.actions.timeStamp)` from the `c.rum.metrics-*` index. More information about Actions can be found in the [RUM Client](./rumClient#actions) documentation.
 
 ### Visits pages
 ![Visits pages table](./assets/kiabana-visits-pages.webp)
