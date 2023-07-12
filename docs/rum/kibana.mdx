@@ -130,19 +130,36 @@ This graph helps you to identify the most visited pages, how long users stay on 
 This graph aggregates fields `view.id`, `unique_count(view.startTime)`, [`percentile(session.duration, percentile=95)`](./rumClient#session), [`percentile(view.fps.fps, percentile=95)`](../glossary/webperf#fps) and [`percentile(metrics.lcp, percentile=95)`](../glossary/webperf#lcp) from the `c.rum.metrics-*` index.
 
 ### Resources
-![Resources graph](./assets/kiabana-visits-pages.webp)
+This table shows the amount of resources transferred from your server and third-party servers to the client device. It's important for you to monitor how many resources are being transferred to the client device, ensure the resource size doesn't grow excessively, and identify which resources are larger and heavier.
 
+Additionally, you can identify which resources are not available (e.g., those returning a '404 Not Found' error), so you can fix them. You can also see which resources are marked by the web browser as blocking for fast loading, determine their size, and identify which pages are loading them.
+
+![Resources table](./assets/kibana-resources.webp)
 
 ![Resources table](./assets/kibana-resources-table.webp)
 
+This table aggregate fields `max(view.resourceTypes.css.count)`, `max(view.resourceTypes.fetch.count)`, `max(view.resourceTypes.image.count)` and `max(view.resourceTypes.other.count)` from the `c.rum.metrics-*` index. If you need information about more resources, you can add those resources to the table or graph.
+
+For more information about resources, please refer to [Browser Data Collected](./rumClient#browser-data-collected) and [data from view](./rumClient#view) sections.
+
 ### Browser console
+This table helps you to identify errors and exceptions that occur in the web browser or your web application on the client device.
+
 ![Browser console](./assets/kibana-browser-console.webp)
 
+For this table are aggregated fields `view.console.type`, `view.console.value` and count(view.console.type) from the `c.rum.metrics-*` index.
+
 ### Content Security Policy
+This graph shows amount of violations of [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) on your web application. More information about CSP reporter you can find in the [RUM Server](./rumServer#content-security-policy) section.
+
+This graph shows records about violation from the `c.rum.csp.reporting-*` index.
+
 ![CSP](./assets/kibana-csp-graph.webp)
 
-
+The CSP Report shows violations of the Content Security Policy in your web application, including the directive, blocked URI, and a sample of the problematic code if it is available.
 ![CSP](./assets/kibana-csp-table.webp)
+
+This table aggregate fields `type`, `body.blockedURL`, `body.effectiveDirective` and `body.sample` from the `c.rum.csp.reporting-*` index.
 
 
 ### Others
