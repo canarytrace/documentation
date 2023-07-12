@@ -26,45 +26,76 @@ Please read [Kibana documentation](https://www.elastic.co/what-is/kibana)
 
 :::
 
-## Hlavní RUM Vizualizace
-- [x] Aktuálně aktivních session
-- [x] Počet návštěv
-- [x] 95%th LoadTime aktuální a trend
-- [x] 95%th CVW
-- [x] 95%th TTFB aktuální a trend
-- [x] Frontend errors a trend
-- [x] LongTasks a trend
-- [x] TOP urls, browsers, devices(desktop, mobil), platforma(iOS, Android)
+Thanks to Kibana, you can monitor key health metrics (such as errors, performance, memory usage, etc.) and observe user behaviors (including user journeys, [actions](./rumClient#actions), context, visits, etc.) in your web application.
 
-**Všechny pohledy**
-- Hlavní RUM vizualizace
-- Failing Resources
-- Users most affected by issues
-- Sessions and trends, js errors, time spent 
-- High memory consuption views
-- Performance monitoring
-	- Seznam top stranek a u nich CVW, TTFB, errors a devices
-	- Seznam stranek s velmi nízkým score
-- Detail vybraného view/stránky
-	- prakticky stejné jako performance monitoring
-	- chyby, trendy atp
 
-**Vizualizace**
-- CVW
-- Page Views by Version
-- Total Errors by Version
-- Ongoing Issues
-- Top Browsers
-- Top Devices
-- Top Pages
-- Total Sessions
-- User Sessions
-- Session Duration (avg)
-- Count of resources grouped by type
-- Slowest resources
-- XHR and Fetch requests with status code >= 400
-- XHR and Fetch requests grouped by method
-- Resource timings
+## Scenarios
+
+You will certainly be interested in a wealth of information about the performance of your website on your users' devices, such as:
+
+### User-Centric and Business Metrics
+
+- The number of actual users interacting with your website.
+- The number of visits every hour.
+- The most visited pages.
+- The length of time users spend on your product page.
+- The pages users visit before they leave your website, and what their journey looks like.
+- The most popular products.
+- The behavior of your users on your website.
+- The platforms, browsers, and devices used by your users.
+- When users see your banner and when they click on it.
+
+### Performance and Technical Metrics
+
+- The 95th percentile of [LoadTime](../glossary/webperf#duration) and its trend for every page.
+- The 95th percentile of [Core Web Vitals](../glossary/webperf#core-web-vitals) and its trend.
+- The 95th percentile of [TTFB](../glossary/webperf#ttfb) and its trend.
+- [Frontend errors](#browser-console).
+- [Long Tasks](../glossary/webperf#long-task) and smoothness as measured by [FPS](../glossary/webperf#fps).
+- [Actions](./rumClient#actions) and [Events](./rumClient#events).
+- Whether the page is loaded in a hidden tab.
+- [Web Performance Metrics](./rumClient#metrics).
+- The slowest resources and those that are blocking.
+- [Detailed information about user devices](./rumClient#attributes), including browsers, platforms, CPU, memory, network, etc.
+
+:::tip How to observe quality of your website?
+You can use:
+- [Query	DSL](#query-dsl) directly in Kibana or 
+- you can use [visualizations](#visualizations) for a better understanding and for a quick overview of the health of your website.
+
+For both options, whether you use Query SQL or visualize the data, you're always working with data stored in indices within Elasticsearch. These indices contain more interesting information than what might even be displayed in the visualizations, e.g. you can see the exact [User Agent](./rumClient#attributes) of the user's device, or you can see the exact [URL](./rumClient#attributes) of the page that the user visited, protocols, request order, etc.
+
+I recommend reading the [RUM Client](./rumClient) documentation to understand what data is collected and stored in Elasticsearch.
+
+:::
+
+
+## Query DSL
+
+You can use Kibana > DevTools > Console to search for information, or you can use visualizations for a better understanding and for a quick overview of the health of your website.
+
+Example: Find all sessions with [FPS](../glossary/webperf#fps) lower than 30, sorted by timestamp descending and display [FPS](../glossary/webperf#fps), timestamp, and labels.
+```json title="Query DSL example"
+GET c.rum.metrics-*/_search
+{
+  "_source": ["view.fps.fps","view.fps.timeStamp", "timestamp", "attributes.labels"],
+  "query": { 
+    "bool": { 
+      "must": [
+        {
+          "range": {
+            "view.fps.fps": {
+              "lte": "30"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [{ "timestamp": "desc" }]
+}
+```
+For more information about query DSL, please read [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html).
 
 
 ## Visualizations
@@ -167,6 +198,9 @@ You can find additional visualizations in our dashboard, such as: [LoadPage](../
 ![Mini graph](./assets/kibana-mini-graphs.webp)
 
 This mini graphs aggregate fields from the `c.rum.metrics-*`, `c.rum.entries-*` and `c.rum.csp.reporting-*` indices.
+
+
+## How to get visualizations?
 
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
