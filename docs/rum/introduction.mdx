@@ -1,34 +1,134 @@
 ---
 sidebar_position: 1
-description: Create a doc page with rich content.
+description: Start with Canarytrace RUM
 title: Introduction
 tags:
   - rum
 ---
 
-# Real User Monitoring
+# What is Real User Monitoring
 
-RUM pomáhá zjistit, jak webová aplikace funguje koncovému uživateli. Měří výkon webové aplikace a webového browseru, zjišťuje, kdy přesně se načetla jaká část webové aplikace, jak je rychlá komunikace mezi prohlížečem a serverem a jakou má server odezvu. Zachytává kliknutí uživatele na tlačítka a další uživatelskou interakci a měří výkonnostní problémy webové aplikace jako je například plynulost a odezvu na uživatelskou interakci.
+Understanding how your web application performs for your end user or customer on their device is critical. It directly impacts your online business and customer satisfaction.
 
-RUM získává informace o použitém prohlížeči, zařízení koncového uživatele, jeho typu a výkonu. Zároveň zachytává chyby webové aplikace, porušení bezpečnostních zásad CSP, uživatelské události jako je například - uživatel něco zobrazil nebo uživatel odeslal formulář atp.
+Canarytrace RUM provides insights into the user experience with your web application. It measures the application and browser performance on the user's device, details the loading time for various sections, and monitors the communication speed between the browser and server. It tracks user clicks and interactions, identifying any performance issues such as response time and smoothness.
+
+Furthermore, it records user paths, helping identify whether your application runs flawlessly on user devices, or if there are any issues concerning violations of CSP security policies. 
+
+In short, Canarytrace RUM enhances your understanding of user experience, enabling you to optimize accordingly for business success.
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="performance"
+  values={[
+    {label: 'Improve performance', value: 'performance'},
+    {label: 'Analyze product usage', value: 'product'},
+    {label: 'Banana', value: 'banana'},
+  ]}>
+  <TabItem value="performance">
+    <ul>
+      <li>Grasp the user experience of your applications by focusing on crucial performance indicators like Core Web Vitals.</li>
+      <li>Aggregate and visualize frontend performance metrics, or break them down by parameters such as country, device, application, and others.</li>
+      <li>Pinpoint the origins of prolonged load times, be it a code issue, a network snag, or an infrastructure problem.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="product">
+    <ul>
+      <li>Effortlessly gather and link each resource, error, and user activity throughout a user's session.</li>
+      <li>Examine usage patterns across your mobile and web applications by parameters such as browser, country, or any custom dimension using RUM Analytics.</li>
+      <li>Comprehend user experience through visual tools like time series, top lists, and tables.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="banana">
+    <ul>
+      <li>Grasp the user experience of your applications by focusing on crucial performance indicators like Core Web Vitals.</li>
+      <li>Aggregate and visualize frontend performance metrics, or break them down by parameters such as country, device, application, and others.</li>
+      <li>Pinpoint the origins of prolonged load times, be it a code issue, a network snag, or an infrastructure problem.</li>
+    </ul>
+  </TabItem>
+</Tabs>
+
+## Co je Canarytrace RUM
+
+Datadog Real User Monitoring (RUM) provides insight into your application’s frontend performance from the perspective of real users. Every user journey is correlated seamlessly with synthetic tests, backend metrics, traces, logs, and network performance data, so you can quickly detect poor user experience and resolve issues with context from across the stack.
 
 RUM je nástroj, který se skládá z RUM Serveru, který běží v Kubernetes a RUM Client, který se vkládá v podobě Javascriptu do šablony webové aplikace.
 Všechna získaná data se odesílají na RUM Server, který je Dockerizovaný a běží v Kubernetes. Data z RUM Serveru se ukládají přímo do Elasticsearch - vše se děje ve firmním serveru a nic se neodesílá ven.
 
 RUM je bez údržový nástroj, pouze se vloží měřící skript a měřící značky do šablony webové aplikace a to je vše. Není potřeba psát žádné testovací scénáře a není potřeba žádné testy udržovat.
 
-:::note Poznámka
-Some **content** with _Markdown_ `syntax`. Check [this `api`](#).
-:::
+## Use cases
 
-In JavaScript, trying to access properties on `null` will error.
+Monitoring spokojenosti koncových uživatelů na produkci.
+- Střežení kvality webové aplikace ( rychlost, bezpečnost a chybovost ).
+- RUM se používá i na testovacích prostředích jako doplněk pro manuální testery, automatizované testy a vývojáře. 
+- Měří, jak rychlá je komunikace mezi backendem a frontendem.
+- Měří, jak rychle se načítají jednotlivé části webové aplikace.
+- Měří, které části webové aplikace jsou nejvíce využívané a kolik uživatelů aktivně s webovou aplikací pracuje.
+- Jaké akce uživatel ve webové aplikaci udělal a jaká byla její odezva.
+- Měří, jaké zdroje si webová aplikace načetla a jaká je jejich velikost a typ.
+- Měří nefunkcionální parametry webové aplikace, což je vhodné sledovat na testovacím prostředí, na produkci a před a po releasu.
+- Umí sbírat informace o rychlosti backendových služeb, pokud je správně nakonfigurován response header.
+- Umí sbírat informace o porušení zásad CSP.
+- RUM sbírá data z webového prohlížeče o samotném prohlížeči a webové aplikaci - přidejme Listener, který získaná data automaticky vyhodnocuje a upozorňuje na nalezené problémy.
+RUM získává informace o použitém prohlížeči, zařízení koncového uživatele, jeho typu a výkonu. Zároveň zachytává chyby webové aplikace, porušení bezpečnostních zásad CSP, uživatelské události jako je například - uživatel něco zobrazil nebo uživatel odeslal formulář atp.
 
-```js
-const name = null;
-// highlight
-console.log(name.toUpperCase());
-// Uncaught TypeError: Cannot read properties of null (reading 'toUpperCase')
-```
+
+## Co se díky RUM dozvíte
+
+**Otázky**
+- [x] Za jak dlouho se uživateli načte stránka
+	- `duration`
+- [x] Na jakých stránkách se uživatel pohyboval
+	- `view.href`, `view.id`
+- [x] Jaké má zařízení, model, výkon (CPU  & RAM) a typ sítě
+	- `attributes.device.*`, `attributes.connection.*`, `view.usedMemory`
+- [x] Jak rychle se načetli resources
+	- seznam zdrojů: `view.resources`
+- [x] Jaké typy zdrojů webová stránka načetla
+	- `view.resourceTypes`
+- [ ] ~~Z Jakého regionu uživatel je~~
+	- Má nízkou prioritu [[GEO Location]]
+	- Data nejsou vždy dostupná a hlavně zanášíme do RUM problém s lokací uživatele
+- [ ] Vykazovala stránka nějaké Javascriptové chyby?
+	- Výpis z console `error`, `warn`, `debug`
+	- Chybí zaznamenávání chyb, které nejsou zapsány do console, které vyvolal Javascript a chybu zachytil interpretr.
+- [x] Jak rychlý byl backend vs frontend?
+	- document: `metrics.ttfb` a `metrics.fp` popřípadě `metrics.fcp`
+	- resources: `view.resources`
+- [x] Kolik uživatelů právě teď stránku používá
+	- Vypište všechny unikátní `session.id`, které nemají `session.lastLoop` starší několika minut. Například dvě minuty.
+- [x] Jak dlouho uživatel na stránce byl
+	- Vyberte uživatele podle `session.id` a stránku podle `view.id` popř. `view.href` a odečtěte poslední `session.lastLoop` od `session.startTime`. Výsledek je délka `session.id` v ms.
+- [x] Jaké stránky uživatel otevřel?
+	- `view.href` nebo `view.id` podle `session.id`
+- [x] Jaké akce uživatel udělal.
+	- sledování uživatelských kliknutí `view.actions` pomocí atributů `crum-action="name"``
+	- přidávání událostí během celého životního cyklu webové aplikace `view.events` pomocí `crum.addEvent`
+- [x] Jak rychle se uživately načetly jednotlivé části stránky
+	- `view.marks`
+- [x] Načítá a používá se stránka plynule
+	- `view.fps`
+- [x] Kolik zdrojů stránka spotřebuje
+	- `view.usedMemory`
+- [x] Kolik se přenese dat.
+	- `view.resources.transferSize` (https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/transferSize)
+- [x] Který ze zdrojů je blokující.
+	- `view.resources[1].renderBlockingStatus`
+- [x] Které stránky jsou nejvíce navštěvované
+	- agregace podle nejvíce `view.href` nebo `view.id`
+
+
+## Difference
+
+
+Canarytrace RUM je měřící skript, který se vkládá do šablon webové aplikace a díky tomu změří, jak funguje webová aplikace ve webový prohlížeči vašeho zákazníka a jak je vás zákazník spokojený.
+
+Canarytrace RUM is important tool for guarding your web business. You will be know, how your web application works for your customers. Canarytrace RUM provides a lot of data, which can be used for next scenarios.
+
+
 
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
