@@ -202,6 +202,9 @@ This mini graphs aggregate fields from the `c.rum.metrics-*`, `c.rum.entries-*` 
 
 ## How to get visualizations?
 
+If you wish, you can use our prepared visualizations that are stored within the Docker image with the [RUM Server](./rumServer). These can simply be exported for use. However, if you prefer, you have the option to create your own visualizations instead.
+
+```bash title="Get Kibana visualizations and dashboard"
 
 ```bash title="Get visualizations"
 docker run --rm -it --entrypoint /bin/mv -v $(pwd):/kibana quay.io/canarytrace/rum:latest /opt/canary-rum/kibana/ /kibana/
@@ -213,6 +216,16 @@ ls -lah kibana
 -rw-r--r--@ 1 rdp  staff    61K 12 čvc 04:22 visualizations.ndjson
 ```
 
+### Import
+Importing visualizations and dashboards is not an easy process because Kibana does not offer ideal solutions for exporting and importing created objects such as visualizations. This process also depends on your version of Kibana.
+
+Let's go step by step:
+
+1). Start by using Canarytrace RUM to create the first [Elasticsearch indices](./elasticsearch#list-of-indices) with RUM data. These indices will be automatically created in your Elasticsearch.
+
+2). To create a Data View, navigate to your Kibana Menu > Stack Management > Data Views. Create a data view for all [indices](./elasticsearch#list-of-indices). For example, Name = c.rum.entries-, Index pattern = c.rum.entries- and Timestamp field = timestamp.
+
+3). To import Visualizations and Dashboards, go to your Kibana Menu > Stack Management > Saved Objects. Import the visualizations first and then the dashboard.
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
