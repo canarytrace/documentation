@@ -203,6 +203,17 @@ This mini graphs aggregate fields from the `c.rum.metrics-*`, `c.rum.entries-*` 
 ## How to get visualizations?
 
 
+```bash title="Get visualizations"
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/kibana quay.io/canarytrace/rum:latest /opt/canary-rum/kibana/ /kibana/
+```
+
+```bash title="Print directory kibana"
+ls -lah kibana 
+-rw-r--r--@ 1 rdp  staff    21K 12 čvc 04:22 dashboard.ndjson
+-rw-r--r--@ 1 rdp  staff    61K 12 čvc 04:22 visualizations.ndjson
+```
+
+
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
 <FeedbackFooter />
