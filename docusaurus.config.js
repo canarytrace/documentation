@@ -60,10 +60,13 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      sidebar: {
+        collapsible: true, 
+      },
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        hideOnScroll: false,
+        hideOnScroll: true,
         title: 'Canarytrace',
         logo: {
           alt: 'Canarytrace',
@@ -153,7 +156,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Canarytrace, developed by RDPANEK LABS, s.r.o.`,
       },
       prism: {
         theme: lightCodeTheme,

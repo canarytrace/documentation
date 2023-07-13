@@ -1,0 +1,21 @@
+---
+sidebar_position: 6
+description: Troubleshooting
+title: Troubleshooting
+tags:
+  - rum
+  - troubleshooting
+---
+
+:::info Important links
+- Please always use the latest tag for the [Canarytrace RUM Docker image](https://quay.io/repository/canarytrace/rum?tab=tags).
+- Discuss your ideas and bugs with us on [Discussions](https://github.com/canarytrace/documentation/discussions/categories/rum)
+:::
+
+## Elasticsearch
+
+If you are experiencing issues with Elasticsearch, please use the `ELASTIC_OBSERVABILITY` property in your [RUM Server](./rumServer#settings) deployment. Enabling this property will activate Elasticsearch Observability, allowing you to see what is happening within Elasticsearch through the log of the [RUM Server POD](./rumServer#log).
+
+import FeedbackFooter from '../../src/components/FeedbackFooter';
+
+<FeedbackFooter />
