@@ -19,19 +19,20 @@ tags:
 ## Releases
 
 ### 2.8.10
+Download: `docker pull quay.io/canarytrace/rum:2.8.10`
 
-#### 🚀 New Features
+Your text is mostly correct, with some minor issues related to plurality, prepositions, and punctuation. Here is a revised version:
 
+🚀 New Features
+- Monitoring the entire lifecycle of user actions on the page.
+- Storing the latest [metrics](./rumClient#rumClient#browser-data-collected).
+- New deployment script for Kubernetes. You can now run multiple instances of the Canarytrace RUM server in a Kubernetes cluster. This allows you to horizontally scale the Canarytrace RUM server and handle more traffic.
 
-#### 🐛 Bug Fixes
+💥 Breaking Change
+- The latest RUM from 2.8.10 is not compatible with Canarytrace RUM 1. Therefore, please remove older Elasticsearch indices and create new ones. More information about the new Elasticsearch indices can be found in the [documentation](./elasticsearch#indices).
 
-
-#### 💅 Polish
-
-
-#### 💥 Breaking Change
-
-#### 📝 Documentation
+📝 Documentation
+- Welcome to the new documentation for Canarytrace RUM 2.8.10 and the entire Canarytrace toolset, which includes RUM, Listener, and Synthetic. This documentation is based on [Docusaurus](https://docusaurus.io/). We hope you will like it. If you find any issues, please report them to us in the [Discussions](https://github.com/canarytrace/documentation/discussions) section.
 
 ---
 
