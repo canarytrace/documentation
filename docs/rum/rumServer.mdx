@@ -326,6 +326,32 @@ All parameters of the RUM Server can be changed via environment variables direct
 |`ENV_PRINT`|`false`|Print all environment variables. Set the `allow` value for activate this feature.|
 
 
+## Performance Testing
+The RUM Server is a Node.js application that can be scaled horizontally. You can run multiple instances of the RUM Server and use a load balancer to distribute the load between them. Since the RUM Server is stateless, you can run as many instances as needed.
+
+The Docker image with Canarytrace RUM includes [k6](https://k6.io/) performance scripts. These allow you to run tests and evaluate the performance of the RUM Server based on your specific settings and the number of visits to your pages. An increased number of page visits implies more payloads being sent to the RUM Server.
+
+```bash title="Download k6 performance scripts"
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/k6 quay.io/canarytrace/rum:latest /opt/canary-rum/k6/ /k6/
+```
+
+```bash title="Print directory k6"
+ls -lah k6 
+-rw-r--r--@ 1 rdpanek  staff    16K 15 čvc 04:23 01-demo-data.js
+-rw-r--r--@ 1 rdpanek  staff   4,3K 15 čvc 04:23 02-simply.js
+drwxr-xr-x@ 5 rdpanek  staff   160B 15 čvc 04:23 data
+```
+
+- `data` contains test data for the performance scripts.
+- `01-demo-data.js` is a full script that sends payloads to the [RUM Server](./rumServer) and simulates a real users.
+- `02-simply.js` is a simple script that sends simple payloads to the [RUM Server](./rumServer).
+
+```bash title="Run performance script"
+export RUM_SERVER=https://<your-rum-server> && k6 run k6/01-demo-data.js --insecure-skip-tls-verify
+```
+
+These performance scripts send payloads to the `/rum` endpoint on the RUM Server. Please monitor the logs of the POD running the RUM Server and check the amount of resources used in Kubernetes.
+
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
 <FeedbackFooter />
