@@ -1,0 +1,67 @@
+---
+sidebar_position: 1
+description: Listener is next tool in Canarytrace toolset for analyzing data from Canarytrace RUM and Canarytrace Synthetic
+title: Introduction
+tags:
+  - Listener
+---
+
+# Canarytrace Listener
+
+
+Web applications can be so complex and bugs may appear very often and in various forms that manual checking through graphs or logs is practically impossible unless we are looking for a specific problem. Some types of bugs are not related to the speed of the web, yet they can be serious for a certain group of devices and their users, or they can become part of a problem that has been overlooked and will become apparent later or during high user traffic.
+
+If you really want to ensure that your web application works correctly and smoothly for your customers - you need to monitor several parameters at once, while also understanding how web applications work.
+
+Canarytrace Listener is the third significant component in the Canarytrace toolset, which is tasked with evaluating data from [Canarytrace RUM](../rum/introduction) and Canarytrace Synthetic.
+
+
+### Analytics
+
+The Listener has built-in intelligence and knows how web applications should work properly. From the data obtained, it can recognize when your customer had a problem while using your web application.
+
+The Listener includes built-in rules that are very frequently updated. The Listener validates new data from RUM and Synthetic against these rules and evaluates the severity of rule violations.
+
+You don't have to be an expert on web applications, the Listener, which evaluates the quality of your web application continuously, will stand in for you.
+
+You can add your own business rules, for example: How long should it take to log in, or how long should it take to put a product into the shopping cart, or how quickly should a list of items in a category be displayed, etc.
+
+### Experiments
+
+The Listener also tries to autonomously conduct experiments in an effort to improve your website, or to help fix a problem. For example, thanks to data from RUM and Synthetic, the Listener knows that your website contains images. The Listener is aware that there are efficient formats, so if your website contains images in an outdated format, it will download the images, perform optimization, and measure the difference. If the result of the experiment brings improvement, it will send you information about the conducted experiment via email.
+
+The number of experiments in the Listener will gradually increase. You don't have to worry about anything, the Listener conducts the experiments autonomously.
+
+
+### Alerting
+
+For all its analyses, including experiments and detected anomalies, the Listener adds a severity score. If a serious problem has been found, you'll learn about it immediately. If the issue isn't serious enough to require immediate attention, you'll receive the information later - it should be known, but it also shouldn't be overlooked.
+
+The Listener also tracks the frequency and severity of issues, and whether or not someone is addressing the problem. The Listener aims not to overwhelm your team with constant problem notifications, but instead considers when and through which channel to send the information.
+
+For example, if the server starts returning a ResponseCode 500, you should be informed immediately. However, if the server slightly slows down, you will learn about it in a summary by default, as it's not a show-stopper. Everything can be configured according to your needs, because even a minor server slowdown can be significant for some.
+
+
+### Integration with Third-Party Tools
+
+The Listener reports all its work into the `c.listener.events-*` index in Elasticsearch. This index is referred to as 'events' and is the index of truth. In this index, you can find records of processed rules, exceeded thresholds, experiment results, and so on.
+
+Thanks to the fact that you can read data from Elasticsearch indices using REST-API, you can utilize other tools that can benefit from the results of the Listener's work. This means that you do not need to set any conditions / evaluate the quality of your web applications in other tools; you just need to read this index.
+
+For example, you can use ZABBIX to create a critical ticket in JIRA. In ZABBIX, you simply set a simple rule: If, in the last 10 minutes, the events index has an evaluation of a rule (logging into the application) and the score is below 50, then create a ticket in JIRA and assign it to a team to resolve.
+
+
+## Canarytrace Listener components
+
+
+### Listener Agent
+
+### Listener DM
+
+### Listener AD
+
+### Listener UI
+
+import FeedbackFooter from '../../src/components/FeedbackFooter';
+
+<FeedbackFooter />
