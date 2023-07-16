@@ -53,14 +53,37 @@ For example, you can use ZABBIX to create a critical ticket in JIRA. In ZABBIX, 
 
 ## Canarytrace Listener components
 
+The Listener is component-based, so you can start only with the [Listener Agent](#listener-agent) and later add other components such as [DM](#listener-dm), [UI](#listener-ui), and [AD](#listener-ad) based on your requirements. Thanks to this approach, your start with the Listener is easy. Each component works independently from the others, and updates are incremental.
+
+Each component is distributed via a Docker image for deployment into Kubernetes.
 
 ### Listener Agent
 
+The Listener Agent is the most important component. It contains built-in rules that evaluate data from [Canarytrace RUM](../rum/introduction) and Canarytrace Synthetic, then stores the results into an event index in Elasticsearch. It calculates the score of defects, sends reports, and finally, includes experiments.
+
+You must start with the Listener Agent the first time.
+
 ### Listener DM
+
+The Data Management component removes older data from Elasticsearch and creates long-term indices with trend data. For example, an Elasticsearch index with RUM metrics contains a lot of data for immediate review, but these data consume significant storage and detailed data becomes less interesting after one week. You can create a long-term index for this data that will contain only the types of devices, browsers, FPS, and Duration.
+
 
 ### Listener AD
 
+The Anomaly Detection component brings smarter quality guardianship of your web application based on usual and observed behavior. For example, the duration of the web application loading time is volatile and depends on the behavior and number of your visitors. Therefore, you cannot set a certain threshold, for instance, that loading a page must always take 1.5s. In the real world, the loading time of your web application will be shorter with fewer visitors and longer during peak times.
+
+A shorter load time with fewer visitors is correct, but a longer load time during peak times is also correct. Therefore, the Listener Anomaly Detection learns from Canarytrace RUM and Canarytrace Synthetic what is normal and when it is normal. Listener Anomaly Detection is a learning model with performance metrics that are typically for your web application during a week.
+
+When an anomaly is detected, you will be informed. Performance metrics are not the only domain for our Listener Anomaly Detection. In the future, Listener AD will evaluate anomalies in, for example, response codes of your services and more. Why not? Thanks to Canarytrace Synthetic and Canarytrace RUM, the Listener knows all the technical parameters of your web application.
+
+This component is under construction.
+
+
 ### Listener UI
+
+Listener UI is a new interface for Listener. It is a web application that allows for configuration and evaluation of information from Canarytrace Synthetic, Canarytrace RUM, Listener AD, and experiments. This component provides new visualizations for a thorough understanding of your web application's health and customer satisfaction.
+
+This component is under construction.
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
