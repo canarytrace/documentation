@@ -42,6 +42,7 @@ const sidebars = {
       label: 'Listener',
       items: [
         'listener/introduction',
+        'listener/agent',
       ],
     },
     {

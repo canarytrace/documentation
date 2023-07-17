@@ -1,0 +1,83 @@
+---
+sidebar_position: 2
+description: Listener is next tool in Canarytrace toolset for analyzing data from Canarytrace RUM and Canarytrace Synthetic
+title: Listener Agent
+tags:
+  - Listener
+  - Listener Agent
+---
+
+# Listener Agent
+
+The Listener Agent is a Dockerized component that evaluates data from Canarytrace [RUM](../rum/overview) and Canarytrace Synthetic, which are stored in Elasticsearch.
+
+The Listener Agent works in phases:
+
+1. First phase, internal checks: The Listener Agent contains built-in internal checks which i verify that Canarytrace is functioning correctly, that Elasticsearch is available, and that it's possible to store data in Elasticsearch.
+
+2. Second phase, rule checking: The Listener Agent contains built-in rules, like a checklist for the quality of the web application. The Listener Agent checks stored data against these rules very frequently. Thanks to these rules, you do not need know how the web application works properly.
+
+3. Third phase, reporting: All information about the work of the Listener Agent and violations of rules are stored in an Elasticsearch index called "events", and notifications are sent through reporters. This phase also includes bug watchers and creates an overview.
+
+import LicenseInfo from '../../src/components/LicenseInfo';
+
+<LicenseInfo app="Canarytrace Listener" />
+
+
+## Docker image
+
+The Listener Agent is distributed as a [Docker](https://quay.io/repository/canarytrace/listener-agent?tab=tags) image and we recommend running it in a Kubernetes cluster.
+
+
+:::tip Please always use a latest Docker image
+- List of Docker image tags https://quay.io/repository/canarytrace/listener-agent?tab=tags
+:::
+
+The [Docker](https://quay.io/repository/canarytrace/listener-agent?tab=tags) image contains not only the Listener engine itself but also built-in rules and the necessary Kubernetes deployment objects.
+
+Upon launching the Docker image with the Listener Agent, the creation of service indices in Elasticsearch happens automatically, followed by the start of individual phases. Once the final phase ends, the Docker image stops and restarts. Thanks to this, the Listener Agent evaluates current data from Canarytrace RUM and Canarytrace Synthetic.
+
+For optimal operation, it's necessary to run the Listener Agent in a Kubernetes cluster. More information can be found in the [Kubernetes](#kubernetes) section.
+
+
+## Kubernetes
+
+To run the Listener Agent, you need a Kubernetes deployment that includes the Docker image, resources, configurations, and additional parameters. We provide a deployment that you can use as is or modify to your preferences.
+
+### Deployment
+
+All deployment objects necessary for running the RUM Server are packaged and distributed inside the Docker image. This includes any required configuration files, scripts, and dependencies needed for the deployment process.
+
+#### Download the deployments scripts from the Docker image
+
+```bash title="Download deployments scripts from docker image"
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/k8s quay.io/canarytrace/listener-agent:latest /opt/canary-listener/k8s/ /k8s/
+```
+
+```bash title="Print directory k8s"
+ls -lah k8s 
+-rw-r--r--@ 1 rdpanek  staff   4,5K 13 led  2022 config-rules.yaml
+-rw-r--r--@ 1 rdpanek  staff   4,3K 13 led  2022 listener.yaml
+-rw-r--r--@ 1 rdpanek  staff   321B 13 led  2022 secret.yml
+```
+
+All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
+
+- `config-rules.yaml` - contains configuration of rules, more information in the [Rules](#rules) section.
+- `secret.yaml` - contains configuration of secrets, more information in the [Configuration](#configuration) section.
+- `listener.yaml` - contains configuration of Listener Agent, more information in the [Configuration](#configuration) section.
+
+## Configuration
+
+## Elasticsearch
+
+## Rules
+
+## Reporters
+
+
+
+
+import FeedbackFooter from '../../src/components/FeedbackFooter';
+
+<FeedbackFooter />
