@@ -44,6 +44,9 @@ For optimal operation, it's necessary to run the Listener Agent in a Kubernetes 
 
 To run the Listener Agent, you need a Kubernetes deployment that includes the Docker image, resources, configurations, and additional parameters. We provide a deployment that you can use as is or modify to your preferences.
 
+### Requirements
+
+
 ### Deployment
 
 All deployment objects necessary for running the RUM Server are packaged and distributed inside the Docker image. This includes any required configuration files, scripts, and dependencies needed for the deployment process.
@@ -63,16 +66,69 @@ ls -lah k8s
 -rw-r--r--@ 1 rdpanek  staff   357B 31 pro  2022 secret.yml
 ```
 
-- `config-rum-rules.yaml` - contains configuration of rules for [Canarytrace RUM](../rum/rumClient), more information in the [Rules](#rules) section.
-- `config-internal-rules.yaml` - contains configuration of internal rules for Canarytrace Synthetic, more information in the [Rules](#rules) section.
-- `secret.yaml` - contains Listener configuration, more information in the [Configuration](#configuration) section.
-- `listener.yaml` - contains deployment of Listener Agent, more information in the [Configuration](#configuration) section.
+- `k8s/config-rum-rules.yaml` - contains configuration of rules for [Canarytrace RUM](../rum/rumClient), more information in the [Rules](#rules) section.
+- `k8s/config-internal-rules.yaml` - contains configuration of internal rules for Canarytrace Synthetic, more information in the [Rules](#rules) section.
+- `k8s/config-custom-rules.yaml` - contains configuration of your custom business rules. More information in the [Rules](#rules) section.
+- `k8s/secret.yaml` - contains Listener configuration, more information in the [Configuration](#configuration) section.
+- `k8s/listener.yaml` - contains deployment of Listener Agent, more information in the [Configuration](#configuration) section.
 
-Before deploying the Listener Agent to your Kubernetes cluster, please update the `secret.yaml` and `listener.yaml` files and their configurations.
+Before deploying the Listener Agent to your Kubernetes cluster, please:
+- update the `secret.yaml` and `listener.yaml` files and their configurations.
+- additionally, you may choose to edit the rules in one or more of these files:" `k8s/config-custom-rules.yaml`, `k8s/config-internal-rules.yaml`, and `k8s/config-rum-rules.yaml`. Learn more about the syntax of the rules in the [Rules](#rules) section.
 
-The `config-rules.yaml` file contains the default configuration for rules (checklist). You can modify this file and change the settings for each rule. More information can be found in the [Rules](#rules) section.
+:::tip
+Configuration files with rules are in the YAML format. You don't need to edit these files or values if the default configuration meets your requirements.
+:::
+
+
+Deploy these objects to Kubernetes in this order:
+
+1. `k8s/secret.yaml`
+2. `k8s/config-custom-rules.yaml`
+3. `k8s/config-internal-rules.yaml`
+4. `k8s/config-rum-rules.yaml`
+5. `k8s/deployment.yaml`
 
 All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
+
+### Check the deployment
+
+Please check, that the Canarytrace Listerer Agent is deployed and running.
+
+```bash title="Check Secrects"
+kubectl -n canarytrace get secrets
+
+// result
+NAME                               TYPE                                  DATA   AGE
+listener-agent-secret              Opaque                                10     451d
+```
+
+```bash title="Check ConfigMaps"
+kubectl -n canarytrace get configmaps  
+NAME                            DATA   AGE
+listener-agent-custom-rules     1      213d
+listener-agent-internal-rules   1      213d
+listener-agent-rum-rules        1      213d
+```
+
+```bash title="Check CronJobs"
+kubectl -n canarytrace get cronjob   
+NAME                          SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+listener-agent                */10 * * * *   False     0        6m15s           199d
+```
+
+```bash title="Check Pods"
+kubectl -n canarytrace get pods   
+NAME                                         READY   STATUS      RESTARTS   AGE
+listener-agent-28161260-grp2f                0/1     Completed   0          27m
+listener-agent-28161270-84pwc                0/1     Completed   0          17m
+listener-agent-28161280-2d6df                0/1     Completed   0          7m21s
+```
+
+### Lifecycle
+
+### Log
+
 
 ## Configuration
 
