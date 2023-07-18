@@ -51,21 +51,28 @@ All deployment objects necessary for running the RUM Server are packaged and dis
 #### Download the deployments scripts from the Docker image
 
 ```bash title="Download deployments scripts from docker image"
-docker run --rm -it --entrypoint /bin/mv -v $(pwd):/k8s quay.io/canarytrace/listener-agent:latest /opt/canary-listener/k8s/ /k8s/
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/k8s quay.io/canarytrace/listener-agent:1.42 /opt/canary-listener/k8s/ /k8s/
 ```
 
 ```bash title="Print directory k8s"
 ls -lah k8s 
--rw-r--r--@ 1 rdpanek  staff   4,5K 13 led  2022 config-rules.yaml
--rw-r--r--@ 1 rdpanek  staff   4,3K 13 led  2022 listener.yaml
--rw-r--r--@ 1 rdpanek  staff   321B 13 led  2022 secret.yml
+-rw-r--r--@ 1 rdpanek  staff   788B 31 pro  2022 config-custom-rules.yaml
+-rw-r--r--@ 1 rdpanek  staff   9,8K 31 pro  2022 config-internal-rules.yaml
+-rw-r--r--@ 1 rdpanek  staff   4,7K 31 pro  2022 config-rum-rules.yaml
+-rw-r--r--@ 1 rdpanek  staff   3,9K 31 pro  2022 deployment.yaml
+-rw-r--r--@ 1 rdpanek  staff   357B 31 pro  2022 secret.yml
 ```
 
-All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
+- `config-rum-rules.yaml` - contains configuration of rules for [Canarytrace RUM](../rum/rumClient), more information in the [Rules](#rules) section.
+- `config-internal-rules.yaml` - contains configuration of internal rules for Canarytrace Synthetic, more information in the [Rules](#rules) section.
+- `secret.yaml` - contains Listener configuration, more information in the [Configuration](#configuration) section.
+- `listener.yaml` - contains deployment of Listener Agent, more information in the [Configuration](#configuration) section.
 
-- `config-rules.yaml` - contains configuration of rules, more information in the [Rules](#rules) section.
-- `secret.yaml` - contains configuration of secrets, more information in the [Configuration](#configuration) section.
-- `listener.yaml` - contains configuration of Listener Agent, more information in the [Configuration](#configuration) section.
+Before deploying the Listener Agent to your Kubernetes cluster, please update the `secret.yaml` and `listener.yaml` files and their configurations.
+
+The `config-rules.yaml` file contains the default configuration for rules (checklist). You can modify this file and change the settings for each rule. More information can be found in the [Rules](#rules) section.
+
+All Kubernetes objects can be deployed using the `kubectl -n` command, followed by the name of the namespace and the `create` option. For example, to deploy a `secret.yaml` file, you would use the command `kubectl -n canarytrace create -f secret.yaml`.
 
 ## Configuration
 
