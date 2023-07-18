@@ -95,6 +95,7 @@ All Kubernetes objects can be deployed using the `kubectl -n` command, followed 
 
 Please check, that the Canarytrace Listerer Agent is deployed and running.
 
+Secrects contains configuration of Listener Agent such as connection to Elasticsearch, Slack webhook, etc. More information in the [Configuration](#configuration) section.
 ```bash title="Check Secrects"
 kubectl -n canarytrace get secrets
 
@@ -103,6 +104,8 @@ NAME                               TYPE                                  DATA   
 listener-agent-secret              Opaque                                10     451d
 ```
 
+
+ConfigMaps contains configuration of rules for [Canarytrace RUM](../rum/rumClient), more information in the [Rules](#rules) section.
 ```bash title="Check ConfigMaps"
 kubectl -n canarytrace get configmaps  
 NAME                            DATA   AGE
@@ -111,12 +114,18 @@ listener-agent-internal-rules   1      213d
 listener-agent-rum-rules        1      213d
 ```
 
+The CronJob configuration includes settings for the Listener Agent, such as the version of the Docker image and Kubernetes deployment settings, etc. More information can be found in the [Configuration](#configuration) section.
+Thanks to [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/), the Listener Agent starts every 10 minutes to check new data from Canarytrace RUM and Canarytrace Synthetic. The ten-minute interval is a default value, which can be modified in the `k8s/deployment.yaml` file.
 ```bash title="Check CronJobs"
 kubectl -n canarytrace get cronjob   
 NAME                          SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 listener-agent                */10 * * * *   False     0        6m15s           199d
 ```
 
+Pods run the Listener Agent instances. Every 10 minutes, the CronJob creates a [Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/) with the Listener Agent.
+But in this example, you see three Pods of the Listener Agent. This means that you're seeing the three most recent instances of the Listener Agent. Therefore, the latest run was 7 minutes ago, the previous run was 17 minutes ago and the first run was 26 minutes ago. 
+
+You can read logs from the three most recent instances of the Listener Agent. More information can be found in the [Log](#log) section.
 ```bash title="Check Pods"
 kubectl -n canarytrace get pods   
 NAME                                         READY   STATUS      RESTARTS   AGE
@@ -125,18 +134,106 @@ listener-agent-28161270-84pwc                0/1     Completed   0          17m
 listener-agent-28161280-2d6df                0/1     Completed   0          7m21s
 ```
 
-### Lifecycle
+In other cases, you may see a state of pods where one of them has the STATUS `Running`. This means that the Listener Agent is currently executing.
+```bash title="Check Pods with running the Listener Agent"
+NAME                                         READY   STATUS      RESTARTS   AGE
+listener-agent-28161400-f4sjv                0/1     Completed   0          30m
+listener-agent-28161410-8tnvn                0/1     Completed   0          20m
+listener-agent-28161420-l94gv                0/1     Completed   0          10m
+listener-agent-28161430-bnrkl                1/1     Running     0          2s
+```
 
 ### Log
 
+You can access the log of the Listener Agent from the three most recent instances. To retrieve these logs, you'll need to know the name of the Pod. You can determine the Pod's name from the previous step.
 
-## Configuration
 
-## Elasticsearch
+With this Kubernetes command `logs`, you will be able to see the log.
+```bash title="Get logs"
+kubectl -n canarytrace logs listener-agent-28161280-2d6df
+```
+
+The first phase is the initiation of internal checks. The Listener Agent examines the health of Elasticsearch, Canarytrace RUM, and Canarytrace Synthetic.
+
+The internal checks are the most important phase, which verifies the health of the Canarytrace toolset and Elasticsearch.
+
+```bash title="The Listener Agent start internal checks"
+    __    _      __                      
+   / /   (______/ /____  ____  ___  _____
+  / /   / / ___/ __/ _ \/ __ \/ _ \/ ___/
+ / /___/ (__  / /_/  __/ / / /  __/ /    
+/_____/_/____/\__/\___/_/ /_/\___/_/     
+                                         
+Listener agent: 1 https://canarytrace.com
+Node.js: v18.7.0
+Listener:lastRuleCheck used is: 2023-07-18T13:10:05.247Z
+Listener:rule-analyzer:start
+Elasticsearch health check: green, pending: 0
+Elasticsearch nodes: 4, max heap: 53%, max ram: 97%, max disk used 2.37%, max cpu 7%, node with highest heap tiebreaker-0000000018
+Canarytrace health check: running
+Canarytrace lifecycle: OK
+DataManager exist: OK
+Datamanager: last run before 13 hours
+...
+```
+
+The second phase, marked as the analysis phase, is when the Listener Agent loads and evaluates rules, and prepares data for the final phase, known as the overview phase. During the analysis phase, rules are evaluated, notifications for critical problems are sent out, and new errors are added to the error queue.
+
+```bash title="The Listener Agent evaluate rules"
+...
+Listener: load internal rules.
+Listener: loaded 20x internal rules from ./rules/internal.yaml
+Listener: load custom rules from ./rules/custom.yaml
+Listener: loaded 1x custom rules.
+Listener: load RUM rules from ./rules/rum.yaml
+Listener: loaded 10x RUM rules.
+Listener agent: evaluate 31 rules
+---------------------------------
+
+Load time needs improvement, filter: (loadEventEnd gte 3000),(loadEventEnd lt 5000),
+analyzers: incidents 0
+
+Load time is poor, filter: (loadEventEnd gte 5000),
+analyzers: incidents 0
+...
+```
+
+In this phase, the Listener Agent evaluates the error queue, for instance, updating the status of the errors or closing old errors.
+
+```bash title="The Listener Agent evaluate incidents"
+...
+errors-queue:queue size 1
+errors-queue:closing: 1 incidents older 30 minutes.
+errors-queue:how long:9min: Performance score needs improvement
+errors-queue:not closed
+...
+```
+The Overview phase is the final phase of the Listener Agent. In this phase, the Listener Agent generates reports and sends them to the configured reporters. It evaluates numerous parameters such as the age of errors and their score, available reporters, appropriate time for sending the report, sentence preparation for improved explanation, and so on.
+
+```bash title="The Listener Agent create reports"
+...
+Listener:overview:lastEmergencyOverview: check after 60 minutes
+Listener:overview:lastEmergencyOverview: last emergency check has taken place before 50 minutes
+Listener:overview:stage1: check after 180 minutes
+Listener:overview:stage1: stage1 check has taken place before 170 minutes
+
+-------------------------------
+Listener aget: uuid: d55bdef17866afdb8e62fddfca3c7a98
+Start: Tue Jul 18 13:20:01 UTC 2023
+End: Tue Jul 18 13:20:09 UTC 2023
+...
+```
+## Score
+
+## Internal checks
 
 ## Rules
 
 ## Reporters
+
+## Configuration
+
+## Elasticsearch
 
 
 
