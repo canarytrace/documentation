@@ -16,8 +16,8 @@ function HomepageHeader() {
         <p className="text-2xl py-6 text-slate-600 dark:text-slate-50 font-sans antialiased">With Canartrace, you can easily protect your web business, increase sales and make your customers happier.</p>
 
         <div className="py-10">
-          <Link className="bg-slate-50 rounded-md text-gray-500 px-4 py-2" to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+          <Link className="bg-slate-50 rounded-md text-gray-500 px-4 py-2" to="docs/introduction/intro">
+            Start
           </Link>
         </div>
       </div>
