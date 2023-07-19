@@ -44,7 +44,14 @@ For optimal operation, it's necessary to run the Listener Agent in a Kubernetes 
 
 To run the Listener Agent, you need a Kubernetes deployment that includes the Docker image, resources, configurations, and additional parameters. We provide a deployment that you can use as is or modify to your preferences.
 
-### Requirements
+### Resources
+
+- To deploy the Listener Agent Server on Kubernetes, several requirements need to be met, including specifying the appropriate resource requests and limits.
+- In most cases, one instance of the Listener Agent will be sufficient.
+
+|Resources|CPU Request|CPU Limits|Memory requests|Memory limits|
+|-|-|-|-|-|
+|One instance of the Listener Agent|`50m`|`200m`|`50Mi`|`300Mi`|
 
 
 ### Deployment
@@ -107,7 +114,9 @@ listener-agent-secret              Opaque                                10     
 
 ConfigMaps contains configuration of rules for [Canarytrace RUM](../rum/rumClient), more information in the [Rules](#rules) section.
 ```bash title="Check ConfigMaps"
-kubectl -n canarytrace get configmaps  
+kubectl -n canarytrace get configmaps
+
+// result
 NAME                            DATA   AGE
 listener-agent-custom-rules     1      213d
 listener-agent-internal-rules   1      213d
@@ -117,7 +126,9 @@ listener-agent-rum-rules        1      213d
 The CronJob configuration includes settings for the Listener Agent, such as the version of the Docker image and Kubernetes deployment settings, etc. More information can be found in the [Configuration](#configuration) section.
 Thanks to [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/), the Listener Agent starts every 10 minutes to check new data from Canarytrace RUM and Canarytrace Synthetic. The ten-minute interval is a default value, which can be modified in the `k8s/deployment.yaml` file.
 ```bash title="Check CronJobs"
-kubectl -n canarytrace get cronjob   
+kubectl -n canarytrace get cronjob
+
+// result
 NAME                          SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 listener-agent                */10 * * * *   False     0        6m15s           199d
 ```
@@ -127,7 +138,9 @@ But in this example, you see three Pods of the Listener Agent. This means that y
 
 You can read logs from the three most recent instances of the Listener Agent. More information can be found in the [Log](#log) section.
 ```bash title="Check Pods"
-kubectl -n canarytrace get pods   
+kubectl -n canarytrace get pods
+
+// result
 NAME                                         READY   STATUS      RESTARTS   AGE
 listener-agent-28161260-grp2f                0/1     Completed   0          27m
 listener-agent-28161270-84pwc                0/1     Completed   0          17m
@@ -136,6 +149,9 @@ listener-agent-28161280-2d6df                0/1     Completed   0          7m21
 
 In other cases, you may see a state of pods where one of them has the STATUS `Running`. This means that the Listener Agent is currently executing.
 ```bash title="Check Pods with running the Listener Agent"
+kubectl -n canarytrace get pods
+
+// result
 NAME                                         READY   STATUS      RESTARTS   AGE
 listener-agent-28161400-f4sjv                0/1     Completed   0          30m
 listener-agent-28161410-8tnvn                0/1     Completed   0          20m
