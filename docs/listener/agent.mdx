@@ -241,15 +241,199 @@ End: Tue Jul 18 13:20:09 UTC 2023
 ```
 ## Score
 
+All processes in the Listener Agent are governed by a score, which represents the severity of the problem. Each type of defect (Internal checks, Rules/Checklist) has its own score, and the Listener Agent considers this score when deciding what to do with the discovered defect.
+
+**Canarytrace toolkit uses these score tables**
+
+Description | Score | Color
+-- | -- | --
+needs fix! | 0-30 | red
+needs improvement! | 31-70 | orange
+good job! | 71-100 | green
+
+- This score table is used in rule definitions, for color coding reporters, and for overview reports. The score also controls alerting.
+- The score defines the impact on a real user from 0 = very poor to 100 percent = excellent.
+
+The default rule applies, that a score below 30 is an emergency problem, for example: Performance Score is poor, or Response code 500, or Elasticsearch nodes: java heap is higher than 85%. Events with such a low score represent a problem with the monitored application or an inability to monitor the application.
+
+For instance, if you do not use Data Manager (event: DataManager exists: Not found.), it is not an emergency problem right now, so the score is higher than 30. But, if you do not clean data in Elasticsearch, you will receive a notification about the java heap in Elasticsearch filling up, with a low score.
+
 ## Internal checks
 
-## Rules
+Interní checky kontrolují vše potřebné, aby nic nebránilo monitorovat webové aplikace, jako je například to, jestli Canarytrace běží, jestli je Elasticsearch dostupný a jestli není přetížen a nevyžaduje údržbu. 
 
-## Reporters
+
+Title | Score
+-- | --
+Elasticsearch health check: yellow | 50
+Elasticsearch health check: red | 0
+Elasticsearch nodes: java heap is higher than 80% | 50
+Elasticsearch nodes: java heap is higher than 85% | 0
+Elasticsearch nodes: disk used percentage is higher than 85% | 30
+Canarytrace health check: missing data | 0
+Canarytrace lifecycle errors | 30
+DataManager exist: Not found. | 31
+
+- [Reporters](#reporters) `internal-slack`
+- Internal checks are run when Listener agent start and before rules check.
+
+## Rules / Checklists
+
+Listener agent je dodáván s předem definovanými pravidly, takže reálně nemusíte ze začátku do konfigurace vůbec zasahovat. Nic méně, určitě budete chtít některá pravidla měnit a proto můžete built-in pravidla přetížit. K tomu se používají 3 soubory
+
+- `rules/internal.yaml` pro pravidla kvality webových aplikací, obzvláště pro kontrolu dat z Canarytrace.
+    - Seznam pravidel https://github.com/canarytrace/documentation/issues/110#issuecomment-1288031254
+- `rules/rum.yaml` s pravidly pro kontrolu dat z RUM.
+    - Seznam pravidel https://github.com/canarytrace/documentation/issues/110#issuecomment-1288045409
+- `rules/custom.yaml` pro Vaše vlastní business pravidla
+    - Obsahuje pouze ukázku možného business pravidla ( maximální čas pro přihlášení uživatele do aplikace )
+
+Všechny tři soubory se deployují do Kubernetes jako [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) a jejich obsah můžete za běhu měnit. Změny se projeví při dalším startu Listener agenta.
+
+Jednotlivá pravidla jsou v těchto souborech definována pomocí typů [range](https://github.com/canarytrace/documentation/issues/110#issuecomment-1364990113), [contains](https://github.com/canarytrace/documentation/issues/110#issuecomment-1365282100) a [match](https://github.com/canarytrace/documentation/issues/110#issuecomment-1365444676). Pomocí těchto typů můžete upravit či postavit robustní seznam pravidel pro Vaše business thresholdy.
+
+Syntaxe v pravidlech slouží pro vygenerování dotazu do Elasticsearch, takže: 
+
+pokud je pravidlo pravdivé ⇒ dotaz v Elasticsearch našel data, které pravidlu odpovídají ⇒ založení události ⇒ reportování 
+
+### internal rules
+
+> source: rules/internal.yaml
+
+Title | Index | Condition | Count / hour | Score
+-- | -- | -- | -- | --
+Load time needs improvement | c.performance-entries | > 3000ms | 5 | 40
+Load time is poor | c.performance-entries | > 5000ms | 5 | 20
+Higher response time. | c.performance-entries | > 3000ms | 10 | 40
+Performance Score is poor | c.audit | 0 - 49 | 3 | 20
+Performance Score needs improvement | c.audit | 50 - 89 | 3 | 60
+FCP needs improvement | c.audit | 1800 - 3000 | 3 | 40
+FCP is poor | c.audit | > 3000 | 3 | 20
+LCP needs improvement (CoreWebVitals). | c.audit | > 2500ms | 5 | 40
+LCP is poor (CoreWebVitals). | c.audit | > 4000ms | 5 | 40
+CLS needs improvement (CoreWebVitals) | c.audit | > 0.1 | 5 | 40
+CLS is poor (CoreWebVitals) | c.audit | > 0.25 | 5 | 30
+TBT needs improvement | c.audit | 200 - 600 | 3 | 40
+TBT is poor | c.audit | > 600 | 3 | 20
+TTI needs improvement | c.audit | > 3900ms | 5 | 40
+TTI is poor | c.audit | > 7300ms | 5 | 20
+Response with Javascript must contains gzip or brotli compression. | c.request-log | gzip or br missing in headers.content-encoding | 10 | 40
+Responses with CSS files must contains gzip or brotli compression. | c.request-log | gzip or br missing in headers.content-encoding | 10 | 40
+Response code 400 | r.request-log | >= 400 | 5 | 80
+Response code 500 | r.request-log | >= 500 | 5 | 20
+Failed check your page! | c.report | test step failed | 2 | 10
+
+### rum rules
+
+> source: rules/rum.yaml
+
+Title | Index | Condition | Count / hour | Score
+-- | -- | -- | -- | --
+LCP needs improvement (RUM) | c.rum.metrics | 2500ms - 4000ms | 2 | 40
+LCP is poor (RUM) | c.rum.metrics | >= 4000ms | 2 | 20
+CLS needs improvement (RUM) | c.rum.metrics | 0.1 - 0.25 | 5 | 40
+CLS is poor (RUM) | c.rum.metrics | >= 0.25 | 5 | 30
+FID needs improvement (RUM) | c.rum.metrics | 100 - 300 | 2 | 20
+FID is poor (RUM) | c.rum.metrics | >= 300 | 5 | 30
+FCP needs improvement (RUM) | c.rum.metrics | 1800 - 3000 | 3 | 40
+FCP is poor (RUM) | c.rum.metrics | >= 3000 | 3 | 20
+TTFB needs improvement (RUM) | c.rum.metrics | 400 - 800 | 3 | 40
+TTFB is poor (RUM) | c.rum.metrics | >= 800 | 3 | 20
+
+### custom rules
+
+> source: rules/custom.yaml
+
+This file contains only example rule.
+
+## Rule syntax
+
+- The listener-agent load and parsing a rules from files `rules/internal.yaml`, `rules/rum.yaml` and `rules/custom.yaml`. You can use one from three type of rules. Each rule type has different syntax and different use case. 
+- All these files with rules are inside into the Docker image with listener-agent. If you want change some value or some rule or if you want delete or add a new rule, you can override these files with your own set of rules. Just create a config-map and deploy them into Kubernetes.
+
+
+**Example of one rule definition**
+- This rule is type `range`, searching items with a label `loadEventEnd` with value between 3000 and 5000 ms in `c.performance-entries` index.
+- If the listener-agent finds minimal 5 items, automatically save event into `c.listener.events` index and send report into slack.
+- For creating report body are used additional labels `loadEventEnd` and `timestamp`.
+
+```yaml
+  - type: range
+    title: "Load time needs improvement"
+    index: c.performance-entries
+    filter:
+    - field: 'loadEventEnd'
+      operator: 'gte'
+      value: 3000
+    - field: 'loadEventEnd'
+      operator: 'lt'
+      value: 5000
+    min: 5
+    score: 40
+    reportLabels:
+    - 'loadEventEnd'
+    - 'timestamp'
+    reporters:
+    - type: slack
+      message: "Page is complete loaded."
+```
+
+### type `range`
+
+**Example rule**
+
+> This rule evaluate if exists minimal 5 items in `c.performance-entries` index and if these items has label `loadEventEnd` with value between `3000` and `5000`ms
+
+```yaml
+rules:
+  - type: range
+    title: "Load time needs improvement"
+    index: c.performance-entries
+    filter:
+    - field: 'loadEventEnd'
+      operator: 'gte'
+      value: 3000
+    - field: 'loadEventEnd'
+      operator: 'lt'
+      value: 5000
+    min: 5
+    score: 40
+    reportLabels:
+    - 'loadEventEnd'
+    - 'timestamp'
+    reporters:
+    - type: slack
+      message: "Page is complete loaded."
+```
+
+**Mandatory parts**
+- `title` name of this rule definition
+- `index` Elasticsearch labels
+- `score` define score by score table, more info in chapter [Score table](#score-table)
+- `reporters` are list of reporters type, which are you want use for sending notice about the rule exceeded. You must use at least one reporter type and you can combine them. E.g. only `slack` or ( `slack` and `email`  )
+
+**Optional parts**
+- `filter` is array of filters. Each filter must contains:
+  - `field` name of field from Elasticsearch index
+  - `operator` can contains value `lt`, `lte`, `gt` and `gte` and
+  - `value` 
+ - `min` this rule will be true only in case, that was found minimal `min` items in Elasticsearch index. If is not `min` used, will be the listener-agent report all findings.
+
+### type `contains`
+
+### type `match`
+
+## Reporting
+
+### Reporters
+
+### Schema
 
 ## Configuration
 
 ## Elasticsearch
+
+## Data Manager
 
 
 
