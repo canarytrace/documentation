@@ -260,7 +260,7 @@ For instance, if you do not use Data Manager (event: DataManager exists: Not fou
 
 ## Internal checks
 
-Interní checky kontrolují vše potřebné, aby nic nebránilo monitorovat webové aplikace, jako je například to, jestli Canarytrace běží, jestli je Elasticsearch dostupný a jestli není přetížen a nevyžaduje údržbu. 
+Internal checks verify everything necessary to ensure nothing prevents monitoring of web applications, such as whether Canarytrace is running, whether Elasticsearch is accessible, and whether it is not overloaded and does not require maintenance.
 
 
 Title | Score
@@ -275,18 +275,18 @@ Canarytrace lifecycle errors | 30
 DataManager exist: Not found. | 31
 
 - [Reporters](#reporters) `internal-slack`
-- Internal checks are run when Listener agent start and before rules check.
+- Internal checks are run when the Listener agent starts and before the rules check.
 
 ## Rules / Checklists
 
-Listener agent je dodáván s předem definovanými pravidly, takže reálně nemusíte ze začátku do konfigurace vůbec zasahovat. Nic méně, určitě budete chtít některá pravidla měnit a proto můžete built-in pravidla přetížit. K tomu se používají 3 soubory
+The Listener agent comes with pre-defined rules / checklist, so you don't necessarily have to intervene in the configuration from the beginning. However, you will likely want to modify certain rules, and for that, you can override the built-in rules. For this purpose, three files are used.
 
-- `rules/internal.yaml` pro pravidla kvality webových aplikací, obzvláště pro kontrolu dat z Canarytrace.
-    - Seznam pravidel https://github.com/canarytrace/documentation/issues/110#issuecomment-1288031254
-- `rules/rum.yaml` s pravidly pro kontrolu dat z RUM.
-    - Seznam pravidel https://github.com/canarytrace/documentation/issues/110#issuecomment-1288045409
-- `rules/custom.yaml` pro Vaše vlastní business pravidla
-    - Obsahuje pouze ukázku možného business pravidla ( maximální čas pro přihlášení uživatele do aplikace )
+- `rules/internal.yaml` For the quality rules of web applications, especially for checking data from Canarytrace.
+    - List of rules [internal.yaml](#internal-rules)
+- `rules/rum.yaml` Rules for monitoring data from the [Canarytrace RUM](../rum/introduction)
+    - List of rules [rum.yaml](#rum-rules)
+- `rules/custom.yaml` For your own custom business rules.
+    - List of rules [custom.yaml](#custom-rules)
 
 Všechny tři soubory se deployují do Kubernetes jako [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) a jejich obsah můžete za běhu měnit. Změny se projeví při dalším startu Listener agenta.
 
@@ -344,18 +344,18 @@ TTFB is poor (RUM) | c.rum.metrics | >= 800 | 3 | 20
 
 > source: rules/custom.yaml
 
-This file contains only example rule.
+It contains only an example of a possible business rule (maximum time for user login to the application).
 
 ## Rule syntax
 
-- The listener-agent load and parsing a rules from files `rules/internal.yaml`, `rules/rum.yaml` and `rules/custom.yaml`. You can use one from three type of rules. Each rule type has different syntax and different use case. 
-- All these files with rules are inside into the Docker image with listener-agent. If you want change some value or some rule or if you want delete or add a new rule, you can override these files with your own set of rules. Just create a config-map and deploy them into Kubernetes.
+- The Listener Agent loads and parses rules from files `rules/internal.yaml`, `rules/rum.yaml`, and `rules/custom.yaml`. You can choose one of the three types of rules, each with a different syntax and use case.
+- All these rule files are included inside the Docker image with the Listener Agent. If you wish to change a value, modify a rule, add a new rule, or delete a rule, you can override these files with your custom set of rules. Simply create a config-map and deploy it into Kubernetes.
 
 
 **Example of one rule definition**
-- This rule is type `range`, searching items with a label `loadEventEnd` with value between 3000 and 5000 ms in `c.performance-entries` index.
-- If the listener-agent finds minimal 5 items, automatically save event into `c.listener.events` index and send report into slack.
-- For creating report body are used additional labels `loadEventEnd` and `timestamp`.
+- This rule is of type `range`, searching for items with a label `loadEventEnd` and a value between `3000` and `5000` ms in the `c.performance-entries` index.
+- If the Listener Agent finds a minimum of 5 items that match this condition, it automatically saves the event into the `c.listener.events` index and sends a [report](#reporters) to Slack.
+- For creating the report body, additional labels `loadEventEnd` and `timestamp` are used.
 
 ```yaml
   - type: range
@@ -379,10 +379,11 @@ This file contains only example rule.
 ```
 
 ### type `range`
+If the page load time is between 3 and 5 seconds, then create an event and send a report.
 
 **Example rule**
 
-> This rule evaluate if exists minimal 5 items in `c.performance-entries` index and if these items has label `loadEventEnd` with value between `3000` and `5000`ms
+- This rule evaluates if there are at least 5 items in the `c.performance-entries` index, and if these items have a label `loadEventEnd` with a value between `3000` and `5000` ms.
 
 ```yaml
 rules:
@@ -407,10 +408,58 @@ rules:
 ```
 
 **Mandatory parts**
-- `title` name of this rule definition
-- `index` Elasticsearch labels
-- `score` define score by score table, more info in chapter [Score table](#score-table)
+- `title` rule name
+- `index` Elasticsearch index
+- `score` define score by score table, more info in chapter [Score table](#score)
 - `reporters` are list of reporters type, which are you want use for sending notice about the rule exceeded. You must use at least one reporter type and you can combine them. E.g. only `slack` or ( `slack` and `email`  )
+
+**Optional parts**
+- `filter` is array of filters. Each filter must contains:
+  - `field` name of field from Elasticsearch index
+  - `operator` can contains value `lt`, `lte`, `gt` and `gte` and
+  - `value` 
+ - `min` this rule will be true only in case, that was found minimal `min` items in Elasticsearch index. If is not `min` used, will be the Listener Agent report all findings.
+
+### type `contains`
+
+**Example rule**
+Check if there are any CSS files in the web app responses without gzip or brotli compression. If yes, then create an event and send a report.
+
+- This rule evaluate if exists minimal 10 items in `c.request-log` index and if these items has field `response.headers.content-type` with value `css` plus field `response.headers.content-encoding` must not have values `gzip` and `br`
+
+```yaml
+rules:
+  - type: contains
+    title: "Responses with CSS files must contains gzip or brotli compression."
+    index: c.request-log
+    field: response.headers.content-type
+    value: 'css'
+    expression:
+      field: 'response.headers.content-encoding'
+      operator: must_not
+      values:
+      - 'gzip'
+      - 'br'
+    min: 10
+    score: 40
+    reportLabels:
+    - 'url'
+    - 'timestamp'
+    reporters:
+    - type: slack
+      message: "Use Brotli for plain text compression."
+```
+
+**Mandatory parts**
+- `title` rule name
+- `index` Elasticsearch index
+- `score` define score by score table, more info in chapter [Score table](#score)
+- `reporters` are list of reporters type, which are you want use for sending notice about the rule exceeded. You must use at least one reporter type and you can combine them. E.g. only `slack` or (`slack` and `email`)
+- `field` items must contains this field
+- `value` items with `field` must contains exactly value 
+- `expression` is a subset of conditions
+    - `operator` can contains `must` or `must_not`
+    - `values` is an array with with strings. Each items are `and`.
 
 **Optional parts**
 - `filter` is array of filters. Each filter must contains:
@@ -419,9 +468,42 @@ rules:
   - `value` 
  - `min` this rule will be true only in case, that was found minimal `min` items in Elasticsearch index. If is not `min` used, will be the listener-agent report all findings.
 
-### type `contains`
-
 ### type `match`
+
+**Example rule**
+
+
+- This rule evaluates if there are at least 2 items in the `c.report-* index`. Additionally, it checks if these items have the field `passed` with the value `false`.
+
+```yaml
+rules:
+  - type: match
+    title: "Failed check your page!"
+    index: c.report
+    field: passed
+    operator: must
+    expected: false
+    min: 2
+    score: 10
+    reportLabels:
+    - 'fullTitle'
+    - 'timestamp'
+    reporters:
+    - type: slack
+      message: "An error occurred while checking."
+```
+
+**Mandatory parts**
+- `title` rule name
+- `index` Elasticsearch index
+- `score` define score by score table, more info in chapter [Score table](#score)
+- `reporters` are list of reporters type, which are you want use for sending notice about the rule exceeded. You must use at least one reporter type and you can combine them. E.g. only `slack` or (`slack` and `email`)
+- `field` items must contains this field
+- `operator` you can use `must` or `must_not`
+- `value` items with `field` must contains exactly value 
+
+**Optional parts**
+ - `min` this rule will be true only in case, that was found minimal `min` items in Elasticsearch index. If is not `min` used, will be the listener-agent report all findings.
 
 ## Reporting
 

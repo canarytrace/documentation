@@ -57,7 +57,7 @@ The Listener is component-based, so you can start only with the [Listener Agent]
 
 Each component is distributed via a Docker image for deployment into Kubernetes.
 
-### Listener Agent
+### [Listener Agent](./agent)
 
 The Listener Agent is the most important component. It contains built-in rules that evaluate data from [Canarytrace RUM](../rum/introduction) and Canarytrace Synthetic, then stores the results into an event index in Elasticsearch. It calculates the score of defects, sends reports, and finally, includes experiments.
 
