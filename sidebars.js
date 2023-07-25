@@ -29,6 +29,7 @@ const sidebars = {
       label: 'RUM',
       items: [
         'rum/introduction',
+        'rum/useCases',
         'rum/rumClient',
         'rum/rumServer',
         'rum/elasticsearch',
