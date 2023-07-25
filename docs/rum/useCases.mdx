@@ -123,12 +123,52 @@ On the other hand, customers can encounter problems that can lead to a bad user 
 - I am waiting for the order confirmation to load.
 - Oh no, my work is lost. The confirmation returned some error.
 
-
-
 ### Why is problem your problem?
 
 - rychlost nacteni vs google ranking
 - odkaz na studii Miliseconds make Milions
+
+
+### How to start with the RUM
+
+All problems mentioned above can be detected by Canarytrace RUM. You can begin using RUM by adding the following code named [`init script`](./rumClient#init-script) to every page or reusable component of your e-shop.
+
+```javascript title="init script"
+<script>
+  (function(w,d,u,a,o){
+  w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
+  o=d.getElementsByTagName(u)[0];o.parentNode.insertBefore(w,o)
+  })(window,document,'script','https://your-domain.com/rum','CRUM')
+</script>
+```
+- More information about init script can be found in the [RUM Client](./rumClient#init-script) section.
+
+That's really all. This is the first step, and in many cases, it is enough. The Canarytrace RUM will start collecting [all important data](./rumClient#browser-data-collected) from your clients' devices and send them to the Canarytrace RUM backend. You can view the data in the [Canarytrace RUM dashboard](./kibana).
+
+- For successful integration, it is necessary to have a [Canarytrace RUM Server](./rumServer) running.
+
+The Canarytrace RUM starts collecting data on pages where the user navigates, performance metrics, user-journeys, and information about the user's browser and device. This is enough for your first start. Thanks to this first phase, you will gather a lot of information about your e-shop and users, and thanks to this information, you will know how your e-shop works and what the user experience is like.
+
+:::tip
+For the first time, you can start with Canarytrace RUM on your development environment. If you have your e-shop in multiple countries, it's a good idea to start implementing it in the smallest country to gain a first overview, learn about performance metrics, and gain initial experience.
+
+If you do not have these options, no problem, you can start directly on your production environment.
+:::
+
+### More information better knowledge
+
+If you have more information, you will know more important information about your e-shop and satisfaction of your users. Now you can add e.g. [HeroElements](./rumClient#heroelements), [Actions](./rumClient#actions) and [Events](./rumClient#events).
+
+Why?
+- je potreba pridat kliknuti, protoze to vyvola reakci vaseho e-shopu a muzeme tak sledovat, jak se vas e-shop chova na zarizeni uzivatele
+
+![Metrics graph](./assets/UserJourneyEcommerceRUM.webp)
+
+Takze jak by mohl vypadat nasazeny RUM na e-shopu?
+ 
+
+
+Posledni oddil, by mohl byt o labels, custom nazev pages, casovani a debug prostredi bez odesilani dat na server.
 
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
