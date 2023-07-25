@@ -157,10 +157,17 @@ If you do not have these options, no problem, you can start directly on your pro
 
 ### More information better knowledge
 
-If you have more information, you will know more important information about your e-shop and satisfaction of your users. Now you can add e.g. [HeroElements](./rumClient#heroelements), [Actions](./rumClient#actions) and [Events](./rumClient#events).
+If you have more information, you will know more important details about your e-shop and the satisfaction of your users. Now you can add features like [HeroElements](./rumClient#heroelements), [Actions](./rumClient#actions), and [Events](./rumClient#events).
 
-Why?
-- je potreba pridat kliknuti, protoze to vyvola reakci vaseho e-shopu a muzeme tak sledovat, jak se vas e-shop chova na zarizeni uzivatele
+[**HeroElements**](./rumClient#heroelements) can capture the time when arbitrary content is shown to the user's device. This can be used to measure the time when the user sees the important content of the page. For example, you can measure the time when the user views the product detail, the product list, or the cart.
+
+[**Actions**](./rumClient#actions) capture user activities and the exact time when the user clicks on buttons or links. For example, you can measure the time when the user clicks on the button to add the product to the cart or when the user clicks on the button to complete the order, and others.
+
+:::note Why is useful use Actions?
+When a user clicks on a button, the e-shop executes certain procedures, such as loading data from the server, displaying a modal window, and so on. This is why it is essential to track button clicks. By doing so, we can measure the duration it takes to run the procedure and how long it takes to show the result to the user. This tracking allows us to monitor and optimize the performance and user experience on the e-shop.
+:::
+
+[**Events**](./rumClient#events) are useful for storing context. For example, the count of shown products, search results, filter settings, etc. Thanks to Canarytrace RUM, you have a lot of information about performance and user activities, but it's also helpful to know how many products users view, add to the cart, and buy, etc. Therefore, with the use of events, you will better understand the situation and the environment of the client, who is shopping in your e-shop.
 
 ![Metrics graph](./assets/UserJourneyEcommerceRUM.webp)
 
