@@ -247,6 +247,8 @@ Consider what you need to know about loading data from your server to the fronte
 Thanks the HeroElements we now have overview, how our e-shop works on clients devices, how fast is our server and how fast is displayed products.
 :::
 
+More information about HeroElements can be found in the [RUM Client](./rumClient#heroelements) section.
+
 
 #### [Measure user activities](./rumClient#actions)
 
@@ -280,13 +282,65 @@ The RUM Client automatically tracking all clicks on elements and all these click
 - We now know what the user is doing and when, what his journey is, and how long it takes to perform certain actions
 :::
 
+More information about actions can be found in the [RUM Client](./rumClient#actions) section.
+
+#### [Events](./rumClient#events)
+Events are useful for storing contexts. We have a lot of information about the client's devices and browsers; we have metrics, Actions, and HeroElements, but context is something that helps us understand why something is happening or what the user sees on their device.
+
+Imagine that we have some problem with the performance of loading the products. We know what the user is searching for and the size of the response from the server, but we don't know what the user sees on their device. When we use Events, we can store information, such as the number of products the user sees or the types of delivery services they view.
+
+Events are useful for storing additional information about what the user sees on their device or what actions the user is taking. In our e-shop, we can store the count of products on the homepage or after a search, the number of available variants, or the types of delivery services available.
+
+An event is a small piece of JavaScript code that we incorporate into our e-shop code. The [RUM Client](./rumClient) waits and captures new events.
+
+**Example:** Store the number of products displayed on the homepage, as seen on the user's device.
+
+```javascript title="Implementation the event"
+CRUM.addEvent('homepage-products', {
+  'parfums': 10,
+  'makeup': 20,
+});
+```
+
+**Example 2:** Store the number available delivery services, which are seen on the user's device.
+
+```javascript title="Implementation the event"
+CRUM.addEvent('available-delivery', 3);
+```
+
+**Example 3:** Store the settings of filtering, which is seen on the user's device.
+
+```javascript title="Implementation the event"
+CRUM.addEvent('homepage-products', {
+  'categories': ['Category A', 'Category B'],
+  'sort': 'price',
+  'price': {
+    'from': 100,
+    'to': 200,
+  },
+});
+```
+
+Consider, what is interesting to know about what the user sees on their device. Catched events are sent to the [RUM Server](./rumServer) and displayed in the [Kibana](./kibana).
+
+:::info What have we done?
+- Thanks to Events, we can store additional information about what the user sees on their device.
+- Now we know how the user sets filters, how many products they see on the page after a search, how many delivery services they can choose from, and so on.
+- Thanks to Events, we can compare user devices, user actions, and the smoothness of our e-shop, gaining insight into what the user sees.
+:::
+
+More information about events can be found in the [RUM Client](./rumClient#events) section.
 
 
+### Analyzing client satisfaction
 
+Great! We have implemented Canarytrace RUM in our e-shop and we are collecting a lot of data. It's time to analyze client satisfaction and identify opportunities to improve our e-shop.
 
+#### What interests us, what do we want to know?
+Let's go back to our first image and [Customer expectations](#customer-expectations)
+![Metrics graph](./assets/UserJourneyEcommerce.webp)
 
-Posledni oddil, by mohl byt o labels, custom nazev pages, casovani a debug prostredi bez odesilani dat na server.
-
+### Technical analysis of the e-shop
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
