@@ -149,7 +149,14 @@ That's really all. This is the first step, and in many cases, it is enough. The 
 
 The Canarytrace RUM starts collecting data on pages where the user navigates, performance metrics, user-journeys, and information about the user's browser and device. This is enough for your first start. Thanks to this first phase, you will gather a lot of information about your e-shop and users, and thanks to this information, you will know how your e-shop works and what the user experience is like.
 
-:::tip
+:::info What have we done?
+- We now know the time when the user sees the important content of the pages.
+- We now know the time when the data for our e-shop is received from the server.
+
+Thanks the HeroElements we now have overview, how our e-shop works on clients devices, how fast is our server and how fast is displayed products.
+:::
+
+:::tip Development or production environment?
 For the first time, you can start with Canarytrace RUM on your development environment. If you have your e-shop in multiple countries, it's a good idea to start implementing it in the smallest country to gain a first overview, learn about performance metrics, and gain initial experience.
 
 If you do not have these options, no problem, you can start directly on your production environment.
@@ -236,7 +243,46 @@ Consider what you need to know about loading data from your server to the fronte
 :::info What have we done?
 - We now know the time when the user sees the important content of the pages.
 - We now know the time when the data for our e-shop is received from the server.
+
+Thanks the HeroElements we now have overview, how our e-shop works on clients devices, how fast is our server and how fast is displayed products.
 :::
+
+
+#### [Measure user activities](./rumClient#actions)
+
+Measuring user actions is the next useful feature that helps us detect and track user activities on their real devices, such as button clicks. These user actions can trigger procedures in the user's browser and in our e-shop, like opening a product detail, adding items to the cart, fetching data from the server, or executing JavaScript to show modal windows.
+
+These actions may increase memory and CPU usage in the user's browser and in our e-shop. If you have a high volume of visits and active users, these actions can cause performance problems and slow down your e-shop.
+
+Tracking user actions allows us to detect and measure user activities on their real devices and helps us identify performance issues in our e-shop.
+
+The second useful case for using actions is tracing user journeys and user behavior.
+
+We want to track various actions in our e-shop, such as clicking on a product, clicking on a category in the menu, clicking on the chat button, clicking on the search input, clicking on filters, clicking on a product in the search results, clicking on photos, clicking on a variant, clicking on adding a product to the cart, clicking on a delivery method, clicking on a payment method, and clicking on the order button.
+
+Starting to use [actions](./rumClient#actions) is easy; we only need to add the attribute `crum-action="optional-name"` to the HTML element, e.g., a button. The [RUM Client](./rumClient) automatically start tracking all elements, which have the `crum-action` attribute.
+
+**Example:** Track when user click on the product in the product list.
+
+```javascript title="Implementation the action" {2-5}
+<ul>
+  <li crum-action="product-1">Product 1</li>
+  <li crum-action="product-2">Product 2</li>
+  <li crum-action="product-3">Product 3</li>
+  <li crum-action="product-4">Product 4</li>
+</ul>
+```
+
+The RUM Client automatically tracking all clicks on elements and all these clicks are sent to the [RUM Server](./rumServer). The RUM Server stores all actions and displays them in the [Canarytrace RUM dashboard](./kibana).
+
+:::info What have we done?
+- Thanks to, that Canarytrace RUM collect a different metrics in the same time, we can compare user activities with the performance metrics, we can see, how requests was loaded from server and how long it takes to display products to the user or what smoothly our eshop shows result of the click to the user.
+- We now know what the user is doing and when, what his journey is, and how long it takes to perform certain actions
+:::
+
+
+
+
 
 
 Posledni oddil, by mohl byt o labels, custom nazev pages, casovani a debug prostredi bez odesilani dat na server.
