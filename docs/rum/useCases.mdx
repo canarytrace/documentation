@@ -169,10 +169,74 @@ When a user clicks on a button, the e-shop executes certain procedures, such as 
 
 [**Events**](./rumClient#events) are useful for storing context. For example, the count of shown products, search results, filter settings, etc. Thanks to Canarytrace RUM, you have a lot of information about performance and user activities, but it's also helpful to know how many products users view, add to the cart, and buy, etc. Therefore, with the use of events, you will better understand the situation and the environment of the client, who is shopping in your e-shop.
 
+
+### Extended implementation
+
+Now, let's look at a real example where we can identify all possible problems experienced by our customers.
+
 ![Metrics graph](./assets/UserJourneyEcommerceRUM.webp)
 
-Takze jak by mohl vypadat nasazeny RUM na e-shopu?
- 
+#### [init script](./rumClient#init-script)
+Place the init script into the head section of every page or reusable component of your e-shop. The init script loads the Canarytrace RUM client and starts collecting data from the user's device.
+
+Example: Add the init script to the head section on every page of your e-shop.
+```javascript title="init script"
+<script>
+  (function(w,d,u,a,o){
+  w=w[o]=w[o];w=document.createElement(u);w.async=1;w.id=o;w.src=a
+  o=d.getElementsByTagName(u)[0];o.parentNode.insertBefore(w,o)
+  })(window,document,'script','https://your-domain.com/rum','CRUM')
+</script>
+```
+
+More information about init script can be found in the [RUM Client](./rumClient#init-script) section.
+
+#### [HeroElements](./rumClient#heroelements)
+Place HeroElements after every important content on the page. For example, you can place HeroElements after the header menu, AdWords, catalog, product list, chatbot button, search input, filtering settings, product photo, product variants, add to basket button, product description, confirmations, delivery services, payment methods, etc. Add HeroElements after all important content that you want to measure.
+
+**Example:** Add the HeroElement code for measuring the precise time when the search input is displayed to the user:
+```javascript title="Measure time, when is search input displayed" {2}
+<input type="search" name="search" id="header-search" placeholder="Enter the product name, category, ...">
+<script>performance.mark('HE-searchInput')</script>
+```
+In this example we add HeroElement measure code after the search input. The HeroElement code is a simple JavaScript code that marks the time when the search input is displayed to the user. The [RUM Client](./rumClient) collect all HeroElements and send them to the [RUM Server](./rumServer). The RUM Server stores the HeroElements and displays them in the [Canarytrace RUM dashboard](./kibana).
+
+Thanks to HeroElements you will be know, when is displayed important content to the users on their devices. 
+
+**Example 2:** Add the HeroElement code to measure the start of loading the list of products and the end to measure how long it takes to load the whole list of products.
+
+```javascript title="Measure the time it takes to start loading the list of products and how long it takes to load the entire list." {1,8}
+<script>performance.mark('HE-start-productList')</script>
+<ul>
+  <li>Product 1</li>
+  <li>Product 2</li>
+  <li>Product 3</li>
+  <li>Product 4</li>
+</ul>
+<script> performance.mark('HE-end-productList')</script>
+```
+
+Consider what you need to know about what and when is displayed to the user on their device. Use HeroElements, and don't hesitate to have multiple of them on one page.
+
+Nice, now we know when the user sees the important content of the page. But it can also be useful to know when data for the product list is received from the server. In this case, HeroElements is also valuable.
+
+**Example 3:** Add the HeroElement code to measure response from the server.
+
+```javascript title="Measure the time it takes to receive products from the server." {4}
+fetch("https://your-domain.com/api/v1/products")
+  .then((response) => response.json())
+  .then((data) => {
+    performance.mark('HE-productList-loaded')
+    console.log(data)
+  });
+```
+
+Consider what you need to know about loading data from your server to the frontend of your e-shop.
+
+:::info What have we done?
+- We now know the time when the user sees the important content of the pages.
+- We now know the time when the data for our e-shop is received from the server.
+:::
 
 
 Posledni oddil, by mohl byt o labels, custom nazev pages, casovani a debug prostredi bez odesilani dat na server.
