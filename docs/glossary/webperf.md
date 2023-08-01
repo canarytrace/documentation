@@ -7,7 +7,7 @@ tags:
   - glossary
 ---
 
-:::info
+:::info Web performance
 Web performance, or website performance, generally refers to the speed at which web pages load and display in a user's browser. It's a crucial aspect of user experience that can significantly impact a website's traffic and conversion rates.
 
 Performance metrics are specific measurements that allow us to quantify and track website performance. These metrics can include factors such as page load time, Time to First Byte (TTFB), and Time to Interactive (TTI) and more.
@@ -483,58 +483,5 @@ Is the total time taken for a certain process or action to complete. In the cont
 - max. 2s
 - Always be faster than your competition.
 
-## Key findings
-
-- In short, your website should load as fast as possible!
-- The ideal website load time for mobile sites is 1-2 seconds.
-- 53% of mobile site visits are abandoned if pages take longer than 3 seconds to load.
-- A 2-second delay in load time resulted in abandonment rates of up to 87%.
-- Google aims for under half-a-second load time.
-- A very slow load time can be a negative Google ranking factor.
-- The average load time for mobile sites is 19 seconds over 3G connections. Models predict that publishers whose mobile sites load in 5 seconds earn up to 2x more mobile ad revenue than those whose sites load in 19 seconds.
-- People would not return to websites that took longer than four seconds to load and formed a “negative perception” of a company with a badly put-together site or would tell their family and friends about their experiences.
-- Slow load times are a primary reason visitors abandon a checkout process.
-- In studies, page time load goes from 1s to 3s – the probability of bounce increases by 32%.
-- In studies, page time load goes from 1s to 5s – the probability of bounce increases by 90%.
-- In studies, page time load goes from 1s to 6s – the probability of bounce increases by 106%.
-- In studies, page time load goes from 1s to 10s – the probability of bounce increases by 123%.
-- In a recent study, the average load time for a web page was 3.21s.
-- In a recent study, the average load time for a mobile web page is 22 seconds.
-- For every 100ms decrease in homepage load speed, a company’s customer base saw a 1.11% lift in session-based conversion
-- Users read fewer articles each day whilst experiencing delays loading each web page. The speed of the site negatively impacts a user’s session depth, no matter how small the delay.
-- Two-thirds of UK consumers (67%) cite slow loading times as the main reason they would abandon an online purchase.
-- 47 percent of consumers expect a web page to load in two seconds or less.
-- 40 percent of consumers will wait no more than three seconds for a web page to render before abandoning the site
-- 52 percent of online shoppers stated that quick page loading is important to their site loyalty.
-- Shoppers often become distracted when made to wait for a page to load. 14 percent will begin shopping at another site, and 23 percent will stop shopping or walk away from their computer.
-- Optimise your images – the most important thing you can do to decrease download times. Load background images via external - CSS. Minimise white space, line returns and comment tags. Remove unnecessary META tags and META content. Minimise unnecessary javascript and any other client-side scripting.
-- A technical approach to improving user experience would begin with site speed.
-- A faster site should improve visitor satisfaction levels and the number of conversions.
-- Google might crawl your site slower if you have a very slow site (confirmed by Google).
-- Retail and travel sites – 79 percent of online shoppers who experience a dissatisfying visit are less likely to buy from that site again. 64 percent would simply purchase from another online store.
-- Automotive retail sites take on average 6 seconds to load.
-- Customer packaged goods sites take an average of 6.1 seconds to load.
-- Finance sites take an average of 5.1 seconds to load.
-- Healthcare sites take an average of 5.6 seconds to load.
-- Media sites take an average of 5.5 seconds to load.
-- Retail sites take an average of 6 seconds to load.
-- Technology sites take an average of 6.8 seconds to load.
-- Travel sites take an average of 6.7 seconds to load.
-- Improving your desktop site speed score in isolation of developing a compelling user experience, will not magically lead to BETTER rankings in Google in the short term.
-- Ranking is a nuanced process and there are over 200 signals, but now speed is one of them. Know that ‘content’ and relevance’ are still primary.
-
-## Interesting bookmarks
-
-Here is a list of links to interesting articles and studies related to web performance:
-
-1. [Web.dev Performance Guides](https://web.dev/performance/): Official documentation and guides focused on web performance, provided by Google.
-2. [The State of the Web](https://httparchive.org/reports/state-of-the-web): Regularly updated overview of web development and performance with detailed statistics and analysis.
-3. [Web Performance Best Practices](https://developer.mozilla.org/en-US/docs/Web/Performance): Documentation from Mozilla Developer Network (MDN) providing best practices for improving web performance.
-4. [Google Developers: Web Performance](https://developers.google.com/web/fundamentals/performance): Collection of articles and guides from Google Developers focused on optimizing web performance.
-5. [HTTP Archive](https://httparchive.org/): Open-source dataset containing a comprehensive collection of web data and analysis that provides detailed insights into web performance.
-6. [Web Performance Case Studies](https://wpostats.com/): A series of case studies on web performance, covering various types of websites and optimization techniques.
-7. [Web Performance Today](https://www.soasta.com/blog/): Blog by SOASTA (now part of Akamai) focused on current trends and tips in web performance.
-8. [Fast load times](https://web.dev/fast/): Techniques for improving site performance.
-9. [Web Almanac](https://almanac.httparchive.org/en/2022/): Annual report on the state of the web, with detailed statistics and analysis.
 
 These resources should provide you with detailed information on web performance and how to optimize it.
