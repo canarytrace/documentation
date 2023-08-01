@@ -94,6 +94,11 @@ Largest Contentful Paint (LCP) is a metric that measures the time from page load
 
 Improving the LCP metric often involves optimizing server and network, managing third-party resources, reconsidering rendering strategy (e.g., switching to server-side rendering (SSR) or static site generation (SSG) instead of CSR), and optimizing images and other large media.
 
+**Recommendation**
+
+- max. 2.5s
+- Always be faster than your competition.
+
 More information abtout [LCP](https://web.dev/lcp/)
 
 ### FID
@@ -118,7 +123,14 @@ First Input Delay (FID) is the [stable](https://web.dev/vitals/#stable) Core Web
 
 Optimization for better FID often involves improving code efficiency, limiting the amount of JavaScript sent to the browser, breaking up long tasks into smaller ones that the browser can handle more easily, and managing third-party resources.
 
-More information about [FID](https://web.dev/fid/)
+**Recommendation**
+
+- max. 100ms
+- Always be faster than your competition.
+
+
+- [TOP LCP element types](https://almanac.httparchive.org/en/2022/performance#lcp-content-types)
+- More information about [FID](https://web.dev/fid/)
 
 
 ### INP
@@ -130,13 +142,6 @@ The task of INP is not to measure all interactions (e.g., network loading, UI up
 
 ![What is an interaction](https://web-dev.imgix.net/image/jL3OLOhcWUQDnR4XjewLBx4e3PC3/Ng0j5yaGYZX9Bm3VQ70c.svg)
 The life of an interaction. An input delay occurs until event handlers begin running, which may be caused by factors such as long tasks on the main thread. The interaction's event handlers then run, and a delay occurs before the next frame is presented.
-
-
-#### Recommended INP Values
-
-- **Good:** INP less than 200 milliseconds.
-- **Needs Improvement:** INP between 200 and 500 milliseconds.
-- **Poor:** INP greater than 300 milliseconds.
 
 #### Recommendations for INP Optimization
 
@@ -157,6 +162,13 @@ Interactivity is a key part of user experience, and optimizing for Interactivity
 As always, the best strategy can depend on the specifics of your webpage or application. Regular monitoring and performance profiling can help you quickly identify and address any issues affecting your INP.
 
 - What is the difference between FID and INP? https://web.dev/inp/#how-is-inp-different-from-first-input-delay-fid
+
+**Recommendation**
+
+- Good: INP less than 200 milliseconds.
+- Needs Improvement: INP between 200 and 500 milliseconds.
+- Poor: INP greater than 300 milliseconds.
+
 
 More information about [INP](https://web.dev/inp/)
 
@@ -187,6 +199,16 @@ Optimizing FCP can enhance the user experience on a website, as fast content loa
 - **Use HTTP/2 or HTTP/3:** These newer versions of the HTTP protocol allow for more efficient loading of resources.
 
 Remember, FCP is just one of many page performance metrics. It's also essential to track other metrics, such as [TTI](./webperf#tti), [LCP](./webperf#fcp), and [CLS](./webperf#cls), to get a complete picture of page performance.
+
+
+**Recommendation**
+
+max. 1.800ms.
+Always be faster than your competition.
+
+Statistics:
+
+- 1.6.2023, median desktop: 2.2s, median mobile: 3.7s (https://httparchive.org/reports/loading-speed#fcp)
 
 More information about [FPC](https://web.dev/fcp/).
 
@@ -220,6 +242,16 @@ These definitions and metrics help developers better understand and measure how 
 - Optimizing the resources of the page so that they are loaded and processed as efficiently as possible.
 
 As with other web page performance metrics, it's important to monitor TTI in the overall context of page performance and also track other metrics such as [FCP](./webperf#fcp), [LCP](./webperf#lcp), and [CLS](./webperf#cls).
+
+**Recommendation**
+
+- max. 800ms.
+- Always be faster than your competition.
+
+Statistics:
+
+- 1.6.2023, median desktop: 6.3s, median mobile: 12.7s (https://httparchive.org/reports/loading-speed#fcp)
+
 
 More information about [TTI](https://web.dev/tti/).
 
@@ -262,6 +294,11 @@ Remember, the right strategy depends on the specific scenario and the type of ap
 
 - [Analyze frames per seconds](https://developer.chrome.com/docs/devtools/performance/#analyze_frames_per_second) in your browser.
 
+**Recommendation**
+
+- min. 40 FPS and more.
+- Always be faster than your competition.
+
 
 ### Long Task
 
@@ -296,34 +333,14 @@ As a page loads or a user interacts with an application, the browser assigns tas
 
 Remember, the right strategy depends on the specific scenario and the types of tasks you are handling.
 
+**Recommendation**
+
+- max 100ms.
+- Always be faster than your competition.
+
 
 ## Processing
 
-### duration
-
-Is the total time taken for a certain process or action to complete. In the context of web pages and performance, the "duration" metric can refer to the total time taken to load and render a web page, from the initial request to when the page is fully interactive and ready to use.
-
-"Duration" can include the following processes:
-
-1. Time needed to get a response from the server (Time to First Byte - TTFB)
-2. Time required to load the HTML content
-3. Time needed to load and process external resources, such as CSS, JavaScript, and images
-4. Time needed to render the page in the browser
-5. Time required to initialize JavaScript libraries and functions
-
-Factors that can slow down "duration" include:
-
-1. Slow server: A server that responds slowly can increase the time it takes to get a response from the server.
-2. Large number of external resources: Each external resource that the page has to load (CSS, JavaScript, images, etc.) adds to the overall load time.
-3. Complex DOM: More complex Document Object Model (DOM) structures can slow down page rendering.
-4. Heavy JavaScript files: Large JavaScript libraries can slow down page load time.
-
-What a programmer can do to improve "duration":
-
-1. Optimize the server: Make sure your server is fast and well-configured.
-2. Minimize the number of external resources: Reduce the number of external resources the page has to load, if possible.
-3. Optimize DOM: Keep the structure of your DOM as simple as possible.
-4. Minimize and optimize JavaScript: Minimize the size of JavaScript files where possible, and ensure JavaScript is written correctly and efficiently.
 
 ### domComplete
 
@@ -370,9 +387,18 @@ The `domComplete` value is then recorded as the time interval from the start of 
 
 Dependencies for `domComplete` include all of the page's dependent resources (styles, scripts, images, etc.), as well as network latency and server speed. If these resources are slow to load or process, or if the server is slow to respond, it can slow down the `domComplete` time.
 
+**Recommendation**
+
+- max 600ms.
+- Always be faster than your competition.
+
 ### domContentLoadedEventEnd
 
 This metric is another important metric that focuses on the loading of a web page's content. It represents the time when the DOM processing is complete and all events related to the downloading of the page's content, such as loading CSS, JavaScript, and images, are triggered. This metric indicates when the page is ready for interaction with the actual content.
+
+The `DOMContentLoaded` event fires when the HTML document has been completely parsed, and all deferred scripts (`<script defer src="…">` and `<script type="module">`) have downloaded and executed. It doesn't wait for other things like images, subframes, and async scripts to finish loading.
+
+DOMContentLoaded does not wait for stylesheets to load, however deferred scripts do wait for stylesheets, and the DOMContentLoaded event is queued after deferred scripts. Also, scripts which aren't deferred or async (e.g. `<script>`) will wait for already-parsed stylesheets to load.
 
 The processes and steps involved in `domContentLoadedEventEnd` include:
 
@@ -392,7 +418,110 @@ The `domContentLoadedEventEnd` value is recorded as the time interval from the s
 
 Dependencies for the `domContentLoadedEventEnd` metric include the size and complexity of the page's content, network and server speed, as well as the impact of CSS and JavaScript parsing and processing. Optimizing these processes can help improve `domContentLoadedEventEnd` and overall page performance.
 
+**Recommendation**
 
+- lower than or equal to [domComplete](#domcomplete).
+- Always be faster than your competition.
+
+### Render-blocking resources
+
+A page is considered to have render-blocking resources if resources hold up the initial paint (or render) of the page. This is particularly likely for critical scripts and styles that are loaded over the network. Lighthouse includes an audit that checks for these resources, which we’ve run on the home page of each website in CrUX. 
+
+Surprisingly, there was no dramatic improvement in the percent of pages that have render-blocking resources. Only 20% of mobile pages pass the audit, which is a mere 1 percentage point increase over last year.
+
+2022 is the first year in which we have Lighthouse data for desktop. So while we’re unable to compare it against previous years, it’s still interesting to see that many fewer desktop pages pass the audit relative to mobile, in spite of the trend of desktop pages tending to have better LCP and FCP performance.
+
+- Source https://almanac.httparchive.org/en/2022/performance#render-blocking-resources
+
+**Recommendation**
+
+- Try to have no blocking resources.
+
+### onload 
+
+The load event is fired when the whole page has loaded, including all dependent resources such as stylesheets, scripts, iframes, and images. This is in contrast to [DOMContentLoaded](#domcontentloaded), which is fired as soon as the page DOM has been loaded, without waiting for resources to finish loading.
+
+`load` is an event and [duration](#duration) is a metric. Both can show the same time, but the value of `duration` depends on the context being measured.
+
+**Recommendation**
+
+- max. 2s
+- Always be faster than your competition.
+
+
+Statistics:
+- 1.6.2023, median desktop: 6.5s, median mobile: 10.2s (https://httparchive.org/reports/loading-speed#ol)
+
+### duration
+
+Is the total time taken for a certain process or action to complete. In the context of web pages and performance, the "duration" metric can refer to the total time taken to load and render a web page, from the initial request to when the page is fully interactive and ready to use.
+
+**"Duration" can include the following processes:**
+
+1. Time needed to get a response from the server (Time to First Byte - TTFB)
+2. Time required to load the HTML content
+3. Time needed to load and process external resources, such as CSS, JavaScript, and images
+4. Time needed to render the page in the browser
+5. Time required to initialize JavaScript libraries and functions
+
+**Factors that can slow down "duration" include:**
+
+1. Slow server: A server that responds slowly can increase the time it takes to get a response from the server.
+2. Large number of external resources: Each external resource that the page has to load (CSS, JavaScript, images, etc.) adds to the overall load time.
+3. Complex DOM: More complex Document Object Model (DOM) structures can slow down page rendering.
+4. Heavy JavaScript files: Large JavaScript libraries can slow down page load time.
+
+**What a programmer can do to improve "duration":**
+
+1. Optimize the server: Make sure your server is fast and well-configured.
+2. Minimize the number of external resources: Reduce the number of external resources the page has to load, if possible.
+3. Optimize DOM: Keep the structure of your DOM as simple as possible.
+4. Minimize and optimize JavaScript: Minimize the size of JavaScript files where possible, and ensure JavaScript is written correctly and efficiently.
+
+**Recommendation**
+
+- max. 2s
+- Always be faster than your competition.
+
+## Key findings
+
+- In short, your website should load as fast as possible!
+- The ideal website load time for mobile sites is 1-2 seconds.
+- 53% of mobile site visits are abandoned if pages take longer than 3 seconds to load.
+- A 2-second delay in load time resulted in abandonment rates of up to 87%.
+- Google aims for under half-a-second load time.
+- A very slow load time can be a negative Google ranking factor.
+- The average load time for mobile sites is 19 seconds over 3G connections. Models predict that publishers whose mobile sites load in 5 seconds earn up to 2x more mobile ad revenue than those whose sites load in 19 seconds.
+- People would not return to websites that took longer than four seconds to load and formed a “negative perception” of a company with a badly put-together site or would tell their family and friends about their experiences.
+- Slow load times are a primary reason visitors abandon a checkout process.
+- In studies, page time load goes from 1s to 3s – the probability of bounce increases by 32%.
+- In studies, page time load goes from 1s to 5s – the probability of bounce increases by 90%.
+- In studies, page time load goes from 1s to 6s – the probability of bounce increases by 106%.
+- In studies, page time load goes from 1s to 10s – the probability of bounce increases by 123%.
+- In a recent study, the average load time for a web page was 3.21s.
+- In a recent study, the average load time for a mobile web page is 22 seconds.
+- For every 100ms decrease in homepage load speed, a company’s customer base saw a 1.11% lift in session-based conversion
+- Users read fewer articles each day whilst experiencing delays loading each web page. The speed of the site negatively impacts a user’s session depth, no matter how small the delay.
+- Two-thirds of UK consumers (67%) cite slow loading times as the main reason they would abandon an online purchase.
+- 47 percent of consumers expect a web page to load in two seconds or less.
+- 40 percent of consumers will wait no more than three seconds for a web page to render before abandoning the site
+- 52 percent of online shoppers stated that quick page loading is important to their site loyalty.
+- Shoppers often become distracted when made to wait for a page to load. 14 percent will begin shopping at another site, and 23 percent will stop shopping or walk away from their computer.
+- Optimise your images – the most important thing you can do to decrease download times. Load background images via external - CSS. Minimise white space, line returns and comment tags. Remove unnecessary META tags and META content. Minimise unnecessary javascript and any other client-side scripting.
+- A technical approach to improving user experience would begin with site speed.
+- A faster site should improve visitor satisfaction levels and the number of conversions.
+- Google might crawl your site slower if you have a very slow site (confirmed by Google).
+- Retail and travel sites – 79 percent of online shoppers who experience a dissatisfying visit are less likely to buy from that site again. 64 percent would simply purchase from another online store.
+- Automotive retail sites take on average 6 seconds to load.
+- Customer packaged goods sites take an average of 6.1 seconds to load.
+- Finance sites take an average of 5.1 seconds to load.
+- Healthcare sites take an average of 5.6 seconds to load.
+- Media sites take an average of 5.5 seconds to load.
+- Retail sites take an average of 6 seconds to load.
+- Technology sites take an average of 6.8 seconds to load.
+- Travel sites take an average of 6.7 seconds to load.
+- Improving your desktop site speed score in isolation of developing a compelling user experience, will not magically lead to BETTER rankings in Google in the short term.
+- Ranking is a nuanced process and there are over 200 signals, but now speed is one of them. Know that ‘content’ and relevance’ are still primary.
 
 ## Interesting bookmarks
 
@@ -404,6 +533,8 @@ Here is a list of links to interesting articles and studies related to web perfo
 4. [Google Developers: Web Performance](https://developers.google.com/web/fundamentals/performance): Collection of articles and guides from Google Developers focused on optimizing web performance.
 5. [HTTP Archive](https://httparchive.org/): Open-source dataset containing a comprehensive collection of web data and analysis that provides detailed insights into web performance.
 6. [Web Performance Case Studies](https://wpostats.com/): A series of case studies on web performance, covering various types of websites and optimization techniques.
-8. [Web Performance Today](https://www.soasta.com/blog/): Blog by SOASTA (now part of Akamai) focused on current trends and tips in web performance.
+7. [Web Performance Today](https://www.soasta.com/blog/): Blog by SOASTA (now part of Akamai) focused on current trends and tips in web performance.
+8. [Fast load times](https://web.dev/fast/): Techniques for improving site performance.
+9. [Web Almanac](https://almanac.httparchive.org/en/2022/): Annual report on the state of the web, with detailed statistics and analysis.
 
 These resources should provide you with detailed information on web performance and how to optimize it.

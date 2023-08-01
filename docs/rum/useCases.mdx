@@ -336,11 +336,55 @@ More information about events can be found in the [RUM Client](./rumClient#event
 
 Great! We have implemented Canarytrace RUM in our e-shop and we are collecting a lot of data. It's time to analyze client satisfaction and identify opportunities to improve our e-shop.
 
+:::note
+We will use [Kibana](./kibana) visualizations with data aggregated into graphs and indices for filtering and searching data. Please open RUM visualizations or open indices with the `c-*` prefix for searching and filtering data. In both cases, set the date range to the last 24 hours or the last 7 days.
+:::
+
 #### What interests us, what do we want to know?
 Let's go back to our first image and [Customer expectations](#customer-expectations)
 ![Metrics graph](./assets/UserJourneyEcommerce.webp)
 
+
+**How long does it take for the page to fully load?**
+For first time we need focus on the first load of the page and in additional we can look on the interactiv
+
+- Use Elasticsearch indices `c.rum.metrics-*` and the label `view.duration` if you want filter manually. More information about [metrics](./rumClient#metrics).
+- Kibana visualization:
+
+Pracuje e-shop plynule?
+	- `view.fps`
+Jak rychle se načetli resources
+	- seznam zdrojů: `view.resources`
+Vykazovala stránka nějaké Javascriptové chyby?
+	- Výpis z console `error`, `warn`, `debug`
+Jak dlouho uživatel na stránce byl
+	- Vyberte uživatele podle `session.id` a stránku podle `view.id` popř. `view.href` a odečtěte poslední `session.lastLoop` od `session.startTime`. Výsledek je délka `session.id` v ms.
+Jaké akce uživatel udělal.
+	- sledování uživatelských kliknutí `view.actions` pomocí atributů `crum-action="name"``
+	- přidávání událostí během celého životního cyklu webové aplikace `view.events` pomocí `crum.addEvent`
+Na jakých stránkách se uživatel pohyboval
+	- `view.href`, `view.id`
+Jak rychle se uživately načetly jednotlivé části stránky
+	- `view.marks`
+Kolik zdrojů stránka spotřebuje
+	- `view.usedMemory`
+
 ### Technical analysis of the e-shop
+
+- Kolik uživatelů právě teď stránku používá
+	- Vypište všechny unikátní `session.id`, které nemají `session.lastLoop` starší několika minut. Například dvě minuty.
+- Jak rychlý byl backend vs frontend?
+	- document: `metrics.ttfb` a `metrics.fp` popřípadě `metrics.fcp`
+	- resources: `view.resources`
+- Jaké má zařízení, model, výkon (CPU  & RAM) a typ sítě
+	- `attributes.device.*`, `attributes.connection.*`, `view.usedMemory`
+- Jaké typy zdrojů webová stránka načetla
+	- `view.resourceTypes`
+- Kolik se přenese dat.
+	- `view.resources.transferSize` (https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/transferSize)
+- Který ze zdrojů je blokující.
+	- `view.resources[1].renderBlockingStatus`
+
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
