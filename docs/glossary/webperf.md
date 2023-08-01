@@ -60,6 +60,64 @@ All of these key metrics are collected by Canarytrace, making it an effective to
 
 This sequence of events might vary depending on the size of your files, the order they're loaded in, the capabilities of the device viewing the page, network conditions, and more. Always follow the current recommendations and best practices concerning web performance metrics.
 
+## Server
+
+### TTFB
+
+TTFB, an acronym for Time to First Byte, is a metric used to measure the responsiveness of a web server or other network resource. It measures the duration from the user or client making an HTTP(S) request to the first byte of the page being received by the client's browser. This includes the network latency of sending the request, the time the server took to process the request, and the network latency of delivering the first byte of the response to the client. 
+
+This metric is often used in performance testing to identify issues and bottlenecks related to network latency, server performance, and server configuration. A low TTFB is desirable as it means users will start receiving data quickly, contributing to a faster page load time and better user experience.
+
+Several factors can lead to an increased Time to First Byte (TTFB). Here are some of the most common ones:
+
+1. **Server Performance:** If your server is slow or overburdened, it will take longer to generate a response to a request, which in turn will increase TTFB.
+
+2. **Network Latency:** The longer it takes for a request to reach the server or for a response to reach the client, the higher the TTFB will be. This can be impacted by the physical distance between the client and the server, the quality of the network connection, and network congestion.
+
+3. **Server Configuration:** How a server is configured can have a significant impact on TTFB. For example, the server might not be adequately optimized for the type of content it's serving, or it might not be using the most efficient algorithms for handling requests.
+
+4. **Dynamic Content:** Websites that rely heavily on dynamically generated content may have higher TTFB, especially if they're not using caching strategies effectively. Each time a dynamic page is requested, the server must process this, which can take time and increase TTFB.
+
+5. **Database Queries:** If a website's response requires pulling data from a database, slow database queries can increase TTFB. Optimizing these queries or the database itself can help reduce TTFB.
+
+6. **Content Delivery Network (CDN):** If a website isn't using a CDN, or the CDN isn't properly configured, users might be reaching out to servers located far away from them, resulting in increased TTFB due to network latency.
+
+Remember, reducing TTFB can significantly improve the perceived performance of your website, providing a better user experience and potentially improving your site's SEO ranking.
+
+
+### Server Response Time
+
+The "responseTime" metric is a key indicator in performance monitoring, referring to the total time taken for a system, application, or server to respond to a request made by a user or another system. 
+
+In the context of web performance, the response time typically encompasses the following:
+
+1. **Request Time:** The time it takes for the client's request to reach the server.
+
+2. **Processing Time:** The time the server takes to process the request, generate the response, and start sending it back. This may include operations like database queries, server-side computations, or the rendering of dynamic content.
+
+3. **Response Transfer Time:** The time it takes for the first byte of the response to reach the client from the server, which is commonly known as Time to First Byte (TTFB), plus the time required to download the rest of the response data.
+
+It's crucial to note that a lower response time is generally more desirable, as it indicates that the application or server is providing a faster, more efficient service, contributing to improved user experience. However, the acceptable threshold for response time can vary based on the nature of the application and user expectations. For example, a response time of a few seconds might be perfectly acceptable for a complex web application but seen as slow for a simple static webpage.
+
+Several factors can increase response time in a web context. Here are some of the key contributors:
+
+1. **Server Performance:** If a server is slow or overloaded with requests, it will take longer to process each request, resulting in higher response times. This can be due to limited server resources such as CPU, memory, or disk I/O.
+
+2. **Network Latency:** The distance between the client and the server can impact response times. The longer the distance, the higher the network latency, which results in increased response times. Also, poor quality network connections or high network traffic can lead to delays.
+
+3. **Website Optimization:** Websites with large files, complex scripts, or unoptimized images can have high response times. Each additional HTTP request to fetch these resources adds to the total response time.
+
+4. **Database Performance:** If a website relies on a database to deliver content, any delay in retrieving data from the database can increase the response time. This can be due to inefficient database queries, poor database indexing, or high database load.
+
+5. **Dynamic Content:** Websites that rely heavily on server-side processing to generate dynamic content can have higher response times. Each time a dynamic page is requested, the server must process this, which can add to the response time.
+
+6. **Content Delivery Network (CDN):** Not using a CDN, or a poorly configured CDN, can increase response times, particularly for users who are geographically distant from the server.
+
+7. **Third-Party Scripts or Services:** If a website makes use of third-party scripts (like ads, trackers, or widgets) or services (like APIs), any delay from these external sources can increase the overall response time of the website.
+
+Improving these factors can help to reduce response times, leading to a better user experience and potentially higher search engine rankings.
+
+
 ## Core Web Vitals
 
 Core Web Vitals are the subset of Web Vitals that apply to all web pages, should be measured by all site owners, and will be surfaced across all Google tools. Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome.
