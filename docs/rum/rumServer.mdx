@@ -330,6 +330,22 @@ All parameters of the RUM Server can be changed via environment variables direct
 |`LABELS`||You can add a string that will be included in the arrived payload from the RUM Client and added to the `.labels` property. E.g. `environment=development` or `app14`.|
 |`ENV_PRINT`|`false`|Print all environment variables. Set the `allow` value for activate this feature.|
 
+## Restrict traffic for specific URLs
+
+If you want to block traffic from a specific domain (e.g., test.company.com) and allow traffic from another (e.g., company.com), you can do this using the `server_name` directive in NGINX.
+
+In the NGINX configuration, you can define a separate server block for each domain. Within each block, you can specify what happens when a request is made to a specific domain. If you want to block traffic from `test.company.com`, you can create a server block for this domain and return the HTTP status code 403 (Forbidden), which indicates that the server understands the request but refuses to process it.
+
+This configuration will allow traffic from `company.com` to pass through, while traffic from `test.company.com` will be discarded with an HTTP status code of 403.
+
+```yaml title="NGINX configuration"
+# Block traffic from test.company.com
+server {
+  listen 80;
+  server_name test.company.com;
+  return 403;
+}
+```
 
 ## Performance Testing
 The RUM Server is a Node.js application that can be scaled horizontally. You can run multiple instances of the RUM Server and use a load balancer to distribute the load between them. Since the RUM Server is stateless, you can run as many instances as needed.

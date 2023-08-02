@@ -351,7 +351,7 @@ For first time we need focus on the first load of the page and in next step we c
 
 When we look at the graph below, the expected behavior is that even when the number of visits increases, the performance metrics should remain at the same value. If an increase in visits is accompanied by an increase in performance metrics, this indicates performance problems with your server. Poor server performance can impact the speed of your frontend.
 
-![FPS](./assets/kibana-speed.png)
+![FPS](./assets/kibana-speed.webp)
 
 Performance metrics such as Duration and Dom Complete mark the time it takes for your e-shop to load in a client's browser. In this example, you can see it takes approximately 3.5 seconds, which is longer than you might desire. However, this always depends on your requirements, your business, and your competition, because these metrics will have very different values for simple web pages like blogs versus more complex pages with many products, for example.
 
@@ -361,13 +361,50 @@ So, how fast should your e-shop load on a user's mobile phone or desktop?
 - Our [Key findings](../glossary/keyf#key-findings) might help you determine how fast your e-shop should be.
 :::
 
+Kibana offers search, filter, and aggregation capabilities for metrics directly in your `c.rum.metrics-*` index, including metrics such as [FPS](../glossary/webperf#fps), [LongTasks](../glossary/webperf#long-task), [Duration](../glossary/webperf#duration) and [Dom Complete](../glossary/webperf#domcomplete), e.g.:
+
+- get all FPS which are lower than 40 and higher than 0: `metrics.fcp <= 40 and metrics.fcp > 0`
+- get all duration higher than 2 seconds: `metrics.duration > 2000`
+
+**How can we gather more information about our clients and their conditions?**
+
+Open index `c.rum.metrics-*`, select date time range and filter by `metrics.duration > 2000` and result is:
+- graph with label `1,418 hits` shows how often and when is duration higher than 2 seconds
+- selected fields shows unique ID of the client `session.id`, duration, device type, platform and browser.
+
+Now, you have an overview of the clients' conditions and the duration of load our e-shop on their devices. 
+
+:::tip
+If you want to improve [Duration](../glossary/webperf#duration) or other metrics, read our recommendations in the [WebPerformance Glossary](../glossary/webperf).
+:::
+
+![Kibana duration](./assets/kibana-duration-index.webp)
+
+If you identify a problem with the duration, you can access additional information to determine which devices and browsers were affected. Of course, you can also obtain detailed information from [other metrics](./rumClient#browser-data-collected).
+
+![Kibana statistic](./assets/kibana-statistics.webp)
+
+If you select `session.id` (which is the [unique ID of the client](./rumClient#session)), you can observe the conditions, parameters, and metrics for a specific user. The image below shows a user journey, sorted by `session.duration` in minutes, and includes the pages visited by the user.
+
+![Kibana user journey](./assets/kibana-userjourney.webp)
+
+If you select the Field statistics tab, you can view statistics for the selected field. In this example, you can see that 18.6% of users stay on our e-shop for less than 1 minute, and 13.7% stay for less than 5 minutes.
+
+In the second screen, you can see that 59% of our e-shop visits come from mobile devices and 41% from desktop devices.
+
+![Kibana statistic](./assets/kibana-stats.webp)
+
+:::tip
+More information about how to use Kibana can be found in the [Kibana](./kibana) section.
+:::
+
 **Is the e-shop running smoothly for users?**
 
 Visualizations in Kibana reveal that most customers have a high [FPS](../glossary/webperf#fps), and the red circles indicate that some users have experienced slowdowns in your e-shop due to the code of your e-shop on their device's browser - we call these circles [LongTasks](../glossary/webperf#long-task).
 
 In general, aim for the highest possible FPS and the least number of LongTasks.
 
-![FPS](./assets/kibana-fps.png)
+![FPS](./assets/kibana-fps.webp)
 
 
 	- `view.fps`
