@@ -337,7 +337,7 @@ More information about events can be found in the [RUM Client](./rumClient#event
 Great! We have implemented Canarytrace RUM in our e-shop and we are collecting a lot of data. It's time to analyze client satisfaction and identify opportunities to improve our e-shop.
 
 :::note
-We will use [Kibana](./kibana) visualizations with data aggregated into graphs and indices for filtering and searching data. Please open RUM visualizations or open indices with the `c-*` prefix for searching and filtering data. In both cases, set the date range to the last 24 hours or the last 7 days.
+We will use [Kibana](./kibana) visualizations with data aggregated into graphs and indices for filtering and searching data. Please open RUM visualizations or open indices with the `c.*` prefix for searching and filtering data. In both cases, set the date range to the last 24 hours or the last 7 days.
 :::
 
 #### What interests us, what do we want to know?
@@ -346,13 +346,38 @@ Let's go back to our first image and [Customer expectations](#customer-expectati
 
 
 **How long does it take for the page to fully load?**
-For first time we need focus on the first load of the page and in additional we can look on the interactiv
 
-- Use Elasticsearch indices `c.rum.metrics-*` and the label `view.duration` if you want filter manually. More information about [metrics](./rumClient#metrics).
-- Kibana visualization:
+For first time we need focus on the first load of the page and in next step we can look on the interactivity.
 
-Pracuje e-shop plynule?
+When we look at the graph below, the expected behavior is that even when the number of visits increases, the performance metrics should remain at the same value. If an increase in visits is accompanied by an increase in performance metrics, this indicates performance problems with your server. Poor server performance can impact the speed of your frontend.
+
+![FPS](./assets/kibana-speed.png)
+
+Performance metrics such as Duration and Dom Complete mark the time it takes for your e-shop to load in a client's browser. In this example, you can see it takes approximately 3.5 seconds, which is longer than you might desire. However, this always depends on your requirements, your business, and your competition, because these metrics will have very different values for simple web pages like blogs versus more complex pages with many products, for example.
+
+So, how fast should your e-shop load on a user's mobile phone or desktop?
+
+:::tip
+- Our [Key findings](../glossary/keyf#key-findings) might help you determine how fast your e-shop should be.
+:::
+
+**Is the e-shop running smoothly for users?**
+
+Visualizations in Kibana reveal that most customers have a high [FPS](../glossary/webperf#fps), and the red circles indicate that some users have experienced slowdowns in your e-shop due to the code of your e-shop on their device's browser - we call these circles [LongTasks](../glossary/webperf#long-task).
+
+In general, aim for the highest possible FPS and the least number of LongTasks.
+
+![FPS](./assets/kibana-fps.png)
+
+
 	- `view.fps`
+
+**Pracuje e-shop uživatelům rychle?**
+
+
+V indexu `c.rum.metrics-*`
+  - `metrics.inp`
+
 Jak rychle se načetli resources
 	- seznam zdrojů: `view.resources`
 Vykazovala stránka nějaké Javascriptové chyby?
