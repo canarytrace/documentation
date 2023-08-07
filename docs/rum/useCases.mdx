@@ -407,13 +407,32 @@ In general, aim for the highest possible FPS and the least number of LongTasks.
 ![FPS](./assets/kibana-fps.webp)
 
 
-	- `view.fps`
+For aggreation and filtering FPS in Kibana you can use `c.rum.metrics-*` index and label `view.fps`.
 
-**Pracuje e-shop uživatelům rychle?**
+You can focus on the metric [INP](../glossary/webperf#inp), which represents the time between the user's last interaction and the browser's response to that interaction. This metric is crucial for the user experience as it indicates how responsive the e-shop is to user input. The lower the value, the better the user experience.
+
+![FPS](./assets/kibana-inp.webp)
+
+In the image above, we can observe that the statistics of the INP metric are not in green, as a good INP is lower than 200ms. Yes, the majority of users experience response times under 200ms, but there is a small group of our clients who had a bad experience with the smoothness of our e-shop, as their INP was higher than 200ms.
+
+We can further investigate by selecting the INP metric and the device type, which reveals that the majority of users experiencing a bad INP are using mobile devices.
+
+![FPS](./assets/kibana-inp-mobile.webp)
+
+You can compare with the desktop device type.
+
+![FPS](./assets/kibana-inp-desktop.webp)
+
+From both images above, it is evident that the majority of users experiencing a bad INP are using mobile devices. Our clients predominantly use mobile devices compared to desktop devices. 
+
+![FPS](./assets/kibana-inp-device-type.webp)
 
 
-V indexu `c.rum.metrics-*`
-  - `metrics.inp`
+
+
+For aggreation and filtering INP in Kibana you can use `c.rum.metrics-*` index and label `metrics.inp`.
+
+
 
 Jak rychle se načetli resources
 	- seznam zdrojů: `view.resources`
