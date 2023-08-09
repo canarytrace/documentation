@@ -411,46 +411,86 @@ For aggreation and filtering FPS in Kibana you can use `c.rum.metrics-*` index a
 
 You can focus on the metric [INP](../glossary/webperf#inp), which represents the time between the user's last interaction and the browser's response to that interaction. This metric is crucial for the user experience as it indicates how responsive the e-shop is to user input. The lower the value, the better the user experience.
 
-![FPS](./assets/kibana-inp.webp)
+![Kibana and inp](./assets/kibana-inp.webp)
 
 In the image above, we can observe that the statistics of the INP metric are not in green, as a good INP is lower than 200ms. Yes, the majority of users experience response times under 200ms, but there is a small group of our clients who had a bad experience with the smoothness of our e-shop, as their INP was higher than 200ms.
 
 We can further investigate by selecting the INP metric and the device type, which reveals that the majority of users experiencing a bad INP are using mobile devices.
 
-![FPS](./assets/kibana-inp-mobile.webp)
+![INP and mobile](./assets/kibana-inp-mobile.webp)
 
 You can compare with the desktop device type.
 
-![FPS](./assets/kibana-inp-desktop.webp)
+![INP and desktop](./assets/kibana-inp-desktop.webp)
 
 From both images above, it is evident that the majority of users experiencing a bad INP are using mobile devices. Our clients predominantly use mobile devices compared to desktop devices. 
 
-![FPS](./assets/kibana-inp-device-type.webp)
-
-
-
+![INP and device type](./assets/kibana-inp-device-type.webp)
 
 For aggreation and filtering INP in Kibana you can use `c.rum.metrics-*` index and label `metrics.inp`.
 
+**Which pages are the most visited?**
+
+You can create your own visualizations in Kibana, allowing you to visualize the most visited pages in our e-shop and the devices that were used. In the image below, you can observe that the most visited page is the basket, and the majority of the visits were made from desktop devices.
+
+![Most visited pages](./assets/kibana-visited-pages-and-devices.webp)
 
 
-Jak rychle se načetli resources
-	- seznam zdrojů: `view.resources`
-Vykazovala stránka nějaké Javascriptové chyby?
-	- Výpis z console `error`, `warn`, `debug`
-Jak dlouho uživatel na stránce byl
-	- Vyberte uživatele podle `session.id` a stránku podle `view.id` popř. `view.href` a odečtěte poslední `session.lastLoop` od `session.startTime`. Výsledek je délka `session.id` v ms.
-Jaké akce uživatel udělal.
-	- sledování uživatelských kliknutí `view.actions` pomocí atributů `crum-action="name"``
-	- přidávání událostí během celého životního cyklu webové aplikace `view.events` pomocí `crum.addEvent`
-Na jakých stránkách se uživatel pohyboval
-	- `view.href`, `view.id`
+This visualization uses `view.pathname` and `attributes.device.type` labels from the `c.rum.metrics-*` index.
+
+And in this donut graph, we can observe that the top referrer is Google, and the most visited page from Google is a some product page. With this information, we can evaluate our marketing strategy.
+
+![Most referer](./assets/kibana-referer.png)
+
+This visualization uses `view.referrer` and `attributes.browser` labels and `view.referer.keyword : * AND NOT view.referer.keyword : ""` filter from the `c.rum.metrics-*` index.
+
+**How long does the user stay on the page?**
+
+It's interesting to know how long users spend on the page. You can observe that clients in our e-shop typically stay from under 1 minute to 10 minutes.
+
+![User duration](./assets/kibana-user-duration.png)
+
+This visualization uses `session.duration` label from the `c.rum.metrics-*` index.
+
+
+**Which actions are most frequently performed by the user on the page?**
+
+In our e-shop, these actions are associated with buttons such as `crum-action="header-menu-coptery"` and `crum-action="header-menu-frames"`, allowing us to track user interactions on our page.
+
+In the image below, we can observe that our clients most frequently click on the category button labeled motors.
+
+![User actions](./assets/kibana-actions-graph.png)
+
+This visualization uses `view.actions.name` label from the c.rum.metrics-* index.
+
+:::warning
+chybi hero elements
+:::
+
 Jak rychle se uživately načetly jednotlivé části stránky
 	- `view.marks`
+
+
+
+---
+
+### Technical analysis of the e-shop
+
+**How quickly did the resources load?**
+For successful loading of the page, your e-shop needs resources such as images, CSS, JavaScript, and third-party scripts. The faster the resources load, the quicker your e-shop will load, providing a better user experience.
+
+Jaké zdroje se načítají?
+![Most referer](./assets/kibana-resources-graph.png)
+
 Kolik zdrojů stránka spotřebuje
 	- `view.usedMemory`
 
-### Technical analysis of the e-shop
+Vykazovala stránka nějaké Javascriptové chyby?
+	- Výpis z console `error`, `warn`, `debug`
+
+
+Jaké zařízení a prohlížeče uživatelé používají
+![Devices and browsers](./assets/kibana-devices-browsers.png)
 
 - Kolik uživatelů právě teď stránku používá
 	- Vypište všechny unikátní `session.id`, které nemají `session.lastLoop` starší několika minut. Například dvě minuty.
@@ -463,7 +503,7 @@ Kolik zdrojů stránka spotřebuje
 	- `view.resourceTypes`
 - Kolik se přenese dat.
 	- `view.resources.transferSize` (https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/transferSize)
-- Který ze zdrojů je blokující.
+- Který ze zdrojů je blokujících a které to jsou.
 	- `view.resources[1].renderBlockingStatus`
 
 
