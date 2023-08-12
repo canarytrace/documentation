@@ -474,33 +474,58 @@ Jak rychle se uživately načetly jednotlivé části stránky
 
 ---
 
-### Technical analysis of the e-shop
+### Technical analysis of our e-shop
 
 **How quickly did the resources load?**
-For successful loading of the page, your e-shop needs resources such as images, CSS, JavaScript, and third-party scripts. The faster the resources load, the quicker your e-shop will load, providing a better user experience.
+For successful loading of the page, our e-shop needs resources such as images, CSS, JavaScript, and third-party scripts. The faster the resources load, the quicker our e-shop will load, providing a better user experience.
 
-Jaké zdroje se načítají?
+We can search for interesting information about requests that are important to monitor. Open the `c.rum.entries-*` index and apply filters, such as the `name` of the request, and then sort by `responseTime`. With the expanded arrow, we can view details about the requests, such as specific timings like 'time to first byte' [(TTFB)](../glossary/webperf#ttfb) or [response time](../glossary/webperf#ttfb).
+
+![Kibana find resources](./assets/kibana-find-resources.png)
+
+
+**What resources are being loaded?**
+
+We can obtain this information through visualization, which displays the types of requests over time along with their Encoded Body Size. In this graph, we can observe how many the various types of requests our e-shop receives, such as CSS, JavaScript, Images, etc. We can as well as identify any bad requests.
+
+It's always better to have a smaller number of requests, and when releasing a new version, the count of requests should remain the same, never increasing.
+
 ![Most referer](./assets/kibana-resources-graph.png)
 
-Kolik zdrojů stránka spotřebuje
-	- `view.usedMemory`
 
-Vykazovala stránka nějaké Javascriptové chyby?
-	- Výpis z console `error`, `warn`, `debug`
+**How many resources are being used in the user's browser?**
+
+An interesting piece of information is the amount of memory utilized by the user's browser. Higher memory consumption in users' browsers can lead to a poor user experience, such as slow page loading, browser crashes, or even unsmooth scrolling on our e-shop. In the graph below, we can observe memory consumption on both mobile and desktop devices. It's important to note that the web page for desktop devices tends to be more complex than that for mobile devices.
+
+Increased memory consumption can be attributed to a memory leak in our e-shop, which may arise from poorly implemented JavaScript. In extreme cases, higher memory consumption can result in issues with response time, causing delays.
+
+![Used resources](./assets/kbana-memory-used.png)
 
 
-Jaké zařízení a prohlížeče uživatelé používají
+**Is everything working properly?**
+
+This table can reveal whether users encountered any issues while shopping. Errors can act as obstacles in the user journey and hinder successful conversions. In the image below, we can observe the types of errors and their frequency/count.
+
+![Errors](./assets/kibana-errors.png)
+
+
+**Devices and Browsers Used by Our Clients**
+
+For strategic planning, it's important to understand which devices and browsers our clients are using. In the image below, we can observe that the majority of our clients use Chrome version 115 on desktop devices.
+
 ![Devices and browsers](./assets/kibana-devices-browsers.png)
 
 - Kolik uživatelů právě teď stránku používá
+
+![Session](./assets/kibana-sessions.png)
 	- Vypište všechny unikátní `session.id`, které nemají `session.lastLoop` starší několika minut. Například dvě minuty.
+
+  
 - Jak rychlý byl backend vs frontend?
 	- document: `metrics.ttfb` a `metrics.fp` popřípadě `metrics.fcp`
 	- resources: `view.resources`
 - Jaké má zařízení, model, výkon (CPU  & RAM) a typ sítě
 	- `attributes.device.*`, `attributes.connection.*`, `view.usedMemory`
-- Jaké typy zdrojů webová stránka načetla
-	- `view.resourceTypes`
 - Kolik se přenese dat.
 	- `view.resources.transferSize` (https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/transferSize)
 - Který ze zdrojů je blokujících a které to jsou.
