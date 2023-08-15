@@ -463,16 +463,14 @@ In the image below, we can observe that our clients most frequently click on the
 
 This visualization uses `view.actions.name` label from the c.rum.metrics-* index.
 
-:::warning
-chybi hero elements
-:::
+**When do users see the important parts of the page?**
 
-Jak rychle se uživately načetly jednotlivé části stránky
-	- `view.marks`
+Understanding the timing of when users sees the important elements of the page on their devices is of paramount importance. For instance, users typically engage with critical components such as our products, catalog, search input, "Add to Basket" button, and AdWords banner. It is imperative that these vital elements of our e-shop are displayed rapidly to ensure a seamless user experience.
 
+You can locate the so-called [Hero Elements](./rumClient#heroelements) and their corresponding timings within the `c.rum.metrics-*` index. In this specific example, we can observe that critical elements of our e-shop, such as the top menu, are displayed within 412ms, and the products table is visible within 733ms after the initiation of loading our e-shop page.
 
 
----
+![Hero Elements](./assets/kibana-hero-elements-index.webp)
 
 ### Technical analysis of our e-shop
 
