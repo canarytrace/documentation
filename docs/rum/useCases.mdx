@@ -440,7 +440,7 @@ This visualization uses `view.pathname` and `attributes.device.type` labels from
 
 And in this donut graph, we can observe that the top referrer is Google, and the most visited page from Google is a some product page. With this information, we can evaluate our marketing strategy.
 
-![Most referer](./assets/kibana-referer.png)
+![Most referer](./assets/kibana-referer.webp)
 
 This visualization uses `view.referrer` and `attributes.browser` labels and `view.referer.keyword : * AND NOT view.referer.keyword : ""` filter from the `c.rum.metrics-*` index.
 
@@ -448,7 +448,7 @@ This visualization uses `view.referrer` and `attributes.browser` labels and `vie
 
 It's interesting to know how long users spend on the page. You can observe that clients in our e-shop typically stay from under 1 minute to 10 minutes.
 
-![User duration](./assets/kibana-user-duration.png)
+![User duration](./assets/kibana-user-duration.webp)
 
 This visualization uses `session.duration` label from the `c.rum.metrics-*` index.
 
@@ -459,7 +459,7 @@ In our e-shop, these actions are associated with buttons such as `crum-action="h
 
 In the image below, we can observe that our clients most frequently click on the category button labeled motors.
 
-![User actions](./assets/kibana-actions-graph.png)
+![User actions](./assets/kibana-actions-graph.webp)
 
 This visualization uses `view.actions.name` label from the c.rum.metrics-* index.
 
@@ -481,7 +481,7 @@ For successful loading of the page, our e-shop needs resources such as images, C
 
 We can search for interesting information about requests that are important to monitor. Open the `c.rum.entries-*` index and apply filters, such as the `name` of the request, and then sort by `responseTime`. With the expanded arrow, we can view details about the requests, such as specific timings like 'time to first byte' [(TTFB)](../glossary/webperf#ttfb) or [response time](../glossary/webperf#ttfb).
 
-![Kibana find resources](./assets/kibana-find-resources.png)
+![Kibana find resources](./assets/kibana-find-resources.webp)
 
 
 **What resources are being loaded?**
@@ -490,7 +490,10 @@ We can obtain this information through visualization, which displays the types o
 
 It's always better to have a smaller number of requests, and when releasing a new version, the count of requests should remain the same, never increasing.
 
-![Most referer](./assets/kibana-resources-graph.png)
+![Resources](./assets/kibana-resources-graph.webp)
+
+This visualization uses `view.resourceTypes.css.count`, `view.resourceTypes.fetch.count`, `view.resourceTypes.images.count` and `view.resourceTypes.other.count` from the `c.rum.metrics-*` index.
+
 
 
 **How many resources are being used in the user's browser?**
@@ -499,38 +502,87 @@ An interesting piece of information is the amount of memory utilized by the user
 
 Increased memory consumption can be attributed to a memory leak in our e-shop, which may arise from poorly implemented JavaScript. In extreme cases, higher memory consumption can result in issues with response time, causing delays.
 
-![Used resources](./assets/kbana-memory-used.png)
+![Used resources](./assets/kbana-memory-used.webp)
+
+This visualization uses `view.usedMemory` label with filters `attributes.device.type : "desktop"` and `attributes.device.type : "mobile" ` from the `c.rum.metrics-*` index.
 
 
 **Is everything working properly?**
 
 This table can reveal whether users encountered any issues while shopping. Errors can act as obstacles in the user journey and hinder successful conversions. In the image below, we can observe the types of errors and their frequency/count.
 
-![Errors](./assets/kibana-errors.png)
+![Errors](./assets/kibana-errors.webp)
+
+This visualization uses `view.console.type` and `view.console.value` labels from the `c.rum.metrics-*` index.
 
 
 **Devices and Browsers Used by Our Clients**
 
 For strategic planning, it's important to understand which devices and browsers our clients are using. In the image below, we can observe that the majority of our clients use Chrome version 115 on desktop devices.
 
-![Devices and browsers](./assets/kibana-devices-browsers.png)
+![Devices and browsers](./assets/kibana-devices-browsers.webp)
 
-- Kolik uživatelů právě teď stránku používá
+This visualization uses `attributes.browser`, `attributes.browserVersion` and `attributes.device.type` labels from the `c.rum.metrics-*` index.
 
-![Session](./assets/kibana-sessions.png)
-	- Vypište všechny unikátní `session.id`, které nemají `session.lastLoop` starší několika minut. Například dvě minuty.
 
-  
-- Jak rychlý byl backend vs frontend?
-	- document: `metrics.ttfb` a `metrics.fp` popřípadě `metrics.fcp`
-	- resources: `view.resources`
-- Jaké má zařízení, model, výkon (CPU  & RAM) a typ sítě
-	- `attributes.device.*`, `attributes.connection.*`, `view.usedMemory`
-- Kolik se přenese dat.
-	- `view.resources.transferSize` (https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/transferSize)
-- Který ze zdrojů je blokujících a které to jsou.
-	- `view.resources[1].renderBlockingStatus`
+**How Many Users Are Currently Visiting Our E-shop?**
 
+The count of active users is crucial information for comparison with other metrics. For instance, if we have a high number of active users but a low conversion rate, we can deduce that the issue lies not in the quantity of users, but rather in the user experience.
+
+Another use case is to compare the number of active users with other metrics, such as duration. Through this comparison, we can determine if the user experience deteriorates when more users are on the page. If the duration increases with the number of users, it suggests that the issue might be related to our server.
+
+![Session](./assets/kibana-sessions.webp)
+
+This visualization uses `session.id` label from the `c.rum.metrics-*` index.
+
+**What is the speed of the backend and frontend?**
+
+Another interesting piece of information is the speed of both the backend and frontend. This helps us identify if our e-shop is running slowly and pinpoint whether the issue lies in the frontend or in the backend.
+
+In this graph and over time, we can observe that our backend is consistently slower than expected. As a result, the load time cannot be lower than 2 seconds, considering the backend takes longer than 2 seconds to respond. 
+
+Throughout the entire day, the backend maintains a speed lower than 2 seconds.
+
+Also, consider that you must select the right conditions, meaning mobile or desktop usage, peak times, etc.
+
+![Backend vs frontend](./assets/kibana-backend-frontend.webp)
+
+This visualization uses `metrics.ttfb` and `metrics.fcp` label from the `c.rum.metrics-*` index.
+
+
+**What Devices, Platforms, and Connection Types Do Users Use?**
+
+Crucial information includes the types of devices, platforms, and connections utilized by our clients. In the image below, we can observe that the majority of our clients use desktop devices with the Windows operating system and an efficient 4G connection. This visualization can be expanded with additional attributes such as [downlink](./rumClient#attributes), [rtt](./rumClient#attributes), etc.
+
+![Device](./assets/kibana-platform-os-connection.webp)
+
+This visualization uses `attributes.devices.type`, `attributes.device.platform` and `attributes.connection.effectiveType` labels from the `c.rum.metrics-*` index.
+
+
+**How Much Data Is Being Transferred?**
+
+Crucial information regarding our e-shop involves the volume of data being transferred. In the image below, we can observe the data transfer amounts over time. We have the option to select the type of data we wish to monitor, such as HTML, CSS, JavaScript, images, etc., or specific resources like fetch requests, XHR requests, etc.
+
+![Encoded body size](./assets/kibana-encoded-body-size.webp)
+
+This visualization uses `encodedBodySize` label from the `c.rum.entries-*` index.
+
+**How Many Resources Are Blocking the Rendering of Our E-shop?**
+
+This visualization enables us to monitor the quantity of resources that obstruct the rendering process of our e-shop.
+
+Render-blocking requests play a significant role in performance, as they hinder the complete rendering of the page. However, identifying them can occasionally be challenging. Fortunately, Chrome has begun providing more detailed reports on whether a request qualifies as render blocking.
+
+![Blocking resources](./assets/kibana-blocking-rendering.webp)
+
+
+In conclusion, Canarytrace RUM serves as a versatile and indispensable tool for enhancing the performance and user experience of your e-commerce platform. By closely monitoring loading times, user interactions, and various performance metrics, you gain a comprehensive understanding of how your online store operates in the real world. Armed with this actionable data, you can pinpoint areas for improvement, optimize user journeys, and ensure that your customers enjoy seamless and satisfying shopping experiences.
+
+With Canarytrace RUM, you're equipped to fine-tune your website's performance, increase user engagement, and boost conversion rates. By continuously refining your e-commerce site based on real user behavior, you'll be able to stay ahead of the competition and build long-lasting relationships with your customers.
+
+Implementing Canarytrace RUM is a straightforward process. Start by adding the provided init script to your pages or reusable components to begin collecting essential data. With this foundational step in place, you'll unlock a wealth of insights into user behavior, performance bottlenecks, and opportunities for optimization.
+
+Remember, your users' satisfaction and the success of your e-shop go hand in hand. Utilize Canarytrace RUM's features to their fullest extent, leveraging HeroElements to measure critical content visibility, tracking user actions to identify friction points, and utilizing events to gather context-rich information. By embracing these capabilities, you're well-positioned to elevate your e-commerce platform to new heights.
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
