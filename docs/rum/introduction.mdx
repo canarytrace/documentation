@@ -23,119 +23,110 @@ import TabItem from '@theme/TabItem';
 <Tabs
   defaultValue="performance"
   values={[
-    {label: 'Improve performance', value: 'performance'},
-    {label: 'Analyze product usage', value: 'product'},
+    {label: 'Fast and Smooth Website Experience', value: 'performance'},
+    {label: 'Analyze Product Usage', value: 'product'},
     {label: 'User Journeys', value: 'user-journeys'},
-    {label: 'Behavior analysis', value: 'behavior-analysis'},
+    {label: 'Growing Together', value: 'growing-together'},
   ]}>
   <TabItem value="performance">
     <ul>
-      <li>Grasp the user experience of your applications by focusing on crucial performance indicators like Core Web Vitals.</li>
-      <li>Aggregate and visualize frontend performance metrics, or break them down by parameters such as country, device, application, and others.</li>
-      <li>Pinpoint the origins of prolonged load times, be it a code issue, a network snag, or an infrastructure problem.</li>
+      <li>Ensure your web application is swift and seamless for all users, regardless of where they access it from or the device they use.</li>
+      <li>Easily identify and address the causes of slowdowns, whether they are internal issues or external factors.</li>
+      <li>Ensure your site is always primed to offer the best possible experience to its visitors, leading to greater satisfaction and higher conversion rates.</li>
     </ul>
   </TabItem>
   <TabItem value="product">
     <ul>
-      <li>Effortlessly gather and link each resource, error, and user activity throughout a user's session.</li>
-      <li>Examine usage patterns across your mobile and web applications by parameters such as browser, country, or any custom dimension using RUM Analytics.</li>
-      <li>Comprehend user experience through visual tools like time series, top lists, and tables.</li>
+      <li>Effortlessly collect and link every resource, error, and user activity throughout a user's session.</li>
+      <li>Evaluate usage patterns across your mobile and web applications by parameters like browser, country, or any custom dimension using RUM Analytics.</li>
+      <li>Understand user experience through visual tools like time series, top lists, and tables.</li>
     </ul>
   </TabItem>
   <TabItem value="user-journeys">
     <ul>
-      <li>Overview of the most frequent paths users take.</li>
-      <li>Overview of the devices users use and how your web application works on their diverse devices.</li>
-      <li>Monitoring what users see, when they see it, and what they click on.</li>
+      <li>Gain insights into the most common paths users take.</li>
+      <li>Overview of the devices users employ and how your web application operates on their diverse devices.</li>
+      <li>Monitor what users see, when they see it, and what they click on.</li>
     </ul>
   </TabItem>
-  <TabItem value="behavior-analysis">
+  <TabItem value="growing-together">
     <ul>
-      <li>Overview of the most frequent paths users take.</li>
-      <li>Overview of the devices users use and how your web application works on their diverse devices.</li>
-      <li>Monitoring what users see, when they see it, and what they click on.</li>
+      <li>Boost your success by fine-tuning your website's performance, leading to happier visitors and more fruitful interactions.</li>
+      <li>Save time and effort in addressing issues by catching them early, letting you focus on what you love.</li>
+      <li>Build lasting relationships with satisfied customers, paving the way for a brighter and more prosperous future together.</li>
     </ul>
   </TabItem>
 </Tabs>
 
-## Co je Canarytrace RUM
+## What is Canarytrace RUM?
 
-Datadog Real User Monitoring (RUM) provides insight into your application’s frontend performance from the perspective of real users. Every user journey is correlated seamlessly with synthetic tests, backend metrics, traces, logs, and network performance data, so you can quickly detect poor user experience and resolve issues with context from across the stack.
+Imagine a tool that lets you see through the eyes of your users. Canarytrace RUM offers just that. Our solution provides a deep understanding of how your web application truly performs for the end user. Simply embed our script, and gain detailed insights into application performance, communication speeds, and real user interactions, all securely stored within your infrastructure. 
+Without complex setups, without maintenance, Canarytrace RUM is your straightforward and efficient solution for optimizing user experience and achieving online success.
 
-RUM je nástroj, který se skládá z RUM Serveru, který běží v Kubernetes a RUM Client, který se vkládá v podobě Javascriptu do šablony webové aplikace.
-Všechna získaná data se odesílají na RUM Server, který je Dockerizovaný a běží v Kubernetes. Data z RUM Serveru se ukládají přímo do Elasticsearch - vše se děje ve firmním serveru a nic se neodesílá ven.
+## Why Canarytrace RUM?
 
-RUM je bez údržový nástroj, pouze se vloží měřící skript a měřící značky do šablony webové aplikace a to je vše. Není potřeba psát žádné testovací scénáře a není potřeba žádné testy udržovat.
+**Who is Canarytrace RUM for?**
+- **E-shop Operators**: Optimizing user experience, quickly identifying and resolving issues, tracking conversions, and identifying reasons for cart abandonment.
+- **Developers and Testers**: Enables in-depth performance analysis of web applications, identifies loading and interaction issues, and integrates into testing environments for quick code evaluation.
+- **IT Operations Teams**: Monitoring performance, security, and reliability of web applications in real-time, quickly detecting and resolving issues.
+- **Marketing Specialists**: Monitoring how users interact with different parts of the website, campaign optimization, improving conversions, and increasing engagement.
 
-## Use cases
+**Benefits of Canarytrace RUM**:
+1. **Improved User Satisfaction**: Quick identification and resolution of issues increase customer satisfaction and prevent business loss.
+2. **In-depth Analysis**: A detailed view of how web applications behave in a real environment.
+3. **Security**: Quick detection of potential security threats and ensuring that websites are safe for visitors.
+4. **Performance Optimization**: Identification of performance bottlenecks and addressing them to deliver a smooth and fast user experience.
 
-Monitoring spokojenosti koncových uživatelů na produkci.
-- Střežení kvality webové aplikace ( rychlost, bezpečnost a chybovost ).
-- RUM se používá i na testovacích prostředích jako doplněk pro manuální testery, automatizované testy a vývojáře. 
-- Měří, jak rychlá je komunikace mezi backendem a frontendem.
-- Měří, jak rychle se načítají jednotlivé části webové aplikace.
-- Měří, které části webové aplikace jsou nejvíce využívané a kolik uživatelů aktivně s webovou aplikací pracuje.
-- Jaké akce uživatel ve webové aplikaci udělal a jaká byla její odezva.
-- Měří, jaké zdroje si webová aplikace načetla a jaká je jejich velikost a typ.
-- Měří nefunkcionální parametry webové aplikace, což je vhodné sledovat na testovacím prostředí, na produkci a před a po releasu.
-- Umí sbírat informace o rychlosti backendových služeb, pokud je správně nakonfigurován response header.
-- Umí sbírat informace o porušení zásad CSP.
-- RUM sbírá data z webového prohlížeče o samotném prohlížeči a webové aplikaci - přidejme Listener, který získaná data automaticky vyhodnocuje a upozorňuje na nalezené problémy.
-RUM získává informace o použitém prohlížeči, zařízení koncového uživatele, jeho typu a výkonu. Zároveň zachytává chyby webové aplikace, porušení bezpečnostních zásad CSP, uživatelské události jako je například - uživatel něco zobrazil nebo uživatel odeslal formulář atp.
+**Monitoring and Measurement**
+- Monitoring end-user satisfaction in production.
+- Measures the speed of communication between the backend and frontend.
+- Measures how quickly different parts of the web application load.
+- Measures the most used parts of the web application and the number of active users.
+- Measures non-functional parameters of the web application, suitable for monitoring in test environments, in production, and before and after release.
 
+**Integration and Features**
+- RUM is also used in testing environments as a supplement for manual testers, automated tests, and developers.
+- Captures user actions in the web application and their response times.
+- Can collect backend service speed data if the response header is correctly configured.
+- RUM collects data from the web browser about the browser itself and the web application - consider adding a Listener that automatically evaluates the data and alerts about detected issues.
 
-## Co se díky RUM dozvíte
+**Details and Diagnostics**
+- Measures the resources loaded by the web application and their size and type.
+- RUM obtains information about the used browser, the end user's device, its type, and performance.
+- Captures web application errors, CSP security policy violations, and user events, such as - a user viewed something or a user submitted a form, etc.
 
-**Otázky**
-- [x] Za jak dlouho se uživateli načte stránka
-	- `duration`
-- [x] Na jakých stránkách se uživatel pohyboval
-	- `view.href`, `view.id`
-- [x] Jaké má zařízení, model, výkon (CPU  & RAM) a typ sítě
-	- `attributes.device.*`, `attributes.connection.*`, `view.usedMemory`
-- [x] Jak rychle se načetli resources
-	- seznam zdrojů: `view.resources`
-- [x] Jaké typy zdrojů webová stránka načetla
-	- `view.resourceTypes`
-- [ ] ~~Z Jakého regionu uživatel je~~
-	- Má nízkou prioritu [[GEO Location]]
-	- Data nejsou vždy dostupná a hlavně zanášíme do RUM problém s lokací uživatele
-- [ ] Vykazovala stránka nějaké Javascriptové chyby?
-	- Výpis z console `error`, `warn`, `debug`
-	- Chybí zaznamenávání chyb, které nejsou zapsány do console, které vyvolal Javascript a chybu zachytil interpretr.
-- [x] Jak rychlý byl backend vs frontend?
-	- document: `metrics.ttfb` a `metrics.fp` popřípadě `metrics.fcp`
-	- resources: `view.resources`
-- [x] Kolik uživatelů právě teď stránku používá
-	- Vypište všechny unikátní `session.id`, které nemají `session.lastLoop` starší několika minut. Například dvě minuty.
-- [x] Jak dlouho uživatel na stránce byl
-	- Vyberte uživatele podle `session.id` a stránku podle `view.id` popř. `view.href` a odečtěte poslední `session.lastLoop` od `session.startTime`. Výsledek je délka `session.id` v ms.
-- [x] Jaké stránky uživatel otevřel?
-	- `view.href` nebo `view.id` podle `session.id`
-- [x] Jaké akce uživatel udělal.
-	- sledování uživatelských kliknutí `view.actions` pomocí atributů `crum-action="name"``
-	- přidávání událostí během celého životního cyklu webové aplikace `view.events` pomocí `crum.addEvent`
-- [x] Jak rychle se uživately načetly jednotlivé části stránky
-	- `view.marks`
-- [x] Načítá a používá se stránka plynule
-	- `view.fps`
-- [x] Kolik zdrojů stránka spotřebuje
-	- `view.usedMemory`
-- [x] Kolik se přenese dat.
-	- `view.resources.transferSize` (https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming/transferSize)
-- [x] Který ze zdrojů je blokující.
-	- `view.resources[1].renderBlockingStatus`
-- [x] Které stránky jsou nejvíce navštěvované
-	- agregace podle nejvíce `view.href` nebo `view.id`
+**Quality and Security**
+- Guarding the quality of the web application (speed, security, and error rate).
+- Can collect information about CSP policy violations.
 
 
-## Difference
+:::tip 
+If you want to know the interesting information you can obtain from Canarytrace RUM, please read our [Use Cases](./useCases).
+:::
 
 
-Canarytrace RUM je měřící skript, který se vkládá do šablon webové aplikace a díky tomu změří, jak funguje webová aplikace ve webový prohlížeči vašeho zákazníka a jak je vás zákazník spokojený.
+## Difference Compared to Other Tools
 
-Canarytrace RUM is important tool for guarding your web business. You will be know, how your web application works for your customers. Canarytrace RUM provides a lot of data, which can be used for next scenarios.
+1. **Data Privacy and Security**: 
+   - Canarytrace RUM doesn't collect any personal data or information about your customers, ensuring GDPR compliance.
+   - Canarytrace RUM runs within your infrastructure, not from our clouds, ensuring that all data remains under your roof.
 
+2. **User Experience Insights**:
+   - Canarytrace RUM is a measuring script that is embedded into the templates of web applications. It allows you to determine and measure how the web application functions in your customer's browser and gauge your customer's satisfaction.
+
+3. **Autonomous Analysis**: 
+   - Canarytrace RUM aims for autonomous analysis, including severity assessment. You don't need to be an expert; Canarytrace RUM is the specialist in high-quality web applications.
+
+4. **Ease of Deployment and Use**:
+   - Thanks to Canarytrace RUM being distributed in Docker form, its deployment is a matter of minutes.
+   - Simple setup, with the more complex tasks and analysis left to Canarytrace RUM.
+
+5. **Clear Licensing**: 
+   - The licensing is straightforward: one license, one price. This means you immediately know how much Canarytrace RUM will cost regardless of the number of visits to your web application.
+
+6. **Comprehensive Coverage**:
+   - Canarytrace RUM also focuses on security and the operation between the frontend and the backend.
+   - Canarytrace RUM is an essential tool for safeguarding your web business. It allows you to understand how your web application performs for your customers. Canarytrace RUM provides a wealth of data that can be leveraged for various scenarios.
 
 
 
