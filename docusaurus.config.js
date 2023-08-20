@@ -197,7 +197,7 @@ const config = {
         require.resolve("@cmfcmf/docusaurus-search-local"),
         {
           indexDocs: true,
-          maxSearchResults: 8,
+          maxSearchResults: 15,
         },
       ],
     ],
