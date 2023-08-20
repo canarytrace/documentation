@@ -74,6 +74,33 @@ const config = {
         },
         items: [
           {
+            type: 'dropdown',
+            label: 'Products',
+            position: 'left',
+            items: [
+              {
+                type: 'doc',
+                label: 'Canarytrace Synthetic',
+                docId: 'rum/rumServer',
+              },
+              {
+                type: 'doc',
+                label: 'Canarytrace RUM',
+                docId: 'rum/introduction',
+              },
+              {
+                type: 'doc',
+                label: 'Canarytrace Listener',
+                docId: 'listener/introduction',
+              },
+              {
+                type: 'doc',
+                label: 'Use Cases',
+                docId: 'rum/useCases',
+              },
+            ],
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'docSidebar',
             position: 'left',
@@ -89,11 +116,19 @@ const config = {
                 href: 'https://github.com/canarytrace/documentation/discussions',
               },
               {
+                label: 'Web Performance Trainig',
+                href: 'https://webperf.canarytrace.com/',
+              },
+              {
+                type: 'doc',
+                label: 'Glossary',
+                docId: 'glossary/keyf',
+              },
+              {
                 type: 'doc',
                 label: 'Contact us',
                 docId: 'rum/rumServer',
               },
-              // ... more items
             ],
           },
           {
