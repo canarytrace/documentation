@@ -27,6 +27,7 @@
   --aa-primary-color-rgb: 18, 24, 38 !important;
   --aa-muted-color-rgb: 18, 24, 38 !important;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-font-family-base: font-mono;
 }
 .code-block-error-line {
   background-color: #ff000020;

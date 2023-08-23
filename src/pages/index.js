@@ -13,7 +13,7 @@ function HomepageHeader() {
           Guardians of your 
           <span className="text-7xl font-bold text-transparent bg-clip-text bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-orange-500 to-yellow-300 font-sans antialiased"> web bussiness</span>
           </h1>
-        <p className="text-2xl py-6 text-[#535569] dark:text-slate-50 font-sans antialiased">With Canartrace, you can easily protect your web business, <br/>increase sales and make your customers happier.</p>
+        <p className="text-2xl py-6 text-[#b2b5d0] dark:text-slate-50 font-sans antialiased">With Canartrace, you can easily protect your web business, <br/>increase sales and make your customers happier.</p>
       </div>
     </header>
   );
@@ -22,7 +22,7 @@ function HomepageHeader() {
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout title={`Hello from ${siteConfig.title}`} description="Description will go into a meta tag in <head />">
+    <Layout title={`Hello from ${siteConfig.title}`} description="Guardians of your web bussiness">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
