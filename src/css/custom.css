@@ -24,6 +24,17 @@
   font-size: 1.5rem;
 }
 
+.navbar__logo {
+  padding-left: 12rem; /* Odsazení zleva */
+}
+
+.navbar__items--right {
+  padding-right: 12rem; /* Odsazení zprava */
+}
+
+.docMainContainer .markdown {
+  background-color: #ffffff; /* Nahraďte #desiredColor barvou, kterou chcete použít */
+}
 
 /* You can override the default Infima variables here. */
 :root {
@@ -90,4 +101,7 @@
     margin-left: 20px;
     color: #ffffff;
   }
+}
+body[data-theme='dark'] .main-wrapper {
+  background-color: #21222b !important;
 }

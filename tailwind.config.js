@@ -5,6 +5,9 @@ module.exports = {
       colors: {
         'custom-dark-blue': '#21222b',
       },
+      fontSize: {
+        '6xl': '4rem',
+      }
     },
   },
   plugins: [],
