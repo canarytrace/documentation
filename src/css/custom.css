@@ -19,6 +19,12 @@
   font-size: 2rem;
 }
 
+.markdown h3 {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+}
+
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #f1b24f;
@@ -36,6 +42,17 @@
   --aa-primary-color-rgb: 18, 24, 38 !important;
   --aa-muted-color-rgb: 18, 24, 38 !important;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  .markdown ul, ol {
+    margin-top: 1em;
+    list-style-type: disc;
+    margin-left: 20px;
+    color: #333333;
+  }
+  .markdown blockquote {
+    border-left: 4px solid #333333;
+    padding-left: 10px;
+    color: #666666;
+  }
 }
 .code-block-error-line {
   background-color: #ff000020;
@@ -63,4 +80,14 @@
   --aa-background-color-rgb: 33, 34, 42 !important;
   /* Color which works with dark mode syntax highlighting theme */
   --docusaurus-highlighted-code-line-bg: rgb(255 251 235);
+  .markdown blockquote {
+    border-left-color: #ffffff;
+    color: #cccccc;
+  }
+  .markdown ul, ol {
+    margin-top: 1em;
+    list-style-type: disc;
+    margin-left: 20px;
+    color: #ffffff;
+  }
 }
