@@ -93,7 +93,7 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
   --aa-primary-color-rgb: 241, 178, 79 !important; 
   --aa-muted-color-rgb: 248, 250, 252 !important;
-  --aa-background-color-rgb: 33, 34, 42 !important;
+  --aa-background-color-rgb: 33, 34, 42;
   /* Color which works with dark mode syntax highlighting theme */
   --docusaurus-highlighted-code-line-bg: rgb(83, 83, 83);
   .markdown blockquote {
