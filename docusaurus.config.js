@@ -73,7 +73,7 @@ const config = {
               {
                 type: 'doc',
                 label: 'Canarytrace Synthetic',
-                docId: 'rum/rumServer',
+                docId: 'synthetic/introduction',
               },
               {
                 type: 'doc',

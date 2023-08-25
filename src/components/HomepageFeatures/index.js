@@ -20,7 +20,7 @@ export default function HomepageFeatures() {
                 <li className="relative before:content-['•'] before:absolute before:-left-5 before:text-yellow-500">Kubernetes-ready deployment.</li>
               </ul>
             </div>
-            <Link to='/' className="bg-transparent text-lg text-center font-sans antialiased hover:bg-gray-300 text-gray-500 font-semibold hover:text-gray-500 py-2 px-4 border-0 rounded hover:no-underline">Get Synthetic</Link>
+            <Link to='/docs/synthetic/introduction' className="bg-transparent text-lg text-center font-sans antialiased hover:bg-gray-300 text-gray-500 font-semibold hover:text-gray-500 py-2 px-4 border-0 rounded hover:no-underline">Get Synthetic</Link>
           </div>
           <div className="bg-gray-100 dark:bg-[#282a34] p-4 rounded-lg flex flex-col justify-between h-full">
             <div>
@@ -35,7 +35,7 @@ export default function HomepageFeatures() {
                 <li className="relative before:content-['•'] before:absolute before:-left-5 before:text-yellow-500">User experience optimization.</li>
               </ul>
             </div>
-            <Link to='/rum' className="bg-transparent text-lg text-center font-sans antialiased hover:bg-gray-300 text-gray-500 font-semibold hover:text-gray-500 py-2 px-4 border-0 rounded hover:no-underline">Get RUM</Link>
+            <Link to='/docs/rum/introduction' className="bg-transparent text-lg text-center font-sans antialiased hover:bg-gray-300 text-gray-500 font-semibold hover:text-gray-500 py-2 px-4 border-0 rounded hover:no-underline">Get RUM</Link>
           </div>
           <div className="bg-gray-100 dark:bg-[#282a34] p-4 rounded-lg flex flex-col justify-between h-full">
             <div>

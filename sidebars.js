@@ -48,6 +48,13 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Synthetic',
+      items: [
+        'synthetic/introduction',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Glossary',
       items: [
         'glossary/webperf',
