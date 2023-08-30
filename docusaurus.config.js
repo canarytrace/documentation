@@ -214,6 +214,7 @@ const config = {
           name: "docusaurus-tailwindcss",
           configurePostCss(postcssOptions) {
             // Appends TailwindCSS and AutoPrefixer.
+            postcssOptions.plugins.unshift(require('postcss-nested'));
             postcssOptions.plugins.push(require("tailwindcss"));
             postcssOptions.plugins.push(require("autoprefixer"));
             return postcssOptions;
