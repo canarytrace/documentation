@@ -35,7 +35,7 @@ The Listener Agent is distributed as a [Docker](https://quay.io/repository/canar
 
 The [Docker](https://quay.io/repository/canarytrace/listener-agent?tab=tags) image contains not only the Listener engine itself but also built-in rules and the necessary Kubernetes deployment objects.
 
-Upon launching the Docker image with the Listener Agent, the creation of service indices in Elasticsearch happens automatically, followed by the start of individual phases. Once the final phase ends, the Docker image stops and restarts. Thanks to this, the Listener Agent evaluates current data from Canarytrace RUM and Canarytrace Synthetic.
+Upon launching the Docker image with the Listener Agent, the creation of service indices in Elasticsearch happens automatically, followed by the start of individual phases. Once the final phase ends, the Docker image stops and re-run. Thanks to this, the Listener Agent evaluates current data from Canarytrace RUM and Canarytrace Synthetic.
 
 For optimal operation, it's necessary to run the Listener Agent in a Kubernetes cluster. More information can be found in the [Kubernetes](#kubernetes) section.
 
@@ -281,24 +281,18 @@ DataManager exist: Not found. | 31
 
 The Listener agent comes with pre-defined rules / checklist, so you don't necessarily have to intervene in the configuration from the beginning. However, you will likely want to modify certain rules, and for that, you can override the built-in rules. For this purpose, three files are used.
 
-- `rules/internal.yaml` For the quality rules of web applications, especially for checking data from Canarytrace.
-    - List of rules [internal.yaml](#internal-rules)
-- `rules/rum.yaml` Rules for monitoring data from the [Canarytrace RUM](../rum/introduction)
-    - List of rules [rum.yaml](#rum-rules)
-- `rules/custom.yaml` For your own custom business rules.
-    - List of rules [custom.yaml](#custom-rules)
+- `rules/internal.yaml` For the quality rules of web applications, especially for checking data from Canarytrace. [Go to the list of internal rules](#internal-rules).
+- `rules/rum.yaml` Rules for monitoring data from the [Canarytrace RUM](../rum/introduction). [Go to the list of RUM rules](#rum-rules).
+- `rules/custom.yaml` For your own custom business rules. [Go to the list of custom rules](#custom-rules).
 
-Všechny tři soubory se deployují do Kubernetes jako [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) a jejich obsah můžete za běhu měnit. Změny se projeví při dalším startu Listener agenta.
+All three files are deployed to Kubernetes as a ConfigMap, and you can modify their content during runtime. The changes will take effect upon the next start of the Listener agent.
 
-Jednotlivá pravidla jsou v těchto souborech definována pomocí typů [range](https://github.com/canarytrace/documentation/issues/110#issuecomment-1364990113), [contains](https://github.com/canarytrace/documentation/issues/110#issuecomment-1365282100) a [match](https://github.com/canarytrace/documentation/issues/110#issuecomment-1365444676). Pomocí těchto typů můžete upravit či postavit robustní seznam pravidel pro Vaše business thresholdy.
+Individual rules are defined in these files using the '[range](#type-range)', '[contains](#type-contains)', and '[match](#type-match)' types. Using these types, you can modify or construct a robust list of rules for your business thresholds.
 
-Syntaxe v pravidlech slouží pro vygenerování dotazu do Elasticsearch, takže: 
+The syntax in the rules is used to generate a query in Elasticsearch, so if the rule is true ⇒ the query in Elasticsearch found data corresponding to the rule ⇒ event creation ⇒ reporting.
 
-pokud je pravidlo pravdivé ⇒ dotaz v Elasticsearch našel data, které pravidlu odpovídají ⇒ založení události ⇒ reportování 
+### `rules/internal.yaml`
 
-### internal rules
-
-> source: rules/internal.yaml
 
 Title | Index | Condition | Count / hour | Score
 -- | -- | -- | -- | --
@@ -323,9 +317,7 @@ Response code 400 | r.request-log | >= 400 | 5 | 80
 Response code 500 | r.request-log | >= 500 | 5 | 20
 Failed check your page! | c.report | test step failed | 2 | 10
 
-### rum rules
-
-> source: rules/rum.yaml
+### `rules/rum.yaml`
 
 Title | Index | Condition | Count / hour | Score
 -- | -- | -- | -- | --
@@ -340,9 +332,7 @@ FCP is poor (RUM) | c.rum.metrics | >= 3000 | 3 | 20
 TTFB needs improvement (RUM) | c.rum.metrics | 400 - 800 | 3 | 40
 TTFB is poor (RUM) | c.rum.metrics | >= 800 | 3 | 20
 
-### custom rules
-
-> source: rules/custom.yaml
+### `rules/custom.yaml`
 
 It contains only an example of a possible business rule (maximum time for user login to the application).
 
