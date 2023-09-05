@@ -625,11 +625,23 @@ If this item in `c.listener.queue` already exists, the analyzer updates this err
 
 ## Reporting
 
-Popsat reportovací mechanismus
+
+The Listener Agent wants to send important notifications regarding the health of your web application to you, but only at appropriate times, when it makes sense. The reporting mechanisms are controlled by the score of errors and events, which dictate the severity of the incident and the timing of notifications.
+
+Incidents with a very low score are marked as critical, and you will be notified about these types of incidents immediately and repeatedly until the incident is resolved. This critical stage will alert you to issues such as Elasticsearch being unavailable, Canarytrace not functioning, or our webpage being inaccessible, etc.
+
+The Listener Agent has multiple stages, which ensure distributed notifications based on the score of the incident and the time. Therefore, do not worry; the Listener Agent will not spam you. Instead, you will be notified immediately about critical problems, and simultaneously receive an overview of less critical issues that still require your attention.
+
+Please utilize all available reporting channels, such as Slack and Email. The Listener Agent determines which reporter use.
 
 ### Reporters
 
-Popsat reportery
+The Listener Agent supports the following reporters:
+
+- `slack-internal` - Sends a message into Slack when there are problems with Elasticsearch or the Canarytrace toolset. We recommend that individuals from technical support, DevOps, or SRE monitor this channel.
+- `slack` - Sends a message to Slack when a certain rule is mached and the score is lower than `30`.
+- `email` - Sends an email when a rule is mached and the score is lower than `30`, or in the case of emergency issues.
+- `events` - This reporter stores all events and other Listener Agent activities in the `c.listener.events` index. It is used to log instances where rules are mached, meaning that when the emergency reporter sends a notification to slack-internal, or if a rule is exceeded and a report is sent to slack or e-mail, a copy of the report will be saved in the `c.listener.events`. index.
 
 ### Schema
 
