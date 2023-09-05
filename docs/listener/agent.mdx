@@ -521,6 +521,108 @@ The Listener Agent autonomously creates and utilizes these indices in Elasticsea
 - `c.listener.events-*` - Contains all information and evaluations of rules, bugs, and other items. It serves as the source of truth and is the most interesting index for you. You can only observe this index, as the Listener Agent stores all information here. This index is useful for your subsequent tools, which can utilize this index to evaluate rules for your upcoming actions/flows, e.g., automatically creating an incident ticket in Jira.
 - `c.listener.queue` - Contains all open and closed bugs. It's an interesting place for you to monitor current bugs and their statuses. This index also facilitates the reporting mechanism for sending notifications about bugs and their statuses.
 
+#### Example
+
+In our internal rules, this rule is defined:
+
+Find entries with a `performance.score` value between `50` and `89` in the `c.audit` index. If the Listener Agent finds at least 3 such items, it creates an event in the `c.listener.events` index and sends a report to Slack.
+
+```yaml title="./internal.yaml"
+- type: range
+  title: "Performance score needs improvement"
+  index: c.audit
+  filter:
+  - field: 'categories.performance.score'
+    operator: 'lte'
+    value: 89
+  - field: 'categories.performance.score'
+    operator: 'gte'
+    value: 50
+  min: 3
+  score: 60
+  reportLabels:
+  - 'categories.performance.score'
+  - 'finalUrl'
+  - 'timestamp'
+  reporters:
+  - type: slack
+    message: "The Performance score is a weighted average of the metric scores. https://web.dev/performance-scoring/"
+```
+
+### Events
+
+If the Listener Agent evaluates the rule and finds data that conforms to the definition of the rule described above, it will create an event in the `c.listener.events` index. This event will contain:
+- `tag` - ok, a defect is in production
+- `uuid` - a unique identifier of the Canarytrace Synthetic run. Using this identifier, you can find all other information about this run, e.g., response time, other performance metrics, etc.
+
+The result is that the Listener Analytics found three items in the `c.audit` index that match the rule definition, and thanks to the `documents` array, you can view the identified items.
+
+```json title="event in the c.listener.events index"
+{
+  "type": "events",
+  "rule": "range",
+  "tags": [
+    "monitoring",
+    "production",
+    "uuid:cf3e728924301423c9b80b87498f2f82"
+  ],
+  "kibana_endpoint": "https://xyc.eu-central-1.aws.cloud.es.io:9243",
+  "score": 60,
+  "title": "Performance score needs improvement",
+  "description": "The Performance score is a weighted average of the metric scores. https://web.dev/performance-scoring/, total 3 exceeded.",
+  "documents": [
+    {
+      "_index": "c.audit-2023.09.05",
+      "_id": "vl5jZYoBn60ExuFaYhmL",
+      "categories.performance.score": 86,
+      "finalUrl": "https://canarytrace.com/",
+      "timestamp": "2023-09-05T12:48:46.529Z"
+    },
+    {
+      "_index": "c.audit-2023.09.05",
+      "_id": "K15fZYoBn60ExuFarxia",
+      "categories.performance.score": 86,
+      "finalUrl": "https://canarytrace.com/",
+      "timestamp": "2023-09-05T12:44:44.111Z"
+    },
+    {
+      "_index": "c.audit-2023.09.05",
+      "_id": "nN5cZYoB5js_HTi8Bx-E",
+      "categories.performance.score": 86,
+      "finalUrl": "https://canarytrace.com/",
+      "timestamp": "2023-09-05T12:40:44.492Z"
+    }
+  ],
+  "timestamp": "2023-09-05T12:50:09.133Z"
+}
+```
+
+### Error Queue
+
+If the analyzer finds a match between the rule and the data from Canarytrace Synthetic or Canarytrace RUM, an item will be created in the `c.listener.queue` index.
+
+If this item in `c.listener.queue` already exists, the analyzer updates this error with the count of repetitions and the last occurrence time.
+
+- `score` represents the weight of the error and is defined in the corresponding rule. More info can be found in the chapter [Score Table](#score).
+- `incidents` refer to the total number of item occurrences in your data that match the rule definition or exceed the threshold defined in the corresponding rule.
+- `startTime` indicates the time of the first occurrence of the item in your data. The Listener agent can open and close the same error several times during one day. Therefore, the start time is the time of the first occurrence when the same type of error doesn't exist in the state `open`.
+- `repetition` refers to the iterations of the Listener Agent reviewing your data. In other words, it indicates how many times the Listener Agent found the same error in your data.
+- `open`: if the item is marked as `true`, it means that the error is valid and still exists in your web application. The Elasticsearch index `c.listener.queue` also contains closed errors, which is useful for reviewing how often the same error occurs in your web application and how long it exists before it disappears.
+
+```json title="error in the c.listener.queue index"
+{
+  "lastTime": "2023-09-05T15:50:08.165Z",
+  "score": 60,
+  "incidents": 21,
+  "description": "",
+  "startTime": "2023-09-05T13:50:08.611Z",
+  "title": "Performance score needs improvement",
+  "repetition": 6,
+  "open": true
+}
+```
+
+
 ## Reporting
 
 Popsat reportovací mechanismus
