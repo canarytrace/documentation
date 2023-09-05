@@ -11,13 +11,25 @@ tags:
 
 The Listener Agent is a Dockerized component that evaluates data from Canarytrace [RUM](../rum/introduction) and Canarytrace Synthetic, which are stored in Elasticsearch.
 
-The Listener Agent works in phases:
+## Lifecycle
 
-1. First phase, internal checks: The Listener Agent contains built-in internal checks which i verify that Canarytrace is functioning correctly, that Elasticsearch is available, and that it's possible to store data in Elasticsearch.
+After running the Listener agent, three phases are executed:
 
-2. Second phase, rule checking: The Listener Agent contains built-in rules, like a checklist for the quality of the web application. The Listener Agent checks stored data against these rules very frequently. Thanks to these rules, you do not need know how the web application works properly.
 
-3. Third phase, reporting: All information about the work of the Listener Agent and violations of rules are stored in an Elasticsearch index called "events", and notifications are sent through reporters. This phase also includes bug watchers and creates an overview.
+### First phase, internal checks
+The Listener Agent contains built-in internal checks which verify that Canarytrace is functioning correctly, that Elasticsearch is available, and that it's possible to store data in Elasticsearch. 
+- [Go to the list of internal checks](#internal-checks).
+
+### Second phase, rule checking, analysis phase
+The Listener Agent contains built-in rules, like a checklist for the quality of the web application. The Listener Agent checks stored data from the Canarytrace Synthetic and Canarytrace RUM against these rules. Thanks to these rules, you do not need know how the web application works properly.
+During the analysis phase, rules are evaluated, notifications for critical problems are sent out, and new errors are added to the error queue.
+
+- [Go to the list rules](#rules--checklists).
+
+This phase also includes bug watchers.
+
+### Third phase, overview phase
+This phase creates an overview.
 
 import LicenseInfo from '../../src/components/LicenseInfo';
 
@@ -169,6 +181,8 @@ With this Kubernetes command `logs`, you will be able to see the log.
 kubectl -n canarytrace logs listener-agent-28161280-2d6df
 ```
 
+#### First phase, internal checks
+
 The first phase is the initiation of internal checks. The Listener Agent examines the health of Elasticsearch, Canarytrace RUM, and Canarytrace Synthetic.
 
 The internal checks are the most important phase, which verifies the health of the Canarytrace toolset and Elasticsearch.
@@ -193,6 +207,8 @@ Datamanager: last run before 13 hours
 ...
 ```
 
+#### Second phase, analysis phase
+
 The second phase, marked as the analysis phase, is when the Listener Agent loads and evaluates rules, and prepares data for the final phase, known as the overview phase. During the analysis phase, rules are evaluated, notifications for critical problems are sent out, and new errors are added to the error queue.
 
 ```bash title="The Listener Agent evaluate rules"
@@ -214,7 +230,7 @@ analyzers: incidents 0
 ...
 ```
 
-In this phase, the Listener Agent evaluates the error queue, for instance, updating the status of the errors or closing old errors.
+Next, the Listener Agent evaluates the error queue, for instance, updating the status of the errors or closing old errors.
 
 ```bash title="The Listener Agent evaluate incidents"
 ...
@@ -224,6 +240,9 @@ errors-queue:how long:9min: Performance score needs improvement
 errors-queue:not closed
 ...
 ```
+
+#### Third phase, Overview phase
+
 The Overview phase is the final phase of the Listener Agent. In this phase, the Listener Agent generates reports and sends them to the configured reporters. It evaluates numerous parameters such as the age of errors and their score, available reporters, appropriate time for sending the report, sentence preparation for improved explanation, and so on.
 
 ```bash title="The Listener Agent create reports"
@@ -495,19 +514,51 @@ rules:
 **Optional parts**
  - `min` this rule will be true only in case, that was found minimal `min` items in Elasticsearch index. If is not `min` used, will be the listener-agent report all findings.
 
+## Elasticsearch
+The Listener Agent autonomously creates and utilizes these indices in Elasticsearch:
+
+- `c.lister-*` - A configuration index for the Listener Agent. This index contains time pointers for the reporting mechanism.
+- `c.listener.events-*` - Contains all information and evaluations of rules, bugs, and other items. It serves as the source of truth and is the most interesting index for you. You can only observe this index, as the Listener Agent stores all information here. This index is useful for your subsequent tools, which can utilize this index to evaluate rules for your upcoming actions/flows, e.g., automatically creating an incident ticket in Jira.
+- `c.listener.queue` - Contains all open and closed bugs. It's an interesting place for you to monitor current bugs and their statuses. This index also facilitates the reporting mechanism for sending notifications about bugs and their statuses.
+
 ## Reporting
+
+Popsat reportovací mechanismus
 
 ### Reporters
 
+Popsat reportery
+
 ### Schema
+
+Schema reportovani
+
+### Overviews
+
+Popsat posílání přehledů
 
 ## Configuration
 
-## Elasticsearch
+Popsat konfiguraci
+
+
+
+- `INTERNAL_RULES_PATH`, default './rules/internal.yaml'`
+- `CUSTOM_RULES_PATH`, default './rules/custom.yaml'`
+- `RUM_RULES_PATH`, default './rules/rum.yaml'`
+- `PRINT_RULES='allow'`, default `no` print evaluated rules into stdout
+
+overview
+- `EMERGENCY_AFTER_MIN`
+- `STAGE1_AFTER_MIN`
+- `STAGE1_REPETETION`
+- `KIBANA_ENDPOINT`
+- `TAGS`
+
 
 ## Data Manager
 
-
+Pro Listener DM udělat vlastní stránku
 
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
