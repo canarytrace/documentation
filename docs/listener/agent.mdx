@@ -92,7 +92,7 @@ ls -lah k8s
 - `k8s/listener.yaml` - contains deployment of Listener Agent, more information in the [Configuration](#configuration) section.
 
 Before deploying the Listener Agent to your Kubernetes cluster, please:
-- update the `secret.yaml` and `listener.yaml` files and their configurations.
+- update the `secret.yaml` and `deployment.yaml` files and their configurations.
 - additionally, you may choose to edit the rules in one or more of these files:" `k8s/config-custom-rules.yaml`, `k8s/config-internal-rules.yaml`, and `k8s/config-rum-rules.yaml`. Learn more about the syntax of the rules in the [Rules](#rules) section.
 
 :::tip
@@ -643,18 +643,33 @@ The Listener Agent supports the following reporters:
 - `email` - Sends an email when a rule is mached and the score is lower than `30`, or in the case of emergency issues.
 - `events` - This reporter stores all events and other Listener Agent activities in the `c.listener.events` index. It is used to log instances where rules are mached, meaning that when the emergency reporter sends a notification to slack-internal, or if a rule is exceeded and a report is sent to slack or e-mail, a copy of the report will be saved in the `c.listener.events`. index.
 
-### Schema
+#### Example
+This example show events sends to Slack as result from analyzer which by rules checks data from Canarytrace Syntethic. 
+1. `Failed check your page!` means, that the Listener Agent found at least 2 items in the `c.report` index, which have the field `passed` with the value `false`.
+2. dfdf
 
-Schema reportovani
 
-### Overviews
-
-Popsat posílání přehledů
+![Metrics graph](./assets/listener-slack.webp)
 
 ## Configuration
 
 Popsat konfiguraci
 
+The Listener Agent can be configured using environment variables and these configuration you use `k8s/deployment.yaml` file.
+
+- `ENV_PRINT`
+- `TAGS`
+- `ELASTIC_CLUSTER`
+- `ELASTIC_HTTP_AUTH`
+- `KIBANA_ENDPOINT`
+- `SLACK_WEBHOOK_URL_INTERNAL`
+- `SLACK_WEBHOOK_URL`
+- `EMAIL_SMTP_SERVER`
+- `EMAIL_SMTP_PORT`
+- `EMAIL_SMTP_USER`
+- `EMAIL_SMTP_PASS`
+- `EMAIL_EMERGENCY`
+- `LICENSE`
 
 
 - `INTERNAL_RULES_PATH`, default './rules/internal.yaml'`
