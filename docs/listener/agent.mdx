@@ -638,15 +638,18 @@ Please utilize all available reporting channels, such as Slack and Email. The Li
 
 The Listener Agent supports the following reporters:
 
-- `slack-internal` - Sends a message into Slack when there are problems with Elasticsearch or the Canarytrace toolset. We recommend that individuals from technical support, DevOps, or SRE monitor this channel.
-- `slack` - Sends a message to Slack when a certain rule is mached and the score is lower than `30`.
-- `email` - Sends an email when a rule is mached and the score is lower than `30`, or in the case of emergency issues.
-- `events` - This reporter stores all events and other Listener Agent activities in the `c.listener.events` index. It is used to log instances where rules are mached, meaning that when the emergency reporter sends a notification to slack-internal, or if a rule is exceeded and a report is sent to slack or e-mail, a copy of the report will be saved in the `c.listener.events`. index.
+- `slack-internal` - Sends a message to Slack when there are issues with Elasticsearch or the Canarytrace toolset. We recommend that individuals from technical support, DevOps, or SRE monitor this channel.
+- `slack` - Sends a message to Slack when a certain rule is matched and the score is lower than `30`.
+- `email` - Sends an email when a rule is matched and the score is lower than `30`, or in the case of emergency issues.
+- `events` - This reporter stores all events and other Listener Agent activities in the `c.listener.events` index. It is used to log instances where rules are matched, meaning that when the emergency reporter sends a notification to `slack-internal`, or if a rule is exceeded and a report is sent to `slack` or email, a copy of the report will be saved in the `c.listener.events` index.
+
 
 #### Example
-This example show events sends to Slack as result from analyzer which by rules checks data from Canarytrace Syntethic. 
-1. `Failed check your page!` means, that the Listener Agent found at least 2 items in the `c.report` index, which have the field `passed` with the value `false`.
-2. dfdf
+This example shows events sent to Slack as a result of an analyzer that checks data from Canarytrace Synthetic according to specified rules. 
+1. `Failed check your page!` indicates that the Listener Agent found at least 2 items in the `c.report` index, which have the field `passed` set to the value `false`.
+2. `Congratulations, one incident was closed, but one incident is still open` means that a new incident titled 'Failed check your page' was resolved. However, there is still another open incident.
+3. The next `Congratulations` message indicates that an incident with a lower performance score remained open throughout the day. It was noted 328 times that the score was lower, but now the performance score is satisfactory, so the Listener Agent closed it.
+4. Once again, the Listener Agent informed you that the incident 'Login to application' has been closed.
 
 
 ![Metrics graph](./assets/listener-slack.webp)
