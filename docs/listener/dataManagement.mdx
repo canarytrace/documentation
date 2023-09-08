@@ -1,0 +1,281 @@
+---
+sidebar_position: 1
+description: Listener is next tool in Canarytrace toolset for analyzing data from Canarytrace RUM and Canarytrace Synthetic
+title: Listener DM
+tags:
+  - Listener
+  - Data Management
+---
+
+# Listener Data Management
+
+The Data Management component removes older data from Elasticsearch and creates long-term indices with trend data. For example, an Elasticsearch index with RUM metrics contains a lot of data for immediate review, but these data consume significant storage and detailed data becomes less interesting after one week. You can create a long-term index for this data that will contain only the types of devices, browsers, FPS, and Duration.
+
+# Kubernetes
+Canarytrace RUM is ready for run in Kubernetes. You must create configuration objects in Kubernetes.
+
+## How to get Deployment scripts
+
+```yaml
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments quay.io/canarytrace/dm:1.3 /opt/data-management/deployments/ /deployments/
+```
+This command move directory `deployments` from Docker container to localhost.
+
+- `secret.yaml` contains Elasticsearch credentials and licence
+- `deployment.yaml` CronJob for Data Management
+- `rollup_config.yaml` Configuration for rollup jobs
+
+## Secret
+Create secret and fill `elastic.cluster` and `elastic.http.auth`
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: canarytrace-secret
+  namespace: canarytrace
+type: Opaque
+stringData:
+  elastic.cluster: ""
+  elastic.http.auth: "elastic:XYZ"
+```
+
+## Deployment
+
+Please, always use a latest docker image e.g. `quay.io/canarytrace/dm:1.3`. You can found latest docker images on this page https://quay.io/repository/canarytrace/dm?tab=tags
+
+```yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: data-management
+  namespace: canarytrace
+spec:
+  concurrencyPolicy: Replace
+  failedJobsHistoryLimit: 2
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: data-management
+            image: quay.io/canarytrace/dm:1.3
+            env:
+            - name: CREATE_TRENDS
+              value: "allow"
+            - name: DATA_RETENTION_DAYS
+              value: "14"
+            - name: ELASTIC_CLUSTER
+              valueFrom:
+                secretKeyRef:
+                  name: canarytrace-secret
+                  key: elastic.cluster
+            - name: ELASTIC_HTTP_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: canarytrace-secret
+                  key: elastic.http.auth
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+              limits:
+                memory: "200Mi"
+                cpu: "800m"
+            imagePullPolicy: "IfNotPresent"
+            volumeMounts:
+              - name: data-management-rollup
+                mountPath: /opt/data-management/rollup_jobs/report.json
+                subPath: report.json
+                readOnly: true
+              - name: data-management-rollup
+                mountPath: /opt/data-management/rollup_jobs/audit.json
+                subPath: audit.json
+                readOnly: true
+              - name: data-management-rollup
+                mountPath: /opt/data-management/rollup_jobs/request-log.json
+                subPath: request-log.json
+                readOnly: true
+              - name: data-management-rollup
+                mountPath: /opt/data-management/rollup_jobs/rum.metrics.json
+                subPath: rum.metrics.json
+                readOnly: true
+          restartPolicy: "Never"
+          terminationGracePeriodSeconds: 5
+          volumes:
+            - name: canarytrace-secret
+              secret:
+                secretName: secret
+            - name: data-management-rollup
+              configMap:
+                name: data-management-rollup
+                items:
+                  - key: report.json
+                    path: report.json
+                  - key: audit.json
+                    path: audit.json
+                  - key: request-log.json
+                    path: request-log.json
+                  - key: rum.metrics.json
+                    path: rum.metrics.json
+```
+
+# I don't want to create the long term trends
+
+In this case remove from `deployment.yaml` environment variable `CREATE_TRENDS`, `volumeMounts` and volumes `data-management-rollup`.
+
+**Environment variables**
+- `DATA_RETENTION_DAYS` default is 14 days. You can change this.
+- `ENV_PRINT` print all environment variables. Please remove if you do not need. 
+
+## Rollup jobs configuration
+Configuration for creating rollup jobs for create indices with trends. Older indices (with detailed data) will be deleted by Data Management, so you need rollup jobs for migration some metrics into indices with long live.
+
+Default configuration https://github.com/canarytrace/documentation/issues/126
+
+Now is your Data Management ready 👌
+
+
+# Rolluped metrics
+are metrics moved from original indices to new trend indices. Original indices are deleted by your setup of data retention, but trend indices have a long life.
+
+- Original indices are suitable for immediately investigation.
+- Trend indices are designed for creating of long live trends.
+
+e.g. Elasticsearch index `c.audit-*` contains many metrics from performance audit. This index takes up a lot of space because one performance audit contains many metrics. This is useful for investigation, but not for view of yearly trend.
+
+---
+👉 You can change list of metrics in `rollup_config.yaml`. More information  https://github.com/canarytrace/documentation/issues/123
+
+##  c.audit.trends
+> This index is created from  `c.audit-*`
+
+**Metrics**
+`categories.performance.score`
+`audits.first-contentful-paint.score`
+`audits.largest-contentful-paint.score`
+`audits.interactive.score`
+`audits.metrics.details.totalBlockingTime`
+`audits.cumulative-layout-shift.score`
+`audits.diagnostics.details.numTasksOver50ms`
+`audits.diagnostics.details.numTasksOver100ms`
+`audits.metrics.details.speedIndex`
+`audits.network-server-latency.numericValue`
+`audits.first-contentful-paint.numericValue`
+`audits.diagnostics.details.numScripts`
+`audits.diagnostics.details.numRequests`
+`audits.diagnostics.details.mainDocumentTransferSize`
+
+##  c.report.trends
+> This index is created from  `c.report-*`
+
+**Metrics**
+`testStepDuration`
+
+
+##  c.rum.metrics.trends
+> This index is created from  `c.rum.metrics-*`
+
+**Metrics**
+`decodedBodySize`
+`encodedBodySize`
+`FCP`
+`FID`
+`LCP`
+`TTFB`
+`resources`
+`usedJSHeapSize`
+
+##  c.request-log.trends
+> This index is created from  `c.request-log-*`
+
+**Metrics**
+`har.time`
+`har.wait`
+`usedJSHeapSize`
+
+# Automatically remove older data from Elasticsearch
+
+- Data Management automatically remove older data after midnight. Your Elasticsearch will remain healthy, but you will lose saved data.
+
+- Data Management in default configuration remove 14 days older data from all Canarytrace indices, e.g. `c.report-*`, `c.performance-entries-*` etc.
+
+
+# Use Elasticsearch Rollup Jobs ( https://www.elastic.co/guide/en/kibana/current/data-rollups.html#data-rollups )
+
+- Rollup indices are a good way to compactly store months or years of historical data for use in visualizations and reports.
+- Rollup overview https://www.elastic.co/guide/en/elasticsearch/reference/8.4/rollup-overview.html
+- API https://www.elastic.co/guide/en/elasticsearch/reference/8.4/rollup-put-job.html
+
+# How to use
+1). *Download, edit and push `rollup_config.yaml` into your Kubernetes cluster. How to download https://github.com/canarytrace/documentation/issues/123
+2). Download and push new `deployment.yaml` into your Kubernetes cluster. How to download https://github.com/canarytrace/documentation/issues/123
+
+After starting the Data Management POD you will see in the log:
+
+```
+...
+./rollup_jobs/audit.json
+--------------------------------------------
+✅ Rollup Job for trend c.audit.trends exist.
+✅ Rollup Job c.audit.trends is runned.
+✅ Trend index c.audit.trends exist.
+
+./rollup_jobs/report.json
+--------------------------------------------
+✅ Rollup Job for trend c.report.trends exist.
+✅ Rollup Job c.report.trends is runned.
+✅ Trend index c.report.trends exist.
+
+./rollup_jobs/request-log.json
+--------------------------------------------
+✅ Rollup Job for trend c.request-log.trends exist.
+✅ Rollup Job c.request-log.trends is runned.
+✅ Trend index c.request-log.trends exist.
+
+./rollup_jobs/rum.metrics.json
+--------------------------------------------
+✅ Rollup Job for trend c.rum.metrics.trends exist.
+✅ Rollup Job c.rum.metrics.trends is runned.
+✅ Trend index c.rum.metrics.trends exist.
+
+Found 4 Rollup Jobs configuration.
+...
+```
+
+Data Management contains processes for creating and run of [Rollup Job](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) and new indices for longterm data e.g. `c.audit.trends`
+
+3). You must manually create new index pattern `Kibana > Stack Management > Index patterns` for your news long term indices. This is a lates step.
+
+
+
+![Image](https://user-images.githubusercontent.com/230124/195179741-ed881e0b-ceca-4b60-a41d-fc6a317de0ba.png)
+
+4). You can download our demo visualization and dashboard directly from Docker image with Data Management. 
+```bash
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/kibana_objects quay.io/canarytrace/dm:1.3 /opt/data-management/kibana_objects/ /kibana_objects/
+```
+Downloaded files can import in Kibana `Stack Management > Saved objects > Import`.
+
+*Demo visualization over long term index `c.audit.trends` with performance score in imported dashboard called `Canary trends`.*
+
+
+![Image](https://user-images.githubusercontent.com/230124/195182621-318db8aa-2eae-475f-b938-8c6ef718a930.png)
+
+
+
+
+> 👉 *`rollup_config.yaml` contains default / demo / example configuration ( see on details https://github.com/canarytrace/documentation/issues/126 ). Please create your own rollup_config by your preferences, what data you need move from origin to long term indices.
+
+> 👉 Final rollup_config, index patterns and visualizations is based on your decision, what do you want move to long term indices.
+
+> ❌ I don't want to create the long term trends https://github.com/canarytrace/documentation/issues/123#issuecomment-1275189823
+
+
+
+
+
+import FeedbackFooter from '../../src/components/FeedbackFooter';
+
+<FeedbackFooter />
