@@ -44,6 +44,7 @@ const sidebars = {
       items: [
         'listener/introduction',
         'listener/agent',
+        'listener/releases',
       ],
     },
     {

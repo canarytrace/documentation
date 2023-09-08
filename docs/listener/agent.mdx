@@ -678,6 +678,10 @@ The Listener Agent can be configured using environment variables, and these conf
 - `EMAIL_SMTP_USER` - SMTP user for sending emails.
 - `EMAIL_SMTP_PASS` - SMTP password for sending emails.
 - `EMAIL_EMERGENCY` - Email address for sending emergency events to your administrators team, e.g., Elasticsearch heap is higher than 85%.
+- `TLS_MIN_VERSION = 'TLSv1.2'` - TLS minimum version for sending emails. Default `TLSv1.2`.
+- `TLS_MAX_VERSION = 'TLSv1.3'` - TLS maximum version for sending emails. Default `TLSv1.3`.
+- `TLS_REJECT_UNAUTHORIZED = false` - Reject unauthorized TLS certificate for sending emails. Default `false`.
+- `PRINT_MAIL_CONFIGURATION = false` - Print mail configuration into stdout. Default `false`.
 
 ### Errors queue
 - `CLOSE_ERR_MIN = 30` - Close the error if the same error is not found for more than 30 minutes. The default is `30`.
