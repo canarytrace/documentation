@@ -692,6 +692,14 @@ Internal settings. Therefore, you may not need to change them.
 - `STAGE1_AFTER_MIN = 180` - Send an overview of errors every 180 minutes. The default is `180`.
 - `STAGE1_REPETETION = 20` - Reminder about an error when the same error has been found more than 20 times. The default is `20`.
 
+### Internal Checks
+- `CANARY_HEALTHCHECK = 'allow'` - Checks whether Canarytrace Synthetic is running and sending data to Elasticsearch. Default: `allow`.
+- `DM_HEALTHCHECK = 'allow'` - Checks if the Data Manager is installed. Default: `allow`.
+- `DM_LAST_HOURS = '48'` - Ensures that the Data Manager has been operational within the last 48 hours. Default: `48`.
+- `LIFECYCLE_CHECK = 'allow'` - Useful for verifying that Canarytrace Synthetic is operating correctly. Default: `allow`.
+- `ELASTIC_HEALTHCHECK = 'allow'` - Checks the health status of Elasticsearch. Default: `allow`.
+- `ELASTIC_NODES_HEALTHCHECK = 'allow'` - Monitors the health status of Elasticsearch nodes. Default: `allow`.
+
 ### Others
 - `LICENSE = 'ABCDE-12345-ABCDE-12345-ABCDE-123'` - Place your license key here.
 - `ENV_PRINT = 'allow'` - Print all environment variables into stdout.
