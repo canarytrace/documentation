@@ -656,41 +656,49 @@ This example shows events sent to Slack as a result of an analyzer that checks d
 
 ## Configuration
 
-Popsat konfiguraci
-
-The Listener Agent can be configured using environment variables and these configuration you use `k8s/deployment.yaml` file.
-
-- `ENV_PRINT`
-- `TAGS`
-- `ELASTIC_CLUSTER`
-- `ELASTIC_HTTP_AUTH`
-- `KIBANA_ENDPOINT`
-- `SLACK_WEBHOOK_URL_INTERNAL`
-- `SLACK_WEBHOOK_URL`
-- `EMAIL_SMTP_SERVER`
-- `EMAIL_SMTP_PORT`
-- `EMAIL_SMTP_USER`
-- `EMAIL_SMTP_PASS`
-- `EMAIL_EMERGENCY`
-- `LICENSE`
+The Listener Agent can be configured using environment variables, and these configurations can be changed in the `k8s/deployment.yaml` and `k8s/secret.yaml` files.
 
 
-- `INTERNAL_RULES_PATH`, default './rules/internal.yaml'`
-- `CUSTOM_RULES_PATH`, default './rules/custom.yaml'`
-- `RUM_RULES_PATH`, default './rules/rum.yaml'`
-- `PRINT_RULES='allow'`, default `no` print evaluated rules into stdout
+### Elasticsearch
 
-overview
-- `EMERGENCY_AFTER_MIN`
-- `STAGE1_AFTER_MIN`
-- `STAGE1_REPETETION`
-- `KIBANA_ENDPOINT`
-- `TAGS`
+- `ELASTIC_CLUSTER = 'https://abc.eu-central-1.aws.cloud.es.io'` - Elasticsearch cluster endpoint.
+- `ELASTIC_HTTP_AUTH = 'elastic:ABCQ36RGUw5p6oAj5s123456'` - Elasticsearch HTTP authentication, username:password.
+- `ELASTIC_REQUEST_TIMEOUT = '10000'` - Elasticsearch request timeout in milliseconds. Default `10000`.
+- `INDEX_PREFIX = 'c.'` - Elasticsearch index prefix, e.g. `c.listener-*`. Default `c.`.
+- `QUERY_SIZE = '1000'` - Elasticsearch [paginate search size](https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html). Default `1000`.
+- `ELASTIC_OBSERVABILITY = 'allow'` - Print all Elasticsearch queries into stdout. Default `no`.
+- `KIBANA_ENDPOINT = 'https://abc.kb.eu-central-1.aws.cloud.es.io:9243'` - Kibana endpoint for creating links to Kibana.
 
+### Reporters
 
-## Data Manager
+- `SLACK_WEBHOOK_URL_INTERNAL` - Slack webhook URL to which the reporter will send critical events, e.g., problems from [internal checks](#first-phase-internal-checks).
+- `SLACK_WEBHOOK_URL` - Slack webhook URL to which the reporter will send events from rule analyzers and state of the errors queue.
+- `EMAIL_SMTP_SERVER` - SMTP server for sending emails.
+- `EMAIL_SMTP_PORT` - SMTP port for sending emails.
+- `EMAIL_SMTP_USER` - SMTP user for sending emails.
+- `EMAIL_SMTP_PASS` - SMTP password for sending emails.
+- `EMAIL_EMERGENCY` - Email address for sending emergency events to your administrators team, e.g., Elasticsearch heap is higher than 85%.
 
-Pro Listener DM udělat vlastní stránku
+### Errors queue
+- `CLOSE_ERR_MIN = 30` - Close the error if the same error is not found for more than 30 minutes. The default is `30`.
+
+### Overviews
+Internal settings. Therefore, you may not need to change them.
+- `EMERGENCY_AFTER_MIN = 60` - Send an emergency overview after 60 minutes. The default is `60`.
+- `STAGE1_AFTER_MIN = 180` - Send an overview of errors every 180 minutes. The default is `180`.
+- `STAGE1_REPETETION = 20` - Reminder about an error when the same error has been found more than 20 times. The default is `20`.
+
+### Others
+- `LICENSE = 'ABCDE-12345-ABCDE-12345-ABCDE-123'` - Place your license key here.
+- `ENV_PRINT = 'allow'` - Print all environment variables into stdout.
+- `TAGS = 'monitoring;production'` - Tags that will be added to all events and errors.
+
+### Rules
+Internal settings. Therefore, you may not need to change them.
+- `PRINT_RULES='allow'` - Print evaluated rules into stdout, default `no`.
+- `CUSTOM_RULES_PATH = './rules/custom.yaml'`
+- `INTERNAL_RULES_PATH = './rules/internal.yaml'`
+- `RUM_RULES_PATH = './rules/rum.yaml'`
 
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
