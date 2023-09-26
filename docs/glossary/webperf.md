@@ -541,5 +541,16 @@ Is the total time taken for a certain process or action to complete. In the cont
 - max. 2s
 - Always be faster than your competition.
 
+## Server
+
+### Server-Timing
+The Server Timing header provides a discrete and convenient way to communicate backend server performance timings to developer tools in the browser. Adding timing information to your application enables you to monitor both back-end and front-end performance in one place.
+
+Include this header in your HTTP response along with the timing information:
+```http
+Server-Timing: db;dur=123;desc="Database", tmpl;dur=56;desc="Template processing"
+```
+
+- Sources https://www.smashingmagazine.com/2018/10/performance-server-timing/ and https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
 
 These resources should provide you with detailed information on web performance and how to optimize it.
