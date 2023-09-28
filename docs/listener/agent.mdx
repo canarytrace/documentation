@@ -682,6 +682,7 @@ The Listener Agent can be configured using environment variables, and these conf
 - `TLS_MAX_VERSION = 'TLSv1.3'` - TLS maximum version for sending emails. Default `TLSv1.3`.
 - `TLS_REJECT_UNAUTHORIZED = false` - Reject unauthorized TLS certificate for sending emails. Default `false`.
 - `PRINT_MAIL_CONFIGURATION = false` - Print mail configuration into stdout. Default `false`.
+- `MAILER_SECURE = false` - If the secure property is set to `false`, Nodemailer will attempt to connect to your server using plaintext. If it is set to `true`, Nodemailer will connect to the server using SSL/TLS.  Default `false`.
 
 ### Errors queue
 - `CLOSE_ERR_MIN = 30` - Close the error if the same error is not found for more than 30 minutes. The default is `30`.
