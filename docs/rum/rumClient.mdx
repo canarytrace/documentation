@@ -372,6 +372,18 @@ Metrics are timelines with events triggered by a web browser, such as loading co
 
 ### Entries
 
+The Canarytrace RUM collects traffic between a client's browser and your server. This data is named Entries, giving you an overview of the time taken for every request from a client's device.
+
+Entries contain information about the timing of the request, such as DNS lookup, TCP connection, SSL handshake, size of the response, used protocol, information about whether the resource is a blocker for rendering, and [Server-Timing](#server-timing).
+
+![Entries](./assets/devtools-entries.webp)
+
+Every webpage contains many additional resources such as images, JavaScript files, CSS, etc., loaded from the web server, plus additional requests for loading third-party scripts and data for our web. Each web page has a different number of resources.
+
+The Canarytrace RUM collects all entries in batches of 50 items until all are saved.
+
+
+The Canarytrace RUM stores Entries directly to `c.rum.entries-*` Elasticsearch index.
 
 ## Settings
 
