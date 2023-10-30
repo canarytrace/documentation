@@ -235,7 +235,7 @@ Statistics:
 
 - 1.6.2023, median desktop: 2.2s, median mobile: 3.7s (https://httparchive.org/reports/loading-speed#fcp)
 
-More information about [FPC](https://web.dev/fcp/).
+More information about [FCP](https://web.dev/fcp/).
 
 ### TTI
 
@@ -259,7 +259,7 @@ The calculation of the TTI metric also involves the concept of a "quiet window" 
 
 These definitions and metrics help developers better understand and measure how quickly a page becomes useful and responsive to users, which is key to providing a quality user experience.
 
-#### Recommendations for FCP Optimization
+#### Recommendations for TTI Optimization
 
 - Deferring or asynchronously loading JavaScript and other third-party content that isn't essential for the initial page view.
 - Server optimization for faster response.
@@ -275,10 +275,61 @@ As with other web page performance metrics, it's important to monitor TTI in the
 
 Statistics:
 
-- 1.6.2023, median desktop: 6.3s, median mobile: 12.7s (https://httparchive.org/reports/loading-speed#fcp)
+- 1.11.2023, median desktop: 7.8s, median mobile: 13.5s (https://httparchive.org/reports/loading-speed#ttci)
 
 
 More information about [TTI](https://web.dev/tti/).
+
+### TBT
+
+Total Blocking Time (TBT) is a crucial web performance metric. It measures the total time during which the main thread of the browser is blocked by long tasks, preventing user interaction with the web page. It represents the time when the browser is processing scripts or other tasks that hinder a quick response to user actions.
+
+While TBT primarily focuses on delays caused by long JavaScript tasks that block the main thread, it's important to note that it's not a metric exclusively focused on JavaScript. TBT can also be influenced by other factors such as complex calculations on the main thread or inefficient manipulation of the DOM (Document Object Model), which may not be directly related to JavaScript. Although JavaScript plays a key role in the TBT value, overall web page performance and interactivity are influenced by a combination of various factors, not just JavaScript.
+
+**Evaluation of the TBT Metric**
+
+- 0–200 ms: Green (fast)
+- 200–600 ms: Orange (moderate)
+- Over 600 ms: Red (slow)
+
+For example, consider the following diagram of the browser's main thread during page load:
+
+![Main thread](./assets/a-tasks-timeline-the-mai-72582d2e9e8a8.svg)
+
+The above timeline has five tasks, three of which are Long Tasks because their duration exceeds 50 ms. The next diagram shows the blocking time for each of the long tasks:
+
+![Main thread](./assets/a-tasks-timeline-the-mai-58cb4f9bb2cf3.svg)
+
+**What Causes Its Slowing Down?**
+
+The slowing down of Total Blocking Time can be caused by several factors, including:
+
+- Long JavaScript Tasks: Extended scripts can block the main thread.
+- Complex Calculations on the Main Thread: Complex operations can slow down processing.
+- Inefficient DOM Manipulation: Frequent or complex changes in the DOM can cause slowdowns.
+- Excessive JavaScript and CSS: Large or unoptimized scripts and styles can slow down processing.
+
+**Relationship with Other Metrics**
+
+TBT is a great companion metric for Time to Interactive (TTI) because it helps quantify the severity of how non-interactive a page is prior to it becoming reliably interactive. TTI considers a page "reliably interactive" if the main thread has been free of long tasks for at least five seconds. TBT helps to quantify the user experience in scenarios where TTI might be delayed due to long tasks.
+
+**Recommendations for TBT Optimization**
+- Splitting Long Tasks: Breaking down long JavaScript tasks into smaller parts.
+- Using Web Workers: Moving some calculations to Web Workers outside the main thread.
+- Optimizing JavaScript and CSS: Removing unnecessary code and using techniques like minification.
+- Efficient DOM Manipulation: Minimizing and optimizing changes in the DOM.
+- Asynchronous or Deferred Loading: Loading scripts asynchronously or after the rest of the page.
+- Utilizing Browser Cache: Storing frequently used resources in the browser's cache.
+
+Improving Total Blocking Time can have a positive impact on the overall user experience and can also contribute to better SEO rankings.
+
+**Recommended Maximum Value for TBT**
+
+To provide a good user experience, sites should strive to have a Total Blocking Time of less than 200 milliseconds when tested on average mobile hardware.
+
+- More information about [TBT](https://web.dev/articles/tbt)
+- [TBT in Lighthouse](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/#how-lighthouse-determines-your-tbt-score).
+- Javascript Boot-Up Time: https://httparchive.org/reports/loading-speed#bootupJs
 
 
 ### FPS
