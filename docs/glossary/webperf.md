@@ -180,6 +180,31 @@ More information about [CLS](https://web.dev/cls/).
 
 ## Metrics
 
+### FP
+
+The First Paint (FP)  is an important web performance metric. It measures the time from the start of the page loading to the moment when the browser starts rendering the first pixels on the screen. In other words, it's the time elapsed from the initial request for the page to the first visible result for the user.
+
+#### What Causes Its Slowing Down?
+
+The slowing down of First Paint can be caused by several factors, including:
+- Large number of unoptimized images: Large images can slow down loading.
+- Excessive JavaScript and CSS files: Large or unoptimized scripts and styles can slow down rendering.
+- Resource blocking: Some resources can block rendering until they are loaded.
+- Slow server or network connection: Server response time and network speed have a significant impact.
+- Render-blocking JavaScript and CSS: Scripts and styles that must be loaded before the page can render.
+
+
+#### Recommendations for FP Optimization
+
+- Image Optimization: Using formats like WebP and reducing image sizes.
+- Minimization and Optimization of JavaScript and CSS: Removing unnecessary code and using techniques like minification.
+- Asynchronous or Deferred Loading: Loading scripts asynchronously or after the rest of the page.
+- Browser Cache Utilization: Storing frequently used resources in the browser's cache.
+- Using CDN (Content Delivery Network): Distributing content across multiple servers for faster delivery.
+- Optimizing Server Response: Improving server and database performance.
+- Improving First Paint can have a positive impact on the overall user experience and can also contribute to better SEO rankings.
+
+
 ### FCP
 
 The First Contentful Paint (FCP) metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen. For this metric, "content" refers to text, images (including background images), `<svg>` elements, or non-white `<canvas>` elements.
