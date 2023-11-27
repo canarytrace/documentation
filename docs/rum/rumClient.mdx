@@ -381,8 +381,13 @@ Every webpage contains many additional resources such as images, JavaScript file
 
 The Canarytrace RUM collects all entries in batches of 50 items until all are saved.
 
-
 The Canarytrace RUM stores Entries directly to `c.rum.entries-*` Elasticsearch index.
+
+:::info
+
+The entries will not be recorded if the `trackResources` is set to `false`.
+
+:::
 
 ## Settings
 
@@ -583,6 +588,12 @@ Server-Timing: lb;dur=13;desc="Load Balancer", server-3;dur=338;desc="Server #3 
 ```
 
 Canarytrace RUM stores the Server-Timing data directly in the `c.rum.entries-*` Elasticsearch index, making it available for visualization.
+
+:::info
+
+The Server-Timing will not be recorded if the `trackResources` is set to `false`.
+
+:::
 
 ![Server-Timing in Kibana](./assets/server-timing-kibana.webp)
 
