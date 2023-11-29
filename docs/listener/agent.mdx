@@ -360,7 +360,6 @@ It contains only an example of a possible business rule (maximum time for user l
 - The Listener Agent loads and parses rules from files `rules/internal.yaml`, `rules/rum.yaml`, and `rules/custom.yaml`. You can choose one of the three types of rules, each with a different syntax and use case.
 - All these rule files are included inside the Docker image with the Listener Agent. If you wish to change a value, modify a rule, add a new rule, or delete a rule, you can override these files with your custom set of rules. Simply create a config-map and deploy it into Kubernetes.
 
-
 **Example of one rule definition**
 - This rule is of type `range`, searching for items with a label `loadEventEnd` and a value between `3000` and `5000` ms in the `c.performance-entries` index.
 - If the Listener Agent finds a minimum of 5 items that match this condition, it automatically saves the event into the `c.listener.events` index and sends a [report](#reporters) to Slack.
@@ -386,6 +385,12 @@ It contains only an example of a possible business rule (maximum time for user l
     - type: slack
       message: "Page is complete loaded."
 ```
+
+:::info
+
+The `reportLabels` parameter serves as a label selector for `c.listener.events-*`. This parameter determines which labels from the selected index should be included in the events index. It is used to enrich the documents array in `c.listener.events-*` with specific information from a particular document that violates the rule. The labels stated in `reportLabels` must correspond to those contained in the relevant index to which the rule applies.
+
+:::
 
 ### type `range`
 If the page load time is between 3 and 5 seconds, then create an event and send a report.
@@ -695,11 +700,19 @@ Internal settings. Therefore, you may not need to change them.
 
 ### Internal Checks
 - `CANARY_HEALTHCHECK = 'allow'` - Checks whether Canarytrace Synthetic is running and sending data to Elasticsearch. Default: `allow`.
+- `CANARY_HEALTHCHECK_MINUTES = '5'` - Allows you to set a threshold for the internal check. By default, the Listener will notify you if no new data has been received from Canarytrace for more than 5 minutes, which means that Canarytrace has not been running for more than 5 minutes. Default: `5` minutes. 
 - `DM_HEALTHCHECK = 'allow'` - Checks if the Data Manager is installed. Default: `allow`.
 - `DM_LAST_HOURS = '48'` - Ensures that the Data Manager has been operational within the last 48 hours. Default: `48`.
 - `LIFECYCLE_CHECK = 'allow'` - Useful for verifying that Canarytrace Synthetic is operating correctly. Default: `allow`.
 - `ELASTIC_HEALTHCHECK = 'allow'` - Checks the health status of Elasticsearch. Default: `allow`.
 - `ELASTIC_NODES_HEALTHCHECK = 'allow'` - Monitors the health status of Elasticsearch nodes. Default: `allow`.
+
+
+:::info
+
+At the same time, we do not recommend changing `CANARY_HEALTHCHECK_MINUTES` threshold in any way. Canarytrace should run as often as possible, and this is our recommendation for higher quality of your web application.
+
+:::
 
 ### Others
 - `LICENSE = 'ABCDE-12345-ABCDE-12345-ABCDE-123'` - Place your license key here.
