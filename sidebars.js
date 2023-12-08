@@ -60,6 +60,7 @@ const sidebars = {
       label: 'Glossary',
       items: [
         'glossary/webperf',
+        'glossary/webrtc',
         'glossary/keyf',
         'glossary/awesome',
       ],
