@@ -9,7 +9,7 @@ tags:
 
 :::info Web performance
 
-This page describe WebRTC metrics and their meaning. WebRTC metrics are part of the [RUM Client](./rumClient#webrtc) metrics.
+This page describe WebRTC metrics and their meaning. WebRTC metrics are part of the [RUM Client](../rum/rumClient#webrtc) metrics.
 
 :::
 
