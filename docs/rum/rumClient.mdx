@@ -445,6 +445,7 @@ When the RUM Client starts after the `load` event, you can access the functions 
 |`CRUM.setViewId('string')`|Set a new `viewId`. Is useful especialy for the SPA applications to set a custom `view.id` that is associated with the performance data collected by the RUM Client. In a web application with soft navigation, where the page content changes dynamically without a full page reload, setting a custom `view.id` can help you distinguish between different views and track their performance separately.|
 |`CRUM.addToLabels('env=UAT')`|Add another label. Label added via this function will be added into every samplers until to end of lifecycle actual page.|
 |`CRUM.addEvent('addToBasket')`|Allows you to store arbitrary values during the lifecycle of a web application. For example, form contents, user actions, request results, etc. This function allows you to add custom events with associated data to the RUM monitoring data. For example, you could track when a user adds an item to their shopping cart, along with the details of the item they added. By adding custom events with relevant data, you can gain deeper insights into how users are interacting with your web application and identify areas for improvement.|
+|`CRUM.setWebRTCInstance(webRTCInstace)`|By activating this feature, the collection of WebRTC metrics will begin. For more information, please refer to the documentation. Note, the RUM Client does not support WebRTC by default; you must first enable WebRTC in the RUM Server.|
 
 #### Examples
 Open console in DevTools and try the following functions.
@@ -598,6 +599,102 @@ The Server-Timing will not be recorded if the `trackResources` is set to `false`
 ![Server-Timing in Kibana](./assets/server-timing-kibana.webp)
 
 For more details, refer to our [Server-Timing](../glossary/webperf#server-timing) glossary.
+
+## WebRTC
+
+**WebRTC (Web Real-Time Communication)** is an open-source technology that enables direct, real-time communication between web browsers and devices. This technology facilitates various forms of data exchange, including audio, video, and file sharing directly in web browsers without the need for plugins or additional software. WebRTC is commonly used in various applications such as video conferencing, voice calls, file sharing, and live streaming.
+
+#### Why Monitor WebRTC Performance?
+
+Monitoring the performance of WebRTC is critical for several reasons:
+
+1. **Quality of Service**: Ensures that audio and video communication is clear and uninterrupted, which is essential for user satisfaction.
+2. **Connection Stability**: Identifies and resolves issues related to connection drops or poor connectivity.
+3. **Latency Measurement**: Helps in detecting and minimizing delays in communication, which is crucial for real-time interactions.
+4. **Bandwidth Usage**: Monitoring helps optimize bandwidth use, enhancing efficiency and reducing costs.
+5. **Troubleshooting**: Quick identification and resolution of issues lead to improved reliability and user experience.
+6. **Scalability Assessments**: Provides insights into how well the WebRTC implementation scales with increased load.
+
+#### How to Monitor WebRTC Performance?
+
+:::danger
+
+RUM Client does not support WebRTC by default; you must first [enable WebRTC in the RUM Server](./rumServer#settings).
+
+:::
+
+You must initiate an [RTCPeerConnection](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), and an instance of this RTCPeerConnection must be passed to the RUM Client through the `CRUM.setWebRTCInstance(RTCInstance)` function.
+
+#### Lifecycle of WebRTC
+
+- The console shows this warning `CRUM: setWebRTCInstance error. WebRTC instance not found.` if the WebRTC instance is not available.
+- If the WebRTC instance is available but no connection has been established, the metrics will contain a value of 0.
+
+RUM Client will be send WebRTC metrics to the RUM Server and RUM server will be store them into the `c.rum.webrtc-*` Elasticsearch index.
+
+```javascript title="Example output"
+{
+  "video": {
+    "inbound-rtp": {
+        "packetsLost": 0,
+        "jitter": 0.001,
+        "frameHeight": 480,
+        "frameWidth": 640,
+        "framesPerSecond": 30,
+        "bytesReceived": 1519907965
+    },
+    "outbound-rtp": {
+        "frameHeight": 480,
+        "frameWidth": 640,
+        "framesEncoded": 191178,
+        "framesPerSecond": 30,
+        "bytesSent": 1520188876,
+        "packetsSent": 1467422,
+        "qpSum": 881433,
+        "qualityLimitationDurations": {
+            "bandwidth": 0,
+            "cpu": 0,
+            "none": 7326.29,
+            "other": 0
+        }
+    },
+    "remote-inbound-rtp": {
+        "jitter": 0.001766,
+        "packetsLost": 0,
+        "roundTripTime": 0.001
+    }
+  },
+  "audio": {
+    "inbound-rtp": {
+        "jitter": 0,
+        "packetsLost": 0,
+        "concealedSamples": 275625,
+        "concealmentEvents": 104,
+        "jitterBufferDelay": 14599113.6,
+        "totalAudioEnergy": 8.679371746326856,
+        "totalSamplesDuration": 7326.340000113497
+    },
+    "outbound-rtp": {
+        "bytesSent": 19872476,
+        "packetsSent": 366316,
+        "nackCount": 0,
+        "retransmittedBytesSent": 0,
+        "retransmittedPacketsSent": 0,
+        "totalPacketSendDelay": 0,
+        "active": true
+    },
+    "remote-inbound-rtp": {
+        "jitter": 0.004833,
+        "packetsLost": 0,
+        "fractionLost": 0,
+        "roundTripTime": 0.0019679999999999997,
+        "totalRoundTripTime": 1.980862
+    }
+  }
+}
+```
+
+
 
 ## Limitations
 The RUM client can obtain the most data from Google Chrome because this browser has many APIs and focuses on adopting new web standards and improving web performance.

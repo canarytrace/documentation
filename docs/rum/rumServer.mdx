@@ -61,6 +61,7 @@ The RUM Server expose a few REST API endpoints which are used by the RUM Client.
 |`GET`|`/health`|This endpoint returns `Canarytrace RUM is ready!` if the RUM server is ready to use.|
 |`POST`|`/rum/report-uri`|Endpoint for sending the Content Security Policy report from older browsers.|
 |`POST`|`/rum/reporting-api`|Endpoint for sending the Content Security Policy Report from Google Chrome.|
+|`POST`|`/rum/webrtc`|Endpoint for sending the WebRTC metrics. More information in the [WebRTC](./rumClient#webrtc) section.|
 
 
 ### Security
@@ -329,6 +330,7 @@ All parameters of the RUM Server can be changed via environment variables direct
 |`INDEX_PREFIX`|`c.`|Prefix for the name conventions used for Elasticsearch indices, such as `c.rum.metrics-*`.|
 |`LABELS`||You can add a string that will be included in the arrived payload from the RUM Client and added to the `.labels` property. E.g. `environment=development` or `app14`.|
 |`ENV_PRINT`|`false`|Print all environment variables. Set the `allow` value for activate this feature.|
+|`ENABLE_WEBRTC_METRICS_COLLECTION`|`false`|This environment variable enable the function for collecting WebRTC metrics in the [RUM Client](./rumClient)|
 
 ## Restrict traffic for specific URLs
 
