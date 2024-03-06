@@ -205,8 +205,6 @@ This mini graphs aggregate fields from the `c.rum.metrics-*`, `c.rum.entries-*` 
 If you wish, you can use our prepared visualizations that are stored within the Docker image with the [RUM Server](./rumServer). These can simply be exported for use. However, if you prefer, you have the option to create your own visualizations instead.
 
 ```bash title="Get Kibana visualizations and dashboard"
-
-```bash title="Get visualizations"
 docker run --rm -it --entrypoint /bin/mv -v $(pwd):/kibana quay.io/canarytrace/rum:latest /opt/canary-rum/kibana/ /kibana/
 ```
 
@@ -226,6 +224,8 @@ Let's go step by step:
 2). To create a Data View, navigate to your Kibana Menu > Stack Management > Data Views. Create a data view for all [indices](./elasticsearch#list-of-indices). For example, Name = c.rum.entries-, Index pattern = c.rum.entries- and Timestamp field = timestamp.
 
 3). To import Visualizations and Dashboards, go to your Kibana Menu > Stack Management > Saved Objects. Import the visualizations first and then the dashboard.
+
+Optionally, you can import the index mapping for `c.rum.entries` and `c.rum.metrics`. Examples are in the same directory as the visualizations and dashboard.
 
 import FeedbackFooter from '../../src/components/FeedbackFooter';
 
