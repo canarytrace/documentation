@@ -6,4 +6,109 @@ tags:
   - Synthetic
 ---
 
-# Canarytrace Synthetic
+## Canarytrace Synthetic
+
+Canarytrace Synthetic is a synthetic testing framework designed for proper testing of web applications and for measuring non-functional characteristics, such as performance.
+Synthetic runs on Playwright, a modern and powerful browser automation tool by Microsoft. Therefore, if you already have test scenarios written for Playwright, you can seamlessly use them in Canarytrace Synthetic, as it internally uses the same unmodified version of Playwright.
+
+## Why use Canarytrace Synthetic?
+
+Canarytrace Synthetic is a stack built on the modern testing framework Playwright, which we have enhanced with additional features and configuration for proper web application testing. There’s nothing worse than investing in the wrong testing framework, setting it up incorrectly, or using it improperly, only to discover after months of testing (and sometimes frustration) that the testing results are inaccurate or unreliable.
+
+Canarytrace Synthetic is a ready-to-use stack for proper testing, so you can start using it immediately without spending additional resources on researching how to correctly test web applications.
+
+## Testing Modes
+
+Canarytrace Synthetic offers two testing modes:
+- `Smoke` - Testing the availability of a web application. In this mode, a web page is loaded in a real browser, automatically verifying that the page loads correctly while simultaneously measuring the page load speed. You don’t need to write any test scenarios in this mode—simply provide a set of URLs for several websites or landing pages, and Synthetic handles the rest.
+- `User-Journey` - Testing user scenarios. In this mode, it’s necessary to write test scenarios that simulate user behavior on the website.
+
+You can combine the smoke and user-journey modes. For example, you can use smoke tests to check availability and user-journey tests to validate the main user scenarios.
+
+Synthetic, which runs on Playwright, requires a real web browser for testing, and that’s where Superbrowser comes in.
+
+## Superbrowser
+
+Canarytrace Superbrowser is an encapsulated Google Chrome browser that is pre-configured and includes everything needed for proper testing. Superbrowser is available as a Docker image.
+
+Synthetic and Superbrowser work together because the web browser must be isolated from the testing framework to avoid external influences and ensure consistent and reliable testing results. In this setup, the browser used is Superbrowser.
+
+With the Synthetic and Superbrowser duo, you have an excellent ready-made solution for web application testing with minimal effort, ensuring trustworthy and consistent testing results.
+
+## Docker and Kubernetes
+
+All Canarytrace components, including Synthetic, are distributed as Docker images. This means you don’t need to install or configure anything—simply run Canarytrace Synthetic. The advantage of containerization is that your entire team can use the same version of Canarytrace Synthetic, ensuring uniformity across your company. This also simplifies onboarding for new employees, speeding up their ability to start testing.
+
+We recommend using Kubernetes as an orchestrator/runner for Canarytrace Synthetic. Kubernetes reduces costs and errors related to manual test execution while offering numerous benefits for running automated tests.
+
+Synthetic and Superbrowser are encapsulated together in what is known as a POD, creating a closed and clean stack for running automated tests. With Kubernetes, you can easily scale the number of PODs, enabling parallelized automated testing while maintaining isolation and reliability for each test. Furthermore, each POD can have a different configuration of Canarytrace Synthetic and Superbrowser, allowing you to test various scenarios and configurations.
+
+### Deployment Scripts
+
+Canarytrace Synthetic is run in Kubernetes using CronJob deployment scripts. The Docker image for Canarytrace Synthetic includes two sample configurations for the smoke and user-journey modes.
+
+You can download the deployment scripts from the Docker image using the following command:
+
+```bash
+docker run --rm -it --entrypoint /bin/mv -v $(pwd):/deployments ghcr.io/canarytrace/synthetic:dev-5.5.13 /opt/synthetic/deployments/ /deployments/
+```
+
+### Configuration for `smoke` Mode
+- `smoke-cronjob.yaml` - Upload to Kubernetes using the command: `kubectl apply -f smoke-cronjob.yaml`
+- `image` - Always use the latest version of Canarytrace Synthetic.
+- `BASE_URL` - Provide a list of landing pages.
+- `LABELS` - Specify key labels that will be stored with the test results. Labels allow easier filtering and aggregation of data in Elasticsearch.
+- `LICENSE` - Enter your Canarytrace Synthetic license.
+
+
+### Configuration for `user-journey` Mode
+- `user-journey-cronjob.yaml` - Upload to Kubernetes using the command: `kubectl apply -f user-journey-cronjob.yaml`
+- `BASE_URL` - Provide the URL where your test scenario should start.
+- `LABELS` - Specify key labels that will be stored with the test results. Labels allow easier filtering and data aggregation in Elasticsearch.
+- `LICENSE` - Enter your Canarytrace Synthetic license.
+- `GIT_REVISION` - Specify the GIT revision of your test scenario.
+- `GIT_REPOSITORY` - Provide the URL of the GIT repository containing your test scenario.
+- `SPEC` - Specify the name of the file with your test scenario.
+
+
+## Configuration
+
+All behavior of Canarytrace Synthetic is configured using environment variables.
+
+| Environment variable      | Description                                                                                   | Default                           |
+|---------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------|
+| `BASE_URL`                | For smoke mode: Contains one or more URLs separated by `;` and every URL must contain `http://` or `https://`. For user-journey: Contains a URL which starts with `http://` or `https://`. | EXIT1 and stop the Canarytrace Synthetic. |
+| `WAIT_FOR_LOAD_TIMEOUT`   | Timeout duration in milliseconds to wait for load and for more events: `test`, `includes`, `hooks`, and `fixtures`. | `30000` ms                        |
+| `LABELS`                  | Allows defining keywords associated with all stored data. Labels can be set in any form and length and are stored in Elasticsearch as a string. | `'develop' + version + mode`     |
+| `EXPECT_TIMEOUT`          | Assertions timeout for `expects` in the test.                                                 | `5000` ms                        |
+| `GLOBAL_TIMEOUT`          | Timeout for the whole lifecycle of the Canarytrace Synthetic.                                  | `30000` ms                       |
+| `IGNORE_HTTPS_ERRORS`     | Whether to ignore HTTPS errors. Use `'on'` to enable.                                         | `false`                          |
+| `AVAILABILITY_CHECK`      | Checks if the server of the website is available. Use `'allow'` to enable.                    | `no`                             |
+| `MODE`                    | Select testing mode: `smoke` or `user-journey`.                                               | `smoke`                          |
+| `SPEC`                    | For `user-journey` mode: Name of the file with the Playwright test case.                      |                                   |
+| `ENV_PRINT`               | Print all environment variables. Use keyword `'allow'` to enable.                             |                                   |
+| `GIT_REPOSITORY`          | For `user-journey` mode: Repository with the Playwright test cases.                           |                                   |
+| `GIT_REVISION`            | For `user-journey` mode: Revision of the Playwright test case.                                |                                   |
+| `GIT_REPOSITORY_PORT`     | Port of the GIT repository.                                                                   |                                   |
+| `GIT_REPOSITORY_HOST`     | Host of the GIT repository.                                                                   |                                   |
+| `ELASTIC_CLUSTER`         | Path to your Elasticsearch cluster, e.g., `https://XYZ.eu-central-1.aws.cloud.es.io:9243`.   |                                   |
+| `ELASTIC_HTTP_AUTH`       | The username and password required to access your Elasticsearch cluster, e.g., `elastic:password`. |                                   |
+| `ELASTIC_TIMEOUT`         | Timeout for connecting to Elasticsearch.                                                     | `5000` ms                        |
+| `ELASTIC_OBSERVABILITY`   | To print all Elasticsearch configurations and payloads, set to `'allow'` to enable this feature. | `false`                          |
+| `ELASTIC_INDEX`           | Name of the Elasticsearch index.                                                             | `canarytrace-synthetic`          |
+| `INDEX_PREFIX`            | Prefix for the naming conventions used for Elasticsearch indices, such as `c.rum.metrics-*`. | `c.`                             |
+| `LICENSE`                 | Your Canarytrace Synthetic license.                                                          |                                   |
+| `HERO_ELEMENTS`           | Use `true` to enable the collection of Hero Elements.                                        |                                   |
+| `WAIT_FOR_LOAD_EVENT`     | Event to wait for before continuing, typically used to ensure page load completeness. Use `waitUntil` to wait for all iframes. | `load`                           |
+
+## Elasticsearch and Kubernetes
+
+Canarytrace Synthetic stores test results in Elasticsearch. For Canarytrace Synthetic to function correctly, Elasticsearch must be available and properly configured.
+
+Data is stored in indices with the prefix `c.` followed by the name of the index. For example, `c.report`.
+
+### `c.report`
+This index stores test results from each Canarytrace Synthetic execution, individual test steps, and any errors encountered.
+
+### `c.metrics`
+This index stores data about the loading speed of the web application, individual resources, Hero Elements, blocking resources, timing, and more.

@@ -53,6 +53,7 @@ const sidebars = {
       label: 'Synthetic',
       items: [
         'synthetic/introduction',
+        'synthetic/releases',
       ],
     },
     {
